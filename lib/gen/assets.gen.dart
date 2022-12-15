@@ -5,7 +5,7 @@
 
 // coverage:ignore-file
 // ignore_for_file: type=lint
-// ignore_for_file: directives_ordering,unnecessary_import
+// ignore_for_file: directives_ordering,unnecessary_import,implicit_dynamic_list_literal
 
 import 'package:flutter/widgets.dart';
 
@@ -29,6 +29,10 @@ class $AssetsIconsGen {
 
   /// File path: assets/icons/kit_schedule_logo.svg
   String get kitScheduleLogo => 'assets/icons/kit_schedule_logo.svg';
+
+  /// List of all assets
+  List<String> get values =>
+      [icCalendar, icCircle, icFailed, icSuccess, kitLogo, kitScheduleLogo];
 }
 
 class $AssetsImagesGen {
@@ -48,6 +52,10 @@ class $AssetsImagesGen {
 
   /// File path: assets/images/splash.png
   AssetGenImage get splash => const AssetGenImage('assets/images/splash.png');
+
+  /// List of all assets
+  List<AssetGenImage> get values =>
+      [calendarHeaderTodoDetail, calendarHeader, kitScheduleLogo, splash];
 }
 
 class Assets {
@@ -114,6 +122,8 @@ class AssetGenImage {
       cacheHeight: cacheHeight,
     );
   }
+
+  ImageProvider provider() => AssetImage(_assetName);
 
   String get path => _assetName;
 

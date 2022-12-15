@@ -1,8 +1,20 @@
+
+import 'package:hive/hive.dart';
+import 'package:kit_schedule_v2/common/config/database/hive_type_constants.dart';
+
+part 'personal_schedule_model.g.dart';
+
+@HiveType(typeId: HiveTypeConstants.personal)
 class PersonalScheduleModel {
+  @HiveField(0)
   String? id;
+  @HiveField(1)
   String? date;
+  @HiveField(2)
   String? name;
+  @HiveField(3)
   String? timer;
+  @HiveField(4)
   String? note;
 
   PersonalScheduleModel(this.date, this.name, this.timer, this.note, {this.id});

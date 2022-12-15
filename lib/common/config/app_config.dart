@@ -9,8 +9,9 @@ class AppConfig {
   static String firebaseUid = '';
 
   static const String database = 'pimi_db';
-  static const String financeCollection = 'finance';
-  static const String workflowCollection = 'workflow';
-  static const String walletsCollection = 'wallets';
-  static const String transactionCollection = 'transactions';
+  static const schoolCollection = 'school';
+  static const personalCollection = 'personal';
+  static const studentInfoCollection = 'student';
+
+  
 }
