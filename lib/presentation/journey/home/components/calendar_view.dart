@@ -1,15 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:intl/intl.dart';
+import 'package:kit_schedule_v2/common/utils/date_time_format.dart';
 
 import 'package:kit_schedule_v2/common/utils/export.dart';
+import 'package:kit_schedule_v2/domain/models/school_schedule_model.dart';
+import 'package:kit_schedule_v2/presentation/journey/home/home_controller.dart';
 import 'package:kit_schedule_v2/presentation/theme/export.dart';
 
 import 'package:table_calendar/table_calendar.dart';
 
-
 class CalendarView extends StatefulWidget {
+  CalendarView({Key? key, required this.schedules}) : super(key: key);
 
-
-  const CalendarView({Key? key, }) : super(key: key);
+  List<StudentSchedule> schedules;
 
   @override
   _CalendarViewState createState() => _CalendarViewState();
@@ -22,7 +26,7 @@ class _CalendarViewState extends State<CalendarView> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
           borderRadius: BorderRadius.vertical(bottom: Radius.circular(30)),
           color: Color(0xffFCFAF3)),
       child: TableCalendar(
@@ -32,6 +36,7 @@ class _CalendarViewState extends State<CalendarView> {
         lastDay: DateTime.utc(2030, 3, 14),
         focusedDay: _focusedDay,
         eventLoader: _getEventsForDay,
+
         startingDayOfWeek: StartingDayOfWeek.monday,
         daysOfWeekStyle: DaysOfWeekStyle(
             weekdayStyle: ThemeText.dayOfWeekStyle,
@@ -40,27 +45,26 @@ class _CalendarViewState extends State<CalendarView> {
         calendarStyle: CalendarStyle(
             isTodayHighlighted: true,
             markerDecoration: BoxDecoration(
-                shape: BoxShape.circle,
-                color: AppColors.markerColor),
+                shape: BoxShape.circle, color: AppColors.markerColor),
             todayDecoration: BoxDecoration(
                 shape: BoxShape.circle, color: AppColors.todayColor),
             selectedDecoration:
-            BoxDecoration(color: AppColors.selectedDayColor),
+                BoxDecoration(color: AppColors.selectedDayColor),
             markerSize: 8.sp,
             rangeHighlightColor: AppColors.selectedDayColor as Color,
             markersMaxCount: 1,
             outsideDaysVisible: true,
-            weekendTextStyle:
-            TextStyle(color: AppColors.weekendTextColor),
-            selectedTextStyle:
-            TextStyle(color: AppColors.dayTextColor),
-            todayTextStyle:
-            TextStyle(color: AppColors.dayTextColor)),
+            weekendTextStyle: TextStyle(color: AppColors.weekendTextColor),
+            selectedTextStyle: TextStyle(color: AppColors.dayTextColor),
+            todayTextStyle: TextStyle(color: AppColors.dayTextColor)),
         headerStyle: HeaderStyle(
           titleTextStyle:
-          ThemeText.titleStyle.copyWith(color: AppColors.thirdColor),
+              ThemeText.titleStyle.copyWith(color: AppColors.thirdColor, fontSize: 18.sp),
           formatButtonVisible: false,
           titleCentered: true,
+          titleTextFormatter: (date, locale) =>
+              (DateFormat.yMMMM(locale).format(date).capitalize ?? ''),
+
           leftChevronIcon: Icon(
             Icons.arrow_back_ios,
             size: 18.sp,
@@ -71,28 +75,31 @@ class _CalendarViewState extends State<CalendarView> {
           ),
         ),
         onDaySelected: (
-            selectedDay,
-            focusedDay,
-            ) =>
+          selectedDay,
+          focusedDay,
+        ) =>
             _onDaySelected(selectedDay, focusedDay, context),
       ),
     );
   }
 
   List _getEventsForDay(DateTime day) {
-    return
-    //   this.widget.state!.allSchedulesCalendarMap[
-    // DateTime.fromMillisecondsSinceEpoch(day.millisecondsSinceEpoch)] ??
-        [];
+    return widget
+        .schedules
+        .where((element) => DateTimeFormatter.formatDate(day) == element.day)
+        .toList();
   }
 
   void _onDaySelected(
       DateTime selectedDay, DateTime focusedDay, BuildContext context) {
-    if (!isSameDay(_selectedDay, selectedDay))
+    if (!isSameDay(_selectedDay, selectedDay)) {
       setState(() {
         _selectedDay = selectedDay;
         _focusedDay = focusedDay;
       });
+    }
+
+    Get.find<HomeController>().onChangedSelectedDate(selectedDay);
 
     // BlocProvider.of<ScheduleBloc>(context)
     //   ..add(GetScheduleDayEvent(

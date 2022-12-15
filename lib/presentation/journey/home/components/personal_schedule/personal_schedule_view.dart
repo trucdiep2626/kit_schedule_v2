@@ -1,0 +1,182 @@
+import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+import 'package:kit_schedule_v2/common/utils/export.dart';
+import 'package:kit_schedule_v2/domain/models/personal_schedule_model.dart';
+import 'package:kit_schedule_v2/presentation/journey/home/components/personal_schedule/personal_schedule_item.dart';
+import 'package:kit_schedule_v2/presentation/theme/export.dart';
+
+class PersonalScheduleWidget extends StatelessWidget {
+  PersonalScheduleWidget({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    List<PersonalScheduleModel>? personalSchedulesOfDay = [];
+    return Card(
+      semanticContainer: true,
+//      color: Color(0xffFCFAF3),
+      color: AppColors.personalScheduleBackgroundColor,
+      shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.all(Radius.circular(20))),
+      elevation: 5,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisSize: MainAxisSize.min,
+        children: <Widget>[
+          SizedBox(height: 8.sp),
+          Row(
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              Text('Ghi chú',
+                  style: ThemeText.titleStyle.copyWith(
+                    fontSize: 16.sp,
+                    fontWeight: FontWeight.bold,
+                  )),
+              Container(
+                  decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: AppColors.personalScheduleColor),
+                  margin: const EdgeInsets.only(left: 4),
+                  padding: const EdgeInsets.all(5),
+                  child: Text(
+                    personalSchedulesOfDay != null
+                        ? '${personalSchedulesOfDay.length}'
+                        : '0',
+                    style: ThemeText.numberStyle,
+                  ))
+            ],
+          ),
+          Expanded(
+              child: personalSchedulesOfDay != null
+                  ? ListView.builder(
+                      shrinkWrap: true,
+                      itemCount: personalSchedulesOfDay.length,
+                      itemBuilder: (context, index) {
+                        PersonalScheduleModel todo =
+                            personalSchedulesOfDay[index];
+                        return InkWell(
+                            onTap: () {
+                              showDialog(
+                                  context: context,
+                                  builder: (dialogContext) =>
+                                      toDoDetailsDialog(context, todo));
+                            },
+                            child: PersonalScheduleElementWidget(
+                              todo: todo,
+                            ));
+                      })
+                  : Align(
+                      alignment: Alignment.center,
+                      child: Text('Không có dữ liệu',
+                          style: ThemeText.textStyle.copyWith(
+                              color: AppColors.personalScheduleColor)),
+                    ))
+        ],
+      ),
+    );
+  }
+
+  Widget toDoDetailsDialog(
+      BuildContext context, PersonalScheduleModel toDoItem) {
+    return SimpleDialog(
+        titlePadding: const EdgeInsets.all(0),
+        title: Container(
+          padding: EdgeInsets.all(8.sp),
+          width: MediaQuery.of(context).size.width,
+          color: AppColors.personalScheduleColor2,
+          child: Text(
+            'Chi tiết',
+            style: ThemeText.titleStyle.copyWith(color: AppColors.secondColor),
+          ),
+        ),
+        children: [
+          Container(
+            margin: EdgeInsets.symmetric(
+              horizontal: 16.sp,
+              //vertical: WidgetsConstants.paddingVertical
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Padding(
+                  padding: EdgeInsets.only(bottom: 8.sp),
+                  child: Text(
+                      toDoItem.name != null ? toDoItem.name as String : '',
+                      style: ThemeText.titleStyle2
+                          .copyWith(color: AppColors.personalScheduleColor2)),
+                ),
+                Padding(
+                  padding: EdgeInsets.only(bottom: 8.sp),
+                  child: SizedBox(
+                    width: MediaQuery.of(context).size.width,
+                    child: RichText(
+                      text: TextSpan(
+                        text: 'Thời gian: ',
+                        style: ThemeText.titleStyle2
+                            .copyWith(color: AppColors.personalScheduleColor2),
+                        children: <TextSpan>[
+                          TextSpan(
+                              text: '',
+                              //getTime(toDoItem),
+                              style: ThemeText.titleStyle2.copyWith(
+                                  color: AppColors.personalScheduleColor2,
+                                  fontWeight: FontWeight.normal)),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsets.only(bottom: 8.sp),
+                  child: SizedBox(
+                    width: MediaQuery.of(context).size.width,
+                    child: RichText(
+                      text: TextSpan(
+                        text: 'Ghi ch: ',
+                        style: ThemeText.titleStyle2
+                            .copyWith(color: AppColors.personalScheduleColor2),
+                        children: <TextSpan>[
+                          TextSpan(
+                              text: toDoItem.note != null ? toDoItem.note : '',
+                              style: ThemeText.titleStyle2.copyWith(
+                                  color: AppColors.personalScheduleColor2,
+                                  fontWeight: FontWeight.normal)),
+                        ],
+                      ),
+                    ),
+                  ),
+                )
+              ],
+            ),
+          ),
+          Align(
+            alignment: Alignment.topRight,
+            child: IconButton(
+              padding: EdgeInsets.symmetric(horizontal: 16.sp),
+              onPressed: () {
+                debugPrint(toDoItem.id);
+                Navigator.pop(context);
+                Navigator.pushNamed(context, '/todo-detail',
+                        arguments: toDoItem)
+                    .then((value) {
+                  if (value != null) {
+                    // BlocProvider.of<CalendarBloc>(context)
+                    //     .add(GetAllScheduleDataEvent());
+                  }
+                });
+              },
+              icon: const Icon(Icons.edit),
+              color: AppColors.personalScheduleColor2,
+            ),
+          )
+        ]);
+  }
+
+  // String getTime(PersonalScheduleEntities item) {
+  //   String str = '';
+  //   if (item.timer != null) str = str + (item.timer as String) + ' ';
+  //   if (item.date != null)
+  //     str += DateFormat('dd/MM/yyyy').format(
+  //         DateTime.fromMillisecondsSinceEpoch(int.parse(item.date as String)));
+  //   return str;
+  // }
+}
