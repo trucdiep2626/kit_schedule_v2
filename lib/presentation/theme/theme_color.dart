@@ -110,4 +110,9 @@ class AppColors {
   static Color black = Colors.black;
   static Color? black45 = Colors.black45;
   static Color transparent = Colors.transparent;
+
+
+// TODO(dieptt): define common color
+
+
 }

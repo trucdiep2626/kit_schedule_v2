@@ -134,7 +134,7 @@ class ThemeText {
       fontWeight: FontWeight.normal);
 
   static TextStyle labelStyle = TextStyle(
-      fontSize: ScreenUtil().setSp(18),
+      fontSize: ScreenUtil().setSp(16),
       color: AppColors.personalScheduleColor,
       fontWeight: FontWeight.w500,
       fontFamily: "MR");

@@ -12,31 +12,18 @@ class SplashScreen extends GetView<SplashController> {
   @override
   Widget build(BuildContext context) {
     return Material(
-      color: AppColors.primary,
-      child: Stack(
-        children: [
-          Center(
-            child: AppImageWidget(
-              path: ImageConstants.pimiLogo,
-            ),
-          ),
-          Align(
-            alignment: Alignment.bottomCenter,
-            child: Padding(
-              padding: EdgeInsets.only(bottom: AppDimens.paddingBottom),
-              child: Obx(
-                () {
-                  if (controller.rxLoadedType.value == LoadedType.start) {
-                    return AppLoadingWidget(
-                      width: Get.width * 0.6,
-                    );
-                  }
-                  return const SizedBox.shrink();
-                },
-              ),
-            ),
-          )
-        ],
+      color: AppColors.white,
+      child: Center(
+        child: Obx(
+          () {
+            if (controller.rxLoadedType.value == LoadedType.start) {
+              return AppLoadingWidget(
+                width: Get.width * 0.5,
+              );
+            }
+            return const SizedBox.shrink();
+          },
+        ),
       ),
     );
   }

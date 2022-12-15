@@ -1,0 +1,58 @@
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:kit_schedule_v2/common/common_export.dart';
+import 'package:kit_schedule_v2/domain/usecases/school_usecase.dart';
+import 'package:kit_schedule_v2/presentation/controllers/mixin/export.dart';
+
+class LoginController extends GetxController with MixinController {
+  LoginController(this.schoolUseCase);
+
+  GlobalKey<FormState> textFormKey = GlobalKey<FormState>();
+  TextEditingController accountController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
+  Rx<LoadedType> rxLoginLoadedType = LoadedType.finish.obs;
+
+  RxBool isShow = false.obs;
+
+  SchoolUseCase schoolUseCase;
+
+  @override
+  void onInit() {
+    super.onInit();
+    // setStatusBarStyle(statusBarStyleType: StatusBarStyleType.light);
+  }
+
+  void onPressedShowPassword() {
+    isShow.value = !isShow.value;
+    debugPrint('hehehhe');
+  }
+
+  Future<void> onPressedLogin() async {
+    rxLoginLoadedType.value = LoadedType.start;
+
+    if (accountController.text.trim().isEmpty ||
+        passwordController.text.trim().isEmpty) {
+      return;
+    }
+
+    try {
+      final result = await schoolUseCase.getSchoolSchedule(
+          username:
+              accountController.text.trim().toUpperCase(),
+          password:
+              passwordController.text.trim());
+      debugPrint('===============$result');
+      if (!isNullEmpty(result)) {
+        rxLoginLoadedType.value = LoadedType.finish;
+        debugPrint('===============');
+        Get.offAndToNamed(AppRoutes.main, arguments: result!);
+      }
+    } catch (e) {}
+  }
+
+  @override
+  void onReady() {
+    super.onReady();
+    rxLoadedType.value = LoadedType.start;
+  }
+}

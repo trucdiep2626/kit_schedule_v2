@@ -16,7 +16,7 @@ class ApiClient {
     sendTimeout: 90000,
     receiveTimeout: 90000,
     responseType: ResponseType.json,
-    baseUrl: NetworkConfig.baseUrl,
+    // baseUrl: NetworkConfig.baseUrl,
   );
 
   Dio _dio = Dio();
@@ -104,7 +104,9 @@ class ApiClient {
     try {
       var strMethod = _getMethod(method);
       response = await _dio.request(path ?? '',
-          data: formData != null ? FormData.fromMap(formData) : data ?? jsonEncode({}),
+          data: formData != null
+              ? FormData.fromMap(formData)
+              : data ?? jsonEncode({}),
           options: Options(
               method: strMethod,
               sendTimeout: 10000,
