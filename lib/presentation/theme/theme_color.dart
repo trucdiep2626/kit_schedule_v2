@@ -5,10 +5,10 @@ class AppColors {
   static const marginLoading = 50.0;
 
   static Color? markerColor = Colors.blue[600];
-  static Color? todayColor = Color.fromRGBO(66, 165, 245, 0.6);
+  static Color? todayColor = const Color.fromRGBO(66, 165, 245, 0.6);
   static Color? selectedDayColor = Colors.blue[900];
   static Color? weekendTextColor = Colors.redAccent;
-  static Color? dayTextColor = Color(0xffFCFAF3);
+  static Color? dayTextColor = const Color(0xffFCFAF3);
 
   static const iconSize = 18.0;
   static const markerSize = 8.0;
@@ -20,8 +20,8 @@ class AppColors {
   static const Color errorColor = Colors.red;
 
   static const Color menuItemTextColor = Colors.white;
-  static const Color menuBackgroundColor = const Color.fromRGBO(48, 48, 48, 1);
-  static const Color highLightTextColor = const Color.fromRGBO(249, 170, 51, 1);
+  static const Color menuBackgroundColor = Color.fromRGBO(48, 48, 48, 1);
+  static const Color highLightTextColor = Color.fromRGBO(249, 170, 51, 1);
 
   static Color thirdColor = Colors.black54;
   static Color fourthColor = Colors.blue;

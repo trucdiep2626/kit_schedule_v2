@@ -26,24 +26,20 @@ class ScoreController extends GetxController with MixinController {
   Future<void> getScores() async {
     rxScoreLoadedType.value = LoadedType.start;
 
-    final studentCode = Get.find<MainController>()
-        .schoolScheduleModel
-        .value
-        .studentInfo
-        ?.studentCode;
+    final studentCode =
+        Get.find<MainController>().studentInfo.value.studentCode;
 
     if (studentCode == null || studentCode.isEmpty) {
       return;
     }
 
-    try {
-      final result = await schoolUseCase.getScore(studentCode: studentCode);
-      debugPrint('===============$result');
+    //   try {
+    final result = await schoolUseCase.getScore(studentCode: studentCode);
 
-      if (!isNullEmpty(result)) {
-        studentScores.value = result!;
-      }
-    } catch (e) {}
+    if (!isNullEmpty(result)) {
+      studentScores.value = result!;
+    }
+    // } catch (e) {}
     rxScoreLoadedType.value = LoadedType.finish;
   }
 

@@ -1,19 +1,14 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:get/get.dart';
 import 'package:kit_schedule_v2/common/common_export.dart';
-import 'package:kit_schedule_v2/common/utils/date_time_format.dart';
-import 'package:kit_schedule_v2/common/utils/export.dart';
-import 'package:kit_schedule_v2/presentation/journey/personal/personal_controller.dart';
-import 'package:kit_schedule_v2/presentation/journey/todo/components/cupertino_rounded_datepicker_widget.dart';
 import 'package:kit_schedule_v2/presentation/journey/todo/components/todo_form_widget.dart';
 import 'package:kit_schedule_v2/presentation/journey/todo/todo_controller.dart';
 import 'package:kit_schedule_v2/presentation/theme/export.dart';
 import 'package:kit_schedule_v2/presentation/widgets/loading_widget.dart';
 
 class TodoPage extends GetView<TodoController> {
+  const TodoPage({Key? key}) : super(key: key);
+
   //
   // @override
   // void initState() {
@@ -102,63 +97,61 @@ class TodoPage extends GetView<TodoController> {
                 SizedBox(
                   height: 20.h,
                 ),
-                Expanded(
+                const Expanded(
                   child: SingleChildScrollView(
-                    child:  TodoFormWidget(
-
-                     ),
+                    child: TodoFormWidget(),
                   ),
                 ),
               ],
             ),
           ),
-         Obx(()=>  Positioned(
-           left: 0,
-           right: 0,
-           bottom: 10.sp,
-           child: controller.isKeyboard.value
-               ? SizedBox()
-               : Container(
-             margin: EdgeInsets.symmetric(horizontal: 16.sp),
-             child: controller.rxTodoLoadedType.value == LoadedType.start
-                 ? Container(
-               child: LoadingWidget(),
-             )
-                 : GestureDetector(
-               onTap: () {},
-               // widget.personalSchedule == null
-               //     ? _setOnClickSaveButton
-               //     : _setOnClickUpdateButton,
-               child: Container(
-                 decoration: BoxDecoration(
-                   borderRadius: BorderRadius.circular(20),
-                   color: AppColors.personalScheduleColor2,
-                   boxShadow: [
-                     BoxShadow(
-                       color:
-                       AppColors.primaryColor.withOpacity(0.3),
-                       blurRadius: 5,
-                       spreadRadius: 1,
-                       offset: Offset(
-                         0,
-                         3,
-                       ),
-                     )
-                   ],
-                 ),
-                 width: double.infinity,
-                 alignment: Alignment.center,
-                 padding: EdgeInsets.symmetric(vertical: 12.sp),
-                 child: Text(
-                   'Lưu',
-                   style: ThemeText.titleStyle.copyWith(
-                     color: AppColors.secondColor,
-                   ),
-                 ),
-               ),
-             ),
-           ),
-         )),
+          Obx(() => Positioned(
+                left: 0,
+                right: 0,
+                bottom: 10.sp,
+                child: controller.isKeyboard.value
+                    ? const SizedBox()
+                    : Container(
+                        margin: EdgeInsets.symmetric(horizontal: 16.sp),
+                        child: controller.rxTodoLoadedType.value ==
+                                LoadedType.start
+                            ? const LoadingWidget()
+                            : GestureDetector(
+                                onTap: () {},
+                                // widget.personalSchedule == null
+                                //     ? _setOnClickSaveButton
+                                //     : _setOnClickUpdateButton,
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(20),
+                                    color: AppColors.personalScheduleColor2,
+                                    boxShadow: [
+                                      BoxShadow(
+                                        color: AppColors.primaryColor
+                                            .withOpacity(0.3),
+                                        blurRadius: 5,
+                                        spreadRadius: 1,
+                                        offset: const Offset(
+                                          0,
+                                          3,
+                                        ),
+                                      )
+                                    ],
+                                  ),
+                                  width: double.infinity,
+                                  alignment: Alignment.center,
+                                  padding:
+                                      EdgeInsets.symmetric(vertical: 12.sp),
+                                  child: Text(
+                                    'Lưu',
+                                    style: ThemeText.titleStyle.copyWith(
+                                        color: AppColors.secondColor,
+                                        fontSize: 18.sp),
+                                  ),
+                                ),
+                              ),
+                      ),
+              )),
         ],
       )
           //;
@@ -168,10 +161,8 @@ class TodoPage extends GetView<TodoController> {
     );
   }
 
-
-
   _setOnClickSaveButton(BuildContext context) {
-    FocusScope.of(context).requestFocus(new FocusNode());
+    FocusScope.of(context).requestFocus(FocusNode());
     if (controller.formKey.currentState!.validate()) {
       // BlocProvider.of<TodoBloc>(context)
       //   ..add(CreatePersonalScheduleOnPressEvent(
@@ -180,7 +171,7 @@ class TodoPage extends GetView<TodoController> {
   }
 
   _setOnClickUpdateButton(BuildContext context) {
-    FocusScope.of(context).requestFocus(new FocusNode());
+    FocusScope.of(context).requestFocus(FocusNode());
     if (controller.formKey.currentState!.validate()) {
       // debugPrint(
       //     '>>>>>>>>>>>.id: ' + (this.widget.personalSchedule!.id as String));

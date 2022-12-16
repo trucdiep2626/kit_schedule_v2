@@ -8,7 +8,7 @@ import 'package:kit_schedule_v2/presentation/theme/export.dart';
 class PersonalScheduleElementWidget extends StatelessWidget {
   final PersonalScheduleModel todo;
 
-  PersonalScheduleElementWidget({Key? key, required this.todo})
+  const PersonalScheduleElementWidget({Key? key, required this.todo})
       : super(key: key);
 
   @override

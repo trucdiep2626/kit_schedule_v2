@@ -2,14 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:kit_schedule_v2/common/constants/theme_border.dart';
 import 'package:kit_schedule_v2/common/utils/app_convert.dart';
 import 'package:kit_schedule_v2/common/utils/export.dart';
-import 'package:kit_schedule_v2/domain/models/school_schedule_model.dart';
 import 'package:kit_schedule_v2/domain/models/student_schedule_model.dart';
 import 'package:kit_schedule_v2/presentation/theme/export.dart';
 
 class SchoolScheduleElementWidget extends StatelessWidget {
   final StudentSchedule schedule;
 
-  SchoolScheduleElementWidget({Key? key, required this.schedule})
+  const SchoolScheduleElementWidget({Key? key, required this.schedule})
       : super(key: key);
 
   @override

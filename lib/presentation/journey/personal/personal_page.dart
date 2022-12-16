@@ -6,7 +6,6 @@ import 'package:kit_schedule_v2/presentation/journey/main/main_controller.dart';
 import 'package:kit_schedule_v2/presentation/journey/personal/personal_controller.dart';
 import 'package:kit_schedule_v2/presentation/theme/export.dart';
 import 'package:kit_schedule_v2/presentation/widgets/warning_dialog.dart';
-import 'package:store_redirect/store_redirect.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class PersonalPage extends GetView<PersonalController> {
@@ -15,94 +14,96 @@ class PersonalPage extends GetView<PersonalController> {
   PersonalPage({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        backgroundColor: AppColors.secondColor,
-        body: ListView(
-          padding: EdgeInsets.zero,
-          children: [
-            Container(
-              decoration: const BoxDecoration(),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Container(
-                      margin: EdgeInsets.only(top: 40.sp),
-                      padding: EdgeInsets.all(16.sp),
-                      decoration: BoxDecoration(
-                          color: Colors.blue.shade100, shape: BoxShape.circle),
-                      child: Icon(
-                        Icons.person,
-                        color: AppColors.personalScheduleColor2,
-                        size: 32.sp,
-                      )),
-                  Padding(
-                      padding: EdgeInsets.symmetric(vertical: 16.sp),
-                      child: Text(
-                        _mainController.schoolScheduleModel.value.studentInfo
-                                ?.displayName ??
-                            '',
-                        textAlign: TextAlign.center,
-                        style: ThemeText.headerStyle2.copyWith(fontSize: 24.sp),
-                      ))
-                ],
-              ),
+    return Scaffold(
+      // appBar: AppBar(
+      //   backgroundColor: AppColors.secondColor,
+      // ),
+      backgroundColor: AppColors.secondColor,
+      body: ListView(
+        padding: EdgeInsets.zero,
+        children: [
+          Container(
+            decoration: const BoxDecoration(),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Container(
+                    margin: EdgeInsets.only(
+                        top: Get.mediaQuery.padding.top + 20.sp),
+                    padding: EdgeInsets.all(16.sp),
+                    decoration: BoxDecoration(
+                        color: Colors.blue.shade100, shape: BoxShape.circle),
+                    child: Icon(
+                      Icons.person,
+                      color: AppColors.personalScheduleColor2,
+                      size: 32.sp,
+                    )),
+                Padding(
+                    padding: EdgeInsets.symmetric(vertical: 16.sp),
+                    child: Text(
+                      _mainController.studentInfo.value.displayName ?? '',
+                      textAlign: TextAlign.center,
+                      style: ThemeText.headerStyle2.copyWith(fontSize: 24.sp),
+                    ))
+              ],
             ),
-            _buildListTile(
-                icon: Icons.score_outlined,
-                onTap: () {
-                  _mainController.onChangedNav(1);
-                },
-                title: 'Điểm của tôi'),
-            // _buildListTile(
-            //     icon: Icons.language,
-            //     onTap: () {
-            //       showDialog(
-            //           context: context,
-            //           builder: (dialogContext) =>
-            //               settingDialog(context, true, profileState));
-            //     },
-            //     title: ''),
-            _buildListTile(
-                icon: Icons.notifications_none,
-                onTap: () {
-                  showDialog(
-                      context: context,
-                      builder: (dialogContext) => settingDialog(context));
-                },
-                title: 'Cài đặt thông báo'),
-            _buildListTile(
-                icon: Icons.info_outline,
-                onTap: _launchURL,
-                title: 'Về chúng tôi'),
-            _buildListTile(
-                icon: Icons.star_rate_outlined,
-                onTap: () {
-                  // StoreRedirect.redirect(
-                  //   androidAppId: ProfileConstants.androidAppId,
-                  // );
-                  //key: 'kma.hatuan314.schedule'
-                },
-                title: 'Đánh giá'),
-            _buildListTile(
-              icon:
-                  //profileState.isLogIn ?
-                  Icons.logout,
-              //: Icons.login,
+          ),
+          _buildListTile(
+              icon: Icons.score_outlined,
               onTap: () {
-                 actionLogIn(context, );
+                _mainController.onChangedNav(1);
               },
-              title: 'Đăng xuất',
-            ),
-            // if (profileState.isLogIn)
-            //   _buildListTile(
-            //     onTap: () => _actionDeleteAccount(context),
-            //     title: AppLocalizations.of(context)!.deleteAccount,
-            //     icon: Icons.no_accounts_rounded,
-            //   )
-          ],
-        ),
+              title: 'Điểm của tôi'),
+          // _buildListTile(
+          //     icon: Icons.language,
+          //     onTap: () {
+          //       showDialog(
+          //           context: context,
+          //           builder: (dialogContext) =>
+          //               settingDialog(context, true, profileState));
+          //     },
+          //     title: ''),
+          _buildListTile(
+              icon: Icons.notifications_none,
+              onTap: () {
+                showDialog(
+                    context: context,
+                    builder: (dialogContext) => settingDialog(context));
+              },
+              title: 'Cài đặt thông báo'),
+          _buildListTile(
+              icon: Icons.info_outline,
+              onTap: _launchURL,
+              title: 'Về chúng tôi'),
+          _buildListTile(
+              icon: Icons.star_rate_outlined,
+              onTap: () {
+                // StoreRedirect.redirect(
+                //   androidAppId: ProfileConstants.androidAppId,
+                // );
+                //key: 'kma.hatuan314.schedule'
+              },
+              title: 'Đánh giá'),
+          _buildListTile(
+            icon:
+                //profileState.isLogIn ?
+                Icons.logout,
+            //: Icons.login,
+            onTap: () {
+              actionLogIn(
+                context,
+              );
+            },
+            title: 'Đăng xuất',
+          ),
+          // if (profileState.isLogIn)
+          //   _buildListTile(
+          //     onTap: () => _actionDeleteAccount(context),
+          //     title: AppLocalizations.of(context)!.deleteAccount,
+          //     icon: Icons.no_accounts_rounded,
+          //   )
+        ],
       ),
     );
   }
@@ -183,9 +184,10 @@ class PersonalPage extends GetView<PersonalController> {
               width: 12.w,
             ),
             Text(title,
-                style: ThemeText.buttonStyle
-                    .copyWith(color: AppColors.signInColor,
-                  fontSize: 16.sp,)),
+                style: ThemeText.buttonStyle.copyWith(
+                  color: AppColors.signInColor,
+                  fontSize: 16.sp,
+                )),
           ],
         ),
       ),

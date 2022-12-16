@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:kit_schedule_v2/common/utils/date_time_format.dart';
 import 'package:kit_schedule_v2/common/utils/export.dart';
-import 'package:kit_schedule_v2/domain/models/school_schedule_model.dart';
 import 'package:kit_schedule_v2/domain/models/student_schedule_model.dart';
 import 'package:kit_schedule_v2/presentation/journey/home/components/school_schedule/school_schedule_item.dart';
+import 'package:kit_schedule_v2/presentation/journey/home/home_controller.dart';
 import 'package:kit_schedule_v2/presentation/journey/main/main_controller.dart';
 import 'package:kit_schedule_v2/presentation/theme/export.dart';
 
-class SchoolScheduleWidget extends GetView<MainController> {
-  SchoolScheduleWidget({Key? key, required this.selectedDate})
+class SchoolScheduleWidget extends GetView<HomeController> {
+  const SchoolScheduleWidget({Key? key, required this.selectedDate})
       : super(key: key);
 
   final DateTime selectedDate;
@@ -17,7 +17,7 @@ class SchoolScheduleWidget extends GetView<MainController> {
   @override
   Widget build(BuildContext context) {
     List<StudentSchedule>? schoolSchedulesOfDay =
-        (controller.schoolScheduleModel.value.studentSchedule ?? [])
+        (controller.studentSchedule.value)
             .where((element) =>
                 element.day == DateTimeFormatter.formatDate(selectedDate))
             .toList();

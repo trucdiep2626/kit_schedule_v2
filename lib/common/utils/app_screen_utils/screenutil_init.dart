@@ -2,7 +2,7 @@ part of flutter_screenutil;
 
 class ScreenUtilInit extends StatelessWidget {
   /// A helper widget that initializes [ScreenUtil]
-  ScreenUtilInit({
+  const ScreenUtilInit({
     required this.builder,
     this.designSize = ScreenUtil.defaultSize,
     this.splitScreenMode = false,

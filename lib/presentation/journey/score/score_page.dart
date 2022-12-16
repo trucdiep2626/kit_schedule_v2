@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
 import 'package:kit_schedule_v2/common/common_export.dart';
-import 'package:kit_schedule_v2/common/utils/export.dart';
 import 'package:kit_schedule_v2/domain/models/score_model.dart';
 import 'package:kit_schedule_v2/presentation/journey/score/components/srores_cell.dart';
 import 'package:kit_schedule_v2/presentation/journey/score/score_controller.dart';
@@ -54,10 +52,11 @@ class ScorePage extends GetView<ScoreController> {
           body: Padding(
             padding: EdgeInsets.symmetric(horizontal: 16.sp),
             child: Obx(() =>
-            controller.rxScoreLoadedType.value == LoadedType.start
-                ? SizedBox(
-                    width: Get.width, child: Center(child: LoadingWidget()))
-                : _buildBody()),
+                controller.rxScoreLoadedType.value == LoadedType.start
+                    ? SizedBox(
+                        width: Get.width,
+                        child: const Center(child: LoadingWidget()))
+                    : _buildBody()),
           )),
     );
   }
@@ -73,7 +72,7 @@ class ScorePage extends GetView<ScoreController> {
                   SizedBox(
                     height: 10.sp,
                   ),
-                  Container(
+                  SizedBox(
                     width: double.maxFinite,
                     child: Column(
                       children: [
@@ -106,7 +105,8 @@ class ScorePage extends GetView<ScoreController> {
                     decoration: BoxDecoration(
                         border:
                             Border.all(color: AppColors.personalScheduleColor),
-                        borderRadius: const BorderRadius.all(Radius.circular(8))),
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(8))),
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
                       children: [
@@ -220,11 +220,11 @@ class ScorePage extends GetView<ScoreController> {
       {required String title, required String info}) {
     return Padding(
       padding: EdgeInsets.only(bottom: 8.sp),
-      child: Container(
+      child: SizedBox(
         width: MediaQuery.of(context).size.width,
         child: RichText(
           text: TextSpan(
-            text: '${title}: ',
+            text: '$title: ',
             style: ThemeText.titleStyle2.copyWith(
                 color: AppColors.personalScheduleColor2, fontSize: 16.sp),
             children: <TextSpan>[

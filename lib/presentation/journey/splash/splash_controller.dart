@@ -3,7 +3,8 @@ import 'package:kit_schedule_v2/common/common_export.dart';
 import 'package:kit_schedule_v2/presentation/controllers/mixin/export.dart';
 
 class SplashController extends GetxController with MixinController {
-  SplashController();
+  SplashController(this.sharedPref);
+  final SharePreferencesConstants sharedPref;
 
   @override
   void onInit() {
@@ -15,9 +16,14 @@ class SplashController extends GetxController with MixinController {
   void onReady() {
     super.onReady();
     rxLoadedType.value = LoadedType.start;
-    Future.delayed(const Duration(seconds: 3)).then((_) async {
-      rxLoadedType.value = LoadedType.finish;
+    final isLogin = sharedPref.getIsLogIn();
+    rxLoadedType.value = LoadedType.finish;
+    if(isLogin)
+      {
+        Get.offAndToNamed(AppRoutes.main);
+      }
+    else{
       Get.offAndToNamed(AppRoutes.login);
-    });
+    }
   }
 }

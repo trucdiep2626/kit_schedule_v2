@@ -93,15 +93,15 @@ class TextFieldWidget extends StatelessWidget {
           enabledBorder: OutlineInputBorder(
               borderSide: BorderSide(
                   color: colorBoder ?? AppColors.primaryColor, width: 0.5),
-              borderRadius: BorderRadius.all(Radius.circular(8))),
+              borderRadius: const BorderRadius.all(Radius.circular(8))),
           focusedBorder: OutlineInputBorder(
               borderSide: BorderSide(
                   color: colorBoder ?? AppColors.primaryColor, width: 0.5),
-              borderRadius: BorderRadius.all(Radius.circular(8))),
-          errorBorder: OutlineInputBorder(
+              borderRadius: const BorderRadius.all(Radius.circular(8))),
+          errorBorder: const OutlineInputBorder(
               borderSide: BorderSide(color: AppColors.errorColor, width: 0.5),
               borderRadius: BorderRadius.all(Radius.circular(8))),
-          focusedErrorBorder: OutlineInputBorder(
+          focusedErrorBorder: const OutlineInputBorder(
               borderSide: BorderSide(color: AppColors.primaryColor, width: 0.5),
               borderRadius: BorderRadius.all(Radius.circular(8))),
         ),

@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:kit_schedule_v2/common/utils/export.dart';
 import 'package:kit_schedule_v2/domain/models/personal_schedule_model.dart';
 import 'package:kit_schedule_v2/presentation/journey/home/components/personal_schedule/personal_schedule_item.dart';
 import 'package:kit_schedule_v2/presentation/theme/export.dart';
 
 class PersonalScheduleWidget extends StatelessWidget {
-  PersonalScheduleWidget({Key? key}) : super(key: key);
+  const PersonalScheduleWidget({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -136,7 +135,7 @@ class PersonalScheduleWidget extends StatelessWidget {
                             .copyWith(color: AppColors.personalScheduleColor2),
                         children: <TextSpan>[
                           TextSpan(
-                              text: toDoItem.note != null ? toDoItem.note : '',
+                              text: toDoItem.note ?? '',
                               style: ThemeText.titleStyle2.copyWith(
                                   color: AppColors.personalScheduleColor2,
                                   fontWeight: FontWeight.normal)),

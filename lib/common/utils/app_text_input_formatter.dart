@@ -4,19 +4,16 @@ import 'package:flutter/services.dart';
 import 'package:kit_schedule_v2/common/common_export.dart';
 import 'package:intl/intl.dart';
 
-import 'app_utils.dart';
-
-
 class PhoneNumberInputFormatter extends TextInputFormatter {
   @override
-  TextEditingValue formatEditUpdate(TextEditingValue oldValue, TextEditingValue newValue) {
+  TextEditingValue formatEditUpdate(
+      TextEditingValue oldValue, TextEditingValue newValue) {
     final truncated = formatPhoneNumber(newValue.text);
     return TextEditingValue(
       text: truncated,
       selection: TextSelection.collapsed(offset: truncated.length),
     );
   }
-
 }
 
 class CurrencyTextInputFormatter extends TextInputFormatter {
@@ -97,9 +94,9 @@ class CurrencyTextInputFormatter extends TextInputFormatter {
 
   @override
   TextEditingValue formatEditUpdate(
-      TextEditingValue oldValue,
-      TextEditingValue newValue,
-      ) {
+    TextEditingValue oldValue,
+    TextEditingValue newValue,
+  ) {
     // final bool isInsertedCharacter =
     //     oldValue.text.length + 1 == newValue.text.length &&
     //         newValue.text.startsWith(oldValue.text);

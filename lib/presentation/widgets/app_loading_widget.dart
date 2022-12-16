@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:kit_schedule_v2/common/common_export.dart';
 import 'package:kit_schedule_v2/gen/assets.gen.dart';
 
 import 'app_image_widget.dart';

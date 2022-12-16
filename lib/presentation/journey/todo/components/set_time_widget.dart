@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:intl/intl.dart';
 import 'package:kit_schedule_v2/common/utils/export.dart';
 import 'package:kit_schedule_v2/presentation/journey/todo/todo_controller.dart';
 import 'package:kit_schedule_v2/presentation/theme/export.dart';
@@ -19,14 +18,14 @@ class SetTimeWidget extends GetView<TodoController> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(title, style: ThemeText.titleStyle.copyWith(fontSize: 18.sp)),
-          SizedBox(height: 10),
+          Text(title, style: ThemeText.titleStyle.copyWith(fontSize: 16.sp)),
+          const SizedBox(height: 10),
           InkWell(
             onTap: onTap,
             child: Container(
               width: double.infinity,
               decoration: BoxDecoration(
-                  borderRadius: BorderRadius.all(Radius.circular(8)),
+                  borderRadius: const BorderRadius.all(Radius.circular(8)),
                   border: Border.all(
                       color: AppColors.personalScheduleColor, width: 0.5)),
               alignment: Alignment.center,

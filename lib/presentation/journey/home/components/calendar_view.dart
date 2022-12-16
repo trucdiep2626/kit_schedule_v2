@@ -4,7 +4,6 @@ import 'package:intl/intl.dart';
 import 'package:kit_schedule_v2/common/utils/date_time_format.dart';
 
 import 'package:kit_schedule_v2/common/utils/export.dart';
-import 'package:kit_schedule_v2/domain/models/school_schedule_model.dart';
 import 'package:kit_schedule_v2/domain/models/student_schedule_model.dart';
 import 'package:kit_schedule_v2/presentation/journey/home/home_controller.dart';
 import 'package:kit_schedule_v2/presentation/theme/export.dart';
@@ -59,13 +58,12 @@ class _CalendarViewState extends State<CalendarView> {
             selectedTextStyle: TextStyle(color: AppColors.dayTextColor),
             todayTextStyle: TextStyle(color: AppColors.dayTextColor)),
         headerStyle: HeaderStyle(
-          titleTextStyle:
-              ThemeText.titleStyle.copyWith(color: AppColors.thirdColor, fontSize: 18.sp),
+          titleTextStyle: ThemeText.titleStyle
+              .copyWith(color: AppColors.thirdColor, fontSize: 18.sp),
           formatButtonVisible: false,
           titleCentered: true,
           titleTextFormatter: (date, locale) =>
               (DateFormat.yMMMM(locale).format(date).capitalize ?? ''),
-
           leftChevronIcon: Icon(
             Icons.arrow_back_ios,
             size: 18.sp,
@@ -85,8 +83,7 @@ class _CalendarViewState extends State<CalendarView> {
   }
 
   List _getEventsForDay(DateTime day) {
-    return widget
-        .schedules
+    return widget.schedules
         .where((element) => DateTimeFormatter.formatDate(day) == element.day)
         .toList();
   }

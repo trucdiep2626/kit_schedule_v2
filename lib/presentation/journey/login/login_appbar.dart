@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:kit_schedule_v2/common/utils/export.dart';
 
 class AppBarWidget extends StatelessWidget implements PreferredSizeWidget {
+  const AppBarWidget({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -29,7 +31,8 @@ class AppBarWidget extends StatelessWidget implements PreferredSizeWidget {
                   height: 2.5.sp,
                   decoration: BoxDecoration(
                       color: Colors.blue[800]!,
-                      borderRadius: BorderRadius.all(Radius.circular(10))),
+                      borderRadius:
+                          const BorderRadius.all(Radius.circular(10))),
                 ),
               ],
             ),
@@ -41,5 +44,5 @@ class AppBarWidget extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   // TODO: implement preferredSize
-  Size get preferredSize => Size(double.infinity, 64);
+  Size get preferredSize => const Size(double.infinity, 64);
 }

@@ -1,4 +1,6 @@
 import 'package:get_it/get_it.dart';
+import 'package:kit_schedule_v2/common/config/database/hive_config.dart';
+import 'package:kit_schedule_v2/common/constants/shared_preferences_constants.dart';
 import 'package:kit_schedule_v2/data/local_repository.dart';
 import 'package:kit_schedule_v2/data/remote/school_repository.dart';
 import 'package:kit_schedule_v2/data/remote/weather_repository.dart';
@@ -18,12 +20,14 @@ GetIt getIt = GetIt.instance;
 void configLocator() {
   /// Controllers
   getIt.registerLazySingleton<AppController>(() => AppController());
-  getIt.registerFactory<SplashController>(() => SplashController());
-  getIt.registerFactory<MainController>(() => MainController());
+  getIt.registerFactory<SplashController>(
+      () => SplashController(getIt<SharePreferencesConstants>()));
+  getIt.registerFactory<MainController>(
+      () => MainController(getIt<SchoolUseCase>()));
   getIt.registerFactory<HomeController>(
-      () => HomeController(weatherUc: getIt<WeatherUseCase>()));
-  getIt.registerFactory<LoginController>(
-      () => LoginController(getIt<SchoolUseCase>()));
+      () => HomeController(schoolUseCase: getIt<SchoolUseCase>()));
+  getIt.registerFactory<LoginController>(() => LoginController(
+      getIt<SchoolUseCase>(), getIt<SharePreferencesConstants>()));
   getIt.registerFactory<TodoController>(() => TodoController());
   getIt.registerFactory<ScoreController>(
       () => ScoreController(getIt<SchoolUseCase>()));
@@ -38,5 +42,10 @@ void configLocator() {
   /// Repositories
   getIt.registerFactory<WeatherRepository>(() => WeatherRepository());
   getIt.registerFactory<LocalRepository>(() => LocalRepository());
-  getIt.registerFactory<SchoolRepository>(() => SchoolRepository());
+  getIt.registerFactory<SchoolRepository>(
+      () => SchoolRepository(getIt<HiveConfig>()));
+  getIt.registerFactory<SharePreferencesConstants>(
+      () => SharePreferencesConstants());
+
+  getIt.registerLazySingleton<HiveConfig>(() => HiveConfig());
 }

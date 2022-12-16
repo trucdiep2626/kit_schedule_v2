@@ -159,7 +159,7 @@ class LoginPage extends GetView<LoginController> {
   }
 
   _loadingUI() {
-    return LoadingWidget(
+    return const LoadingWidget(
       color: AppColors.secondColor,
     );
   }

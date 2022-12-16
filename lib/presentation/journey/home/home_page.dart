@@ -18,9 +18,7 @@ class HomePage extends GetView<HomeController> {
           child: Column(
             children: <Widget>[
               CalendarView(
-                schedules: controller.mainController.schoolScheduleModel.value
-                        .studentSchedule ??
-                    [],
+                schedules: controller.studentSchedule,
               ),
               const Expanded(child: ScheduleView()),
             ],

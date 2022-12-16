@@ -44,16 +44,17 @@ void warningDialog(
                       TextSpan(
                         text: '?',
                         style: ThemeText.titleStyle.copyWith(
-                            color: AppColors.thirdColor,
-                            fontWeight: FontWeight.normal,
-                          fontSize: 16.sp,),
+                          color: AppColors.thirdColor,
+                          fontWeight: FontWeight.normal,
+                          fontSize: 16.sp,
+                        ),
                       ),
                     ]),
               ),
               name == null
-                  ? SizedBox()
+                  ? const SizedBox()
                   : Text(
-                      '$name',
+                      name,
                       style: ThemeText.titleStyle.copyWith(
                         color: AppColors.thirdColor,
                         fontSize: 16.sp,
@@ -76,7 +77,7 @@ void warningDialog(
                 color: AppColors.primaryColor.withOpacity(0.3),
                 blurRadius: 5,
                 spreadRadius: 1,
-                offset: Offset(
+                offset: const Offset(
                   0,
                   3,
                 ),
@@ -90,7 +91,8 @@ void warningDialog(
               'Đồng ý',
               style: ThemeText.buttonLabelStyle.copyWith(
                   fontSize: 16.sp,
-                  color: AppColors.secondColor, fontWeight: FontWeight.bold),
+                  color: AppColors.secondColor,
+                  fontWeight: FontWeight.bold),
             ),
           ),
         ),
@@ -107,7 +109,7 @@ void warningDialog(
                 color: AppColors.primaryColor.withOpacity(0.3),
                 blurRadius: 5,
                 spreadRadius: 1,
-                offset: Offset(
+                offset: const Offset(
                   0,
                   3,
                 ),
@@ -120,7 +122,8 @@ void warningDialog(
             child: Text('Huỷ',
                 style: ThemeText.buttonLabelStyle.copyWith(
                     fontSize: 16.sp,
-                    color: AppColors.secondColor, fontWeight: FontWeight.bold)),
+                    color: AppColors.secondColor,
+                    fontWeight: FontWeight.bold)),
           ),
         ),
       )).show();

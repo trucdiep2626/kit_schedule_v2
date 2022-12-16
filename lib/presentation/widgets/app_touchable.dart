@@ -34,7 +34,6 @@ class AppTouchable extends StatelessWidget {
       margin: margin ?? EdgeInsets.zero,
       child: TextButton(
         onPressed: onPressed,
-        child: child ?? const SizedBox.shrink(),
         style: ButtonStyle(
           backgroundColor: MaterialStateProperty.all(
               backgroundColor ?? AppColors.transparent),
@@ -51,6 +50,7 @@ class AppTouchable extends StatelessWidget {
           tapTargetSize: MaterialTapTargetSize.shrinkWrap,
           visualDensity: VisualDensity.standard,
         ),
+        child: child ?? const SizedBox.shrink(),
       ),
     );
   }

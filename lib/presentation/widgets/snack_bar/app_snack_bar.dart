@@ -82,7 +82,7 @@ class AppSnackBarWidget extends StatelessWidget {
           BoxShadow(
             color: backgroundColor!,
             blurRadius: 6,
-            offset: Offset(0,3),
+            offset: const Offset(0,3),
           )
         ]
       ),

@@ -24,12 +24,16 @@ List<GetPage> myPages = [
     PersonalBinding(),
   ]),
   GetPage(
-      name: AppRoutes.login, page: () => LoginPage(), binding: LoginBinding()),
+      name: AppRoutes.login,
+      page: () => const LoginPage(),
+      binding: LoginBinding()),
   GetPage(name: AppRoutes.todo, page: () => TodoPage(), binding: TodoBinding()),
   GetPage(
-      name: AppRoutes.score, page: () => LoginPage(), binding: ScoreBinding()),
+      name: AppRoutes.score,
+      page: () => const LoginPage(),
+      binding: ScoreBinding()),
   GetPage(
       name: AppRoutes.personal,
-      page: () => LoginPage(),
+      page: () => const LoginPage(),
       binding: PersonalBinding()),
 ];

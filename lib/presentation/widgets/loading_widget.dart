@@ -5,7 +5,7 @@ import 'package:kit_schedule_v2/presentation/theme/export.dart';
 class LoadingWidget extends StatelessWidget {
   final Color color;
 
-  LoadingWidget({Key? key, this.color = AppColors.loadingColor})
+  const LoadingWidget({Key? key, this.color = AppColors.loadingColor})
       : super(key: key);
 
   @override
@@ -15,7 +15,7 @@ class LoadingWidget extends StatelessWidget {
       width: 60.sp,
       alignment: Alignment.center,
       child: CircularProgressIndicator(
-        key: ValueKey(LoaderConstants.loaderImageKey),
+        key: const ValueKey(LoaderConstants.loaderImageKey),
         backgroundColor: color,
       ),
     );

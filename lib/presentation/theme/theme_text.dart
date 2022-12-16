@@ -140,13 +140,13 @@ class ThemeText {
       fontFamily: "MR");
 
   static TextStyle buttonLabelStyle = TextStyle(
-      color: Color(0xffFCFAF3),
+      color: const Color(0xffFCFAF3),
       fontSize: ScreenUtil().setSp(18),
       fontFamily: 'MR',
       fontWeight: FontWeight.w600);
 
   static TextStyle dayOfWeekStyle =
-  TextStyle(fontFamily: 'MR', fontWeight: FontWeight.w400);
+  const TextStyle(fontFamily: 'MR', fontWeight: FontWeight.w400);
 
   /*static TextStyle errorTextStyle = TextStyle(
       color: AppColors.errorColor,

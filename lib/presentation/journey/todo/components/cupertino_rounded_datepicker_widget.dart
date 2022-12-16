@@ -1,5 +1,3 @@
-import 'dart:ui';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rounded_date_picker/src/era_mode.dart';
@@ -27,8 +25,8 @@ class CupertinoRoundedDatePickerWidget {
     Color textColor = Colors.black54,
   }) async {
     initialDate ??= DateTime.now();
-    minimumDate ??= DateTime.now().subtract(Duration(days: 7));
-    maximumDate ??= DateTime.now().add(Duration(days: 7));
+    minimumDate ??= DateTime.now().subtract(const Duration(days: 7));
+    maximumDate ??= DateTime.now().add(const Duration(days: 7));
     minimumYear ??= DateTime.now().year - 1;
     maximumYear ??= DateTime.now().year + 1;
 
@@ -36,7 +34,7 @@ class CupertinoRoundedDatePickerWidget {
       backgroundColor: Colors.transparent,
       context: context,
       builder: (context) {
-        return Container(
+        return SizedBox(
           height: 300.sp,
           child: FlutterRoundedCupertinoDatePickerWidget(
             use24hFormat: use24hFormat,

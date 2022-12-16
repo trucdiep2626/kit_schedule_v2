@@ -1,5 +1,4 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:kit_schedule_v2/common/utils/date_time_format.dart';
 import 'package:kit_schedule_v2/common/utils/export.dart';
@@ -59,27 +58,23 @@ class TodoFormWidget extends GetView<TodoController> {
               children: [
                 Expanded(
                     child: SetTimeWidget(
-                      title: 'Ngày',
-                      onTap: () => _selectDatePicker(
-                          context,
-                          DateTimeFormatter.stringToDate(selectedDate
-                              )),
-                      isDate: true,
-                    )),
+                  title: 'Ngày',
+                  onTap: () => _selectDatePicker(
+                      context, DateTimeFormatter.stringToDate(selectedDate)),
+                  isDate: true,
+                )),
                 SizedBox(
                   width: 10.sp,
                 ),
                 Expanded(
                     child: SetTimeWidget(
-                      onTap: () => _selectTimePicker(
-                          context, selectedTime.split(':')),
-                      title: 'Thời gian',
-                    )),
+                  onTap: () =>
+                      _selectTimePicker(context, selectedTime.split(':')),
+                  title: 'Thời gian',
+                )),
               ],
             );
-          }
-
-    ),
+          }),
           SizedBox(
             height: 18.sp,
           ),
