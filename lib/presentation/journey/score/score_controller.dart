@@ -30,6 +30,7 @@ class ScoreController extends GetxController with MixinController {
         Get.find<MainController>().studentInfo.value.studentCode;
 
     if (studentCode == null || studentCode.isEmpty) {
+      rxScoreLoadedType.value = LoadedType.finish;
       return;
     }
 

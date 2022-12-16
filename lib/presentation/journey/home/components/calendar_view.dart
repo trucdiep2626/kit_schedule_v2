@@ -67,10 +67,12 @@ class _CalendarViewState extends State<CalendarView> {
           leftChevronIcon: Icon(
             Icons.arrow_back_ios,
             size: 18.sp,
+            color: AppColors.thirdColor,
           ),
           rightChevronIcon: Icon(
             Icons.arrow_forward_ios,
             size: 18.sp,
+            color: AppColors.thirdColor,
           ),
         ),
         onDaySelected: (

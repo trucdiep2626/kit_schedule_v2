@@ -129,8 +129,8 @@ class PersonalPage extends GetView<PersonalController> {
     warningDialog(
         context: context,
         //isSynch: true,
-        btnOk: _bntOkDialogOnPress,
-        btnCancel: _btnCancelDialogOnPress);
+        btnOk: controller.logOut,
+        btnCancel: () => Get.back());
     //   } else {
     //     Navigator.pushNamed(context, '/sign-in').then((value) {
     //       if (value is bool && value) {
@@ -146,16 +146,6 @@ class PersonalPage extends GetView<PersonalController> {
     //       }
     //     });
     //   }
-  }
-
-  _btnCancelDialogOnPress(BuildContext context) {
-    Get.back();
-  }
-
-  //
-  _bntOkDialogOnPress(BuildContext context) {
-    // BlocProvider.of<HomeBloc>(context)..add(SignOutOnPressEvent());
-    Get.offAllNamed(AppRoutes.login);
   }
 
   bool isEnglish(String isEng) {

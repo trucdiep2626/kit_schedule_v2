@@ -17,47 +17,66 @@ class ScorePage extends GetView<ScoreController> {
       controller: controller.scoreRefreshController,
       onRefresh: controller.onRefresh,
       child: Scaffold(
-          backgroundColor: AppColors.secondColor,
-          appBar: AppBar(
-            backgroundColor: AppColors.secondColor,
-            elevation: 0,
-            title: Text(
-              'Điểm của tôi',
-              textAlign: TextAlign.center,
-              style: ThemeText.headerStyle2.copyWith(fontSize: 18.sp),
-            ),
-            leadingWidth: 0,
-            // actions: [
-            //   IconButton(
-            //       onPressed: () async {
-            //         final result = await Navigator.pushNamed(
-            //             context, RouteList.addScores);
-            //         log(result.toString());
-            //         if (result is bool && result == true) {
-            //           BlocProvider.of<ScoresBloc>(context)
-            //               .add(LoadScoresEvent());
-            //           BlocProvider.of<ScoresBloc>(context)
-            //               .add(CalculateGpaScoreEvent());
-            //         }
-            //       },
-            //       icon: Icon(
-            //         Icons.add,
-            //         color: AppColors.personalScheduleColor,
-            //       )),
-            //   SizedBox(
-            //     width: 10.w,
-            //   )
-            // ],
-          ),
-          body: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 16.sp),
-            child: Obx(() =>
-                controller.rxScoreLoadedType.value == LoadedType.start
-                    ? SizedBox(
-                        width: Get.width,
-                        child: const Center(child: LoadingWidget()))
-                    : _buildBody()),
-          )),
+        backgroundColor: AppColors.secondColor,
+        // appBar: AppBar(
+        //   backgroundColor: AppColors.secondColor,
+        //   elevation: 0,
+        //   title: Text(
+        //     'Điểm của tôi',
+        //     textAlign: TextAlign.center,
+        //     style: ThemeText.headerStyle2.copyWith(fontSize: 18.sp),
+        //   ),
+        //   leadingWidth: 0,
+        //   // actions: [
+        //   //   IconButton(
+        //   //       onPressed: () async {
+        //   //         final result = await Navigator.pushNamed(
+        //   //             context, RouteList.addScores);
+        //   //         log(result.toString());
+        //   //         if (result is bool && result == true) {
+        //   //           BlocProvider.of<ScoresBloc>(context)
+        //   //               .add(LoadScoresEvent());
+        //   //           BlocProvider.of<ScoresBloc>(context)
+        //   //               .add(CalculateGpaScoreEvent());
+        //   //         }
+        //   //       },
+        //   //       icon: Icon(
+        //   //         Icons.add,
+        //   //         color: AppColors.personalScheduleColor,
+        //   //       )),
+        //   //   SizedBox(
+        //   //     width: 10.w,
+        //   //   )
+        //   // ],
+        // ),
+        body: Padding(
+            padding: EdgeInsets.only(
+                left: 16.sp,
+                right: 16.sp,
+                top: Get.mediaQuery.padding.top + 16.sp),
+            child: SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'Điểm của tôi',
+                    textAlign: TextAlign.center,
+                    style: ThemeText.headerStyle2.copyWith(fontSize: 18.sp),
+                  ),
+                  Obx(() =>
+                      controller.rxScoreLoadedType.value == LoadedType.start
+                          ? SizedBox(
+                              width: Get.width,
+                              height: Get.height -
+                                  18.sp -
+                                  Get.mediaQuery.padding.top +
+                                  16.sp,
+                              child: const Center(child: LoadingWidget()))
+                          : _buildBody()),
+                ],
+              ),
+            )),
+      ),
     );
   }
 
@@ -70,14 +89,13 @@ class ScorePage extends GetView<ScoreController> {
               child: Column(
                 children: [
                   SizedBox(
-                    height: 10.sp,
+                    height: 16.sp,
                   ),
                   SizedBox(
                     width: double.maxFinite,
                     child: Column(
                       children: [
                         Container(
-                          margin: EdgeInsets.only(top: 10.sp),
                           padding: EdgeInsets.all(20.sp),
                           decoration: BoxDecoration(
                               color: Colors.blue.shade100,
@@ -101,7 +119,7 @@ class ScorePage extends GetView<ScoreController> {
                     ),
                   ),
                   Container(
-                    margin: EdgeInsets.symmetric(vertical: 10.h),
+                    margin: EdgeInsets.symmetric(vertical: 8.h),
                     decoration: BoxDecoration(
                         border:
                             Border.all(color: AppColors.personalScheduleColor),
@@ -112,6 +130,7 @@ class ScorePage extends GetView<ScoreController> {
                       children: [
                         const HeaderScoresWidget(),
                         ListView.builder(
+                            padding: EdgeInsets.zero,
                             shrinkWrap: true,
                             physics: const NeverScrollableScrollPhysics(),
                             itemCount:
@@ -178,42 +197,47 @@ class ScorePage extends GetView<ScoreController> {
 
   Widget _scoreDetailsDialog(BuildContext context, Score score) {
     return SimpleDialog(
-        titlePadding: const EdgeInsets.all(0),
-        title: Container(
-          padding: EdgeInsets.all(16.sp),
-          width: MediaQuery.of(context).size.width,
-          color: AppColors.personalScheduleColor2,
-          child: Text(
-            score.subject?.name ?? '',
-            style: ThemeText.titleStyle
-                .copyWith(color: AppColors.secondColor, fontSize: 18.sp),
+      titlePadding: EdgeInsets.zero,
+      contentPadding: EdgeInsets.symmetric(
+        vertical: 12.sp,
+        horizontal: 16.sp,
+      ),
+      title: Container(
+        padding: EdgeInsets.all(16.sp),
+        width: MediaQuery.of(context).size.width,
+        color: AppColors.personalScheduleColor2,
+        child: Text(
+          score.subject?.name ?? '',
+          style: ThemeText.titleStyle
+              .copyWith(color: AppColors.secondColor, fontSize: 18.sp),
+        ),
+      ),
+      children: [
+        Container(
+          // margin: EdgeInsets.symmetric(
+          //
+          //   //vertical: WidgetsConstants.paddingVertical
+          // ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              _buildDetailInfo(context,
+                  title: 'Điểm thành phần 1',
+                  info: score.firstComponentScore ?? ''),
+              _buildDetailInfo(context,
+                  title: 'Điểm thành phần 2',
+                  info: score.secondComponentScore ?? ''),
+              _buildDetailInfo(context,
+                  title: 'Điểm thi cuối kì', info: score.examScore ?? ''),
+              _buildDetailInfo(context,
+                  title: 'Điểm tổng kết', info: score.avgScore ?? ''),
+              _buildDetailInfo(context,
+                  title: 'Điểm chữ', info: score.alphabetScore ?? ''),
+            ],
           ),
         ),
-        children: [
-          Container(
-            margin: EdgeInsets.symmetric(
-              horizontal: 16.sp,
-              //vertical: WidgetsConstants.paddingVertical
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                _buildDetailInfo(context,
-                    title: 'Điểm thành phần 1',
-                    info: score.firstComponentScore ?? ''),
-                _buildDetailInfo(context,
-                    title: 'Điểm thành phần 2',
-                    info: score.secondComponentScore ?? ''),
-                _buildDetailInfo(context,
-                    title: 'Điểm thi cuối kì', info: score.examScore ?? ''),
-                _buildDetailInfo(context,
-                    title: 'Điểm tổng kết', info: score.avgScore ?? ''),
-                _buildDetailInfo(context,
-                    title: 'Điểm chữ', info: score.alphabetScore ?? ''),
-              ],
-            ),
-          ),
-        ]);
+      ],
+    );
   }
 
   Widget _buildDetailInfo(BuildContext context,

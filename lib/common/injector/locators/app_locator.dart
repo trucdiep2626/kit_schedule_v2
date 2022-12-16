@@ -31,7 +31,9 @@ void configLocator() {
   getIt.registerFactory<TodoController>(() => TodoController());
   getIt.registerFactory<ScoreController>(
       () => ScoreController(getIt<SchoolUseCase>()));
-  getIt.registerFactory<PersonalController>(() => PersonalController());
+  getIt.registerFactory<PersonalController>(() => PersonalController(
+      schoolUseCase: getIt<SchoolUseCase>(),
+      sharePreferencesConstants: getIt<SharePreferencesConstants>()));
 
   /// UseCases
   getIt.registerFactory<WeatherUseCase>(

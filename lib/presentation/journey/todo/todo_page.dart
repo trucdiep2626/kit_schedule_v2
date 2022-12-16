@@ -61,32 +61,20 @@ class TodoPage extends GetView<TodoController> {
       //         ))
       //   ],
       // ),
-      body: SafeArea(
-          child:
-              // BlocListener<TodoBloc, TodoState>(
-              //   listener: (context, state) {
-              //     if (state is TodoSuccessState) {
-              //       if (widget.personalSchedule == null) {
-              //         _noteController.text = "";
-              //         _nameController.text = "";
-              //       } else {
-              //         Navigator.pop(context, 'ok');
-              //       }
-              //     } else if (state is TodoFailureState) {}
-              //   },
-              //   child: BlocBuilder<TodoBloc, TodoState>(builder: (context, state) {
-              //    return
-              Stack(
+      body: Stack(
         fit: StackFit.expand,
         children: [
           Padding(
-            padding: EdgeInsets.symmetric(horizontal: 16.sp),
+            padding: EdgeInsets.only(
+                left: 16.sp,
+                right: 16.sp,
+                top: Get.mediaQuery.padding.top + 16.sp),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                SizedBox(
-                  height: 10.h,
-                ),
+                // SizedBox(
+                //   height: 10.h,
+                // ),
                 Text(
                   'Tạo ghi chú',
                   // widget.personalSchedule == null
@@ -95,7 +83,7 @@ class TodoPage extends GetView<TodoController> {
                   style: ThemeText.headerStyle2.copyWith(fontSize: 18.sp),
                 ),
                 SizedBox(
-                  height: 20.h,
+                  height: 16.h,
                 ),
                 const Expanded(
                   child: SingleChildScrollView(
@@ -153,10 +141,7 @@ class TodoPage extends GetView<TodoController> {
                       ),
               )),
         ],
-      )
-          //;
-          //       }),
-          ),
+      ),
       //   ),
     );
   }

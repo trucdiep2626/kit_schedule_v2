@@ -25,6 +25,8 @@ class TodoController extends GetxController with MixinController {
     selectedDate.value = DateTimeFormatter.formatDate(DateTime.now());
     selectedTime.value =
         Convert.timerConvert(TimeOfDay.fromDateTime(DateTime.now()));
+
+    debugPrint('----------${selectedDate.value}----${selectedTime.value}');
   }
 
   @override
@@ -38,5 +40,10 @@ class TodoController extends GetxController with MixinController {
         // if (mounted) setState(() {});
       }
     });
+    selectedDate.value = DateTimeFormatter.formatDate(DateTime.now());
+    selectedTime.value =
+        Convert.timerConvert(TimeOfDay.fromDateTime(DateTime.now()));
+
+    debugPrint('----------${selectedDate.value}----${selectedTime.value}');
   }
 }

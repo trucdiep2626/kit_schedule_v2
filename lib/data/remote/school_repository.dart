@@ -67,10 +67,13 @@ class SchoolRepository {
     return hiveConfig.studentBox.get(HiveKey.studentInfoCollection);
   }
 
-  // Future<void> deleteAllSchoolSchedulesLocal() async {
-  //   await hiveConfig.scheduleBox.clear();
-  //   debugPrint('Empty ? ' + hiveConfig.scheduleBox.isEmpty.toString());
-  // }
+  Future<void> deleteAllSchoolSchedulesLocal() async {
+    await hiveConfig.scheduleBox.clear();
+  }
+
+  Future<void> deleteStudentInfo() async {
+    await hiveConfig.studentBox.clear();
+  }
 
   // Future<void> updateAllSchoolSchedulesRepo(List<SchoolSchedule> data) async {
   //   await hiveConfig.scheduleBox.addAll(data);

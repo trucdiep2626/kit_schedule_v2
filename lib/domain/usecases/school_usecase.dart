@@ -38,4 +38,12 @@ class SchoolUseCase {
   StudentInfo? getStudentInfoLocal() {
     return schoolRepository.getStudentInfoLocal();
   }
+
+  Future<void> deleteAllSchoolSchedulesLocal() async {
+    await schoolRepository.deleteAllSchoolSchedulesLocal();
+  }
+
+  Future<void> deleteStudentInfo() async {
+    await schoolRepository.deleteStudentInfo();
+  }
 }

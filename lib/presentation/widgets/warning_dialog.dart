@@ -8,8 +8,8 @@ void warningDialog(
     {required BuildContext context,
     // required bool isSynch,
     String? name,
-    required Function(BuildContext) btnOk,
-    required Function(BuildContext) btnCancel}) {
+    required Function() btnOk,
+    required Function() btnCancel}) {
   AwesomeDialog(
       dismissOnTouchOutside: false,
       context: context,
@@ -66,7 +66,7 @@ void warningDialog(
             ],
           )),
       btnOk: GestureDetector(
-        onTap: () => btnOk(context),
+        onTap: () => btnOk(),
         child: Container(
           margin: EdgeInsets.only(bottom: 16.sp),
           decoration: BoxDecoration(
@@ -98,7 +98,7 @@ void warningDialog(
         ),
       ),
       btnCancel: GestureDetector(
-        onTap: () => btnCancel(context),
+        onTap: () => btnCancel(),
         child: Container(
           margin: EdgeInsets.only(bottom: 16.sp),
           decoration: BoxDecoration(

@@ -35,7 +35,7 @@ class SetTimeWidget extends GetView<TodoController> {
                     ? controller.selectedDate.value
                     : controller.selectedTime.value,
                 style: ThemeText.labelStyle
-                    .copyWith(fontWeight: FontWeight.w400, fontSize: 20.sp),
+                    .copyWith(fontWeight: FontWeight.w400, fontSize: 16.sp),
               ),
             ),
           ),

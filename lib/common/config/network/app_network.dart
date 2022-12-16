@@ -4,7 +4,7 @@ import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:kit_schedule_v2/common/common_export.dart';
 import 'package:kit_schedule_v2/domain/models/base_response.dart';
-import 'package:pretty_dio_logger/pretty_dio_logger.dart';
+//import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 
 class ApiClient {
@@ -36,14 +36,14 @@ class ApiClient {
   ApiClient._create({BaseOptions? options}) {
     options ??= defaultOptions;
     _dio = Dio(options);
-    _dio.interceptors.add(PrettyDioLogger(
-        requestHeader: true,
-        requestBody: true,
-        responseBody: true,
-        responseHeader: true,
-        error: true,
-        compact: true,
-        maxWidth: 90));
+    // _dio.interceptors.add(PrettyDioLogger(
+    //     requestHeader: true,
+    //     requestBody: true,
+    //     responseBody: true,
+    //     responseHeader: true,
+    //     error: true,
+    //     compact: true,
+    //     maxWidth: 90));
   }
 
   static ApiClient get instance => ApiClient();
