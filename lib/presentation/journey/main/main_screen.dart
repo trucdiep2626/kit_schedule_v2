@@ -43,7 +43,7 @@ class MainScreen extends GetView<MainController> {
 
   Widget _buildBottomNavigationBar(BuildContext context) {
     return Container(
-      decoration: BoxDecoration(color: AppColors.secondColor, boxShadow: [
+      decoration: BoxDecoration(color: AppColors.scheduleBackgroundColor, boxShadow: [
         BoxShadow(blurRadius: 20, color: AppColors.primaryColor.withOpacity(.1))
       ]),
       child: SafeArea(

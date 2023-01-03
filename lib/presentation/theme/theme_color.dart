@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
 class AppColors {
-  static const backgroundColor = Color(0xfff8f4ea);
+  static const backgroundColor = Color(0xffFAFAFA);
   static const marginLoading = 50.0;
 
   static Color? markerColor = Colors.blue[600];
   static Color? todayColor = const Color.fromRGBO(66, 165, 245, 0.6);
   static Color? selectedDayColor = Colors.blue[900];
-  static Color? weekendTextColor = Colors.redAccent;
+  static const Color weekendTextColor = Color(0xffdd7878);
   static Color? dayTextColor = const Color(0xffFCFAF3);
 
   static const iconSize = 18.0;
@@ -16,15 +16,15 @@ class AppColors {
   static const paddingHorizontal = 20.0;
   static const paddingVertical = 20.0;
   static const Color primaryColor = Color.fromRGBO(39, 44, 55, 1.0);
-  static const Color secondColor = Color(0xffFCFAF3);
+  static const Color secondColor = Color(0xffFAFAFA);
   static const Color errorColor = Colors.red;
 
-  static const Color menuItemTextColor = Colors.white;
+  static const Color menuItemTextColor = Color(0xffFAFAFA);
   static const Color menuBackgroundColor = Color.fromRGBO(48, 48, 48, 1);
   static const Color highLightTextColor = Color.fromRGBO(249, 170, 51, 1);
 
   static Color thirdColor = Colors.black54;
-  static Color fourthColor = Colors.blue;
+  static const Color fourthColor = Color(0xff04A5E5);
 
   static const Color errorColor2 = Colors.redAccent;
 
@@ -55,11 +55,11 @@ class AppColors {
 
   /// icon of list item view
   static Color scheduleType = Colors.black54;
-  static const scheduleBackgroundColor = Color(0xffECE8DD);
+  static const scheduleBackgroundColor = Color(0xffeff1f5);
   static const Color todoType = Colors.yellow;
 
   static Color personalScheduleColor = Colors.grey.shade800;
-  static Color personalScheduleColor2 = Colors.grey.shade900;
+  static const Color personalScheduleColor2 = Color(0xff04A5E5);
   static Color personalScheduleColor3 = Colors.grey;
   static Color personalScheduleBackgroundColor = Colors.blue.shade100;
 
@@ -74,7 +74,7 @@ class AppColors {
   static const Color loadingColor = Color(0xFF0D47A1);
 
 
-  static const Color primary = Color(0xFF001C3A);
+  static const Color primary = Color(0xFF04A5E5);
   static Color text = black;
   static Color hintText = grey;
   static Color? background = grey50;

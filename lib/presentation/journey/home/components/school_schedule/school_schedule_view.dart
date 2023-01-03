@@ -46,7 +46,7 @@ class SchoolScheduleWidget extends GetView<HomeController> {
                   )),
               Container(
                 decoration: const BoxDecoration(
-                    shape: BoxShape.circle, color: Colors.red),
+                    shape: BoxShape.circle, color: Color(0xffdd7878)),
                 margin: EdgeInsets.only(left: 4.sp),
                 padding: EdgeInsets.all(5.sp),
                 child: Text(
