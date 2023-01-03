@@ -28,7 +28,7 @@ class _CalendarViewState extends State<CalendarView> {
     return Container(
       decoration: const BoxDecoration(
           borderRadius: BorderRadius.vertical(bottom: Radius.circular(30)),
-          color: Color(0xffFCFAF3)),
+          color: Color(0xffF8F4EA)),
       child: TableCalendar(
         locale: 'vi', // TODO(dieptt): add locale
         currentDay: _selectedDay,

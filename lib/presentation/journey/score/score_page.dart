@@ -17,7 +17,7 @@ class ScorePage extends GetView<ScoreController> {
       controller: controller.scoreRefreshController,
       onRefresh: controller.onRefresh,
       child: Scaffold(
-        backgroundColor: AppColors.secondColor,
+        backgroundColor: AppColors.backgroundColor,
         // appBar: AppBar(
         //   backgroundColor: AppColors.secondColor,
         //   elevation: 0,

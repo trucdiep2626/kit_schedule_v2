@@ -49,7 +49,7 @@ class LoginPage extends GetView<LoginController> {
                         fontWeight: FontWeight.w400),
                   ),
                 ),
-                Text("Kit Schedule",
+                Text("KMA Schedule",
                     style: TextStyle(
                         fontSize: 35.sp,
                         color: Colors.black,

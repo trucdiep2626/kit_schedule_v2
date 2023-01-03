@@ -33,23 +33,23 @@ class LoginController extends GetxController with MixinController {
 
     try {
       final result = await schoolUseCase.getSchoolSchedule(
-          username:
-              accountController.text.trim().toUpperCase(),
-          password:
-              passwordController.text.trim());
+          username: accountController.text.trim().toUpperCase(),
+          password: passwordController.text.trim());
       debugPrint('===============$result');
       if (!isNullEmpty(result)) {
         schoolUseCase.insertSchoolScheduleLocal(result?.studentSchedule ?? []);
         schoolUseCase.setStudentInfoLocal(result?.studentInfo ?? StudentInfo());
-        if(!isNullEmpty(result?.studentSchedule) || !isNullEmpty(result?.studentInfo))
-          {
-            sharePreferencesConstants.setIsLogIn(isLogIn: true);
-          }
+        if (!isNullEmpty(result?.studentSchedule) ||
+            !isNullEmpty(result?.studentInfo)) {
+          sharePreferencesConstants.setIsLogIn(isLogIn: true);
+        }
         rxLoginLoadedType.value = LoadedType.finish;
         debugPrint('===============');
         Get.offAndToNamed(AppRoutes.main);
       }
-    } catch (e) {}
+    } catch (e) {
+      debugPrint(e.toString());
+    }
   }
 
   @override

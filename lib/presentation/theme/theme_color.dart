@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class AppColors {
-  static const backgroundColor = Color(0xffFCFAF3);
+  static const backgroundColor = Color(0xfff8f4ea);
   static const marginLoading = 50.0;
 
   static Color? markerColor = Colors.blue[600];
@@ -54,13 +54,13 @@ class AppColors {
   static const Color addTodoButtonColor = Colors.red;
 
   /// icon of list item view
-  static const Color scheduleType = Colors.red;
-  static Color scheduleBackgroundColor = Colors.red.shade100;
+  static Color scheduleType = Colors.black54;
+  static const scheduleBackgroundColor = Color(0xffECE8DD);
   static const Color todoType = Colors.yellow;
 
-  static Color personalScheduleColor = Colors.blue.shade800;
-  static Color personalScheduleColor2 = Colors.blue.shade900;
-  static Color personalScheduleColor3 = Colors.blue;
+  static Color personalScheduleColor = Colors.grey.shade800;
+  static Color personalScheduleColor2 = Colors.grey.shade900;
+  static Color personalScheduleColor3 = Colors.grey;
   static Color personalScheduleBackgroundColor = Colors.blue.shade100;
 
   static Color searchColor = Colors.black54;
