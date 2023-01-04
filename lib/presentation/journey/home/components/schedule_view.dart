@@ -39,7 +39,9 @@ class ScheduleView extends GetView<HomeController> {
       SchoolScheduleWidget(
         selectedDate: controller.selectedDate.value,
       ),
-      const PersonalScheduleWidget()
+      PersonalScheduleWidget(
+        selectedDate: controller.selectedDate.value,
+      )
     ];
 
     return Container(

@@ -32,6 +32,7 @@ class TodoPage extends GetView<TodoController> {
   // }
   @override
   Widget build(BuildContext context) {
+    controller.context = context;
     return Scaffold(
       backgroundColor: AppColors.bianca,
       // appBar:
@@ -105,9 +106,10 @@ class TodoPage extends GetView<TodoController> {
                                 LoadedType.start
                             ? const LoadingWidget()
                             : GestureDetector(
-                                onTap: () {},
-                                // widget.personalSchedule == null
-                                //     ? _setOnClickSaveButton
+                                onTap:
+                                    //() {},
+                                    // widget.personalSchedule == null
+                                    () async => await _setOnClickSaveButton(context),
                                 //     : _setOnClickUpdateButton,
                                 child: Container(
                                   decoration: BoxDecoration(
@@ -115,8 +117,8 @@ class TodoPage extends GetView<TodoController> {
                                     color: AppColors.blue900,
                                     boxShadow: [
                                       BoxShadow(
-                                        color: AppColors.charade
-                                            .withOpacity(0.3),
+                                        color:
+                                            AppColors.charade.withOpacity(0.3),
                                         blurRadius: 5,
                                         spreadRadius: 1,
                                         offset: const Offset(
@@ -146,12 +148,10 @@ class TodoPage extends GetView<TodoController> {
     );
   }
 
-  _setOnClickSaveButton(BuildContext context) {
+  _setOnClickSaveButton(BuildContext context) async {
     FocusScope.of(context).requestFocus(FocusNode());
     if (controller.formKey.currentState!.validate()) {
-      // BlocProvider.of<TodoBloc>(context)
-      //   ..add(CreatePersonalScheduleOnPressEvent(
-      //       _nameController.text.trim(), _noteController.text.trim()));
+      await controller.createTodo();
     }
   }
 

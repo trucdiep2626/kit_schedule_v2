@@ -4,6 +4,7 @@ import 'package:intl/intl.dart';
 import 'package:kit_schedule_v2/common/utils/date_time_format.dart';
 
 import 'package:kit_schedule_v2/common/utils/export.dart';
+import 'package:kit_schedule_v2/domain/models/personal_schedule_model.dart';
 import 'package:kit_schedule_v2/domain/models/student_schedule_model.dart';
 import 'package:kit_schedule_v2/presentation/journey/home/home_controller.dart';
 import 'package:kit_schedule_v2/presentation/theme/export.dart';
@@ -11,9 +12,14 @@ import 'package:kit_schedule_v2/presentation/theme/export.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 class CalendarView extends StatefulWidget {
-  CalendarView({Key? key, required this.schedules}) : super(key: key);
+  CalendarView({
+    Key? key,
+    required this.schedules,
+    required this.personals,
+  }) : super(key: key);
 
   List<StudentSchedule> schedules;
+  List<PersonalScheduleModel> personals;
 
   @override
   _CalendarViewState createState() => _CalendarViewState();
@@ -40,18 +46,17 @@ class _CalendarViewState extends State<CalendarView> {
         startingDayOfWeek: StartingDayOfWeek.monday,
         daysOfWeekStyle: DaysOfWeekStyle(
             weekdayStyle: ThemeText.dayOfWeekStyle,
-            weekendStyle: ThemeText.dayOfWeekStyle
-                .copyWith(color: AppColors.red)),
+            weekendStyle:
+                ThemeText.dayOfWeekStyle.copyWith(color: AppColors.red)),
         calendarStyle: CalendarStyle(
             isTodayHighlighted: true,
-            markerDecoration: BoxDecoration(
-                shape: BoxShape.circle, color: AppColors.blue600),
-            todayDecoration: BoxDecoration(
-                shape: BoxShape.circle, color: AppColors.blue200),
-            selectedDecoration:
-                BoxDecoration(color: AppColors.blue900),
+            markerDecoration:
+                BoxDecoration(shape: BoxShape.circle, color: AppColors.blue600),
+            todayDecoration:
+                BoxDecoration(shape: BoxShape.circle, color: AppColors.blue200),
+            selectedDecoration: BoxDecoration(color: AppColors.blue900),
             markerSize: 8.sp,
-            rangeHighlightColor: AppColors.blue900 ,
+            rangeHighlightColor: AppColors.blue900,
             markersMaxCount: 1,
             outsideDaysVisible: true,
             weekendTextStyle: TextStyle(color: AppColors.red),
@@ -85,9 +90,14 @@ class _CalendarViewState extends State<CalendarView> {
   }
 
   List _getEventsForDay(DateTime day) {
-    return widget.schedules
+    List<dynamic> events = [];
+    events.addAll(widget.schedules
         .where((element) => DateTimeFormatter.formatDate(day) == element.day)
-        .toList();
+        .toList());
+    events.addAll(widget.personals
+        .where((element) => DateTimeFormatter.formatDate(day) == element.date)
+        .toList());
+    return events;
   }
 
   void _onDaySelected(

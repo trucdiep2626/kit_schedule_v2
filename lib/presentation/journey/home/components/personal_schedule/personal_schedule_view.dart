@@ -1,15 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:get/get_state_manager/get_state_manager.dart';
+import 'package:kit_schedule_v2/common/utils/date_time_format.dart';
 import 'package:kit_schedule_v2/common/utils/export.dart';
 import 'package:kit_schedule_v2/domain/models/personal_schedule_model.dart';
 import 'package:kit_schedule_v2/presentation/journey/home/components/personal_schedule/personal_schedule_item.dart';
+import 'package:kit_schedule_v2/presentation/journey/home/home_controller.dart';
 import 'package:kit_schedule_v2/presentation/theme/export.dart';
 
-class PersonalScheduleWidget extends StatelessWidget {
-  const PersonalScheduleWidget({Key? key}) : super(key: key);
+class PersonalScheduleWidget extends  GetView<HomeController> {
+  const PersonalScheduleWidget({Key? key,required this.selectedDate}) : super(key: key);
+
+  final DateTime selectedDate;
 
   @override
   Widget build(BuildContext context) {
-    List<PersonalScheduleModel>? personalSchedulesOfDay = [];
+    List<PersonalScheduleModel>? personalSchedulesOfDay = (controller.personalSchedule.value)
+        .where((element) =>
+    element.date == DateTimeFormatter.formatDate(selectedDate))
+        .toList();
     return Card(
       semanticContainer: true,
 //      color: Color(0xffFCFAF3),

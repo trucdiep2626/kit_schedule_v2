@@ -40,9 +40,9 @@ class AppSnackBarWidget extends StatelessWidget {
   String get iconPath {
     switch (type) {
       case SnackBarType.done:
-        return ImageConstants.icDone;
+        return ImageConstants.icSuccess;
       case SnackBarType.error:
-        return ImageConstants.icCircleClose;
+        return ImageConstants.icFailed;
       default:
         return ImageConstants.icWarning;
     }
@@ -88,13 +88,14 @@ class AppSnackBarWidget extends StatelessWidget {
       ),
       padding: EdgeInsets.all(AppDimens.space_12),
       child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
+     //   mainAxisAlignment: MainAxisAlignment.center,
         children: [
           AppImageWidget(
             path: iconPath,
             width: AppDimens.space_20,
             height: AppDimens.space_20,
-            color: textColor,
+         //   color: textColor,
           ),
           SizedBox(
             width: AppDimens.space_12,

@@ -4,6 +4,7 @@ import 'package:kit_schedule_v2/common/constants/shared_preferences_constants.da
 import 'package:kit_schedule_v2/data/local_repository.dart';
 import 'package:kit_schedule_v2/data/remote/school_repository.dart';
 import 'package:kit_schedule_v2/data/remote/weather_repository.dart';
+import 'package:kit_schedule_v2/domain/usecases/personal_usecase.dart';
 import 'package:kit_schedule_v2/domain/usecases/school_usecase.dart';
 import 'package:kit_schedule_v2/domain/usecases/weather_usecase.dart';
 import 'package:kit_schedule_v2/presentation/controllers/app_controller.dart';
@@ -24,11 +25,14 @@ void configLocator() {
       () => SplashController(getIt<SharePreferencesConstants>()));
   getIt.registerFactory<MainController>(
       () => MainController(getIt<SchoolUseCase>()));
-  getIt.registerFactory<HomeController>(
-      () => HomeController(schoolUseCase: getIt<SchoolUseCase>()));
+  getIt.registerFactory<HomeController>(() => HomeController(
+        schoolUseCase: getIt<SchoolUseCase>(),
+        personalUseCase: getIt<PersonalUsecase>(),
+      ));
   getIt.registerFactory<LoginController>(() => LoginController(
       getIt<SchoolUseCase>(), getIt<SharePreferencesConstants>()));
-  getIt.registerFactory<TodoController>(() => TodoController());
+  getIt.registerFactory<TodoController>(
+      () => TodoController(getIt<PersonalUsecase>()));
   getIt.registerFactory<ScoreController>(
       () => ScoreController(getIt<SchoolUseCase>()));
   getIt.registerFactory<PersonalController>(() => PersonalController(
@@ -40,10 +44,13 @@ void configLocator() {
       () => WeatherUseCase(weatherRepo: getIt<WeatherRepository>()));
   getIt.registerFactory<SchoolUseCase>(
       () => SchoolUseCase(schoolRepository: getIt<SchoolRepository>()));
+  getIt.registerFactory<PersonalUsecase>(
+      () => PersonalUsecase(getIt<LocalRepository>()));
 
   /// Repositories
   getIt.registerFactory<WeatherRepository>(() => WeatherRepository());
-  getIt.registerFactory<LocalRepository>(() => LocalRepository());
+  getIt.registerFactory<LocalRepository>(
+      () => LocalRepository(hiveConfig: getIt<HiveConfig>()));
   getIt.registerFactory<SchoolRepository>(
       () => SchoolRepository(getIt<HiveConfig>()));
   getIt.registerFactory<SharePreferencesConstants>(

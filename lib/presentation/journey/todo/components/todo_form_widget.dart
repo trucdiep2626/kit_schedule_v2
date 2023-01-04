@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:kit_schedule_v2/common/utils/date_time_format.dart';
 import 'package:kit_schedule_v2/common/utils/export.dart';
@@ -92,20 +93,68 @@ class TodoFormWidget extends GetView<TodoController> {
   }
 
   _selectDatePicker(BuildContext context, DateTime initialDate) async {
-    CupertinoRoundedDatePickerWidget.show(
-      context,
-      initialDate: initialDate,
-      textColor: AppColors.blue800,
-      initialDatePickerMode: CupertinoDatePickerMode.date,
-      fontFamily: 'MR',
-      onDateTimeChanged: (dataTime) {
-        // BlocProvider.of<TodoBloc>(context)
-        //   ..add(SelectDatePickerOnPressEvent(selectDay: dataTime));
-      },
-      borderRadius: 20,
-      maximumYear: DateTime.now().year + 10,
-      minimumYear: DateTime.now().year - 10,
+    showCupertinoModalPopup(
+      context: context,
+      builder: (_) => Material(
+        child: Container(
+          height: 350.sp,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            mainAxisAlignment: MainAxisAlignment.start,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Padding(
+                padding: EdgeInsets.fromLTRB(0, 16.sp, 16.sp, 0),
+                child: GestureDetector(
+                  onTap: () => Navigator.of(context).pop(),
+                  child: Text(
+                    'OK',
+                    style: ThemeText.bodyText1
+                    //    .copyWith(color: AppColors.blue900)
+                    ,
+                  ),
+                ),
+              ),
+
+              SizedBox(
+                //   color: AppColors.primary,
+                height: 300,
+                child: CupertinoDatePicker(
+                    //   borderRadius: 20,
+                    maximumYear: DateTime.now().year + 10,
+                    minimumYear: DateTime.now().year - 10,
+
+                    /// initialDate: initialDate,
+                    // textColor: AppColors.blue800,
+                    mode: CupertinoDatePickerMode.date,
+                    //  fontFamily: 'MR',
+                    initialDateTime: initialDate,
+                    onDateTimeChanged: (dateTime) =>
+                        controller.onSelectDate(dateTime)),
+              ),
+
+              // Close the modal
+            ],
+          ),
+        ),
+      ),
     );
+    // CupertinoRoundedDatePickerWidget.show(
+    //   context,
+    //   initialDate: initialDate,
+    //   textColor: AppColors.blue800,
+    //   initialDatePickerMode: CupertinoDatePickerMode.date,
+    //   fontFamily: 'MR',
+    //   onDateTimeChanged: (dataTime) => controller.onSelectDate(dataTime)
+    //   //{
+    //   // BlocProvider.of<TodoBloc>(context)
+    //   //   ..add(SelectDatePickerOnPressEvent(selectDay: dataTime));
+    //   //}
+    //   ,
+    //   borderRadius: 20,
+    //   maximumYear: DateTime.now().year + 10,
+    //   minimumYear: DateTime.now().year - 10,
+    // );
   }
 
   _selectTimePicker(BuildContext context, List<String> hourAndMinues) async {
@@ -114,18 +163,67 @@ class TodoFormWidget extends GetView<TodoController> {
         (int.parse(hourAndMinues[1]) * 60 * 1000);
     DateTime a = DateTime.fromMillisecondsSinceEpoch(
         DateTime(2021).millisecondsSinceEpoch + time);
-    CupertinoRoundedDatePickerWidget.show(
-      context,
-      initialDate: a,
-      textColor: AppColors.blue800,
-      initialDatePickerMode: CupertinoDatePickerMode.time,
-      fontFamily: 'MR',
-      onDateTimeChanged: (dataTime) {
-        // BlocProvider.of<TodoBloc>(context)
-        //   ..add(SelectTimePickerOnPressEvent(
-        //   timer: TimeOfDay.fromDateTime(dataTime)));
-      },
-      borderRadius: 20,
+    showCupertinoModalPopup(
+      context: context,
+      builder: (_) => Material(
+        child: Container(
+          height: 350.sp,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            mainAxisAlignment: MainAxisAlignment.start,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Padding(
+                padding: EdgeInsets.fromLTRB(0, 16.sp, 16.sp, 0),
+                child: GestureDetector(
+                  onTap: () => Navigator.of(context).pop(),
+                  child: Text(
+                    'OK',
+                    style: ThemeText.bodyText1
+                    //    .copyWith(color: AppColors.blue900)
+                    ,
+                  ),
+                ),
+              ),
+
+              SizedBox(
+                //   color: AppColors.primary,
+                height: 300,
+                child: CupertinoDatePicker(
+                  //   borderRadius: 20,
+                  maximumYear: DateTime.now().year + 10,
+                  minimumYear: DateTime.now().year - 10,
+
+                  /// initialDate: initialDate,
+                  // textColor: AppColors.blue800,
+                  mode: CupertinoDatePickerMode.time,
+                  //  fontFamily: 'MR',
+                  initialDateTime: a,
+                  onDateTimeChanged: (dateTime) =>
+                      controller.onSelectTime(TimeOfDay.fromDateTime(dateTime)),
+                ),
+              ),
+              // Close the modal
+            ],
+          ),
+        ),
+      ),
     );
+    // CupertinoRoundedDatePickerWidget.show(
+    //   context,
+    //   initialDate: a,
+    //   textColor: AppColors.blue800,
+    //   initialDatePickerMode: CupertinoDatePickerMode.time,
+    //   fontFamily: 'MR',
+    //   onDateTimeChanged: (dataTime) =>
+    //       controller.onSelectTime(TimeOfDay.fromDateTime(dataTime))
+    //   //{
+    //   // BlocProvider.of<TodoBloc>(context)
+    //   //   ..add(SelectTimePickerOnPressEvent(
+    //   //   timer: TimeOfDay.fromDateTime(dataTime)));
+    //   //}
+    //   ,
+    //   borderRadius: 20,
+    // );
   }
 }

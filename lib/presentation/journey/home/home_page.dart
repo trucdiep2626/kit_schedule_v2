@@ -19,6 +19,7 @@ class HomePage extends GetView<HomeController> {
             children: <Widget>[
               CalendarView(
                 schedules: controller.studentSchedule,
+                personals: controller.personalSchedule,
               ),
               const Expanded(child: ScheduleView()),
             ],

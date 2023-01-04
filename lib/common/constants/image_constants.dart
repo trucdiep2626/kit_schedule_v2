@@ -1,5 +1,6 @@
 class ImageConstants {
   static const String svgPath = 'assets/images/svg';
+  static const String iconsPath = 'assets/icons';
   static const String pngPath = 'assets/images/png';
   static const String lottiesPath = 'assets/images/lotties';
 
@@ -47,4 +48,7 @@ class ImageConstants {
   static const String icWorkflow = '$svgPath/ic_workflow.svg';
   static const String icCamera = '$svgPath/ic_camera.svg';
   static const String icWallet = '$svgPath/ic_wallet.svg';
+
+  static const String icSuccess = '$iconsPath/ic_success.svg';
+  static const String icFailed = '$iconsPath/ic_failed.svg';
 }
