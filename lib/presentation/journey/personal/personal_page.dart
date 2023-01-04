@@ -33,7 +33,7 @@ class PersonalPage extends GetView<PersonalController> {
                         top: Get.mediaQuery.padding.top + 20.sp),
                     padding: EdgeInsets.all(16.sp),
                     decoration: BoxDecoration(
-                        color: Colors.blue.shade100, shape: BoxShape.circle),
+                        color: AppColors.blue100, shape: BoxShape.circle),
                     child: Icon(
                       Icons.person,
                       color: AppColors.blue900,
@@ -283,7 +283,7 @@ class PersonalPage extends GetView<PersonalController> {
           Container(
               height: 0.2,
               width: MediaQuery.of(context).size.width - 50,
-              color: Colors.grey),
+              color: AppColors.grey400),
         ]));
   }
 

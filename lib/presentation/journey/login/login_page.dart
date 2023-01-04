@@ -28,6 +28,7 @@ class LoginPage extends GetView<LoginController> {
     //       isShow = state.isShow;
     //     }
     return Scaffold(
+      backgroundColor: AppColors.bianca,
         appBar: AppBarWidget(),
         body: SingleChildScrollView(
           child: Container(
@@ -96,7 +97,7 @@ class LoginPage extends GetView<LoginController> {
                                   !controller.isShow.value
                                       ? Icons.visibility
                                       : Icons.visibility_off,
-                                  color: Colors.blue[800],
+                                  color: AppColors.blue800,
                                 ),
                               ),
                               onSubmitted: (pass) {
@@ -126,7 +127,7 @@ class LoginPage extends GetView<LoginController> {
                   child: Container(
                     height: 60.sp,
                     width: double.infinity,
-                    color: Colors.grey.withOpacity(0.3),
+                    color: AppColors.grey300,
                   ),
                 ),
                 Positioned(
@@ -140,7 +141,7 @@ class LoginPage extends GetView<LoginController> {
                           height: 57.sp,
                           width: 85.sp,
                           decoration: BoxDecoration(
-                              color: Colors.blue[800],
+                              color: AppColors.blue800,
                               borderRadius:
                                   const BorderRadius.all(Radius.circular(10))),
                           child: controller.rxLoginLoadedType.value ==

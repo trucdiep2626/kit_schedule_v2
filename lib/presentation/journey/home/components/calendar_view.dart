@@ -41,7 +41,7 @@ class _CalendarViewState extends State<CalendarView> {
         daysOfWeekStyle: DaysOfWeekStyle(
             weekdayStyle: ThemeText.dayOfWeekStyle,
             weekendStyle: ThemeText.dayOfWeekStyle
-                .copyWith(color: AppColors.redAccent)),
+                .copyWith(color: AppColors.red)),
         calendarStyle: CalendarStyle(
             isTodayHighlighted: true,
             markerDecoration: BoxDecoration(
@@ -54,7 +54,7 @@ class _CalendarViewState extends State<CalendarView> {
             rangeHighlightColor: AppColors.blue900 ,
             markersMaxCount: 1,
             outsideDaysVisible: true,
-            weekendTextStyle: TextStyle(color: AppColors.redAccent),
+            weekendTextStyle: TextStyle(color: AppColors.red),
             selectedTextStyle: TextStyle(color: AppColors.bianca),
             todayTextStyle: TextStyle(color: AppColors.bianca)),
         headerStyle: HeaderStyle(

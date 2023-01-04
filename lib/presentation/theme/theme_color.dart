@@ -1,16 +1,15 @@
 import 'package:flutter/material.dart';
 
 class AppColors {
-
   // TODO(dieptt): define common color
-  static const Color primary = Color(0xFF04A5E5);
+  static const Color primary = Color(0xFF012A4A);
   static const Color text = black;
   static Color? background = grey50;
   // static const backgroundColor = Color(0xffFCFAF3);
   // static const bianca = Color(0xffFCFAF3);
-  static const backgroundColor = Color(0xffFCFAFA);
-  static const bianca = Color(0xffFCFAFA);
-  static const Color charade = Color(0xff272C37);
+  static const backgroundColor = Color(0xfff6f6f6);
+  static const bianca = Color(0xfff6f6f6);
+  static const Color charade = Color(0xff012A4A);
   static const Color white = Colors.white;
 
   static const Color errorColor = Colors.red;
@@ -38,15 +37,15 @@ class AppColors {
   static Color transparent = Colors.transparent;
 
   //blue
-  static const Color blue100 = Color(0xFFE0E0E0);
-  static const Color blue200 = Color(0xFFEEEEEE);
-  static const Color blue300 = Color(0xFFE0E0E0);
-  static const Color blue400 = Color(0xFFBDBDBD);
-  static const Color blue500 = Color(0xFF9E9E9E);
-  static const Color blue600 = Color(0xFF757575);
-  static const Color blue700 = Color(0xFF616161);
-  static const Color blue800 = Color(0xFF424242);
-  static const Color blue900 = Color(0xFF212121);
+  static const Color blue100 = Color(0xFFDCEEF3);
+  static const Color blue200 = Color(0xFFC2E2EA);
+  static const Color blue300 = Color(0xFFA7D5E1);
+  static const Color blue400 = Color(0xFF8DC8D8);
+  static const Color blue500 = Color(0xFF72BBCE);
+  static const Color blue600 = Color(0xFF2A6F97);
+  static const Color blue700 = Color(0xFF014F86);
+  static const Color blue800 = Color(0xFF01497C);
+  static const Color blue900 = Color(0xFF013A63);
 
   // //blue
   // static const Color blue100 = Color(0xFFBBDEFB);
@@ -61,10 +60,10 @@ class AppColors {
 
   static const Color borderColor = blue400;
   //red
-  static const Color red = Colors.red;
-  static const Color redAccent = Colors.redAccent;
-  static const Color red50 = Color(0xFFFFEBEE);
-  static const Color red100 = Color(0xFFFFCDD2);
+  static const Color red = Color(0xFFa0001c);
+  static const Color redAccent = Color(0xFFE99394);
+  static const Color red50 = Color(0xFFf8edeb);
+  static const Color red100 = Color(0xfff1ece4);
 
   //black
   static const Color black = Colors.black;

@@ -98,7 +98,7 @@ class ScorePage extends GetView<ScoreController> {
                         Container(
                           padding: EdgeInsets.all(20.sp),
                           decoration: BoxDecoration(
-                              color: Colors.blue.shade100,
+                              color: AppColors.blue100,
                               shape: BoxShape.circle),
                           child: Text(
                             (controller.studentScores.value?.avgScore ?? '')
