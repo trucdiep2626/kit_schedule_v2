@@ -9,7 +9,7 @@ class ThemeBorder {
     borderRadius: borderRadiusAll,
     borderSide: BorderSide(color: AppColors.charade),
   );
-  static const Color borderColor = Color(0xFF42A5F5);
+
 
   static double borderWidth = 5.w;
 
@@ -18,7 +18,7 @@ class ThemeBorder {
       color: AppColors.blue800);
 
   static BorderSide textFieldEnableBorder =
-      BorderSide(color: borderColor, width: ScreenUtil().setWidth(1.2));
+      BorderSide(color: AppColors.borderColor, width: ScreenUtil().setWidth(1.2));
 
   static BorderSide textFieldErrorBorder =
       BorderSide(color: AppColors.errorColor, width: ScreenUtil().setWidth(3));

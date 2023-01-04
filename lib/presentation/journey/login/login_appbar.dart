@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:kit_schedule_v2/common/utils/export.dart';
+import 'package:kit_schedule_v2/presentation/theme/export.dart';
 
 class AppBarWidget extends StatelessWidget implements PreferredSizeWidget {
   const AppBarWidget({Key? key}) : super(key: key);
@@ -19,7 +20,7 @@ class AppBarWidget extends StatelessWidget implements PreferredSizeWidget {
                   'Đăng nhập',
                   style: TextStyle(
                       fontFamily: "MR",
-                      color: Colors.blue[800]!,
+                      color: AppColors.blue800,
                       fontWeight: FontWeight.w600,
                       fontSize: 16.sp),
                 ),
@@ -30,7 +31,7 @@ class AppBarWidget extends StatelessWidget implements PreferredSizeWidget {
                   width: 30.sp,
                   height: 2.5.sp,
                   decoration: BoxDecoration(
-                      color: Colors.blue[800]!,
+                      color:AppColors.blue800,
                       borderRadius:
                           const BorderRadius.all(Radius.circular(10))),
                 ),
