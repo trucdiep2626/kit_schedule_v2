@@ -30,7 +30,7 @@ void warningDialog(
                 text: TextSpan(
                     text: 'Bạn có muốn',
                     style: ThemeText.titleStyle.copyWith(
-                      color: AppColors.thirdColor,
+                      color: AppColors.black54,
                       fontSize: 16.sp,
                     ),
                     children: [
@@ -44,7 +44,7 @@ void warningDialog(
                       TextSpan(
                         text: '?',
                         style: ThemeText.titleStyle.copyWith(
-                          color: AppColors.thirdColor,
+                          color: AppColors.black54,
                           fontWeight: FontWeight.normal,
                           fontSize: 16.sp,
                         ),
@@ -56,7 +56,7 @@ void warningDialog(
                   : Text(
                       name,
                       style: ThemeText.titleStyle.copyWith(
-                        color: AppColors.thirdColor,
+                        color: AppColors.black54,
                         fontSize: 16.sp,
                         fontWeight: FontWeight.normal,
                       ),
@@ -71,10 +71,10 @@ void warningDialog(
           margin: EdgeInsets.only(bottom: 16.sp),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(20),
-            color: AppColors.fourthColor,
+            color: AppColors.blue500,
             boxShadow: [
               BoxShadow(
-                color: AppColors.primaryColor.withOpacity(0.3),
+                color: AppColors.charade.withOpacity(0.3),
                 blurRadius: 5,
                 spreadRadius: 1,
                 offset: const Offset(
@@ -91,7 +91,7 @@ void warningDialog(
               'Đồng ý',
               style: ThemeText.buttonLabelStyle.copyWith(
                   fontSize: 16.sp,
-                  color: AppColors.secondColor,
+                  color: AppColors.bianca,
                   fontWeight: FontWeight.bold),
             ),
           ),
@@ -106,7 +106,7 @@ void warningDialog(
             color: AppColors.errorColor,
             boxShadow: [
               BoxShadow(
-                color: AppColors.primaryColor.withOpacity(0.3),
+                color: AppColors.charade.withOpacity(0.3),
                 blurRadius: 5,
                 spreadRadius: 1,
                 offset: const Offset(
@@ -122,7 +122,7 @@ void warningDialog(
             child: Text('Huỷ',
                 style: ThemeText.buttonLabelStyle.copyWith(
                     fontSize: 16.sp,
-                    color: AppColors.secondColor,
+                    color: AppColors.bianca,
                     fontWeight: FontWeight.bold)),
           ),
         ),

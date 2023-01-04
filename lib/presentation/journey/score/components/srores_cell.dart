@@ -21,7 +21,7 @@ class ScoresCell extends StatelessWidget {
       decoration: BoxDecoration(
           color: Colors.transparent,
           border: Border(
-              bottom: BorderSide(color: AppColors.personalScheduleColor))),
+              bottom: BorderSide(color: AppColors.blue800))),
       child: Row(
         children: [
           Expanded(
@@ -52,7 +52,7 @@ class ScoresCell extends StatelessWidget {
           border: Border(
               right: BorderSide(
                   color: isBorderRight
-                      ? AppColors.personalScheduleColor
+                      ? AppColors.blue800
                       : Colors.transparent))),
       alignment: Alignment.center,
       child: Text(score,

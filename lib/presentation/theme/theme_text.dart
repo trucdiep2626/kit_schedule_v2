@@ -84,24 +84,24 @@ class ThemeText {
 
 
   static TextStyle buttonStyle = TextStyle(
-      color: AppColors.secondColor,
+      color: AppColors.bianca,
       fontSize: ScreenUtil().setSp(18),
       fontWeight: FontWeight.w500);
 
   static TextStyle textStyle = TextStyle(
-      color: AppColors.primaryColor,
+      color: AppColors.charade,
       fontSize: ScreenUtil().setSp(14),
       fontWeight: FontWeight.w500);
 
   static TextStyle titleStyle = TextStyle(
       fontSize: ScreenUtil().setSp(22),
-      color: AppColors.personalScheduleColor,
+      color: AppColors.blue800,
       fontFamily: 'MR',
       fontWeight: FontWeight.w600);
 
   static TextStyle titleStyle2 = TextStyle(
       fontSize: ScreenUtil().setSp(20),
-      color: AppColors.personalScheduleColor,
+      color: AppColors.blue800,
       fontFamily: 'MR',
       fontWeight: FontWeight.w600);
 
@@ -112,30 +112,30 @@ class ThemeText {
 
   static TextStyle numberStyle = TextStyle(
       fontSize: ScreenUtil().setSp(14),
-      color: AppColors.secondColor,
+      color: AppColors.bianca,
       fontWeight: FontWeight.normal);
 
   static TextStyle headerStyle = TextStyle(
       fontSize: ScreenUtil().setSp(25),
-      color: AppColors.secondColor,
+      color: AppColors.bianca,
       fontFamily: 'MR',
       fontWeight: FontWeight.w600);
 
   static TextStyle headerStyle2 = TextStyle(
       fontSize: ScreenUtil().setSp(25),
-      color: AppColors.signInColor,
+      color: AppColors.blue900,
       fontFamily: 'MR',
       fontWeight: FontWeight.w600);
 
   static TextStyle textInforStyle = TextStyle(
       fontFamily: 'MR',
-      color: AppColors.secondColor,
+      color: AppColors.bianca,
       fontSize: ScreenUtil().setSp(18),
       fontWeight: FontWeight.normal);
 
   static TextStyle labelStyle = TextStyle(
       fontSize: ScreenUtil().setSp(16),
-      color: AppColors.personalScheduleColor,
+      color: AppColors.blue800,
       fontWeight: FontWeight.w500,
       fontFamily: "MR");
 
@@ -171,7 +171,7 @@ class ThemeText {
       fontSize: 20.sp,
 //        fontWeight: FontWeight.w300,
       fontFamily: 'MR',
-      color: AppColors.signInColor);
+      color: AppColors.blue900);
 
   static TextTheme getDefaultTextTheme = TextTheme(
     // headline3: TextStyle(
@@ -197,7 +197,7 @@ class ThemeText {
     button: TextStyle(
         fontSize: 14.sp,
         fontWeight: FontWeight.normal,
-        color: AppColors.primaryColor),
+        color: AppColors.charade),
     // caption: TextStyle(
     //     fontSize: 12.sp,
     //     fontWeight: FontWeight.normal,

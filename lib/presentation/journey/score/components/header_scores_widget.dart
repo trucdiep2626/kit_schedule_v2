@@ -12,7 +12,7 @@ class HeaderScoresWidget extends StatelessWidget {
       width: double.maxFinite,
       decoration: BoxDecoration(
           border: Border(
-              bottom: BorderSide(color: AppColors.personalScheduleColor))),
+              bottom: BorderSide(color: AppColors.blue800))),
       child: Row(
         mainAxisSize: MainAxisSize.max,
         children: [
@@ -37,10 +37,10 @@ class HeaderScoresWidget extends StatelessWidget {
           //                         border: Border(
           //                             right: BorderSide(
           //                                 color:
-          //                                     AppColors.personalScheduleColor),
+          //                                     AppColors.blue800),
           //                             bottom: BorderSide(
           //                                 color:
-          //                                     AppColors.personalScheduleColor))),
+          //                                     AppColors.blue800))),
           //                     alignment: Alignment.center,
           //                     child: Text(
           //                       AppLocalizations.of(context)!.score,
@@ -78,7 +78,7 @@ class HeaderScoresWidget extends StatelessWidget {
           border: Border(
               right: BorderSide(
                   color: isBorderRight
-                      ? AppColors.personalScheduleColor
+                      ? AppColors.blue800
                       : Colors.transparent))),
       alignment: Alignment.center,
       child: Text(

@@ -33,7 +33,7 @@ class TodoPage extends GetView<TodoController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.secondColor,
+      backgroundColor: AppColors.bianca,
       // appBar:
       // widget.personalSchedule == null
       //     ? null
@@ -42,7 +42,7 @@ class TodoPage extends GetView<TodoController> {
       //   elevation: 0,
       //   backgroundColor: Colors.transparent,
       //   leading: BackButton(
-      //     color: AppColors.personalScheduleColor2,
+      //     color: AppColors.blue900,
       //   ),
       //   actions: <Widget>[
       //     IconButton(
@@ -56,7 +56,7 @@ class TodoPage extends GetView<TodoController> {
       //             }),
       //         icon: Icon(
       //           Icons.delete,
-      //           color: AppColors.personalScheduleColor2,
+      //           color: AppColors.blue900,
       //           size: ToDoConstants.iconSize,
       //         ))
       //   ],
@@ -112,10 +112,10 @@ class TodoPage extends GetView<TodoController> {
                                 child: Container(
                                   decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(20),
-                                    color: AppColors.personalScheduleColor2,
+                                    color: AppColors.blue900,
                                     boxShadow: [
                                       BoxShadow(
-                                        color: AppColors.primaryColor
+                                        color: AppColors.charade
                                             .withOpacity(0.3),
                                         blurRadius: 5,
                                         spreadRadius: 1,
@@ -133,7 +133,7 @@ class TodoPage extends GetView<TodoController> {
                                   child: Text(
                                     'Lưu',
                                     style: ThemeText.titleStyle.copyWith(
-                                        color: AppColors.secondColor,
+                                        color: AppColors.bianca,
                                         fontSize: 18.sp),
                                   ),
                                 ),
@@ -214,7 +214,7 @@ class TodoPage extends GetView<TodoController> {
   //             color: AppColor.fourthColor,
   //             boxShadow: [
   //               BoxShadow(
-  //                 color: AppColor.primaryColor.withOpacity(0.3),
+  //                 color: AppColor.charade.withOpacity(0.3),
   //                 blurRadius: 5,
   //                 spreadRadius: 1,
   //                 offset: Offset(
@@ -232,7 +232,7 @@ class TodoPage extends GetView<TodoController> {
   //             child: Text(
   //               AppLocalizations.of(context)!.yes,
   //               style: ThemeText.buttonLabelStyle.copyWith(
-  //                   color: AppColor.secondColor, fontWeight: FontWeight.bold),
+  //                   color: AppColor.bianca, fontWeight: FontWeight.bold),
   //             ),
   //           ),
   //         ),
@@ -245,7 +245,7 @@ class TodoPage extends GetView<TodoController> {
   //             color: AppColor.errorColor,
   //             boxShadow: [
   //               BoxShadow(
-  //                 color: AppColor.primaryColor.withOpacity(0.3),
+  //                 color: AppColor.charade.withOpacity(0.3),
   //                 blurRadius: 5,
   //                 spreadRadius: 1,
   //                 offset: Offset(
@@ -263,7 +263,7 @@ class TodoPage extends GetView<TodoController> {
   //             child: FittedBox(
   //               child: Text(AppLocalizations.of(context)!.no,
   //                   style: ThemeText.buttonLabelStyle.copyWith(
-  //                       color: AppColor.secondColor,
+  //                       color: AppColor.bianca,
   //                       fontWeight: FontWeight.bold)),
   //             ),
   //           ),

@@ -27,7 +27,7 @@ class SetTimeWidget extends GetView<TodoController> {
               decoration: BoxDecoration(
                   borderRadius: const BorderRadius.all(Radius.circular(8)),
                   border: Border.all(
-                      color: AppColors.personalScheduleColor, width: 0.5)),
+                      color: AppColors.blue800, width: 0.5)),
               alignment: Alignment.center,
               padding: EdgeInsets.symmetric(vertical: 12.sp),
               child: Text(

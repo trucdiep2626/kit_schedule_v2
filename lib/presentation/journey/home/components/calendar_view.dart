@@ -41,25 +41,25 @@ class _CalendarViewState extends State<CalendarView> {
         daysOfWeekStyle: DaysOfWeekStyle(
             weekdayStyle: ThemeText.dayOfWeekStyle,
             weekendStyle: ThemeText.dayOfWeekStyle
-                .copyWith(color: AppColors.weekendTextColor)),
+                .copyWith(color: AppColors.redAccent)),
         calendarStyle: CalendarStyle(
             isTodayHighlighted: true,
             markerDecoration: BoxDecoration(
-                shape: BoxShape.circle, color: AppColors.markerColor),
+                shape: BoxShape.circle, color: AppColors.blue600),
             todayDecoration: BoxDecoration(
-                shape: BoxShape.circle, color: AppColors.todayColor),
+                shape: BoxShape.circle, color: AppColors.blue200),
             selectedDecoration:
-                BoxDecoration(color: AppColors.selectedDayColor),
+                BoxDecoration(color: AppColors.blue900),
             markerSize: 8.sp,
-            rangeHighlightColor: AppColors.selectedDayColor as Color,
+            rangeHighlightColor: AppColors.blue900 ,
             markersMaxCount: 1,
             outsideDaysVisible: true,
-            weekendTextStyle: TextStyle(color: AppColors.weekendTextColor),
-            selectedTextStyle: TextStyle(color: AppColors.dayTextColor),
-            todayTextStyle: TextStyle(color: AppColors.dayTextColor)),
+            weekendTextStyle: TextStyle(color: AppColors.redAccent),
+            selectedTextStyle: TextStyle(color: AppColors.bianca),
+            todayTextStyle: TextStyle(color: AppColors.bianca)),
         headerStyle: HeaderStyle(
           titleTextStyle: ThemeText.titleStyle
-              .copyWith(color: AppColors.thirdColor, fontSize: 18.sp),
+              .copyWith(color: AppColors.black54, fontSize: 18.sp),
           formatButtonVisible: false,
           titleCentered: true,
           titleTextFormatter: (date, locale) =>
@@ -67,12 +67,12 @@ class _CalendarViewState extends State<CalendarView> {
           leftChevronIcon: Icon(
             Icons.arrow_back_ios,
             size: 18.sp,
-            color: AppColors.thirdColor,
+            color: AppColors.black54,
           ),
           rightChevronIcon: Icon(
             Icons.arrow_forward_ios,
             size: 18.sp,
-            color: AppColors.thirdColor,
+            color: AppColors.black54,
           ),
         ),
         onDaySelected: (

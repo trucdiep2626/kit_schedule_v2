@@ -5,7 +5,7 @@ import 'package:kit_schedule_v2/presentation/theme/export.dart';
 class LoadingWidget extends StatelessWidget {
   final Color color;
 
-  const LoadingWidget({Key? key, this.color = AppColors.loadingColor})
+  const LoadingWidget({Key? key, this.color = AppColors.blue900})
       : super(key: key);
 
   @override

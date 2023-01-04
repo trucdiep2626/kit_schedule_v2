@@ -7,7 +7,7 @@ class ThemeBorder {
       BorderRadius.all(Radius.circular(12));
   static OutlineInputBorder outlineInputBorder = const OutlineInputBorder(
     borderRadius: borderRadiusAll,
-    borderSide: BorderSide(color: AppColors.primaryColor),
+    borderSide: BorderSide(color: AppColors.charade),
   );
   static const Color borderColor = Color(0xFF42A5F5);
 
@@ -15,7 +15,7 @@ class ThemeBorder {
 
   static BorderSide scheduleElementBorder = BorderSide(
       width: ScreenUtil().setWidth(1.2),
-      color: AppColors.personalScheduleColor);
+      color: AppColors.blue800);
 
   static BorderSide textFieldEnableBorder =
       BorderSide(color: borderColor, width: ScreenUtil().setWidth(1.2));

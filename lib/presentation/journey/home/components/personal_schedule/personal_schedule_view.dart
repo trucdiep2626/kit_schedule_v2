@@ -13,7 +13,7 @@ class PersonalScheduleWidget extends StatelessWidget {
     return Card(
       semanticContainer: true,
 //      color: Color(0xffFCFAF3),
-      color: AppColors.personalScheduleBackgroundColor,
+      color: AppColors.blue100,
       shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.all(Radius.circular(20))),
       elevation: 5,
@@ -33,7 +33,7 @@ class PersonalScheduleWidget extends StatelessWidget {
               Container(
                   decoration: BoxDecoration(
                       shape: BoxShape.circle,
-                      color: AppColors.personalScheduleColor),
+                      color: AppColors.blue800),
                   margin: const EdgeInsets.only(left: 4),
                   padding: const EdgeInsets.all(5),
                   child: Text(
@@ -67,7 +67,7 @@ class PersonalScheduleWidget extends StatelessWidget {
                       alignment: Alignment.center,
                       child: Text('Không có dữ liệu',
                           style: ThemeText.textStyle.copyWith(
-                              color: AppColors.personalScheduleColor)),
+                              color: AppColors.blue800)),
                     ))
         ],
       ),
@@ -81,10 +81,10 @@ class PersonalScheduleWidget extends StatelessWidget {
         title: Container(
           padding: EdgeInsets.all(8.sp),
           width: MediaQuery.of(context).size.width,
-          color: AppColors.personalScheduleColor2,
+          color: AppColors.blue900,
           child: Text(
             'Chi tiết',
-            style: ThemeText.titleStyle.copyWith(color: AppColors.secondColor),
+            style: ThemeText.titleStyle.copyWith(color: AppColors.bianca),
           ),
         ),
         children: [
@@ -101,7 +101,7 @@ class PersonalScheduleWidget extends StatelessWidget {
                   child: Text(
                       toDoItem.name != null ? toDoItem.name as String : '',
                       style: ThemeText.titleStyle2
-                          .copyWith(color: AppColors.personalScheduleColor2)),
+                          .copyWith(color: AppColors.blue900)),
                 ),
                 Padding(
                   padding: EdgeInsets.only(bottom: 8.sp),
@@ -111,13 +111,13 @@ class PersonalScheduleWidget extends StatelessWidget {
                       text: TextSpan(
                         text: 'Thời gian: ',
                         style: ThemeText.titleStyle2
-                            .copyWith(color: AppColors.personalScheduleColor2),
+                            .copyWith(color: AppColors.blue900),
                         children: <TextSpan>[
                           TextSpan(
                               text: '',
                               //getTime(toDoItem),
                               style: ThemeText.titleStyle2.copyWith(
-                                  color: AppColors.personalScheduleColor2,
+                                  color: AppColors.blue900,
                                   fontWeight: FontWeight.normal)),
                         ],
                       ),
@@ -132,12 +132,12 @@ class PersonalScheduleWidget extends StatelessWidget {
                       text: TextSpan(
                         text: 'Ghi ch: ',
                         style: ThemeText.titleStyle2
-                            .copyWith(color: AppColors.personalScheduleColor2),
+                            .copyWith(color: AppColors.blue900),
                         children: <TextSpan>[
                           TextSpan(
                               text: toDoItem.note ?? '',
                               style: ThemeText.titleStyle2.copyWith(
-                                  color: AppColors.personalScheduleColor2,
+                                  color: AppColors.blue900,
                                   fontWeight: FontWeight.normal)),
                         ],
                       ),
@@ -164,7 +164,7 @@ class PersonalScheduleWidget extends StatelessWidget {
                 });
               },
               icon: const Icon(Icons.edit),
-              color: AppColors.personalScheduleColor2,
+              color: AppColors.blue900,
             ),
           )
         ]);

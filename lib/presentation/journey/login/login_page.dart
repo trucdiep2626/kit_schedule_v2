@@ -49,7 +49,7 @@ class LoginPage extends GetView<LoginController> {
                         fontWeight: FontWeight.w400),
                   ),
                 ),
-                Text("Kit Schedule",
+                Text("KMA Schedule",
                     style: TextStyle(
                         fontSize: 35.sp,
                         color: Colors.black,
@@ -70,7 +70,7 @@ class LoginPage extends GetView<LoginController> {
                           labelText: "Tài khoản",
                           controller: controller.accountController,
                           textStyle: ThemeText.labelStyle,
-                          colorBoder: AppColors.personalScheduleColor,
+                          colorBoder: AppColors.blue800,
                         ),
                         SizedBox(
                           height: 15.h,
@@ -82,7 +82,7 @@ class LoginPage extends GetView<LoginController> {
                                 }
                                 return null;
                               },
-                              colorBoder: AppColors.personalScheduleColor,
+                              colorBoder: AppColors.blue800,
                               labelText: "Mật khẩu",
                               controller: controller.passwordController,
                               textStyle: ThemeText.labelStyle,
@@ -160,7 +160,7 @@ class LoginPage extends GetView<LoginController> {
 
   _loadingUI() {
     return const LoadingWidget(
-      color: AppColors.secondColor,
+      color: AppColors.bianca,
     );
   }
 

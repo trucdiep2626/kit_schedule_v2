@@ -16,9 +16,9 @@ class PersonalPage extends GetView<PersonalController> {
   Widget build(BuildContext context) {
     return Scaffold(
       // appBar: AppBar(
-      //   backgroundColor: AppColors.secondColor,
+      //   backgroundColor: AppColors.bianca,
       // ),
-      backgroundColor: AppColors.secondColor,
+      backgroundColor: AppColors.bianca,
       body: ListView(
         padding: EdgeInsets.zero,
         children: [
@@ -36,7 +36,7 @@ class PersonalPage extends GetView<PersonalController> {
                         color: Colors.blue.shade100, shape: BoxShape.circle),
                     child: Icon(
                       Icons.person,
-                      color: AppColors.personalScheduleColor2,
+                      color: AppColors.blue900,
                       size: 32.sp,
                     )),
                 Padding(
@@ -163,19 +163,19 @@ class PersonalPage extends GetView<PersonalController> {
       onTap: onTap,
       child: Container(
         padding: EdgeInsets.all(16.sp),
-        color: AppColors.secondColor,
+        color: AppColors.bianca,
         child: Row(
           children: [
             Icon(
               icon,
-              color: AppColors.signInColor,
+              color: AppColors.blue900,
             ),
             SizedBox(
               width: 12.w,
             ),
             Text(title,
                 style: ThemeText.buttonStyle.copyWith(
-                  color: AppColors.signInColor,
+                  color: AppColors.blue900,
                   fontSize: 16.sp,
                 )),
           ],
@@ -194,7 +194,7 @@ class PersonalPage extends GetView<PersonalController> {
         ),
         title: Text('Thông báo',
             style: ThemeText.titleStyle
-                .copyWith(color: AppColors.personalScheduleColor2)),
+                .copyWith(color: AppColors.blue900)),
         children: [
           _dialogItem(
             title: 'Bật thông báo',
@@ -267,7 +267,7 @@ class PersonalPage extends GetView<PersonalController> {
                     child: Text(
                       title,
                       style: ThemeText.buttonStyle
-                          .copyWith(color: AppColors.personalScheduleColor2),
+                          .copyWith(color: AppColors.blue900),
                     ),
                   ),
                 ),
@@ -275,7 +275,7 @@ class PersonalPage extends GetView<PersonalController> {
                     visible: visible,
                     child: Icon(
                       Icons.check,
-                      color: AppColors.personalScheduleColor2,
+                      color: AppColors.blue900,
                     ))
               ],
             ),

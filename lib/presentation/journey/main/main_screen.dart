@@ -24,7 +24,7 @@ class MainScreen extends GetView<MainController> {
     return Expanded(
       child: AppTouchable(
           height: 50.sp,
-          backgroundColor: AppColors.secondColor,
+          backgroundColor: AppColors.bianca,
           onPressed: onPressed,
           outlinedBorder: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(0),
@@ -43,8 +43,8 @@ class MainScreen extends GetView<MainController> {
 
   Widget _buildBottomNavigationBar(BuildContext context) {
     return Container(
-      decoration: BoxDecoration(color: AppColors.secondColor, boxShadow: [
-        BoxShadow(blurRadius: 20, color: AppColors.primaryColor.withOpacity(.1))
+      decoration: BoxDecoration(color: AppColors.bianca, boxShadow: [
+        BoxShadow(blurRadius: 20, color: AppColors.charade.withOpacity(.1))
       ]),
       child: SafeArea(
         child: Padding(
@@ -73,8 +73,8 @@ class MainScreen extends GetView<MainController> {
           child: Icon(
             mainItem.getIcon(),
             color: controller.rxCurrentNavIndex.value == index
-                ? AppColors.fourthColor
-                : AppColors.primaryColor,
+                ? AppColors.blue500
+                : AppColors.charade,
           ),
         ));
   }

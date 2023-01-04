@@ -39,7 +39,7 @@ class TodoFormWidget extends GetView<TodoController> {
               labelText: 'Tiêu đề',
               textStyle:
                   ThemeText.labelStyle.copyWith(fontWeight: FontWeight.w400),
-              colorBoder: AppColors.personalScheduleColor,
+              colorBoder: AppColors.blue800,
               validate: (value) {
                 if (value!.trim().isEmpty) {
                   return "Không được phép bỏ trống ô này";
@@ -83,7 +83,7 @@ class TodoFormWidget extends GetView<TodoController> {
             labelText: 'Ghi chú',
             textStyle:
                 ThemeText.labelStyle.copyWith(fontWeight: FontWeight.w400),
-            colorBoder: AppColors.personalScheduleColor,
+            colorBoder: AppColors.blue800,
             maxLines: 5,
           ),
         ],
@@ -95,7 +95,7 @@ class TodoFormWidget extends GetView<TodoController> {
     CupertinoRoundedDatePickerWidget.show(
       context,
       initialDate: initialDate,
-      textColor: AppColors.personalScheduleColor,
+      textColor: AppColors.blue800,
       initialDatePickerMode: CupertinoDatePickerMode.date,
       fontFamily: 'MR',
       onDateTimeChanged: (dataTime) {
@@ -117,7 +117,7 @@ class TodoFormWidget extends GetView<TodoController> {
     CupertinoRoundedDatePickerWidget.show(
       context,
       initialDate: a,
-      textColor: AppColors.personalScheduleColor,
+      textColor: AppColors.blue800,
       initialDatePickerMode: CupertinoDatePickerMode.time,
       fontFamily: 'MR',
       onDateTimeChanged: (dataTime) {

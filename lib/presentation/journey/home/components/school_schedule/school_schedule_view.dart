@@ -26,7 +26,7 @@ class SchoolScheduleWidget extends GetView<HomeController> {
 //      color: Color(0xffFCFAF3),
       //   margin: EdgeInsets.symmetric(
       //     vertical: WidgetsConstants.cardMargin),
-      color: AppColors.scheduleBackgroundColor,
+      color: AppColors.red100,
       shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.all(Radius.circular(20))),
       elevation: 3,
@@ -40,7 +40,7 @@ class SchoolScheduleWidget extends GetView<HomeController> {
             children: <Widget>[
               Text('Lịch học',
                   style: ThemeText.titleStyle.copyWith(
-                    color: AppColors.scheduleType,
+                    color: AppColors.red,
                     fontSize: 16.sp,
                     fontWeight: FontWeight.bold,
                   )),
@@ -75,7 +75,7 @@ class SchoolScheduleWidget extends GetView<HomeController> {
                     alignment: Alignment.center,
                     child: Text('Không có dữ liệu',
                         style: ThemeText.textStyle
-                            .copyWith(color: AppColors.scheduleType)),
+                            .copyWith(color: AppColors.red)),
                   ),
           )
         ],

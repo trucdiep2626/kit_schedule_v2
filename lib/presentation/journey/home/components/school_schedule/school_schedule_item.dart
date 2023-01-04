@@ -32,13 +32,13 @@ class SchoolScheduleElementWidget extends StatelessWidget {
                 children: <Widget>[
                   Text('${Convert.startTimeLessonMap[startLesson]}',
                       style: ThemeText.textStyle
-                          .copyWith(color: AppColors.scheduleType)),
+                          .copyWith(color: AppColors.red)),
                   Icon(Icons.arrow_drop_down,
-                      color: AppColors.scheduleType,
+                      color: AppColors.red,
                       size: ScreenUtil().setHeight(15)),
                   Text('${Convert.endTimeLessonMap[endLesson]}',
                       style: ThemeText.textStyle
-                          .copyWith(color: AppColors.scheduleType)),
+                          .copyWith(color: AppColors.red)),
                 ],
               ),
             ),
@@ -50,7 +50,7 @@ class SchoolScheduleElementWidget extends StatelessWidget {
               decoration: BoxDecoration(
                   border: Border(
                       left: ThemeBorder.scheduleElementBorder
-                          .copyWith(color: AppColors.scheduleType))),
+                          .copyWith(color: AppColors.red))),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisSize: MainAxisSize.min,
@@ -58,13 +58,13 @@ class SchoolScheduleElementWidget extends StatelessWidget {
                   Text('${schedule.subjectName}',
                       style: ThemeText.textStyle.copyWith(
                           fontWeight: FontWeight.w600,
-                          color: AppColors.scheduleType)),
+                          color: AppColors.red)),
                   Text(
                       (schedule.room ?? '').contains('null')
                           ? 'Không có dữ liệu'
                           : '${schedule.room}',
                       style: ThemeText.textStyle
-                          .copyWith(color: AppColors.scheduleType)
+                          .copyWith(color: AppColors.red)
                           .copyWith(fontWeight: FontWeight.normal)),
                 ],
               ),

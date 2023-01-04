@@ -17,9 +17,9 @@ class ScorePage extends GetView<ScoreController> {
       controller: controller.scoreRefreshController,
       onRefresh: controller.onRefresh,
       child: Scaffold(
-        backgroundColor: AppColors.secondColor,
+        backgroundColor: AppColors.bianca,
         // appBar: AppBar(
-        //   backgroundColor: AppColors.secondColor,
+        //   backgroundColor: AppColors.bianca,
         //   elevation: 0,
         //   title: Text(
         //     'Điểm của tôi',
@@ -42,7 +42,7 @@ class ScorePage extends GetView<ScoreController> {
         //   //       },
         //   //       icon: Icon(
         //   //         Icons.add,
-        //   //         color: AppColors.personalScheduleColor,
+        //   //         color: AppColors.blue800,
         //   //       )),
         //   //   SizedBox(
         //   //     width: 10.w,
@@ -122,7 +122,7 @@ class ScorePage extends GetView<ScoreController> {
                     margin: EdgeInsets.symmetric(vertical: 8.h),
                     decoration: BoxDecoration(
                         border:
-                            Border.all(color: AppColors.personalScheduleColor),
+                            Border.all(color: AppColors.blue800),
                         borderRadius:
                             const BorderRadius.all(Radius.circular(8))),
                     child: Column(
@@ -205,11 +205,11 @@ class ScorePage extends GetView<ScoreController> {
       title: Container(
         padding: EdgeInsets.all(16.sp),
         width: MediaQuery.of(context).size.width,
-        color: AppColors.personalScheduleColor2,
+        color: AppColors.blue900,
         child: Text(
           score.subject?.name ?? '',
           style: ThemeText.titleStyle
-              .copyWith(color: AppColors.secondColor, fontSize: 18.sp),
+              .copyWith(color: AppColors.bianca, fontSize: 18.sp),
         ),
       ),
       children: [
@@ -250,12 +250,12 @@ class ScorePage extends GetView<ScoreController> {
           text: TextSpan(
             text: '$title: ',
             style: ThemeText.titleStyle2.copyWith(
-                color: AppColors.personalScheduleColor2, fontSize: 16.sp),
+                color: AppColors.blue900, fontSize: 16.sp),
             children: <TextSpan>[
               TextSpan(
                   text: info,
                   style: ThemeText.titleStyle2.copyWith(
-                      color: AppColors.personalScheduleColor2,
+                      color: AppColors.blue900,
                       fontSize: 16.sp,
                       fontWeight: FontWeight.normal)),
             ],
