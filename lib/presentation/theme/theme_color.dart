@@ -3,11 +3,13 @@ import 'package:flutter/material.dart';
 class AppColors {
 
   // TODO(dieptt): define common color
-  static const Color primary = Color(0xFF001C3A);
+  static const Color primary = Color(0xFF04A5E5);
   static const Color text = black;
   static Color? background = grey50;
-  static const backgroundColor = Color(0xffFCFAF3);
-  static const bianca = Color(0xffFCFAF3);
+  // static const backgroundColor = Color(0xffFCFAF3);
+  // static const bianca = Color(0xffFCFAF3);
+  static const backgroundColor = Color(0xffFCFAFA);
+  static const bianca = Color(0xffFCFAFA);
   static const Color charade = Color(0xff272C37);
   static const Color white = Colors.white;
 
@@ -36,15 +38,26 @@ class AppColors {
   static Color transparent = Colors.transparent;
 
   //blue
-  static const Color blue100 = Color(0xFFBBDEFB);
-  static const Color blue200 = Color(0xFF90CAF9);
-  static const Color blue300 = Color(0xFF64B5F6);
-  static const Color blue400 = Color(0xFF42A5F5);
-  static const Color blue500 = Color(0xFF2196F3);
-  static const Color blue600 = Color(0xFF1E88E5);
-  static const Color blue700 = Color(0xFF1976D2);
-  static const Color blue800 = Color(0xFF1565C0);
-  static const Color blue900 = Color(0xFF0D47A1);
+  static const Color blue100 = Color(0xFFE0E0E0);
+  static const Color blue200 = Color(0xFFEEEEEE);
+  static const Color blue300 = Color(0xFFE0E0E0);
+  static const Color blue400 = Color(0xFFBDBDBD);
+  static const Color blue500 = Color(0xFF9E9E9E);
+  static const Color blue600 = Color(0xFF757575);
+  static const Color blue700 = Color(0xFF616161);
+  static const Color blue800 = Color(0xFF424242);
+  static const Color blue900 = Color(0xFF212121);
+
+  // //blue
+  // static const Color blue100 = Color(0xFFBBDEFB);
+  // static const Color blue200 = Color(0xFF90CAF9);
+  // static const Color blue300 = Color(0xFF64B5F6);
+  // static const Color blue400 = Color(0xFF42A5F5);
+  // static const Color blue500 = Color(0xFF2196F3);
+  // static const Color blue600 = Color(0xFF1E88E5);
+  // static const Color blue700 = Color(0xFF1976D2);
+  // static const Color blue800 = Color(0xFF1565C0);
+  // static const Color blue900 = Color(0xFF0D47A1);
 
   //red
   static const Color red = Colors.red;
