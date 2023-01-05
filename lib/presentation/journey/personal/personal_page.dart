@@ -72,12 +72,13 @@ class PersonalPage extends GetView<PersonalController> {
               title: 'Về chúng tôi'),
           _buildListTile(
               icon: Icons.star_rate_outlined,
-              onTap: () {
-                // StoreRedirect.redirect(
-                //   androidAppId: ProfileConstants.androidAppId,
-                // );
-                //key: 'kma.hatuan314.schedule'
-              },
+              onTap: _launchURL,
+              //() {
+              // StoreRedirect.redirect(
+              //   androidAppId: ProfileConstants.androidAppId,
+              // );
+              //key: 'kma.hatuan314.schedule'
+              // },
               title: 'Đánh giá'),
           _buildListTile(
             icon:
@@ -182,62 +183,133 @@ class PersonalPage extends GetView<PersonalController> {
     BuildContext context,
   ) {
     return SimpleDialog(
-        contentPadding: EdgeInsets.only(
-          bottom: 16.sp,
-          top: 16.sp,
+      titlePadding: EdgeInsets.zero,
+      contentPadding: EdgeInsets.symmetric(
+        vertical: 12.sp,
+        horizontal: 16.sp,
+      ),
+      title: Container(
+        padding: EdgeInsets.all(16.sp),
+        width: MediaQuery.of(context).size.width,
+        color: AppColors.blue900,
+        child: Text(
+          'Cài đặt thông báo',
+          style: ThemeText.titleStyle
+              .copyWith(color: AppColors.bianca, fontSize: 18.sp),
         ),
-        title: Text('Thông báo',
-            style: ThemeText.titleStyle
-                .copyWith(color: AppColors.blue900)),
-        children: [
-          _dialogItem(
-            title: 'Bật thông báo',
-            context: context,
-            onTap: () {},
-            // isLanguageDialog
-            //     ? () {
-            //   Injector.getIt<LanguageSelect>().changeLanguage(true);
-            // }
-            //     : !profileState.hasNoti
-            //     ? () async {
-            //   if (await Permission.calendar.isDenied) {
-            //     Navigator.pop(context);
-            //     openSettingDiaLog(
-            //       context: context,
-            //     );
-            //     return;
-            //   } else {
-            //     BlocProvider.of<ProfileBloc>(context)
-            //         .add(TurnOnNotificationEvent());
-            //     Navigator.pop(context);
-            //     BlocProvider.of<ProfileBloc>(context)
-            //         .add(GetUserNameInProfileEvent());
-            //   }
-            // }
-            //     : () {},
-            visible: false,
-          ),
-          _dialogItem(
-            title: 'Tắt thông báo',
-            context: context,
-            onTap:
-                // isLanguageDialog
-                //     ? () {
-                //   Injector.getIt<LanguageSelect>().changeLanguage(false);
-                // }
-                //     : profileState.hasNoti
-                //     ? () {
-                //   BlocProvider.of<ProfileBloc>(context)
-                //       .add(TurnOffNotificationEvent());
-                //   Navigator.pop(context);
-                //   BlocProvider.of<ProfileBloc>(context)
-                //       .add(GetUserNameInProfileEvent());
-                // }
-                //     :
-                () {},
-            visible: true,
-          ),
-        ]);
+      ),
+      children: [
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            _dialogItem(
+              title: 'Bật thông báo',
+              context: context,
+              onTap: () {},
+              // isLanguageDialog
+              //     ? () {
+              //   Injector.getIt<LanguageSelect>().changeLanguage(true);
+              // }
+              //     : !profileState.hasNoti
+              //     ? () async {
+              //   if (await Permission.calendar.isDenied) {
+              //     Navigator.pop(context);
+              //     openSettingDiaLog(
+              //       context: context,
+              //     );
+              //     return;
+              //   } else {
+              //     BlocProvider.of<ProfileBloc>(context)
+              //         .add(TurnOnNotificationEvent());
+              //     Navigator.pop(context);
+              //     BlocProvider.of<ProfileBloc>(context)
+              //         .add(GetUserNameInProfileEvent());
+              //   }
+              // }
+              //     : () {},
+              visible: false,
+            ),
+            _dialogItem(
+              title: 'Tắt thông báo',
+              context: context,
+              onTap:
+                  // isLanguageDialog
+                  //     ? () {
+                  //   Injector.getIt<LanguageSelect>().changeLanguage(false);
+                  // }
+                  //     : profileState.hasNoti
+                  //     ? () {
+                  //   BlocProvider.of<ProfileBloc>(context)
+                  //       .add(TurnOffNotificationEvent());
+                  //   Navigator.pop(context);
+                  //   BlocProvider.of<ProfileBloc>(context)
+                  //       .add(GetUserNameInProfileEvent());
+                  // }
+                  //     :
+                  () {},
+              visible: true,
+            )
+          ],
+        ),
+      ],
+    );
+
+    // SimpleDialog(
+    //   contentPadding: EdgeInsets.only(
+    //     bottom: 16.sp,
+    //     top: 16.sp,
+    //   ),
+    //   title: Text('Thông báo',
+    //       style: ThemeText.titleStyle.copyWith(color: AppColors.blue900)),
+    //   children: [
+    //     _dialogItem(
+    //       title: 'Bật thông báo',
+    //       context: context,
+    //       onTap: () {},
+    //       // isLanguageDialog
+    //       //     ? () {
+    //       //   Injector.getIt<LanguageSelect>().changeLanguage(true);
+    //       // }
+    //       //     : !profileState.hasNoti
+    //       //     ? () async {
+    //       //   if (await Permission.calendar.isDenied) {
+    //       //     Navigator.pop(context);
+    //       //     openSettingDiaLog(
+    //       //       context: context,
+    //       //     );
+    //       //     return;
+    //       //   } else {
+    //       //     BlocProvider.of<ProfileBloc>(context)
+    //       //         .add(TurnOnNotificationEvent());
+    //       //     Navigator.pop(context);
+    //       //     BlocProvider.of<ProfileBloc>(context)
+    //       //         .add(GetUserNameInProfileEvent());
+    //       //   }
+    //       // }
+    //       //     : () {},
+    //       visible: false,
+    //     ),
+    //     _dialogItem(
+    //       title: 'Tắt thông báo',
+    //       context: context,
+    //       onTap:
+    //           // isLanguageDialog
+    //           //     ? () {
+    //           //   Injector.getIt<LanguageSelect>().changeLanguage(false);
+    //           // }
+    //           //     : profileState.hasNoti
+    //           //     ? () {
+    //           //   BlocProvider.of<ProfileBloc>(context)
+    //           //       .add(TurnOffNotificationEvent());
+    //           //   Navigator.pop(context);
+    //           //   BlocProvider.of<ProfileBloc>(context)
+    //           //       .add(GetUserNameInProfileEvent());
+    //           // }
+    //           //     :
+    //           () {},
+    //       visible: true,
+    //     ),
+    //   ]);
   }
 
   Widget _dialogItem(
@@ -282,7 +354,7 @@ class PersonalPage extends GetView<PersonalController> {
   }
 
   _launchURL() async {
-    const url = 'https://www.facebook.com/kitclubKMA';
+    const url = 'https://actvn.edu.vn/';
     if (await canLaunchUrlString(url)) {
       await launchUrlString(url);
     } else {
