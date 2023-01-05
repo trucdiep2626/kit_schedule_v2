@@ -64,7 +64,7 @@ class LoginPage extends GetView<LoginController> {
                         TextFieldWidget(
                           validate: (value) {
                             if (value!.isEmpty) {
-                              return "Không được phép bỏ trống ô này";
+                              return "Tên đăng nhập không được bỏ trống";
                             }
                             return null;
                           },
@@ -79,7 +79,7 @@ class LoginPage extends GetView<LoginController> {
                         Obx(() => TextFieldWidget(
                               validate: (value) {
                                 if (value!.isEmpty) {
-                                  return "Không được phép bỏ trống ô này";
+                                  return "Mật khẩu không được bỏ trống";
                                 }
                                 return null;
                               },

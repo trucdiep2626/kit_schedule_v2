@@ -4,6 +4,7 @@ import 'package:kit_schedule_v2/common/common_export.dart';
 import 'package:kit_schedule_v2/domain/models/student_info_model.dart';
 import 'package:kit_schedule_v2/domain/usecases/school_usecase.dart';
 import 'package:kit_schedule_v2/presentation/controllers/mixin/export.dart';
+import 'package:kit_schedule_v2/presentation/widgets/snack_bar/app_snack_bar.dart';
 
 class LoginController extends GetxController with MixinController {
   LoginController(this.schoolUseCase, this.sharePreferencesConstants);
@@ -31,25 +32,37 @@ class LoginController extends GetxController with MixinController {
       return;
     }
 
+    if (!await NetworkState.isConnected) {
+      showTopSnackBar(context,
+          message: 'Đã có lỗi xảy ra. Vui lòng thử lại',
+          type: SnackBarType.error);
+
     try {
       final result = await schoolUseCase.getSchoolSchedule(
-          username:
-              accountController.text.trim().toUpperCase(),
-          password:
-              passwordController.text.trim());
+          username: accountController.text.trim().toUpperCase(),
+          password: passwordController.text.trim());
       debugPrint('===============$result');
       if (!isNullEmpty(result)) {
         schoolUseCase.insertSchoolScheduleLocal(result?.studentSchedule ?? []);
         schoolUseCase.setStudentInfoLocal(result?.studentInfo ?? StudentInfo());
-        if(!isNullEmpty(result?.studentSchedule) || !isNullEmpty(result?.studentInfo))
-          {
-            sharePreferencesConstants.setIsLogIn(isLogIn: true);
-          }
-        rxLoginLoadedType.value = LoadedType.finish;
+        if (!isNullEmpty(result?.studentSchedule) ||
+            !isNullEmpty(result?.studentInfo)) {
+          sharePreferencesConstants.setIsLogIn(isLogIn: true);
+        }
+
         debugPrint('===============');
         Get.offAndToNamed(AppRoutes.main);
+      } else {
+        showTopSnackBar(context,
+            message: 'Tài khoản đăng nhập không đúng',
+            type: SnackBarType.error);
       }
-    } catch (e) {}
+    } catch (e) {
+      showTopSnackBar(context,
+          message: 'Đã có lỗi xảy ra. Vui lòng thử lại',
+          type: SnackBarType.error);
+    }
+    rxLoginLoadedType.value = LoadedType.finish;
   }
 
   @override

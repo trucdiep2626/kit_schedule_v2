@@ -24,7 +24,8 @@ class SchoolRepository {
         path: ApiConstants.getSchedule,
         method: NetworkMethod.post,
         queryParameters: {"username": username, "password": password});
-    if ((baseResponse.result ?? false) && baseResponse.data != null) {
+
+    if ( ((baseResponse.code ?? 0) == 200) &&(baseResponse.result ?? false) && baseResponse.data != null) {
       final schoolSchedule =
           SchoolScheduleModel.fromJson(json.decode(baseResponse.data)["data"]);
       return schoolSchedule;

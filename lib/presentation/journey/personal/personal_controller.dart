@@ -24,14 +24,12 @@ class PersonalController extends GetxController with MixinController {
   }
 
   Future<void> logOut() async {
-  //  try {
+    try {
       await schoolUseCase.deleteStudentInfo();
       await schoolUseCase.deleteAllSchoolSchedulesLocal();
       await personalUsecase.deleteAllPersonalSchedulesLocal();
       await await sharePreferencesConstants.setIsLogIn(isLogIn: false);
       Get.offAllNamed(AppRoutes.login);
-    // } catch (e) {
-    //
-    // }
+    } catch (e) {}
   }
 }
