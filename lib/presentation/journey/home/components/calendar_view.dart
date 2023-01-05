@@ -60,8 +60,9 @@ class _CalendarViewState extends State<CalendarView> {
             markersMaxCount: 1,
             outsideDaysVisible: true,
             weekendTextStyle: TextStyle(color: AppColors.red),
-            selectedTextStyle: TextStyle(color: AppColors.bianca),
-            todayTextStyle: TextStyle(color: AppColors.bianca)),
+            selectedTextStyle: TextStyle(color: AppColors.red),
+            todayTextStyle: TextStyle(
+                color: AppColors.blue900, fontWeight: FontWeight.bold)),
         headerStyle: HeaderStyle(
           titleTextStyle: ThemeText.titleStyle
               .copyWith(color: AppColors.black54, fontSize: 18.sp),

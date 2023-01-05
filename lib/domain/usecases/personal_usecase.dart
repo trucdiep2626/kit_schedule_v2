@@ -12,11 +12,11 @@ class PersonalUsecase {
     return localRepository.fetchAllPersonalScheduleOfDate(date);
   }
 
-  Future<void> deleteAllSchoolPersonalLocal() async {
-    await localRepository.deleteAllSchoolPersonal();
+  Future<void> deleteAllPersonalSchedulesLocal() async {
+    await localRepository.deleteAllPersonalSchedulesLocal();
   }
 
-  Future<int> deletePersonalScheduleLocal(
+  Future<bool> deletePersonalScheduleLocal(
       PersonalScheduleModel personal) async {
     return localRepository.deletePersonalSchedule(personal);
   }
@@ -33,7 +33,7 @@ class PersonalUsecase {
   }
 
   
-  Future<int> updatePersonalScheduleDataLocal(
+  Future<bool> updatePersonalScheduleDataLocal(
       PersonalScheduleModel personal) async {
     return localRepository.updatePersonalScheduleData(personal);
   }

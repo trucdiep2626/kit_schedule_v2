@@ -7,39 +7,12 @@ import 'package:kit_schedule_v2/presentation/journey/personal/personal_page.dart
 import 'package:kit_schedule_v2/presentation/journey/score/score_page.dart';
 import 'package:kit_schedule_v2/presentation/journey/todo/todo_page.dart';
 import 'package:kit_schedule_v2/presentation/theme/export.dart';
-import 'package:kit_schedule_v2/presentation/widgets/export.dart';
 
 import 'main_controller.dart';
 
 class MainScreen extends GetView<MainController> {
   const MainScreen({Key? key}) : super(key: key);
 
-  Widget _buildBottomNavigationItemWidget(
-    BuildContext context, {
-    Function()? onPressed,
-    IconData? icon,
-    String? title,
-    bool isSelected = false,
-  }) {
-    return Expanded(
-      child: AppTouchable(
-          height: 50.sp,
-          backgroundColor: AppColors.bianca,
-          onPressed: onPressed,
-          outlinedBorder: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(0),
-          ),
-          padding: EdgeInsets.only(
-            top: AppDimens.space_12,
-            bottom: MediaQuery.of(context).padding.bottom + 12.sp,
-          ),
-          child: Icon(
-            icon,
-            size: 20.sp,
-            color: isSelected ? AppColors.primary : AppColors.grey,
-          )),
-    );
-  }
 
   Widget _buildBottomNavigationBar(BuildContext context) {
     return Container(
@@ -67,7 +40,7 @@ class MainScreen extends GetView<MainController> {
     final mainItem = MainItem.values.elementAt(index);
 
     return GestureDetector(
-        onTap: () => controller.onChangedNav(index),
+        onTap: () async => await controller.onChangedNav(index),
         child: SizedBox(
           height: 50.sp,
           child: Icon(
@@ -86,7 +59,7 @@ class MainScreen extends GetView<MainController> {
     final List<Widget> listScreenTab = [
       const HomePage(),
       ScorePage(),
-      TodoPage(),
+      const TodoPage(),
       PersonalPage(),
     ];
     return

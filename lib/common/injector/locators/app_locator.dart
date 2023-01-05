@@ -37,6 +37,7 @@ void configLocator() {
       () => ScoreController(getIt<SchoolUseCase>()));
   getIt.registerFactory<PersonalController>(() => PersonalController(
       schoolUseCase: getIt<SchoolUseCase>(),
+      personalUsecase: getIt<PersonalUsecase>(),
       sharePreferencesConstants: getIt<SharePreferencesConstants>()));
 
   /// UseCases

@@ -19,19 +19,28 @@ class HomeController extends GetxController with MixinController {
   RxInt currentViewIndex = 0.obs;
   Rx<LoadedType> rxHomeLoadedType = LoadedType.start.obs;
   RxList<StudentSchedule> studentSchedule = <StudentSchedule>[].obs;
-  RxList<PersonalScheduleModel> personalSchedule = <PersonalScheduleModel>[].obs;
+  RxList<PersonalScheduleModel> personalSchedule =
+      <PersonalScheduleModel>[].obs;
 
   Future<void> getScheduleLocal() async {
+    await getSchoolScheduleLocal();
+    await getPersonalScheduleLocal();
+  }
+
+  Future<void> getSchoolScheduleLocal() async {
     rxHomeLoadedType.value = LoadedType.start;
     studentSchedule.clear();
     studentSchedule.addAll(await schoolUseCase.getSchoolScheduleLocal());
-
-    personalSchedule.clear();
-    personalSchedule.addAll(await personalUseCase.fetchAllPersonalScheduleRepoLocal());
     rxHomeLoadedType.value = LoadedType.finish;
   }
 
-
+  Future<void> getPersonalScheduleLocal() async {
+    rxHomeLoadedType.value = LoadedType.start;
+    personalSchedule.clear();
+    personalSchedule
+        .addAll(await personalUseCase.fetchAllPersonalScheduleRepoLocal());
+    rxHomeLoadedType.value = LoadedType.finish;
+  }
 
   void onChangedView(int newIndex) {
     currentViewIndex.value = newIndex;

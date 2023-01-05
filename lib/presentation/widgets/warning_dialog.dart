@@ -51,8 +51,20 @@ void warningDialog(
                       ),
                     ]),
               ),
+              SizedBox(
+                height: 8,
+              ),
               name == null
-                  ? const SizedBox()
+                  ? Text(
+                      'Các ghi chú đã tạo sẽ bị mất khi đăng xuất.',
+                      style: ThemeText.titleStyle.copyWith(
+                        color: AppColors.black54,
+                        fontSize: 14.sp,
+                      ),
+                      overflow: TextOverflow.ellipsis,
+                      textAlign: TextAlign.center,
+                      maxLines: 3,
+                    )
                   : Text(
                       name,
                       style: ThemeText.titleStyle.copyWith(

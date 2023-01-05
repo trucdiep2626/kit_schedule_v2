@@ -42,6 +42,7 @@ class PersonalScheduleModel {
     this.name = data['name'];
     this.timer = data['timer'];
     this.note = data['note'];
+    this.createAt = data['createAt'];
     this.updateAt = data['updateAt'];
   }
 
@@ -51,6 +52,7 @@ class PersonalScheduleModel {
     data['name'] = this.name;
     data['timer'] = this.timer;
     data['note'] = this.note;
+    data['createAt'] = this.createAt;
     data['updateAt'] = this.updateAt;
     return data;
   }

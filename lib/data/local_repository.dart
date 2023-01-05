@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:flutter/cupertino.dart';
 import 'package:kit_schedule_v2/common/common_export.dart';
 import 'package:kit_schedule_v2/common/config/database/hive_config.dart';
 import 'package:kit_schedule_v2/domain/models/personal_schedule_model.dart';
@@ -29,12 +30,12 @@ class LocalRepository {
   Future<List<PersonalScheduleModel>> listPerSonIsSyncFailed() async {
     return hiveConfig.personalBox.values
         .where((element) =>
-    element.isSynchronized == false || element.updateAt == '0')
+            element.isSynchronized == false || element.updateAt == '0')
         .toList();
   }
 
   Future<List<PersonalScheduleModel>>
-  fetchAllPersonalScheduleRepoLocal() async {
+      fetchAllPersonalScheduleRepoLocal() async {
     List<PersonalScheduleModel> result = hiveConfig.personalBox.values
         .where((element) => element.updateAt != '0')
         .toList();
@@ -51,7 +52,7 @@ class LocalRepository {
     return result;
   }
 
-  Future<int> updatePersonalScheduleData(
+  Future<bool> updatePersonalScheduleData(
       PersonalScheduleModel personal) async {
     final result = hiveConfig.personalBox.values;
     for (int i = 0; i < result.length; i++) {
@@ -67,28 +68,28 @@ class LocalRepository {
                 createAt: personal.createAt,
                 updateAt: personal.updateAt,
                 isSynchronized: personal.isSynchronized));
-        return 1;
+        return true;
       }
     }
-    return 0;
+    return false;
   }
 
-  Future<int> deletePersonalSchedule(PersonalScheduleModel personal) async {
+  Future<bool> deletePersonalSchedule(PersonalScheduleModel personal) async {
     var result = hiveConfig.personalBox.values;
     try {
       for (int i = 0; i < result.length; i++) {
-        if (result.elementAt(i) == personal) {
+        if (result.elementAt(i).createAt == personal.createAt) {
           hiveConfig.personalBox.deleteAt(i);
-          return 1;
+          return true;
         }
       }
     } catch (e) {
-      return 0;
+      return false;
     }
-    return 0;
+    return false;
   }
 
-  Future<void> deleteAllSchoolPersonal() async {
+  Future<void> deleteAllPersonalSchedulesLocal() async {
     await hiveConfig.personalBox.clear();
   }
 }

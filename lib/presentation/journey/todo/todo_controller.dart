@@ -7,6 +7,7 @@ import 'package:kit_schedule_v2/common/utils/date_time_format.dart';
 import 'package:kit_schedule_v2/domain/models/personal_schedule_model.dart';
 import 'package:kit_schedule_v2/domain/usecases/personal_usecase.dart';
 import 'package:kit_schedule_v2/presentation/controllers/mixin/export.dart';
+import 'package:kit_schedule_v2/presentation/journey/home/home_controller.dart';
 import 'package:kit_schedule_v2/presentation/journey/main/main_controller.dart';
 import 'package:kit_schedule_v2/presentation/widgets/export.dart';
 
@@ -20,9 +21,12 @@ class TodoController extends GetxController with MixinController {
   TextEditingController nameController = TextEditingController();
   TextEditingController noteController = TextEditingController();
   RxBool isKeyboard = false.obs;
-  GlobalKey<FormState> formKey = GlobalKey<FormState>();
+  //GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
+  Rx<PersonalScheduleModel?> personalSchedule = (null as PersonalScheduleModel?).obs;
+  RxString validateText= ''.obs;
   String msv = '';
+
 
   // String _date = DateTime.utc(DateTime.now().year, DateTime.now().month,
   //     DateTime.now().day, 0, 0, 0, 0)
@@ -34,7 +38,7 @@ class TodoController extends GetxController with MixinController {
 
   TodoController(this.personalUsecase);
 
-  // override
+  //verride
   // Future<void> onReady() async {
   //   super.onReady();
   //   // selectedDate.value =DateTime.utc(DateTime.now().year, DateTime.now().month,
@@ -46,6 +50,14 @@ class TodoController extends GetxController with MixinController {
   //   //
   //   // debugPrint('----------${selectedDate.value}----${selectedTime.value}');
   // }
+
+  void checkValidateInput()
+  {
+    if(nameController.text.trim().isEmpty)
+      {
+        validateText.value = 'Thông tin này không được phép bỏ trống';
+      }
+  }
 
   void onSelectDate(DateTime newSelectedDate) {
     rxTodoLoadedType.value = LoadedType.start;
@@ -60,22 +72,16 @@ class TodoController extends GetxController with MixinController {
   }
 
   Future<void> createTodo() async {
+    checkValidateInput();
+
+    if(!isNullEmpty(validateText.value))
+      {
+        return;
+      }
+
     rxTodoLoadedType.value = LoadedType.start;
     final String now = DateTime.now().millisecondsSinceEpoch.toString();
-    //  bool hasNoti = await shareService.getHasNoti() ?? false;
-    String id = '';
-    // String date = DateTime.parse(
-    //     DateTime.fromMillisecondsSinceEpoch(int.parse(this._date))
-    //         .toString()
-    //         .substring(0, 10))
-    //     .millisecondsSinceEpoch
-    //     .toString();
-    // if (hasNoti) {
-    //   //1630772220386
-    //   debugPrint(
-    //       DateTime.fromMillisecondsSinceEpoch(int.parse(date)).toString());
-    //   await _retrieveCalendars();
-    //id =
+
     try {
       await personalUsecase.insertPersonalScheduleLocal(PersonalScheduleModel(
         date: selectedDate.value,
@@ -86,76 +92,126 @@ class TodoController extends GetxController with MixinController {
         createAt: now,
       ));
       showTopSnackBar(context,
-          message: 'Tạo nhắc nhở thành công', type: SnackBarType.done);
-      nameController.clear();
-      noteController.clear();
+          message: 'Tạo ghi chú thành công', type: SnackBarType.done);
+      await Get.find<HomeController>().getPersonalScheduleLocal();
+      resetData();
     } catch (e) {
       showTopSnackBar(context,
           message: 'Đã có lỗi xảy ra. Vui lòng thử lại',
           type: SnackBarType.error);
     }
     rxTodoLoadedType.value = LoadedType.finish;
-    //   }
-    //   PersonalScheduleEntities schedule(bool isSynch) {
-    //     PersonalScheduleEntities schedule = PersonalScheduleEntities(
-    //       id: id,
-    //       date: date,
-    //       name: event.name,
-    //       timer: this._timer,
-    //       note: event.note,
-    //       isSynchronized: isSynch,
-    //       updateAt: now,
-    //       createAt: now,
-    //     );
-    //     debugPrint('todo id: ' + (schedule.id ?? ''));
-    //     return schedule;
-    //   }
-    //
-    //   try {
-    //     // bool hasNoti= await shareService.getHasNoti() ?? false;
-    //     // if(hasNoti)
-    //     //   {
-    //     //     await _retrieveCalendars();
-    //     //     await _addPersonalScheduleToCalendar(schedule(true));
-    //     //   }
-    //     String result =
-    //         await personalUS.syncPersonalSchoolDataFirebase(msv, schedule(true));
-    //     if (result.isNotEmpty) {
-    //       log('Not Empty');
-    //       await personalUS.insertPersonalSchedule(schedule(true));
-    //     } else {
-    //       log('empty');
-    //       await personalUS.insertPersonalSchedule(schedule(false));
-    //     }
-    //     _date = DateTime.now().millisecondsSinceEpoch.toString();
-    //     _timer = '${Convert.timerConvert(TimeOfDay.now())}';
-    //     calendarBloc!.add(GetAllScheduleDataEvent());
-    //     snackbarBloc.add(ShowSnackbar(
-    //         title: '${SnackBarTitle.CreateSuccess}', type: SnackBarType.success));
-    //     yield TodoSuccessState(true, selectTimer: _timer, selectDay: _date);
-    //     // String msv=await ShareService().getUsername() as String;
-    //   } catch (e) {
-    //     snackbarBloc.add(ShowSnackbar(
-    //         title: '${SnackBarTitle.ConnectionFailed}',
-    //         type: SnackBarType.error));
-    //     yield TodoFailureState(
-    //         error: e.toString(), selectDay: this._date, selectTimer: this._timer);
-    // }
+  }
+
+  Future<void> updateTodo() async {
+    checkValidateInput();
+
+    if(!isNullEmpty(validateText.value))
+    {
+      return;
+    }
+
+
+
+    rxTodoLoadedType.value = LoadedType.start;
+    final String now = DateTime.now().millisecondsSinceEpoch.toString();
+
+     try {
+      final result = await personalUsecase
+          .updatePersonalScheduleDataLocal(PersonalScheduleModel(
+        date: selectedDate.value,
+        name: nameController.text.trim(),
+        timer: selectedTime.value,
+        note: noteController.text.trim(),
+        updateAt: personalSchedule.value?.createAt ?? now,
+        createAt: personalSchedule.value?.createAt ?? now,
+      ));
+      if (result) {
+        showTopSnackBar(context,
+            message: 'Cập nhật ghi chú thành công', type: SnackBarType.done);
+        await Get.find<HomeController>().getPersonalScheduleLocal();
+        resetData();
+        Get.back();
+      } else {
+        showTopSnackBar(context,
+            message: 'Đã có lỗi xảy ra. Vui lòng thử lại',
+            type: SnackBarType.error);
+      }
+    } catch (e) {
+      showTopSnackBar(context,
+          message: 'Đã có lỗi xảy ra. Vui lòng thử lại',
+          type: SnackBarType.error);
+    }
+    rxTodoLoadedType.value = LoadedType.finish;
+  }
+
+  void resetData(){
+    nameController.clear();
+    noteController.clear();
+    personalSchedule.value = null;
+    selectedDate.value = DateTimeFormatter.formatDate(DateTime.now());
+    selectedTime.value = '${Convert.timerConvert(TimeOfDay.now())}';
+  }
+
+
+  Future<void> deleteTodo() async {
+    rxTodoLoadedType.value = LoadedType.start;
+
+    try {
+      final result = await personalUsecase
+          .deletePersonalScheduleLocal(personalSchedule.value!);
+      if (result) {
+        showTopSnackBar(context,
+            message: 'Xoá ghi chú thành công', type: SnackBarType.done);
+        await Get.find<HomeController>().getPersonalScheduleLocal();
+        resetData();
+        Get.back(result: true);
+      } else {
+        showTopSnackBar(context,
+            message: 'Đã có lỗi xảy ra. Vui lòng thử lại',
+            type: SnackBarType.error);
+      }
+    } catch (e) {
+      showTopSnackBar(context,
+          message: 'Đã có lỗi xảy ra. Vui lòng thử lại',
+          type: SnackBarType.error);
+    }
+    rxTodoLoadedType.value = LoadedType.finish;
+  }
+
+  void getPersonalSchedule(PersonalScheduleModel personalScheduleModel) {
+    personalSchedule.value = personalScheduleModel;
+    nameController.text = personalSchedule.value?.name ?? '';
+    noteController.text = personalSchedule.value?.note ?? '';
+    selectedDate.value = personalSchedule.value?.date ??
+        DateTimeFormatter.formatDate(DateTime.now());
+    selectedTime.value =
+        personalSchedule.value?.timer ?? '${Convert.timerConvert(TimeOfDay.now())}';
+
   }
 
   @override
   void onInit() {
+    //
+    // final args = Get.arguments;
+    // debugPrint('1=============$args');
+   // if (args != null) {
+     //
+   // } else {
+      selectedDate.value = DateTimeFormatter.formatDate(DateTime.now());
+      selectedTime.value = '${Convert.timerConvert(TimeOfDay.now())}';
+   // }
+
     KeyboardVisibilityController().onChange.listen((event) async {
       isKeyboard.value = event;
-      if (isKeyboard == false) {
+      if (isKeyboard.value == false) {
         await Future.delayed(const Duration(milliseconds: 110));
         //  if (mounted) setState(() {});
       } else {
         // if (mounted) setState(() {});
       }
     });
-    selectedDate.value = DateTimeFormatter.formatDate(DateTime.now());
-    selectedTime.value = '${Convert.timerConvert(TimeOfDay.now())}';
+
 
     debugPrint('----------${selectedDate.value}----${selectedTime.value}');
   }

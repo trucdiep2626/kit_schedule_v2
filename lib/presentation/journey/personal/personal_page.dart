@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:kit_schedule_v2/common/constants/constants_export.dart';
 import 'package:kit_schedule_v2/common/utils/export.dart';
 import 'package:kit_schedule_v2/presentation/journey/main/main_controller.dart';
 import 'package:kit_schedule_v2/presentation/journey/personal/personal_controller.dart';
 import 'package:kit_schedule_v2/presentation/theme/export.dart';
 import 'package:kit_schedule_v2/presentation/widgets/warning_dialog.dart';
-import 'package:url_launcher/url_launcher.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 
 class PersonalPage extends GetView<PersonalController> {
   final MainController _mainController = Get.find<MainController>();
@@ -15,9 +14,6 @@ class PersonalPage extends GetView<PersonalController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // appBar: AppBar(
-      //   backgroundColor: AppColors.bianca,
-      // ),
       backgroundColor: AppColors.bianca,
       body: ListView(
         padding: EdgeInsets.zero,
@@ -32,7 +28,7 @@ class PersonalPage extends GetView<PersonalController> {
                     margin: EdgeInsets.only(
                         top: Get.mediaQuery.padding.top + 20.sp),
                     padding: EdgeInsets.all(16.sp),
-                    decoration: BoxDecoration(
+                    decoration: const BoxDecoration(
                         color: AppColors.blue100, shape: BoxShape.circle),
                     child: Icon(
                       Icons.person,
@@ -51,9 +47,7 @@ class PersonalPage extends GetView<PersonalController> {
           ),
           _buildListTile(
               icon: Icons.score_outlined,
-              onTap: () {
-                _mainController.onChangedNav(1);
-              },
+              onTap: () async => await _mainController.onChangedNav(1),
               title: 'Điểm của tôi'),
           // _buildListTile(
           //     icon: Icons.language,
@@ -273,7 +267,7 @@ class PersonalPage extends GetView<PersonalController> {
                 ),
                 Visibility(
                     visible: visible,
-                    child: Icon(
+                    child: const Icon(
                       Icons.check,
                       color: AppColors.blue900,
                     ))
@@ -289,8 +283,8 @@ class PersonalPage extends GetView<PersonalController> {
 
   _launchURL() async {
     const url = 'https://www.facebook.com/kitclubKMA';
-    if (await canLaunch(url)) {
-      await launch(url);
+    if (await canLaunchUrlString(url)) {
+      await launchUrlString(url);
     } else {
       debugPrint('Could not launch $url');
     }

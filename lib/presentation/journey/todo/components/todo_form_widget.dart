@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:kit_schedule_v2/common/utils/date_time_format.dart';
 import 'package:kit_schedule_v2/common/utils/export.dart';
-import 'package:kit_schedule_v2/presentation/journey/todo/components/cupertino_rounded_datepicker_widget.dart';
 import 'package:kit_schedule_v2/presentation/journey/todo/components/set_time_widget.dart';
 import 'package:kit_schedule_v2/presentation/journey/todo/todo_controller.dart';
 import 'package:kit_schedule_v2/presentation/theme/export.dart';
@@ -33,22 +32,14 @@ class TodoFormWidget extends GetView<TodoController> {
       margin: EdgeInsets.only(top: 10.sp),
       child: Column(
         children: [
-          Form(
-            key: controller.formKey,
-            child: TextFieldWidget(
-              controller: controller.nameController,
-              labelText: 'Tiêu đề',
-              textStyle:
-                  ThemeText.labelStyle.copyWith(fontWeight: FontWeight.w400),
-              colorBoder: AppColors.blue800,
-              validate: (value) {
-                if (value!.trim().isEmpty) {
-                  return "Không được phép bỏ trống ô này";
-                }
-                return null;
-              },
-            ),
-          ),
+          Obx(() => TextFieldWidget(
+                controller: controller.nameController,
+                labelText: 'Tiêu đề',
+                textStyle:
+                    ThemeText.labelStyle.copyWith(fontWeight: FontWeight.w400),
+                colorBoder: AppColors.blue800,
+                errorText: controller.validateText.value,
+              )),
           SizedBox(
             height: 18.sp,
           ),
@@ -96,7 +87,7 @@ class TodoFormWidget extends GetView<TodoController> {
     showCupertinoModalPopup(
       context: context,
       builder: (_) => Material(
-        child: Container(
+        child: SizedBox(
           height: 350.sp,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.end,
@@ -166,7 +157,7 @@ class TodoFormWidget extends GetView<TodoController> {
     showCupertinoModalPopup(
       context: context,
       builder: (_) => Material(
-        child: Container(
+        child: SizedBox(
           height: 350.sp,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.end,

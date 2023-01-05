@@ -1,86 +1,87 @@
 import 'package:flutter/material.dart';
-import 'package:get/get_state_manager/get_state_manager.dart';
+import 'package:get/get.dart';
+import 'package:kit_schedule_v2/common/common_export.dart';
 import 'package:kit_schedule_v2/common/utils/date_time_format.dart';
-import 'package:kit_schedule_v2/common/utils/export.dart';
 import 'package:kit_schedule_v2/domain/models/personal_schedule_model.dart';
 import 'package:kit_schedule_v2/presentation/journey/home/components/personal_schedule/personal_schedule_item.dart';
 import 'package:kit_schedule_v2/presentation/journey/home/home_controller.dart';
+import 'package:kit_schedule_v2/presentation/journey/todo/todo_controller.dart';
 import 'package:kit_schedule_v2/presentation/theme/export.dart';
 
-class PersonalScheduleWidget extends  GetView<HomeController> {
-  const PersonalScheduleWidget({Key? key,required this.selectedDate}) : super(key: key);
+class PersonalScheduleWidget extends GetView<HomeController> {
+  const PersonalScheduleWidget({Key? key, required this.selectedDate})
+      : super(key: key);
 
   final DateTime selectedDate;
 
   @override
   Widget build(BuildContext context) {
-    List<PersonalScheduleModel>? personalSchedulesOfDay = (controller.personalSchedule.value)
-        .where((element) =>
-    element.date == DateTimeFormatter.formatDate(selectedDate))
-        .toList();
-    return Card(
-      semanticContainer: true,
-//      color: Color(0xffFCFAF3),
-      color: AppColors.blue100,
-      shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.all(Radius.circular(20))),
-      elevation: 5,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisSize: MainAxisSize.min,
-        children: <Widget>[
-          SizedBox(height: 8.sp),
-          Row(
-            mainAxisSize: MainAxisSize.min,
-            children: <Widget>[
-              Text('Ghi chú',
-                  style: ThemeText.titleStyle.copyWith(
-                    fontSize: 16.sp,
-                    fontWeight: FontWeight.bold,
-                    color: AppColors.blue800,
-                  )),
-              Container(
-                  decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: AppColors.blue800),
-                  margin: const EdgeInsets.only(left: 4),
-                  padding: const EdgeInsets.all(5),
-                  child: Text(
-                    personalSchedulesOfDay != null
-                        ? '${personalSchedulesOfDay.length}'
-                        : '0',
-                    style: ThemeText.numberStyle,
-                  ))
-            ],
-          ),
-          Expanded(
-              child: personalSchedulesOfDay != null
-                  ? ListView.builder(
-                      shrinkWrap: true,
-                      itemCount: personalSchedulesOfDay.length,
-                      itemBuilder: (context, index) {
-                        PersonalScheduleModel todo =
-                            personalSchedulesOfDay[index];
-                        return InkWell(
-                            onTap: () {
-                              showDialog(
-                                  context: context,
-                                  builder: (dialogContext) =>
-                                      toDoDetailsDialog(context, todo));
-                            },
-                            child: PersonalScheduleElementWidget(
-                              todo: todo,
-                            ));
-                      })
-                  : Align(
-                      alignment: Alignment.center,
-                      child: Text('Không có dữ liệu',
-                          style: ThemeText.textStyle.copyWith(
-                              color: AppColors.blue800)),
+    return Obx(() {
+      List<PersonalScheduleModel>? personalSchedulesOfDay =
+          (controller.personalSchedule.value)
+              .where((element) =>
+                  element.date == DateTimeFormatter.formatDate(selectedDate))
+              .toList();
+      return Card(
+        semanticContainer: true,
+        color: AppColors.blue100,
+        shape: const RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(Radius.circular(20))),
+        elevation: 5,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisSize: MainAxisSize.min,
+          children: <Widget>[
+            SizedBox(height: 8.sp),
+            Row(
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[
+                Text('Ghi chú',
+                    style: ThemeText.titleStyle.copyWith(
+                      fontSize: 16.sp,
+                      fontWeight: FontWeight.bold,
+                      color: AppColors.blue800,
+                    )),
+                Container(
+                    decoration: const BoxDecoration(
+                        shape: BoxShape.circle, color: AppColors.blue800),
+                    margin: const EdgeInsets.only(left: 4),
+                    padding: const EdgeInsets.all(5),
+                    child: Text(
+                      '${personalSchedulesOfDay.length}',
+                      style: ThemeText.numberStyle,
                     ))
-        ],
-      ),
-    );
+              ],
+            ),
+            Expanded(
+                child: personalSchedulesOfDay.isNotEmpty
+                    ? ListView.builder(
+                        shrinkWrap: true,
+                        itemCount: personalSchedulesOfDay.length,
+                        itemBuilder: (context, index) {
+                          PersonalScheduleModel todo =
+                              personalSchedulesOfDay[index];
+                          return InkWell(
+                              onTap: () {
+                                showDialog(
+                                    context: context,
+                                    builder: (dialogContext) =>
+                                        toDoDetailsDialog(context, todo));
+                              },
+                              child: PersonalScheduleElementWidget(
+                                todo: todo,
+                              ));
+                        })
+                    : Align(
+                        alignment: Alignment.center,
+                        child: Text('Không có dữ liệu',
+                            style: ThemeText.textStyle
+                                .copyWith(color: AppColors.blue800)),
+                      ))
+          ],
+        ),
+      );
+    });
   }
 
   Widget toDoDetailsDialog(
@@ -93,7 +94,8 @@ class PersonalScheduleWidget extends  GetView<HomeController> {
           color: AppColors.blue900,
           child: Text(
             'Chi tiết',
-            style: ThemeText.titleStyle.copyWith(color: AppColors.bianca),
+            style: ThemeText.titleStyle
+                .copyWith(color: AppColors.bianca, fontSize: 18.sp),
           ),
         ),
         children: [
@@ -105,54 +107,11 @@ class PersonalScheduleWidget extends  GetView<HomeController> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Padding(
-                  padding: EdgeInsets.only(bottom: 8.sp),
-                  child: Text(
-                      toDoItem.name != null ? toDoItem.name as String : '',
-                      style: ThemeText.titleStyle2
-                          .copyWith(color: AppColors.blue900)),
-                ),
-                Padding(
-                  padding: EdgeInsets.only(bottom: 8.sp),
-                  child: SizedBox(
-                    width: MediaQuery.of(context).size.width,
-                    child: RichText(
-                      text: TextSpan(
-                        text: 'Thời gian: ',
-                        style: ThemeText.titleStyle2
-                            .copyWith(color: AppColors.blue900),
-                        children: <TextSpan>[
-                          TextSpan(
-                              text: '',
-                              //getTime(toDoItem),
-                              style: ThemeText.titleStyle2.copyWith(
-                                  color: AppColors.blue900,
-                                  fontWeight: FontWeight.normal)),
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
-                Padding(
-                  padding: EdgeInsets.only(bottom: 8.sp),
-                  child: SizedBox(
-                    width: MediaQuery.of(context).size.width,
-                    child: RichText(
-                      text: TextSpan(
-                        text: 'Ghi ch: ',
-                        style: ThemeText.titleStyle2
-                            .copyWith(color: AppColors.blue900),
-                        children: <TextSpan>[
-                          TextSpan(
-                              text: toDoItem.note ?? '',
-                              style: ThemeText.titleStyle2.copyWith(
-                                  color: AppColors.blue900,
-                                  fontWeight: FontWeight.normal)),
-                        ],
-                      ),
-                    ),
-                  ),
-                )
+                _buildDetailInfo(context, title: toDoItem.name ?? '', info: ''),
+                _buildDetailInfo(context,
+                    title: 'Thời gian: ', info: toDoItem.timer ?? ''),
+                _buildDetailInfo(context,
+                    title: 'Ghi chú: ', info: toDoItem.note ?? ''),
               ],
             ),
           ),
@@ -161,22 +120,49 @@ class PersonalScheduleWidget extends  GetView<HomeController> {
             child: IconButton(
               padding: EdgeInsets.symmetric(horizontal: 16.sp),
               onPressed: () {
-                debugPrint(toDoItem.id);
-                Navigator.pop(context);
-                Navigator.pushNamed(context, '/todo-detail',
-                        arguments: toDoItem)
-                    .then((value) {
-                  if (value != null) {
-                    // BlocProvider.of<CalendarBloc>(context)
-                    //     .add(GetAllScheduleDataEvent());
-                  }
-                });
+                //  debugPrint(toDoItem.id);
+                Get.back();
+                debugPrint('=========1');
+                Get.find<TodoController>().getPersonalSchedule(toDoItem);
+                debugPrint('=========2');
+                Get.toNamed(AppRoutes.todo);
+                debugPrint('=========3');
+                //     ?.then((value) async {
+                //   if (value != null) {
+                //     await controller.getPersonalScheduleLocal();
+                //   }
+                // });
               },
               icon: const Icon(Icons.edit),
               color: AppColors.blue900,
             ),
           )
         ]);
+  }
+
+  Widget _buildDetailInfo(BuildContext context,
+      {required String title, required String info}) {
+    return Padding(
+      padding: EdgeInsets.only(bottom: 8.sp),
+      child: SizedBox(
+        width: MediaQuery.of(context).size.width,
+        child: RichText(
+          text: TextSpan(
+            text: title,
+            style: ThemeText.titleStyle2
+                .copyWith(color: AppColors.blue900, fontSize: 16.sp),
+            children: <TextSpan>[
+              TextSpan(
+                  text: info,
+                  style: ThemeText.titleStyle2.copyWith(
+                      color: AppColors.blue900,
+                      fontSize: 16.sp,
+                      fontWeight: FontWeight.normal)),
+            ],
+          ),
+        ),
+      ),
+    );
   }
 
   // String getTime(PersonalScheduleEntities item) {

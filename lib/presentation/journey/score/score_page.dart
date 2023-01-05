@@ -11,6 +11,8 @@ import 'package:kit_schedule_v2/presentation/widgets/loading_widget.dart';
 import 'components/header_scores_widget.dart';
 
 class ScorePage extends GetView<ScoreController> {
+  const ScorePage({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return AppRefreshWidget(
@@ -97,9 +99,8 @@ class ScorePage extends GetView<ScoreController> {
                       children: [
                         Container(
                           padding: EdgeInsets.all(20.sp),
-                          decoration: BoxDecoration(
-                              color: AppColors.blue100,
-                              shape: BoxShape.circle),
+                          decoration: const BoxDecoration(
+                              color: AppColors.blue100, shape: BoxShape.circle),
                           child: Text(
                             (controller.studentScores.value?.avgScore ?? '')
                                 .toString(),
@@ -121,8 +122,7 @@ class ScorePage extends GetView<ScoreController> {
                   Container(
                     margin: EdgeInsets.symmetric(vertical: 8.h),
                     decoration: BoxDecoration(
-                        border:
-                            Border.all(color: AppColors.blue800),
+                        border: Border.all(color: AppColors.blue800),
                         borderRadius:
                             const BorderRadius.all(Radius.circular(8))),
                     child: Column(
@@ -213,28 +213,22 @@ class ScorePage extends GetView<ScoreController> {
         ),
       ),
       children: [
-        Container(
-          // margin: EdgeInsets.symmetric(
-          //
-          //   //vertical: WidgetsConstants.paddingVertical
-          // ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              _buildDetailInfo(context,
-                  title: 'Điểm thành phần 1',
-                  info: score.firstComponentScore ?? ''),
-              _buildDetailInfo(context,
-                  title: 'Điểm thành phần 2',
-                  info: score.secondComponentScore ?? ''),
-              _buildDetailInfo(context,
-                  title: 'Điểm thi cuối kì', info: score.examScore ?? ''),
-              _buildDetailInfo(context,
-                  title: 'Điểm tổng kết', info: score.avgScore ?? ''),
-              _buildDetailInfo(context,
-                  title: 'Điểm chữ', info: score.alphabetScore ?? ''),
-            ],
-          ),
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            _buildDetailInfo(context,
+                title: 'Điểm thành phần 1',
+                info: score.firstComponentScore ?? ''),
+            _buildDetailInfo(context,
+                title: 'Điểm thành phần 2',
+                info: score.secondComponentScore ?? ''),
+            _buildDetailInfo(context,
+                title: 'Điểm thi cuối kì', info: score.examScore ?? ''),
+            _buildDetailInfo(context,
+                title: 'Điểm tổng kết', info: score.avgScore ?? ''),
+            _buildDetailInfo(context,
+                title: 'Điểm chữ', info: score.alphabetScore ?? ''),
+          ],
         ),
       ],
     );
@@ -249,8 +243,8 @@ class ScorePage extends GetView<ScoreController> {
         child: RichText(
           text: TextSpan(
             text: '$title: ',
-            style: ThemeText.titleStyle2.copyWith(
-                color: AppColors.blue900, fontSize: 16.sp),
+            style: ThemeText.titleStyle2
+                .copyWith(color: AppColors.blue900, fontSize: 16.sp),
             children: <TextSpan>[
               TextSpan(
                   text: info,
