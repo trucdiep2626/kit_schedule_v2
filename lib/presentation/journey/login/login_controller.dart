@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:kit_schedule_v2/common/common_export.dart';
+import 'package:kit_schedule_v2/common/config/network/api_exceptions.dart';
+import 'package:kit_schedule_v2/common/config/network/network_state.dart';
 import 'package:kit_schedule_v2/domain/models/student_info_model.dart';
 import 'package:kit_schedule_v2/domain/usecases/school_usecase.dart';
 import 'package:kit_schedule_v2/presentation/controllers/mixin/export.dart';
@@ -25,6 +27,12 @@ class LoginController extends GetxController with MixinController {
   }
 
   Future<void> onPressedLogin() async {
+    if (!await NetworkState.isConnected) {
+      showTopSnackBar(context,
+          message: 'Không có kết nối Internet', type: SnackBarType.error);
+      return;
+    }
+
     rxLoginLoadedType.value = LoadedType.start;
 
     if (accountController.text.trim().isEmpty ||
@@ -32,16 +40,10 @@ class LoginController extends GetxController with MixinController {
       return;
     }
 
-    if (!await NetworkState.isConnected) {
-      showTopSnackBar(context,
-          message: 'Đã có lỗi xảy ra. Vui lòng thử lại',
-          type: SnackBarType.error);
-
     try {
       final result = await schoolUseCase.getSchoolSchedule(
           username: accountController.text.trim().toUpperCase(),
           password: passwordController.text.trim());
-      debugPrint('===============$result');
       if (!isNullEmpty(result)) {
         schoolUseCase.insertSchoolScheduleLocal(result?.studentSchedule ?? []);
         schoolUseCase.setStudentInfoLocal(result?.studentInfo ?? StudentInfo());
@@ -50,13 +52,15 @@ class LoginController extends GetxController with MixinController {
           sharePreferencesConstants.setIsLogIn(isLogIn: true);
         }
 
-        debugPrint('===============');
         Get.offAndToNamed(AppRoutes.main);
       } else {
         showTopSnackBar(context,
             message: 'Tài khoản đăng nhập không đúng',
             type: SnackBarType.error);
       }
+    } on WrongPasswordError {
+      showTopSnackBar(context,
+          message: 'Đăng nhập thất bại', type: SnackBarType.error);
     } catch (e) {
       showTopSnackBar(context,
           message: 'Đã có lỗi xảy ra. Vui lòng thử lại',

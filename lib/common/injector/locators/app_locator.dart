@@ -3,10 +3,8 @@ import 'package:kit_schedule_v2/common/config/database/hive_config.dart';
 import 'package:kit_schedule_v2/common/constants/shared_preferences_constants.dart';
 import 'package:kit_schedule_v2/data/local_repository.dart';
 import 'package:kit_schedule_v2/data/remote/school_repository.dart';
-import 'package:kit_schedule_v2/data/remote/weather_repository.dart';
 import 'package:kit_schedule_v2/domain/usecases/personal_usecase.dart';
 import 'package:kit_schedule_v2/domain/usecases/school_usecase.dart';
-import 'package:kit_schedule_v2/domain/usecases/weather_usecase.dart';
 import 'package:kit_schedule_v2/presentation/controllers/app_controller.dart';
 import 'package:kit_schedule_v2/presentation/journey/home/home_controller.dart';
 import 'package:kit_schedule_v2/presentation/journey/login/login_controller.dart';
@@ -41,15 +39,12 @@ void configLocator() {
       sharePreferencesConstants: getIt<SharePreferencesConstants>()));
 
   /// UseCases
-  getIt.registerFactory<WeatherUseCase>(
-      () => WeatherUseCase(weatherRepo: getIt<WeatherRepository>()));
   getIt.registerFactory<SchoolUseCase>(
       () => SchoolUseCase(schoolRepository: getIt<SchoolRepository>()));
   getIt.registerFactory<PersonalUsecase>(
       () => PersonalUsecase(getIt<LocalRepository>()));
 
   /// Repositories
-  getIt.registerFactory<WeatherRepository>(() => WeatherRepository());
   getIt.registerFactory<LocalRepository>(
       () => LocalRepository(hiveConfig: getIt<HiveConfig>()));
   getIt.registerFactory<SchoolRepository>(
