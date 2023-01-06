@@ -37,10 +37,22 @@ class PersonalPage extends GetView<PersonalController> {
                     )),
                 Padding(
                     padding: EdgeInsets.symmetric(vertical: 16.sp),
-                    child: Text(
-                      _mainController.studentInfo.value.displayName ?? '',
-                      textAlign: TextAlign.center,
-                      style: ThemeText.headerStyle2.copyWith(fontSize: 24.sp),
+                    child: Column(
+                      children: [
+                        Text(
+                          _mainController.studentInfo.value.displayName ?? '',
+                          textAlign: TextAlign.center,
+                          style: ThemeText.bodySemibold.s20.blue900,
+                        ),
+                        SizedBox(
+                          height: 4,
+                        ),
+                        Text(
+                          _mainController.studentInfo.value.studentCode ?? '',
+                          textAlign: TextAlign.center,
+                          style: ThemeText.bodyRegular.s16,
+                        ),
+                      ],
                     ))
               ],
             ),
@@ -164,14 +176,14 @@ class PersonalPage extends GetView<PersonalController> {
             Icon(
               icon,
               color: AppColors.blue900,
+              size: 20.sp,
             ),
             SizedBox(
               width: 12.w,
             ),
             Text(title,
-                style: ThemeText.buttonStyle.copyWith(
+                style: ThemeText.bodyRegular.copyWith(
                   color: AppColors.blue900,
-                  fontSize: 16.sp,
                 )),
           ],
         ),
@@ -194,7 +206,7 @@ class PersonalPage extends GetView<PersonalController> {
         color: AppColors.blue900,
         child: Text(
           'Cài đặt thông báo',
-          style: ThemeText.titleStyle
+          style: ThemeText.bodySemibold
               .copyWith(color: AppColors.bianca, fontSize: 18.sp),
         ),
       ),
@@ -260,7 +272,7 @@ class PersonalPage extends GetView<PersonalController> {
     //     top: 16.sp,
     //   ),
     //   title: Text('Thông báo',
-    //       style: ThemeText.titleStyle.copyWith(color: AppColors.blue900)),
+    //       style: ThemeText.bodySemibold.copyWith(color: AppColors.blue900)),
     //   children: [
     //     _dialogItem(
     //       title: 'Bật thông báo',
@@ -332,8 +344,7 @@ class PersonalPage extends GetView<PersonalController> {
                     alignment: Alignment.centerLeft,
                     child: Text(
                       title,
-                      style: ThemeText.buttonStyle
-                          .copyWith(color: AppColors.blue900),
+                      style: ThemeText.bodyMedium.blue900,
                     ),
                   ),
                 ),

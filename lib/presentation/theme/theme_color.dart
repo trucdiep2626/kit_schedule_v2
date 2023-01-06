@@ -5,10 +5,10 @@ class AppColors {
   static const Color primary = Color(0xFF012A4A);
   static const Color text = black;
   static Color? background = grey50;
-  // static const backgroundColor = Color(0xffFCFAF3);
-  // static const bianca = Color(0xffFCFAF3);
-  static const backgroundColor = Color(0xfff6f6f6);
-  static const bianca = Color(0xfff6f6f6);
+   static const backgroundColor = Color(0xffFCFAF3);
+   static const bianca = Color(0xffFCFAF3);
+ // static const backgroundColor = Color(0xfff6f6f6);
+ // static const bianca = Color(0xfff6f6f6);
   static const Color charade = Color(0xff012A4A);
   static const Color white = Colors.white;
 
@@ -60,10 +60,10 @@ class AppColors {
 
   static const Color borderColor = blue400;
   //red
-  static const Color red = Color(0xFFa0001c);
-  static const Color redAccent = Color(0xFFE99394);
-  static const Color red50 = Color(0xFFf8edeb);
-  static const Color red100 = Color(0xfff1ece4);
+  static const Color red = Colors.red;
+  static const Color redAccent = Colors.redAccent;
+  static const Color red50 = Color(0xffFFEBEE);
+  static const Color red100 = Color(0xffFFCDD2);
 
   //black
   static const Color black = Colors.black;
@@ -147,3 +147,5 @@ class AppColors {
   // static Color? black45 = Colors.black45;
 
 }
+
+

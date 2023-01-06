@@ -83,7 +83,7 @@
 //                         (date, locale) =>
 //                     (DateFormat.yMMMM(locale).format(date).capitalize ?? ''),
 //                     titleCentered: true,
-//                     titleTextStyle: ThemeText.titleStyle
+//                     titleTextStyle: ThemeText.bodySemibold
 //                         .copyWith(color: AppColors.black54, fontSize: 18.sp),
 //                   ),
 //                   startingDayOfWeek: StartingDayOfWeek.monday,

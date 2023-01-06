@@ -62,6 +62,7 @@ class LoginController extends GetxController with MixinController {
       showTopSnackBar(context,
           message: 'Đăng nhập thất bại', type: SnackBarType.error);
     } catch (e) {
+      debugPrint(e.toString());
       showTopSnackBar(context,
           message: 'Đã có lỗi xảy ra. Vui lòng thử lại',
           type: SnackBarType.error);

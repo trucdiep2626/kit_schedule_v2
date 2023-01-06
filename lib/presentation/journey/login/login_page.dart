@@ -43,19 +43,11 @@ class LoginPage extends GetView<LoginController> {
                 FittedBox(
                   child: Text(
                     "Chào mừng bạn đến với",
-                    style: TextStyle(
-                        fontSize: 20.sp,
-                        color: Colors.black,
-                        fontFamily: "MR",
-                        fontWeight: FontWeight.w400),
+                    style: ThemeText.heading2.blue900.w500() ,
                   ),
                 ),
-                Text("KMA Schedule",
-                    style: TextStyle(
-                        fontSize: 35.sp,
-                        color: Colors.black,
-                        fontFamily: "MR",
-                        fontWeight: FontWeight.bold)),
+                Text("Kit Schedule",
+                    style: ThemeText.heading1.blue900.s36.w700()),
                 SizedBox(height: 65.sp),
                 Form(
                     key: controller.textFormKey,
@@ -70,8 +62,8 @@ class LoginPage extends GetView<LoginController> {
                           },
                           labelText: "Tài khoản",
                           controller: controller.accountController,
-                          textStyle: ThemeText.labelStyle,
-                          colorBoder: AppColors.blue800,
+                          textStyle: ThemeText.bodyRegular.blue900,
+                          colorBoder: AppColors.blue900,
                         ),
                         SizedBox(
                           height: 15.h,
@@ -83,10 +75,10 @@ class LoginPage extends GetView<LoginController> {
                                 }
                                 return null;
                               },
-                              colorBoder: AppColors.blue800,
+                              colorBoder: AppColors.blue900,
                               labelText: "Mật khẩu",
                               controller: controller.passwordController,
-                              textStyle: ThemeText.labelStyle,
+                              textStyle: ThemeText.bodyRegular.blue900,
                               obscureText: !controller.isShow.value,
                               seffixIcon: IconButton(
                                 onPressed: controller.rxLoginLoadedType.value ==
@@ -97,7 +89,7 @@ class LoginPage extends GetView<LoginController> {
                                   !controller.isShow.value
                                       ? Icons.visibility
                                       : Icons.visibility_off,
-                                  color: AppColors.blue800,
+                                  color: AppColors.blue900,
                                 ),
                               ),
                               onSubmitted: (pass) {
@@ -141,7 +133,7 @@ class LoginPage extends GetView<LoginController> {
                           height: 57.sp,
                           width: 85.sp,
                           decoration: BoxDecoration(
-                              color: AppColors.blue800,
+                              color: AppColors.blue900,
                               borderRadius:
                                   const BorderRadius.all(Radius.circular(10))),
                           child: controller.rxLoginLoadedType.value ==

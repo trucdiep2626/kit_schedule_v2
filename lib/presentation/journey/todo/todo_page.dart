@@ -89,8 +89,7 @@ class TodoPage extends GetView<TodoController> {
                               controller.personalSchedule.value == null
                                   ? 'Tạo ghi chú'
                                   : 'Sửa ghi chú',
-                              style: ThemeText.headerStyle2
-                                  .copyWith(fontSize: 18.sp),
+                              style: ThemeText.bodySemibold.s18,
                             ),
                           ),
                           controller.personalSchedule.value == null
@@ -166,7 +165,7 @@ class TodoPage extends GetView<TodoController> {
                                         EdgeInsets.symmetric(vertical: 12.sp),
                                     child: Text(
                                       'Lưu',
-                                      style: ThemeText.titleStyle.copyWith(
+                                      style: ThemeText.bodySemibold.copyWith(
                                           color: AppColors.bianca,
                                           fontSize: 18.sp),
                                     ),
@@ -216,19 +215,19 @@ class TodoPage extends GetView<TodoController> {
   //               textAlign: TextAlign.center,
   //               text: TextSpan(
   //                   text: AppLocalizations.of(context)!.doYouWant,
-  //                   style: ThemeText.titleStyle.copyWith(
+  //                   style: ThemeText.bodySemibold.copyWith(
   //                       color: Colors.black54, fontWeight: FontWeight.normal),
   //                   children: [
   //                     TextSpan(
   //                         text: AppLocalizations.of(context)!.delete,
-  //                         style: ThemeText.titleStyle.copyWith(
+  //                         style: ThemeText.bodySemibold.copyWith(
   //                           color: AppColor.errorColor,
   //                         )),
   //                   ]),
   //             ),
   //             Text(
   //               '${this.widget.personalSchedule!.name}?',
-  //               style: ThemeText.titleStyle.copyWith(
+  //               style: ThemeText.bodySemibold.copyWith(
   //                 color: Colors.black54,
   //                 fontWeight: FontWeight.normal,
   //               ),

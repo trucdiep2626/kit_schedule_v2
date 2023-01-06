@@ -18,11 +18,7 @@ class AppBarWidget extends StatelessWidget implements PreferredSizeWidget {
               children: [
                 Text(
                   'Đăng nhập',
-                  style: TextStyle(
-                      fontFamily: "MR",
-                      color: AppColors.blue800,
-                      fontWeight: FontWeight.w600,
-                      fontSize: 16.sp),
+                  style: ThemeText.bodySemibold,
                 ),
                 SizedBox(
                   height: 5.sp,
@@ -31,7 +27,7 @@ class AppBarWidget extends StatelessWidget implements PreferredSizeWidget {
                   width: 30.sp,
                   height: 2.5.sp,
                   decoration: BoxDecoration(
-                      color:AppColors.blue800,
+                      color:AppColors.blue900,
                       borderRadius:
                           const BorderRadius.all(Radius.circular(10))),
                 ),

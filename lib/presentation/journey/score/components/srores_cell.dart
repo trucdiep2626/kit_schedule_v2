@@ -57,7 +57,7 @@ class ScoresCell extends StatelessWidget {
       alignment: Alignment.center,
       child: Text(score,
           textAlign: TextAlign.center,
-          style: ThemeText.labelStyle.copyWith(fontSize: 12.sp)),
+          style: ThemeText.bodyMedium.s12),
     );
   }
 }

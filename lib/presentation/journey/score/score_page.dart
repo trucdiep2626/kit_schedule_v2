@@ -15,70 +15,51 @@ class ScorePage extends GetView<ScoreController> {
 
   @override
   Widget build(BuildContext context) {
-    return AppRefreshWidget(
-      controller: controller.scoreRefreshController,
-      onRefresh: controller.onRefresh,
-      child: Scaffold(
-        backgroundColor: AppColors.bianca,
-        // appBar: AppBar(
-        //   backgroundColor: AppColors.bianca,
-        //   elevation: 0,
-        //   title: Text(
-        //     'Điểm của tôi',
-        //     textAlign: TextAlign.center,
-        //     style: ThemeText.headerStyle2.copyWith(fontSize: 18.sp),
-        //   ),
-        //   leadingWidth: 0,
-        //   // actions: [
-        //   //   IconButton(
-        //   //       onPressed: () async {
-        //   //         final result = await Navigator.pushNamed(
-        //   //             context, RouteList.addScores);
-        //   //         log(result.toString());
-        //   //         if (result is bool && result == true) {
-        //   //           BlocProvider.of<ScoresBloc>(context)
-        //   //               .add(LoadScoresEvent());
-        //   //           BlocProvider.of<ScoresBloc>(context)
-        //   //               .add(CalculateGpaScoreEvent());
-        //   //         }
-        //   //       },
-        //   //       icon: Icon(
-        //   //         Icons.add,
-        //   //         color: AppColors.blue800,
-        //   //       )),
-        //   //   SizedBox(
-        //   //     width: 10.w,
-        //   //   )
-        //   // ],
-        // ),
-        body: Padding(
-            padding: EdgeInsets.only(
-                left: 16.sp,
-                right: 16.sp,
-                top: Get.mediaQuery.padding.top + 16.sp),
-            child: SingleChildScrollView(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'Điểm của tôi',
-                    textAlign: TextAlign.center,
-                    style: ThemeText.headerStyle2.copyWith(fontSize: 18.sp),
-                  ),
-                  Obx(() =>
-                      controller.rxScoreLoadedType.value == LoadedType.start
-                          ? SizedBox(
-                              width: Get.width,
-                              height: Get.height -
-                                  18.sp -
-                                  Get.mediaQuery.padding.top +
-                                  16.sp,
-                              child: const Center(child: LoadingWidget()))
-                          : _buildBody()),
-                ],
-              ),
-            )),
-      ),
+    controller.context = context;
+    return Scaffold(
+      backgroundColor: AppColors.bianca,
+      body: Padding(
+          padding: EdgeInsets.only(
+              left: 16.sp,
+              right: 16.sp,
+              top: Get.mediaQuery.padding.top + 16.sp),
+          child: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  mainAxisSize: MainAxisSize.max,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Expanded(
+                      child: Text(
+                        'Điểm của tôi',
+                        textAlign: TextAlign.left,
+                        style: ThemeText.bodySemibold.s18,
+                      ),
+                    ),
+                    IconButton(
+                        padding: EdgeInsets.zero,
+                        onPressed: () async => await controller.onRefresh(),
+                        icon: Icon(
+                          Icons.update,
+                          color: AppColors.blue900,
+                          size: 24.sp,
+                        ))
+                  ],
+                ),
+                Obx(() => controller.rxScoreLoadedType.value == LoadedType.start
+                    ? SizedBox(
+                        width: Get.width,
+                        height: Get.height -
+                            18.sp -
+                            Get.mediaQuery.padding.top +
+                            16.sp,
+                        child: const Center(child: LoadingWidget()))
+                    : _buildBody()),
+              ],
+            ),
+          )),
     );
   }
 
@@ -104,7 +85,7 @@ class ScorePage extends GetView<ScoreController> {
                           child: Text(
                             (controller.studentScores.value?.avgScore ?? '')
                                 .toString(),
-                            style: ThemeText.headerStyle2
+                            style: ThemeText.bodySemibold
                                 .copyWith(fontSize: 25.sp),
                           ),
                         ),
@@ -113,7 +94,7 @@ class ScorePage extends GetView<ScoreController> {
                           child: Text(
                             controller.studentScores.value?.id ?? '',
                             textAlign: TextAlign.center,
-                            style: ThemeText.headerStyle2,
+                            style: ThemeText.bodySemibold,
                           ),
                         )
                       ],
@@ -208,7 +189,7 @@ class ScorePage extends GetView<ScoreController> {
         color: AppColors.blue900,
         child: Text(
           score.subject?.name ?? '',
-          style: ThemeText.titleStyle
+          style: ThemeText.bodySemibold
               .copyWith(color: AppColors.bianca, fontSize: 18.sp),
         ),
       ),
@@ -243,15 +224,11 @@ class ScorePage extends GetView<ScoreController> {
         child: RichText(
           text: TextSpan(
             text: '$title: ',
-            style: ThemeText.titleStyle2
-                .copyWith(color: AppColors.blue900, fontSize: 16.sp),
+            style: ThemeText.bodySemibold.blue900.s16,
             children: <TextSpan>[
               TextSpan(
                   text: info,
-                  style: ThemeText.titleStyle2.copyWith(
-                      color: AppColors.blue900,
-                      fontSize: 16.sp,
-                      fontWeight: FontWeight.normal)),
+                  style: ThemeText.bodySemibold.blue900.s16.w400()),
             ],
           ),
         ),

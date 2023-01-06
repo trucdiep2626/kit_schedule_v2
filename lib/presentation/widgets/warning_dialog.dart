@@ -23,27 +23,27 @@ void warningDialog(
               //     ? SizedBox()
               //     : Text(
               //   AppLocalizations.of(context)!.synchronizedTxt,
-              //   style: ThemeText.titleStyle.copyWith(
+              //   style: ThemeText.bodySemibold.copyWith(
               //       fontSize: MainScreenConstants.synchronizedSize),
               // ),
               RichText(
                 text: TextSpan(
                     text: 'Bạn có muốn',
-                    style: ThemeText.titleStyle.copyWith(
+                    style: ThemeText.bodySemibold.copyWith(
                       color: AppColors.black54,
                       fontSize: 16.sp,
                     ),
                     children: [
                       TextSpan(
                         text: name == null ? ' đăng xuất' : ' xoá',
-                        style: ThemeText.titleStyle.copyWith(
+                        style: ThemeText.bodySemibold.copyWith(
                           color: AppColors.errorColor,
                           fontSize: 16.sp,
                         ),
                       ),
                       TextSpan(
                         text: '?',
-                        style: ThemeText.titleStyle.copyWith(
+                        style: ThemeText.bodySemibold.copyWith(
                           color: AppColors.black54,
                           fontWeight: FontWeight.normal,
                           fontSize: 16.sp,
@@ -57,7 +57,7 @@ void warningDialog(
               name == null
                   ? Text(
                       'Các ghi chú đã tạo sẽ bị mất khi đăng xuất.',
-                      style: ThemeText.titleStyle.copyWith(
+                      style: ThemeText.bodySemibold.copyWith(
                         color: AppColors.black54,
                         fontSize: 14.sp,
                       ),
@@ -67,7 +67,7 @@ void warningDialog(
                     )
                   : Text(
                       name,
-                      style: ThemeText.titleStyle.copyWith(
+                      style: ThemeText.bodySemibold.copyWith(
                         color: AppColors.black54,
                         fontSize: 16.sp,
                         fontWeight: FontWeight.normal,
@@ -101,10 +101,7 @@ void warningDialog(
             padding: EdgeInsets.symmetric(vertical: 8.sp, horizontal: 16.sp),
             child: Text(
               'Đồng ý',
-              style: ThemeText.buttonLabelStyle.copyWith(
-                  fontSize: 16.sp,
-                  color: AppColors.bianca,
-                  fontWeight: FontWeight.bold),
+              style: ThemeText.bodySemibold.s16.bianca,
             ),
           ),
         ),
@@ -132,10 +129,7 @@ void warningDialog(
           child: Padding(
             padding: EdgeInsets.symmetric(vertical: 8.sp, horizontal: 16.sp),
             child: Text('Huỷ',
-                style: ThemeText.buttonLabelStyle.copyWith(
-                    fontSize: 16.sp,
-                    color: AppColors.bianca,
-                    fontWeight: FontWeight.bold)),
+              style: ThemeText.bodySemibold.s16.bianca,),
           ),
         ),
       )).show();

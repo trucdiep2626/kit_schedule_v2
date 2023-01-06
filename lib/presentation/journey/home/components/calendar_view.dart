@@ -42,29 +42,27 @@ class _CalendarViewState extends State<CalendarView> {
         lastDay: DateTime.utc(2030, 3, 14),
         focusedDay: _focusedDay,
         eventLoader: _getEventsForDay,
-
         startingDayOfWeek: StartingDayOfWeek.monday,
         daysOfWeekStyle: DaysOfWeekStyle(
-            weekdayStyle: ThemeText.dayOfWeekStyle,
-            weekendStyle:
-                ThemeText.dayOfWeekStyle.copyWith(color: AppColors.red)),
+            weekdayStyle: ThemeText.bodySemibold.black54,
+            weekendStyle: ThemeText.bodyRegular.red),
         calendarStyle: CalendarStyle(
             isTodayHighlighted: true,
-            markerDecoration:
-                BoxDecoration(shape: BoxShape.circle, color: AppColors.blue600),
-            todayDecoration:
-                BoxDecoration(shape: BoxShape.circle, color: AppColors.blue200),
-            selectedDecoration: BoxDecoration(color: AppColors.blue900),
+            markerDecoration: const BoxDecoration(
+                shape: BoxShape.circle, color: AppColors.blue600),
+            todayDecoration: const BoxDecoration(
+                shape: BoxShape.circle, color: AppColors.blue200),
+            selectedDecoration: const BoxDecoration(color: AppColors.blue900),
             markerSize: 8.sp,
             rangeHighlightColor: AppColors.blue900,
             markersMaxCount: 1,
             outsideDaysVisible: true,
-            weekendTextStyle: TextStyle(color: AppColors.red),
-            selectedTextStyle: TextStyle(color: AppColors.red),
-            todayTextStyle: TextStyle(
-                color: AppColors.blue900, fontWeight: FontWeight.bold)),
+            weekendTextStyle: const TextStyle(color: AppColors.red),
+            selectedTextStyle: const TextStyle(color: AppColors.red),
+            todayTextStyle: const TextStyle(
+                color: AppColors.bianca, fontWeight: FontWeight.bold)),
         headerStyle: HeaderStyle(
-          titleTextStyle: ThemeText.titleStyle
+          titleTextStyle: ThemeText.bodySemibold
               .copyWith(color: AppColors.black54, fontSize: 18.sp),
           formatButtonVisible: false,
           titleCentered: true,
@@ -109,7 +107,6 @@ class _CalendarViewState extends State<CalendarView> {
         _focusedDay = focusedDay;
       });
     }
-
     Get.find<HomeController>().onChangedSelectedDate(selectedDay);
 
     // BlocProvider.of<ScheduleBloc>(context)

@@ -37,11 +37,7 @@ class PersonalScheduleWidget extends GetView<HomeController> {
               mainAxisSize: MainAxisSize.min,
               children: <Widget>[
                 Text('Ghi chú',
-                    style: ThemeText.titleStyle.copyWith(
-                      fontSize: 16.sp,
-                      fontWeight: FontWeight.bold,
-                      color: AppColors.blue800,
-                    )),
+                    style: ThemeText.bodySemibold.s16.blue800),
                 Container(
                     decoration: const BoxDecoration(
                         shape: BoxShape.circle, color: AppColors.blue800),
@@ -49,7 +45,7 @@ class PersonalScheduleWidget extends GetView<HomeController> {
                     padding: const EdgeInsets.all(5),
                     child: Text(
                       '${personalSchedulesOfDay.length}',
-                      style: ThemeText.numberStyle,
+                      style: ThemeText.bodyRegular,
                     ))
               ],
             ),
@@ -75,8 +71,7 @@ class PersonalScheduleWidget extends GetView<HomeController> {
                     : Align(
                         alignment: Alignment.center,
                         child: Text('Không có dữ liệu',
-                            style: ThemeText.textStyle
-                                .copyWith(color: AppColors.blue800)),
+                            style: ThemeText.bodyRegular.blue800,),
                       ))
           ],
         ),
@@ -94,7 +89,7 @@ class PersonalScheduleWidget extends GetView<HomeController> {
           color: AppColors.blue900,
           child: Text(
             'Chi tiết',
-            style: ThemeText.titleStyle
+            style: ThemeText.bodySemibold
                 .copyWith(color: AppColors.bianca, fontSize: 18.sp),
           ),
         ),
@@ -149,12 +144,12 @@ class PersonalScheduleWidget extends GetView<HomeController> {
         child: RichText(
           text: TextSpan(
             text: title,
-            style: ThemeText.titleStyle2
+            style: ThemeText.bodySemibold
                 .copyWith(color: AppColors.blue900, fontSize: 16.sp),
             children: <TextSpan>[
               TextSpan(
                   text: info,
-                  style: ThemeText.titleStyle2.copyWith(
+                  style: ThemeText.bodySemibold.copyWith(
                       color: AppColors.blue900,
                       fontSize: 16.sp,
                       fontWeight: FontWeight.normal)),

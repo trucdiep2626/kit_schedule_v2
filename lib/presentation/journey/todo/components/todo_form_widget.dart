@@ -36,7 +36,7 @@ class TodoFormWidget extends GetView<TodoController> {
                 controller: controller.nameController,
                 labelText: 'Tiêu đề',
                 textStyle:
-                    ThemeText.labelStyle.copyWith(fontWeight: FontWeight.w400),
+                    ThemeText.bodyRegular,
                 colorBoder: AppColors.blue800,
                 errorText: controller.validateText.value,
               )),
@@ -74,7 +74,7 @@ class TodoFormWidget extends GetView<TodoController> {
             controller: controller.noteController,
             labelText: 'Ghi chú',
             textStyle:
-                ThemeText.labelStyle.copyWith(fontWeight: FontWeight.w400),
+                ThemeText.bodyRegular,
             colorBoder: AppColors.blue800,
             maxLines: 5,
           ),
@@ -100,8 +100,7 @@ class TodoFormWidget extends GetView<TodoController> {
                   onTap: () => Navigator.of(context).pop(),
                   child: Text(
                     'OK',
-                    style: ThemeText.bodyText1
-                    //    .copyWith(color: AppColors.blue900)
+                    style: ThemeText.bodyRegular
                     ,
                   ),
                 ),
@@ -170,7 +169,7 @@ class TodoFormWidget extends GetView<TodoController> {
                   onTap: () => Navigator.of(context).pop(),
                   child: Text(
                     'OK',
-                    style: ThemeText.bodyText1
+                    style: ThemeText.bodyRegular
                     //    .copyWith(color: AppColors.blue900)
                     ,
                   ),

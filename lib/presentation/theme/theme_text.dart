@@ -1,154 +1,507 @@
 import 'package:flutter/material.dart';
 import 'package:kit_schedule_v2/common/common_export.dart';
+import 'package:kit_schedule_v2/gen/fonts.gen.dart';
 
 import 'theme_color.dart';
 
 class ThemeText {
-  static TextStyle headline1 = TextStyle(
-    fontSize: 96.sp,
-    color: AppColors.text,
-    fontWeight: FontWeight.w300,
+  /// Text style
+  static const TextStyle bodyRegular = TextStyle(
+    fontWeight: FontWeight.w400,
+    fontSize: 14,
+    fontFamily: FontFamily.mr,
+    color: AppColors.blue900,
   );
 
-  static TextStyle headline2 = TextStyle(
-    fontSize: 60.sp,
-    color: AppColors.text,
-    fontWeight: FontWeight.w300,
-  );
 
-  static TextStyle headline3 = TextStyle(
-    fontSize: 48.sp,
-    color: AppColors.text,
-    fontWeight: FontWeight.normal,
-  );
-
-  static TextStyle headline4 = TextStyle(
-    fontSize: 34.sp,
-    color: AppColors.text,
-    fontWeight: FontWeight.normal,
-  );
-
-  static TextStyle headline5 = TextStyle(
-    fontSize: 24.sp,
-    color: AppColors.text,
-    fontWeight: FontWeight.normal,
-  );
-
-  static TextStyle headline6 = TextStyle(
-    fontSize: 20.sp,
-    color: AppColors.text,
+  static final TextStyle bodyMedium = bodyRegular.copyWith(
     fontWeight: FontWeight.w500,
   );
 
-  static TextStyle subtitle1 = TextStyle(
-    fontSize: 16.sp,
-    color: AppColors.text,
+
+
+  static final TextStyle bodySemibold = bodyRegular.copyWith(
+    fontWeight: FontWeight.w600,
+  );
+
+  static final TextStyle bodyStrong = bodyRegular.copyWith(
+    fontWeight: FontWeight.w700,
+  );
+
+  static final TextStyle bodyUnderline = bodyRegular.copyWith(
+    decoration: TextDecoration.underline,
+  );
+
+  static final TextStyle bodyStrikethrough = bodyRegular.copyWith(
+    decoration: TextDecoration.lineThrough,
+  );
+
+  static final TextStyle bodyItalic = bodyRegular.copyWith(
+    fontStyle: FontStyle.italic,
+  );
+
+  static final TextStyle description = bodyRegular.copyWith(
+    fontSize: 12,
+  );
+
+  static const TextStyle bodySmall = TextStyle(
     fontWeight: FontWeight.w500,
+    fontSize: 10,
+    fontFamily: FontFamily.mr,
+    color: AppColors.blue900,
   );
 
-  static TextStyle subtitle2 = TextStyle(
-    fontSize: 14.sp,
-    color: AppColors.text,
+  static const TextStyle heading1 = TextStyle(
+    fontWeight: FontWeight.w600,
+    fontSize: 32,
+    fontFamily: FontFamily.mr,
+    color: AppColors.blue900,
+  );
+
+  static const TextStyle heading2 = TextStyle(
+    fontWeight: FontWeight.w600,
+    fontSize: 20,
+    fontFamily: FontFamily.mr,
+    color: AppColors.blue900,
+  );
+
+  static const TextStyle heading3 = TextStyle(
+    fontWeight: FontWeight.w600,
+    fontSize: 16,
+    fontFamily: FontFamily.mr,
+    color: AppColors.blue900,
+  );
+
+  static const TextStyle heading4 = TextStyle(
+    fontWeight: FontWeight.w600,
+    fontSize: 14,
+    fontFamily: FontFamily.mr,
+    color: AppColors.blue900,
+  );
+
+  static const TextStyle errorText = TextStyle(
     fontWeight: FontWeight.w500,
+    fontSize: 10,
+    fontFamily: FontFamily.mr,
   );
+}
 
-  static TextStyle bodyText1 = TextStyle(
-    fontSize: 16.sp,
-    color: AppColors.text,
-    fontWeight: FontWeight.normal,
-  );
+extension CommonFontWeight on TextStyle {
+  /// FontWeight.w100
+  TextStyle w100([double? fontSize]) => copyWith(
+        fontWeight: FontWeight.w100,
+        fontSize: fontSize,
+      );
 
-  static TextStyle bodyText2 = TextStyle(
-    fontSize: 13.sp,
-    color: AppColors.text,
-    fontWeight: FontWeight.normal,
-  );
+  /// FontWeight.w200
+  TextStyle w200([double? fontSize]) => copyWith(
+        fontWeight: FontWeight.w200,
+        fontSize: fontSize,
+      );
 
-  static TextStyle button = TextStyle(
-    fontSize: 14.sp,
-    color: AppColors.text,
-    fontWeight: FontWeight.w500,
-  );
+  /// FontWeight.w300
+  TextStyle w300([double? fontSize]) => copyWith(
+        fontWeight: FontWeight.w300,
+        fontSize: fontSize,
+      );
 
-  static TextStyle caption = TextStyle(
-    fontSize: 12.sp,
-    color: AppColors.text,
-    fontWeight: FontWeight.normal,
-  );
+  /// FontWeight.w400
+  TextStyle w400([double? fontSize]) => copyWith(
+        fontWeight: FontWeight.w400,
+        fontSize: fontSize,
+      );
 
-  static TextStyle overline = TextStyle(
-    fontSize: 10.sp,
-    color: AppColors.text,
-    fontWeight: FontWeight.normal,
-  );
+  /// FontWeight.w500
+  TextStyle w500([double? fontSize]) => copyWith(
+        fontWeight: FontWeight.w500,
+        fontSize: fontSize,
+      );
 
+  /// FontWeight.w600
+  TextStyle w600([double? fontSize]) => copyWith(
+        fontWeight: FontWeight.w600,
+        fontSize: fontSize,
+      );
 
-  static TextStyle buttonStyle = TextStyle(
-      color: AppColors.bianca,
-      fontSize: ScreenUtil().setSp(18),
-      fontWeight: FontWeight.w500);
+  /// FontWeight.w700
+  TextStyle w700([double? fontSize]) => copyWith(
+        fontWeight: FontWeight.w700,
+        fontSize: fontSize,
+      );
 
-  static TextStyle textStyle = TextStyle(
-      color: AppColors.charade,
-      fontSize: ScreenUtil().setSp(14),
-      fontWeight: FontWeight.w500);
+  /// FontWeight.w800
+  TextStyle w800([double? fontSize]) => copyWith(
+        fontWeight: FontWeight.w800,
+        fontSize: fontSize,
+      );
 
-  static TextStyle titleStyle = TextStyle(
-      fontSize: ScreenUtil().setSp(22),
-      color: AppColors.blue800,
-      fontFamily: 'MR',
-      fontWeight: FontWeight.w600);
+  /// FontWeight.w900
+  TextStyle w900([double? fontSize]) => copyWith(
+        fontWeight: FontWeight.w900,
+        fontSize: fontSize,
+      );
+}
 
-  static TextStyle titleStyle2 = TextStyle(
-      fontSize: ScreenUtil().setSp(20),
-      color: AppColors.blue800,
-      fontFamily: 'MR',
-      fontWeight: FontWeight.w600);
+extension CommonFontSize on TextStyle {
+  /// custom fontSize
+  TextStyle fSize(double fontSize) => copyWith(
+        fontSize: fontSize,
+      );
 
-  static TextStyle errorTextStyle = TextStyle(
-      fontSize: ScreenUtil().setSp(14),
-      color: AppColors.errorColor2,
-      fontFamily: "MR");
+  /// fontSize: 10
+  TextStyle get s10 => copyWith(
+        fontSize: 10,
+      );
 
-  static TextStyle numberStyle = TextStyle(
-      fontSize: ScreenUtil().setSp(14),
-      color: AppColors.bianca,
-      fontWeight: FontWeight.normal);
+  /// fontSize: 12
+  TextStyle get s12 => copyWith(
+        fontSize: 12,
+      );
 
-  static TextStyle headerStyle = TextStyle(
-      fontSize: ScreenUtil().setSp(25),
-      color: AppColors.bianca,
-      fontFamily: 'MR',
-      fontWeight: FontWeight.w600);
+  /// fontSize: 14
+  TextStyle get s14 => copyWith(
+        fontSize: 14,
+      );
 
-  static TextStyle headerStyle2 = TextStyle(
-      fontSize: ScreenUtil().setSp(25),
-      color: AppColors.blue900,
-      fontFamily: 'MR',
-      fontWeight: FontWeight.w600);
+  /// fontSize: 15
+  TextStyle get s15 => copyWith(
+        fontSize: 15,
+      );
 
-  static TextStyle textInforStyle = TextStyle(
-      fontFamily: 'MR',
-      color: AppColors.bianca,
-      fontSize: ScreenUtil().setSp(18),
-      fontWeight: FontWeight.normal);
+  /// fontSize: 16
+  TextStyle get s16 => copyWith(
+        fontSize: 16,
+      );
 
-  static TextStyle labelStyle = TextStyle(
-      fontSize: ScreenUtil().setSp(16),
-      color: AppColors.blue800,
-      fontWeight: FontWeight.w500,
-      fontFamily: "MR");
+  /// fontSize: 17
+  TextStyle get s17 => copyWith(
+        fontSize: 17,
+      );
 
-  static TextStyle buttonLabelStyle = TextStyle(
-      color: const Color(0xffFCFAF3),
-      fontSize: ScreenUtil().setSp(18),
-      fontFamily: 'MR',
-      fontWeight: FontWeight.w600);
+  /// fontSize: 18
+  TextStyle get s18 => copyWith(
+        fontSize: 18,
+      );
 
-  static TextStyle dayOfWeekStyle =
-  const TextStyle(fontFamily: 'MR', fontWeight: FontWeight.w400);
+  /// fontSize: 20
+  TextStyle get s20 => copyWith(
+        fontSize: 20,
+      );
 
-  /*static TextStyle errorTextStyle = TextStyle(
+  /// fontSize: 24
+  TextStyle get s24 => copyWith(
+        fontSize: 24,
+      );
+
+  /// fontSize: 32
+  TextStyle get s32 => copyWith(
+        fontSize: 32,
+      );
+
+  /// fontSize: 36
+  TextStyle get s36 => copyWith(
+        fontSize: 36,
+      );
+
+  /// fontSize: 40
+  TextStyle get s40 => copyWith(
+        fontSize: 40,
+      );
+
+  /// fontSize: 48
+  TextStyle get s48 => copyWith(
+        fontSize: 48,
+      );
+}
+
+extension CommonFontColor on TextStyle {
+  /// custom color
+  TextStyle setColor(Color? color) => copyWith(color: color);
+
+  /// color: AppColors.white,
+  TextStyle get colorWhite => copyWith(color: AppColors.white);
+
+  /// color: AppColors.black,
+  TextStyle get colorBlack => copyWith(color: AppColors.black);
+
+  /// color: AppColors.blue100;
+  TextStyle get blue100Color => copyWith(color: AppColors.blue100);
+
+  /// color: AppColors.blue200;
+  TextStyle get blue200Color => copyWith(color: AppColors.blue200);
+
+  /// color: AppColors.blue300;
+  TextStyle get blue300Color => copyWith(color: AppColors.blue300);
+
+  /// color: AppColors.blue400;
+  TextStyle get blue400Color => copyWith(color: AppColors.blue400);
+
+  /// color: AppColors.blue500;
+  TextStyle get blue500Color => copyWith(color: AppColors.blue500);
+
+  /// color: AppColors.blue600;
+  TextStyle get blue600Color => copyWith(color: AppColors.blue600);
+
+  /// color: AppColors.blue700;
+  TextStyle get blue700Color => copyWith(color: AppColors.blue700);
+
+  /// color: AppColors.blue800;
+  TextStyle get blue800Color => copyWith(color: AppColors.blue800);
+
+  /// color: AppColors.blue900;
+  TextStyle get blue900Color => copyWith(color: AppColors.blue900);
+
+  /// color: AppColors.grey100;
+  TextStyle get grey100Color => copyWith(color: AppColors.grey100);
+
+  /// color: AppColors.grey200;
+  TextStyle get grey200Color => copyWith(color: AppColors.grey200);
+
+  /// color: AppColors.grey300;
+  TextStyle get grey300Color => copyWith(color: AppColors.grey300);
+
+  /// color: AppColors.orange900;
+  TextStyle get grey400Color => copyWith(color: AppColors.grey400);
+
+  /// color: AppColors.grey;
+  TextStyle get grey500Color => copyWith(color: AppColors.grey);
+
+  /// color: AppColors.grey600;
+  TextStyle get grey600Color => copyWith(color: AppColors.grey600);
+
+  /// color: AppColors.grey700;
+  TextStyle get grey700Color => copyWith(color: AppColors.grey700);
+
+  /// color: AppColors.grey800;
+  TextStyle get grey800Color => copyWith(color: AppColors.grey800);
+
+  /// color: AppColors.transparent;
+  TextStyle get transparentColor => copyWith(color: AppColors.transparent);
+
+  /// color: AppColors.errorColor;
+  TextStyle get errorColor => copyWith(color: AppColors.errorColor);
+
+  /// color: AppColors.errorColor2;
+  TextStyle get errorColor2 => copyWith(color: AppColors.errorColor2);
+
+  /// color: AppColors.primary,
+  TextStyle get primary => copyWith(color: AppColors.primary);
+
+  /// color: AppColors.background,
+  TextStyle get background => copyWith(color: AppColors.background);
+
+  /// color: AppColors.backgroundColor;
+  TextStyle get backgroundColor => copyWith(color: AppColors.backgroundColor);
+
+  /// color: AppColors.bianca;
+  TextStyle get bianca => copyWith(color: AppColors.bianca);
+
+  /// color: AppColors.charade;
+  TextStyle get charade => copyWith(color: AppColors.charade);
+
+  /// color: AppColors.green50;
+  TextStyle get green50 => copyWith(color: AppColors.green50);
+
+  /// color: AppColors.green;
+  TextStyle get green => copyWith(color: AppColors.green);
+
+  /// color: AppColors.orange50;
+  TextStyle get orange50 => copyWith(color: AppColors.orange50);
+
+  /// color: AppColors.orange,
+  TextStyle get orange => copyWith(color: AppColors.orange);
+
+  /// color: AppColors.blue100,
+  TextStyle get blue100 => copyWith(color: AppColors.blue100);
+
+  /// color: AppColors.blue200,
+  TextStyle get blue200 => copyWith(color: AppColors.blue200);
+
+  /// color: AppColors.blue300,
+  TextStyle get blue300 => copyWith(color: AppColors.blue300);
+
+  /// color: AppColors.blue400,
+  TextStyle get blue400 => copyWith(color: AppColors.blue400);
+
+  /// color: AppColors.blue500,
+  TextStyle get blue500 => copyWith(color: AppColors.blue500);
+
+  /// color: AppColors.blue600,
+  TextStyle get blue600 => copyWith(color: AppColors.blue600);
+
+  /// color: AppColors.blue700,
+  TextStyle get blue700 => copyWith(color: AppColors.blue700);
+
+  /// color: AppColors.blue800,
+  TextStyle get blue800 => copyWith(color: AppColors.blue800);
+
+  /// color: AppColors.blue900,
+  TextStyle get blue900 => copyWith(color: AppColors.blue900);
+
+  /// color: AppColors.red,
+  TextStyle get red => copyWith(color: AppColors.red);
+
+  /// color: AppColors.redAccent,
+  TextStyle get redAccent => copyWith(color: AppColors.redAccent);
+
+  /// color: AppColors.red50,
+  TextStyle get red50 => copyWith(color: AppColors.red50);
+
+  /// color: AppColors.red100,
+  TextStyle get red100 => copyWith(color: AppColors.red100);
+
+  /// color: AppColors.black45,
+  TextStyle get black45 => copyWith(color: AppColors.black45);
+
+  /// color: AppColors.black54,
+  TextStyle get black54 => copyWith(color: AppColors.black54);
+}
+
+// static TextStyle headline1 = TextStyle(
+//   fontSize: 96.sp,
+//   color: AppColors.text,
+//   fontWeight: FontWeight.w300,
+// );
+//
+// static TextStyle headline2 = TextStyle(
+//   fontSize: 60.sp,
+//   color: AppColors.text,
+//   fontWeight: FontWeight.w300,
+// );
+//
+// static TextStyle headline3 = TextStyle(
+//   fontSize: 48.sp,
+//   color: AppColors.text,
+//   fontWeight: FontWeight.normal,
+// );
+//
+// static TextStyle headline4 = TextStyle(
+//   fontSize: 34.sp,
+//   color: AppColors.text,
+//   fontWeight: FontWeight.normal,
+// );
+//
+// static TextStyle headline5 = TextStyle(
+//   fontSize: 24.sp,
+//   color: AppColors.text,
+//   fontWeight: FontWeight.normal,
+// );
+//
+// static TextStyle headline6 = TextStyle(
+//   fontSize: 20.sp,
+//   color: AppColors.text,
+//   fontWeight: FontWeight.w500,
+// );
+//
+// static TextStyle subtitle1 = TextStyle(
+//   fontSize: 16.sp,
+//   color: AppColors.text,
+//   fontWeight: FontWeight.w500,
+// );
+//
+// static TextStyle subtitle2 = TextStyle(
+//   fontSize: 14.sp,
+//   color: AppColors.text,
+//   fontWeight: FontWeight.w500,
+// );
+//
+// static TextStyle bodyText1 = TextStyle(
+//   fontSize: 16.sp,
+//   color: AppColors.text,
+//   fontWeight: FontWeight.normal,
+// );
+//
+// static TextStyle bodyText2 = TextStyle(
+//   fontSize: 13.sp,
+//   color: AppColors.text,
+//   fontWeight: FontWeight.normal,
+// );
+//
+// static TextStyle button = TextStyle(
+//   fontSize: 14.sp,
+//   color: AppColors.text,
+//   fontWeight: FontWeight.w500,
+// );
+//
+// static TextStyle caption = TextStyle(
+//   fontSize: 12.sp,
+//   color: AppColors.text,
+//   fontWeight: FontWeight.normal,
+// );
+//
+// static TextStyle overline = TextStyle(
+//   fontSize: 10.sp,
+//   color: AppColors.text,
+//   fontWeight: FontWeight.normal,
+// );
+
+// static TextStyle buttonStyle = TextStyle(
+//     color: AppColors.bianca,
+//     fontSize: ScreenUtil().setSp(18),
+//     fontWeight: FontWeight.w500);
+//
+// static TextStyle textStyle = TextStyle(
+//     color: AppColors.charade,
+//     fontFamily: 'MR',
+//     fontSize: ScreenUtil().setSp(14),
+//     fontWeight: FontWeight.w500);
+//
+// static TextStyle bodySemibold = TextStyle(
+//     fontSize: ScreenUtil().setSp(22),
+//     color: AppColors.blue800,
+//     fontFamily: 'MR',
+//     fontWeight: FontWeight.w600);
+//
+// static TextStyle bodySemibold2 = TextStyle(
+//     fontSize: ScreenUtil().setSp(20),
+//     color: AppColors.blue800,
+//     fontFamily: 'MR',
+//     fontWeight: FontWeight.w600);
+//
+// static TextStyle errorTextStyle = TextStyle(
+//     fontSize: ScreenUtil().setSp(14),
+//     color: AppColors.errorColor2,
+//     fontFamily: "MR");
+//
+// static TextStyle numberStyle = TextStyle(
+//     fontSize: ScreenUtil().setSp(14),
+//     color: AppColors.bianca,
+//     fontWeight: FontWeight.normal);
+//
+// static TextStyle headerStyle = TextStyle(
+//     fontSize: ScreenUtil().setSp(25),
+//     color: AppColors.bianca,
+//     fontFamily: 'MR',
+//     fontWeight: FontWeight.w600);
+//
+// static TextStyle headerStyle2 = TextStyle(
+//     fontSize: ScreenUtil().setSp(25),
+//     color: AppColors.blue900,
+//     fontFamily: 'MR',
+//     fontWeight: FontWeight.w600);
+//
+// static TextStyle textInforStyle = TextStyle(
+//     fontFamily: 'MR',
+//     color: AppColors.bianca,
+//     fontSize: ScreenUtil().setSp(18),
+//     fontWeight: FontWeight.normal);
+//
+// static TextStyle labelStyle = TextStyle(
+//     fontSize: ScreenUtil().setSp(16),
+//     color: AppColors.blue800,
+//     fontWeight: FontWeight.w500,
+//     fontFamily: "MR");
+//
+// static TextStyle buttonLabelStyle = TextStyle(
+//     color: const Color(0xffFCFAF3),
+//     fontSize: ScreenUtil().setSp(18),
+//     fontFamily: 'MR',
+//     fontWeight: FontWeight.w600);
+//
+// static TextStyle dayOfWeekStyle =
+// const TextStyle(fontFamily: 'MR', fontWeight: FontWeight.w400);
+
+/*static TextStyle errorTextStyle = TextStyle(
       color: AppColors.errorColor,
       fontSize: ScreenUtil().setSp(24),
       fontWeight: FontWeight.w500);
@@ -166,41 +519,41 @@ class ThemeText {
      // fontSize: HomeScreenConstance.dayOfWeekTextSize,
       color: Colors.red);
 */
-  TextStyle welcomeTextStyle = TextStyle(
-      letterSpacing: 5.w,
-      fontSize: 20.sp,
+TextStyle welcomeTextStyle = TextStyle(
+    letterSpacing: 5.w,
+    fontSize: 20.sp,
 //        fontWeight: FontWeight.w300,
-      fontFamily: 'MR',
-      color: AppColors.blue900);
+    fontFamily: 'MR',
+    color: AppColors.blue900);
 
-  static TextTheme getDefaultTextTheme = TextTheme(
-    // headline3: TextStyle(
-    //     fontSize: 50.sp,
-    //     fontWeight: FontWeight.w900,
-    //     color: AppColors.white),
-    // headline2: TextStyle(
-    //     fontSize: 60.sp,
-    //     fontWeight: FontWeight.w900,
-    //     color: AppColors.white),
-    // headline5: TextStyle(
-    //     fontSize: 22.sp,
-    //     fontWeight: FontWeight.w900,
-    //     color: AppColors.white),
-    // subtitle1: TextStyle(
-    //     fontSize: 18.sp,
-    //     fontWeight: FontWeight.normal,
-    //     color: AppColors.white),
-    // bodyText1: TextStyle(
-    //     fontSize: 16.sp, fontWeight: FontWeight.w500, color: AppColors.navy),
-    // bodyText2: TextStyle(
-    //     fontSize: 14.sp, fontWeight: FontWeight.w500, color: AppColors.navy),
-    button: TextStyle(
-        fontSize: 14.sp,
-        fontWeight: FontWeight.normal,
-        color: AppColors.charade),
-    // caption: TextStyle(
-    //     fontSize: 12.sp,
-    //     fontWeight: FontWeight.normal,
-    //     color: AppColors.grey),
-  );
-}
+// static TextTheme getDefaultTextTheme = TextTheme(
+//   // headline3: TextStyle(
+//   //     fontSize: 50.sp,
+//   //     fontWeight: FontWeight.w900,
+//   //     color: AppColors.white),
+//   // headline2: TextStyle(
+//   //     fontSize: 60.sp,
+//   //     fontWeight: FontWeight.w900,
+//   //     color: AppColors.white),
+//   // headline5: TextStyle(
+//   //     fontSize: 22.sp,
+//   //     fontWeight: FontWeight.w900,
+//   //     color: AppColors.white),
+//   // subtitle1: TextStyle(
+//   //     fontSize: 18.sp,
+//   //     fontWeight: FontWeight.normal,
+//   //     color: AppColors.white),
+//   // bodyText1: TextStyle(
+//   //     fontSize: 16.sp, fontWeight: FontWeight.w500, color: AppColors.navy),
+//   // bodyText2: TextStyle(
+//   //     fontSize: 14.sp, fontWeight: FontWeight.w500, color: AppColors.navy),
+//   button: TextStyle(
+//       fontSize: 14.sp,
+//       fontWeight: FontWeight.normal,
+//       color: AppColors.charade),
+//   // caption: TextStyle(
+//   //     fontSize: 12.sp,
+//   //     fontWeight: FontWeight.normal,
+//   //     color: AppColors.grey),
+// );
+//}
