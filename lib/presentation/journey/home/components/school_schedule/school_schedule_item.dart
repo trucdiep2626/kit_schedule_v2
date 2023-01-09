@@ -16,6 +16,7 @@ class SchoolScheduleElementWidget extends StatelessWidget {
     List lessonNumbers = schedule.lesson!.split(',');
     String startLesson = lessonNumbers[0];
     String endLesson = lessonNumbers[lessonNumbers.length - 1];
+
     return Padding(
       padding: EdgeInsets.all(8.sp),
       child: Row(
@@ -30,15 +31,19 @@ class SchoolScheduleElementWidget extends StatelessWidget {
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: <Widget>[
-                  Text('${Convert.startTimeLessonMap[startLesson]}',
-                      style: ThemeText.textStyle
-                          .copyWith(color: AppColors.red)),
-                  Icon(Icons.arrow_drop_down,
-                      color: AppColors.red,
-                      size: ScreenUtil().setHeight(15)),
-                  Text('${Convert.endTimeLessonMap[endLesson]}',
-                      style: ThemeText.textStyle
-                          .copyWith(color: AppColors.red)),
+                  Text(
+                    '${Convert.startTimeLessonMap[startLesson]}',
+                    style: ThemeText.bodyMedium.red,
+                  ),
+                  Icon(
+                    Icons.arrow_drop_down,
+                    color: AppColors.red,
+                    size: 16.sp,
+                  ),
+                  Text(
+                    '${Convert.endTimeLessonMap[endLesson]}',
+                    style: ThemeText.bodyMedium.red,
+                  ),
                 ],
               ),
             ),
@@ -48,24 +53,25 @@ class SchoolScheduleElementWidget extends StatelessWidget {
             child: Container(
               padding: EdgeInsets.symmetric(horizontal: 20.sp),
               decoration: BoxDecoration(
-                  border: Border(
-                      left: ThemeBorder.scheduleElementBorder
-                          .copyWith(color: AppColors.red))),
+                border: Border(
+                  left: ThemeBorder.scheduleElementBorder
+                      .copyWith(color: AppColors.red),
+                ),
+              ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisSize: MainAxisSize.min,
                 children: <Widget>[
-                  Text('${schedule.subjectName}',
-                      style: ThemeText.textStyle.copyWith(
-                          fontWeight: FontWeight.w600,
-                          color: AppColors.red)),
                   Text(
-                      (schedule.room ?? '').contains('null')
-                          ? 'Không có dữ liệu'
-                          : '${schedule.room}',
-                      style: ThemeText.textStyle
-                          .copyWith(color: AppColors.red)
-                          .copyWith(fontWeight: FontWeight.normal)),
+                    '${schedule.subjectName}',
+                    style: ThemeText.bodySemibold.red,
+                  ),
+                  Text(
+                    (schedule.room ?? '').contains('null')
+                        ? 'Không có dữ liệu'
+                        : '${schedule.room}',
+                    style: ThemeText.bodyRegular.red,
+                  ),
                 ],
               ),
             ),

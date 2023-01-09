@@ -5,7 +5,6 @@ import 'package:kit_schedule_v2/common/utils/export.dart';
 import 'package:kit_schedule_v2/domain/models/student_schedule_model.dart';
 import 'package:kit_schedule_v2/presentation/journey/home/components/school_schedule/school_schedule_item.dart';
 import 'package:kit_schedule_v2/presentation/journey/home/home_controller.dart';
-import 'package:kit_schedule_v2/presentation/journey/main/main_controller.dart';
 import 'package:kit_schedule_v2/presentation/theme/export.dart';
 
 class SchoolScheduleWidget extends GetView<HomeController> {
@@ -16,70 +15,76 @@ class SchoolScheduleWidget extends GetView<HomeController> {
 
   @override
   Widget build(BuildContext context) {
-    List<StudentSchedule>? schoolSchedulesOfDay =
-        (controller.studentSchedule.value)
-            .where((element) =>
-                element.day == DateTimeFormatter.formatDate(selectedDate))
-            .toList();
-    return Card(
-      semanticContainer: true,
-//      color: Color(0xffFCFAF3),
-      //   margin: EdgeInsets.symmetric(
-      //     vertical: WidgetsConstants.cardMargin),
-      color: AppColors.red100,
-      shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.all(Radius.circular(20))),
-      elevation: 3,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisSize: MainAxisSize.min,
-        children: <Widget>[
-          SizedBox(height: 8.sp),
-          Row(
+    return Obx(
+      () {
+        List<StudentSchedule>? schoolSchedulesOfDay =
+            (controller.studentSchedule)
+                .where((element) =>
+                    element.day == DateTimeFormatter.formatDate(selectedDate))
+                .toList();
+
+        return Card(
+          semanticContainer: true,
+          color: AppColors.red100,
+          shape: const RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(
+              Radius.circular(20),
+            ),
+          ),
+          elevation: 3,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
-              Text('Lịch học',
-                  style: ThemeText.titleStyle.copyWith(
-                    color: AppColors.red,
-                    fontSize: 16.sp,
-                    fontWeight: FontWeight.bold,
-                  )),
-              Container(
-                decoration: const BoxDecoration(
-                    shape: BoxShape.circle, color: AppColors.red),
-                margin: EdgeInsets.only(left: 4.sp),
-                padding: EdgeInsets.all(5.sp),
-                child: Text(
-                    schoolSchedulesOfDay != null
-                        ? '${schoolSchedulesOfDay.length}'
-                        : '0',
-                    style: ThemeText.numberStyle),
+              SizedBox(height: 8.sp),
+              Row(
+                mainAxisSize: MainAxisSize.min,
+                children: <Widget>[
+                  Text(
+                    'Lịch học',
+                    style: ThemeText.bodyStrong.red.s16,
+                  ),
+                  Container(
+                    decoration: const BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: AppColors.red,
+                    ),
+                    margin: EdgeInsets.only(left: 4.sp),
+                    padding: EdgeInsets.all(5.sp),
+                    child: Text(
+                      '${schoolSchedulesOfDay.length}',
+                      style: ThemeText.bodyMedium.bianca,
+                    ),
+                  )
+                ],
+              ),
+              Expanded(
+                child: schoolSchedulesOfDay.isNotEmpty
+                    ? Padding(
+                        padding: EdgeInsets.only(bottom: 8.sp),
+                        child: ListView.builder(
+                          shrinkWrap: true,
+                          itemCount: schoolSchedulesOfDay.length,
+                          itemBuilder: (context, index) {
+                            StudentSchedule schedule =
+                                schoolSchedulesOfDay[index];
+                            return SchoolScheduleElementWidget(
+                                schedule: schedule);
+                          },
+                        ),
+                      )
+                    : Align(
+                        alignment: Alignment.center,
+                        child: Text(
+                          'Không có dữ liệu',
+                          style: ThemeText.bodyMedium.red,
+                        ),
+                      ),
               )
             ],
           ),
-          Expanded(
-            child: schoolSchedulesOfDay != null
-                ? Padding(
-                    padding: EdgeInsets.only(bottom: 8.sp),
-                    child: ListView.builder(
-                        shrinkWrap: true,
-                        itemCount: schoolSchedulesOfDay.length,
-                        itemBuilder: (context, index) {
-                          StudentSchedule schedule =
-                              schoolSchedulesOfDay[index];
-                          return SchoolScheduleElementWidget(
-                              schedule: schedule);
-                        }),
-                  )
-                : Align(
-                    alignment: Alignment.center,
-                    child: Text('Không có dữ liệu',
-                        style: ThemeText.textStyle
-                            .copyWith(color: AppColors.red)),
-                  ),
-          )
-        ],
-      ),
+        );
+      },
     );
   }
 }

@@ -83,7 +83,7 @@ class HeaderScoresWidget extends StatelessWidget {
       alignment: Alignment.center,
       child: Text(
         title,
-        style: ThemeText.headerStyle2.copyWith(fontSize: 15.sp),
+        style: ThemeText.bodySemibold,
         textAlign: TextAlign.center,
       ),
     );

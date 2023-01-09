@@ -17,9 +17,10 @@ class HomePage extends GetView<HomeController> {
         body: SafeArea(
           child: Column(
             children: <Widget>[
-              CalendarView(
-                schedules: controller.studentSchedule,
-              ),
+              Obx(() => CalendarView(
+                    schedules: controller.studentSchedule.value,
+                    personals: controller.personalSchedule.value,
+                  )),
               const Expanded(child: ScheduleView()),
             ],
           ),

@@ -50,12 +50,21 @@ class $AssetsImagesGen {
   AssetGenImage get kitScheduleLogo =>
       const AssetGenImage('assets/images/kit_schedule_logo.png');
 
+  /// File path: assets/images/logo_kma.png
+  AssetGenImage get logoKma =>
+      const AssetGenImage('assets/images/logo_kma.png');
+
   /// File path: assets/images/splash.png
   AssetGenImage get splash => const AssetGenImage('assets/images/splash.png');
 
   /// List of all assets
-  List<AssetGenImage> get values =>
-      [calendarHeaderTodoDetail, calendarHeader, kitScheduleLogo, splash];
+  List<AssetGenImage> get values => [
+        calendarHeaderTodoDetail,
+        calendarHeader,
+        kitScheduleLogo,
+        logoKma,
+        splash
+      ];
 }
 
 class Assets {

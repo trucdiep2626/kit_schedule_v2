@@ -34,46 +34,29 @@ dependencies:
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: 1.0.5
+
   # DateFormat
   intl: 0.17.0
+
   # Table Calendar
   table_calendar: 3.0.8
-  # shared_preferences
-  # Date Format
-  date_format: 2.0.7
-  #toast: ^0.1.5
-  # sqlite
-  #sqflite: ^1.2.0
+
   hive: 2.2.3
-  #  sqflite: ^2.0.0+3
+
   # Simple Animation
   simple_animations: 5.0.0+3
-  # Equatable
-  equatable: 2.0.5
-  # Dio
-  # Svg image
-  #flutter_svg: ^0.17.4
-  # Worm indicator
-  #worm_indicator: 0.2.1
-  # Bottom Navigator
-  google_nav_bar: 5.0.6
-    # DatePicker
+
   flutter_rounded_date_picker: 3.0.2
     # Dialog
   awesome_dialog: 3.0.2
   path_provider: 2.0.11
   crypto: 3.0.2
-  flutter_screenutil: 5.6.0
-  #cupertino_date_textbox: ^1.0.0+3
-  #firebase_core:
   store_redirect: 2.0.1
   url_launcher: 6.1.7
-  #cloud_firestore:
   connectivity_plus: 2.3.9
   flutter_keyboard_visibility: 5.4.0
   flutter_localizations: # Add this line
     sdk: flutter
-  device_calendar: 4.2.0
   get: 4.6.5
   get_it: 7.2.0
   flutter_svg: 1.1.6
@@ -83,13 +66,13 @@ dependencies:
   shared_preferences: 2.0.15
   shimmer: 2.0.0
   permission_handler: 10.2.0
-  pull_to_refresh: 2.0.0
   flutter_config: 2.0.0
   #  Network
   dio: 4.0.6
-  #pretty_dio_logger: 1.1.1
   flutter_gen: 5.1.0+1
   carousel_slider: 4.2.1
+  timezone: 0.9.1
+  logger: 1.1.0
 
 dev_dependencies:
 #  flutter_test:
@@ -116,6 +99,7 @@ flutter:
   assets:
     - assets/images/
     - assets/icons/
+    - assets/fonts/
 
     # An image asset can refer to one or more resolution-specific "variants", see
     # https://flutter.dev/assets-and-images/#resolution-aware.

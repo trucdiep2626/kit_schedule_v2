@@ -24,9 +24,10 @@ class PersonalScheduleElementWidget extends StatelessWidget {
               flex: 2,
               child: Align(
                 alignment: Alignment.center,
-                child: Text('${todo.timer}',
-                    style: ThemeText.textStyle
-                        .copyWith(color: AppColors.blue900)),
+                child: Text(
+                  '${todo.timer}',
+                  style: ThemeText.bodyMedium.blue900,
+                ),
               )),
           Expanded(
             flex: 8,
@@ -43,14 +44,11 @@ class PersonalScheduleElementWidget extends StatelessWidget {
                     maxLines: 1,
                     softWrap: false,
                     overflow: TextOverflow.ellipsis,
-                    style: ThemeText.textStyle
-                        .copyWith(color: AppColors.blue900),
+                    style: ThemeText.bodySemibold.blue900,
                   ),
                   Text(
                     todo.note == null ? '' : todo.note as String,
-                    style: ThemeText.textStyle.copyWith(
-                        fontWeight: FontWeight.normal,
-                        color: AppColors.blue900),
+                    style: ThemeText.bodyRegular.blue900,
                     maxLines: 1,
                     softWrap: false,
                     overflow: TextOverflow.ellipsis,

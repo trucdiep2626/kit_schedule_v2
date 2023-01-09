@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:kit_schedule_v2/common/common_export.dart';
+import 'package:kit_schedule_v2/common/config/network/api_exceptions.dart';
+import 'package:kit_schedule_v2/common/config/network/network_state.dart';
 import 'package:kit_schedule_v2/domain/models/student_info_model.dart';
 import 'package:kit_schedule_v2/domain/usecases/school_usecase.dart';
 import 'package:kit_schedule_v2/presentation/controllers/mixin/export.dart';
+import 'package:kit_schedule_v2/presentation/widgets/snack_bar/app_snack_bar.dart';
 
 class LoginController extends GetxController with MixinController {
   LoginController(this.schoolUseCase, this.sharePreferencesConstants);
@@ -12,7 +15,6 @@ class LoginController extends GetxController with MixinController {
   TextEditingController accountController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   Rx<LoadedType> rxLoginLoadedType = LoadedType.finish.obs;
-
   RxBool isShow = false.obs;
 
   SchoolUseCase schoolUseCase;
@@ -24,6 +26,12 @@ class LoginController extends GetxController with MixinController {
   }
 
   Future<void> onPressedLogin() async {
+    if (!await NetworkState.isConnected) {
+      showTopSnackBar(context,
+          message: 'Không có kết nối Internet', type: SnackBarType.error);
+      return;
+    }
+
     rxLoginLoadedType.value = LoadedType.start;
 
     if (accountController.text.trim().isEmpty ||
@@ -33,23 +41,33 @@ class LoginController extends GetxController with MixinController {
 
     try {
       final result = await schoolUseCase.getSchoolSchedule(
-          username:
-              accountController.text.trim().toUpperCase(),
-          password:
-              passwordController.text.trim());
-      debugPrint('===============$result');
+          username: accountController.text.trim().toUpperCase(),
+          password: passwordController.text.trim());
       if (!isNullEmpty(result)) {
         schoolUseCase.insertSchoolScheduleLocal(result?.studentSchedule ?? []);
         schoolUseCase.setStudentInfoLocal(result?.studentInfo ?? StudentInfo());
-        if(!isNullEmpty(result?.studentSchedule) || !isNullEmpty(result?.studentInfo))
-          {
-            sharePreferencesConstants.setIsLogIn(isLogIn: true);
-          }
-        rxLoginLoadedType.value = LoadedType.finish;
-        debugPrint('===============');
+
+        if (!isNullEmpty(result?.studentSchedule) ||
+            !isNullEmpty(result?.studentInfo)) {
+          sharePreferencesConstants.setIsLogIn(isLogIn: true);
+        }
+
         Get.offAndToNamed(AppRoutes.main);
+      } else {
+        showTopSnackBar(context,
+            message: 'Tài khoản đăng nhập không đúng',
+            type: SnackBarType.error);
       }
-    } catch (e) {}
+    } on WrongPasswordError {
+      showTopSnackBar(context,
+          message: 'Đăng nhập thất bại', type: SnackBarType.error);
+    } catch (e) {
+      debugPrint(e.toString());
+      showTopSnackBar(context,
+          message: 'Đã có lỗi xảy ra. Vui lòng thử lại',
+          type: SnackBarType.error);
+    }
+    rxLoginLoadedType.value = LoadedType.finish;
   }
 
   @override

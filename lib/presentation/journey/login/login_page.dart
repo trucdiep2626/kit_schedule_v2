@@ -13,21 +13,9 @@ class LoginPage extends GetView<LoginController> {
   @override
   Widget build(BuildContext context) {
     controller.context = context;
-    // // TODO: implement build
-    // return BlocConsumer<RegisterBloc, RegisterState>(
-    //   listener: (context, state) {
-    //     if (state is RegisterSuccessState) {
-    //       Navigator.pop(context,true);
-    //     }
-    //     if (state is RegisterFailureState) {}
-    //     if (state is RegisterNoDataState) {}
-    //   },
-    //   builder: (context, state) {
-    //     bool isShow = true;
-    //     if (state is RegisterShowPasswordState) {
-    //       isShow = state.isShow;
-    //     }
+
     return Scaffold(
+        backgroundColor: AppColors.bianca,
         appBar: AppBarWidget(),
         body: SingleChildScrollView(
           child: Container(
@@ -42,19 +30,13 @@ class LoginPage extends GetView<LoginController> {
                 FittedBox(
                   child: Text(
                     "Chào mừng bạn đến với",
-                    style: TextStyle(
-                        fontSize: 20.sp,
-                        color: Colors.black,
-                        fontFamily: "MR",
-                        fontWeight: FontWeight.w400),
+                    style: ThemeText.heading2.blue900.w500(),
                   ),
                 ),
-                Text("KMA Schedule",
-                    style: TextStyle(
-                        fontSize: 35.sp,
-                        color: Colors.black,
-                        fontFamily: "MR",
-                        fontWeight: FontWeight.bold)),
+                Text(
+                  "Kit Schedule",
+                  style: ThemeText.heading1.blue900.s36.w700(),
+                ),
                 SizedBox(height: 65.sp),
                 Form(
                     key: controller.textFormKey,
@@ -63,14 +45,14 @@ class LoginPage extends GetView<LoginController> {
                         TextFieldWidget(
                           validate: (value) {
                             if (value!.isEmpty) {
-                              return "Không được phép bỏ trống ô này";
+                              return "Tên đăng nhập không được bỏ trống";
                             }
                             return null;
                           },
                           labelText: "Tài khoản",
                           controller: controller.accountController,
-                          textStyle: ThemeText.labelStyle,
-                          colorBoder: AppColors.blue800,
+                          textStyle: ThemeText.bodyRegular.blue900,
+                          colorBoder: AppColors.blue900,
                         ),
                         SizedBox(
                           height: 15.h,
@@ -78,14 +60,14 @@ class LoginPage extends GetView<LoginController> {
                         Obx(() => TextFieldWidget(
                               validate: (value) {
                                 if (value!.isEmpty) {
-                                  return "Không được phép bỏ trống ô này";
+                                  return "Mật khẩu không được bỏ trống";
                                 }
                                 return null;
                               },
-                              colorBoder: AppColors.blue800,
+                              colorBoder: AppColors.blue900,
                               labelText: "Mật khẩu",
                               controller: controller.passwordController,
-                              textStyle: ThemeText.labelStyle,
+                              textStyle: ThemeText.bodyRegular.blue900,
                               obscureText: !controller.isShow.value,
                               seffixIcon: IconButton(
                                 onPressed: controller.rxLoginLoadedType.value ==
@@ -96,7 +78,7 @@ class LoginPage extends GetView<LoginController> {
                                   !controller.isShow.value
                                       ? Icons.visibility
                                       : Icons.visibility_off,
-                                  color: Colors.blue[800],
+                                  color: AppColors.blue900,
                                 ),
                               ),
                               onSubmitted: (pass) {
@@ -126,7 +108,7 @@ class LoginPage extends GetView<LoginController> {
                   child: Container(
                     height: 60.sp,
                     width: double.infinity,
-                    color: Colors.grey.withOpacity(0.3),
+                    color: AppColors.grey300,
                   ),
                 ),
                 Positioned(
@@ -140,7 +122,7 @@ class LoginPage extends GetView<LoginController> {
                           height: 57.sp,
                           width: 85.sp,
                           decoration: BoxDecoration(
-                              color: Colors.blue[800],
+                              color: AppColors.blue900,
                               borderRadius:
                                   const BorderRadius.all(Radius.circular(10))),
                           child: controller.rxLoginLoadedType.value ==
@@ -168,9 +150,6 @@ class LoginPage extends GetView<LoginController> {
     FocusScope.of(context).requestFocus(FocusNode());
     if (controller.textFormKey.currentState!.validate()) {
       await controller.onPressedLogin();
-      // BlocProvider.of<RegisterBloc>(context)
-      //   ..add(SignInOnPressEvent(_accountController.text.toUpperCase().trim(),
-      //       _passwordController.text.trim()));
     }
   }
 }

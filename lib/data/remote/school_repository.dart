@@ -1,11 +1,7 @@
-import 'dart:convert';
-
-import 'package:flutter/cupertino.dart';
-import 'package:kit_schedule_v2/common/common_export.dart';
 import 'package:kit_schedule_v2/common/config/database/hive_config.dart';
 import 'package:kit_schedule_v2/common/config/database/hive_type_constants.dart';
-import 'package:kit_schedule_v2/data/api_constans.dart';
-import 'package:kit_schedule_v2/domain/models/base_response.dart';
+import 'package:kit_schedule_v2/common/config/network/api_client.dart';
+import 'package:kit_schedule_v2/common/config/network/api_endpoints.dart';
 import 'package:kit_schedule_v2/domain/models/school_schedule_model.dart';
 import 'package:kit_schedule_v2/domain/models/score_model.dart';
 import 'package:kit_schedule_v2/domain/models/student_info_model.dart';
@@ -20,13 +16,13 @@ class SchoolRepository {
     required String username,
     required String password,
   }) async {
-    final BaseResponse baseResponse = await ApiClient.instance.request(
-        path: ApiConstants.getSchedule,
-        method: NetworkMethod.post,
-        queryParameters: {"username": username, "password": password});
-    if ((baseResponse.result ?? false) && baseResponse.data != null) {
-      final schoolSchedule =
-          SchoolScheduleModel.fromJson(json.decode(baseResponse.data)["data"]);
+    final result = await ApiClient.postRequest(
+         ApiEndpoints.getSchedule,
+        params: {"username": username, "password": password});
+
+    if (result is Map<String,dynamic>){
+     final schoolSchedule =
+          SchoolScheduleModel.fromJson(result);
       return schoolSchedule;
     } else {
       return null;
@@ -36,13 +32,11 @@ class SchoolRepository {
   Future<StudentScores?> getScore({
     required String studentCode,
   }) async {
-    final BaseResponse baseResponse = await ApiClient.instance.request(
-      path: '${ApiConstants.getScores}$studentCode',
-      method: NetworkMethod.get,
+    final result = await ApiClient.getRequest(
+      '${ApiEndpoints.getScores}$studentCode'
     );
-    if ((baseResponse.result ?? false) && baseResponse.data != null) {
-      debugPrint('========${baseResponse.data['data']}');
-      final studentScores = StudentScores.fromJson(baseResponse.data['data']);
+    if (result is Map<String,dynamic>){
+      final studentScores = StudentScores.fromJson(result);
       return studentScores;
     } else {
       return null;

@@ -27,7 +27,10 @@ List<GetPage> myPages = [
       name: AppRoutes.login,
       page: () => const LoginPage(),
       binding: LoginBinding()),
-  GetPage(name: AppRoutes.todo, page: () => TodoPage(), binding: TodoBinding()),
+  GetPage(
+      name: AppRoutes.todo,
+      page: () => const TodoPage(),
+      binding: TodoBinding()),
   GetPage(
       name: AppRoutes.score,
       page: () => const LoginPage(),

@@ -18,7 +18,7 @@ class SetTimeWidget extends GetView<TodoController> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(title, style: ThemeText.titleStyle.copyWith(fontSize: 16.sp)),
+          Text(title, style: ThemeText.bodySemibold.copyWith(fontSize: 16.sp)),
           const SizedBox(height: 10),
           InkWell(
             onTap: onTap,
@@ -34,8 +34,7 @@ class SetTimeWidget extends GetView<TodoController> {
                 isDate
                     ? controller.selectedDate.value
                     : controller.selectedTime.value,
-                style: ThemeText.labelStyle
-                    .copyWith(fontWeight: FontWeight.w400, fontSize: 16.sp),
+                style: ThemeText.bodyRegular.s16,
               ),
             ),
           ),
