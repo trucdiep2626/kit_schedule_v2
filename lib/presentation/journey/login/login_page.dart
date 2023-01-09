@@ -13,22 +13,9 @@ class LoginPage extends GetView<LoginController> {
   @override
   Widget build(BuildContext context) {
     controller.context = context;
-    // // TODO: implement build
-    // return BlocConsumer<RegisterBloc, RegisterState>(
-    //   listener: (context, state) {
-    //     if (state is RegisterSuccessState) {
-    //       Navigator.pop(context,true);
-    //     }
-    //     if (state is RegisterFailureState) {}
-    //     if (state is RegisterNoDataState) {}
-    //   },
-    //   builder: (context, state) {
-    //     bool isShow = true;
-    //     if (state is RegisterShowPasswordState) {
-    //       isShow = state.isShow;
-    //     }
+
     return Scaffold(
-      backgroundColor: AppColors.bianca,
+        backgroundColor: AppColors.bianca,
         appBar: AppBarWidget(),
         body: SingleChildScrollView(
           child: Container(
@@ -43,11 +30,13 @@ class LoginPage extends GetView<LoginController> {
                 FittedBox(
                   child: Text(
                     "Chào mừng bạn đến với",
-                    style: ThemeText.heading2.blue900.w500() ,
+                    style: ThemeText.heading2.blue900.w500(),
                   ),
                 ),
-                Text("Kit Schedule",
-                    style: ThemeText.heading1.blue900.s36.w700()),
+                Text(
+                  "Kit Schedule",
+                  style: ThemeText.heading1.blue900.s36.w700(),
+                ),
                 SizedBox(height: 65.sp),
                 Form(
                     key: controller.textFormKey,
@@ -161,9 +150,6 @@ class LoginPage extends GetView<LoginController> {
     FocusScope.of(context).requestFocus(FocusNode());
     if (controller.textFormKey.currentState!.validate()) {
       await controller.onPressedLogin();
-      // BlocProvider.of<RegisterBloc>(context)
-      //   ..add(SignInOnPressEvent(_accountController.text.toUpperCase().trim(),
-      //       _passwordController.text.trim()));
     }
   }
 }

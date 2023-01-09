@@ -34,11 +34,4 @@ class MainController extends GetxController with MixinController {
     getStudentInfoLocal();
     setStatusBarStyle(statusBarStyleType: StatusBarStyleType.dark);
   }
-
-  @override
-  void onReady() {
-    rxLoadedType.value = LoadedType.start;
-
-    rxLoadedType.value = LoadedType.finish;
-  }
 }

@@ -15,49 +15,54 @@ class SchoolScheduleWidget extends GetView<HomeController> {
 
   @override
   Widget build(BuildContext context) {
-    return Obx(() {
-      List<StudentSchedule>? schoolSchedulesOfDay = (controller.studentSchedule)
-          .where((element) =>
-              element.day == DateTimeFormatter.formatDate(selectedDate))
-          .toList();
-      return Card(
-        semanticContainer: true,
-//      color: Color(0xffFCFAF3),
-        //   margin: EdgeInsets.symmetric(
-        //     vertical: WidgetsConstants.cardMargin),
-        color: AppColors.red100,
-        shape: const RoundedRectangleBorder(
-            borderRadius: BorderRadius.all(Radius.circular(20))),
-        elevation: 3,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisSize: MainAxisSize.min,
-          children: <Widget>[
-            SizedBox(height: 8.sp),
-            Row(
-              mainAxisSize: MainAxisSize.min,
-              children: <Widget>[
-                Text('Lịch học',
-                    style: ThemeText.bodySemibold.copyWith(
-                      color: AppColors.red,
-                      fontSize: 16.sp,
-                      fontWeight: FontWeight.bold,
-                    )),
-                Container(
-                  decoration: const BoxDecoration(
-                      shape: BoxShape.circle, color: AppColors.red),
-                  margin: EdgeInsets.only(left: 4.sp),
-                  padding: EdgeInsets.all(5.sp),
-                  child: Text('${schoolSchedulesOfDay.length}',
-                      style: ThemeText.bodyRegular.bianca),
-                )
-              ],
+    return Obx(
+      () {
+        List<StudentSchedule>? schoolSchedulesOfDay =
+            (controller.studentSchedule)
+                .where((element) =>
+                    element.day == DateTimeFormatter.formatDate(selectedDate))
+                .toList();
+
+        return Card(
+          semanticContainer: true,
+          color: AppColors.red100,
+          shape: const RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(
+              Radius.circular(20),
             ),
-            Expanded(
-              child: schoolSchedulesOfDay.isNotEmpty
-                  ? Padding(
-                      padding: EdgeInsets.only(bottom: 8.sp),
-                      child: ListView.builder(
+          ),
+          elevation: 3,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              SizedBox(height: 8.sp),
+              Row(
+                mainAxisSize: MainAxisSize.min,
+                children: <Widget>[
+                  Text(
+                    'Lịch học',
+                    style: ThemeText.bodyStrong.red.s16,
+                  ),
+                  Container(
+                    decoration: const BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: AppColors.red,
+                    ),
+                    margin: EdgeInsets.only(left: 4.sp),
+                    padding: EdgeInsets.all(5.sp),
+                    child: Text(
+                      '${schoolSchedulesOfDay.length}',
+                      style: ThemeText.bodyMedium.bianca,
+                    ),
+                  )
+                ],
+              ),
+              Expanded(
+                child: schoolSchedulesOfDay.isNotEmpty
+                    ? Padding(
+                        padding: EdgeInsets.only(bottom: 8.sp),
+                        child: ListView.builder(
                           shrinkWrap: true,
                           itemCount: schoolSchedulesOfDay.length,
                           itemBuilder: (context, index) {
@@ -65,18 +70,21 @@ class SchoolScheduleWidget extends GetView<HomeController> {
                                 schoolSchedulesOfDay[index];
                             return SchoolScheduleElementWidget(
                                 schedule: schedule);
-                          }),
-                    )
-                  : Align(
-                      alignment: Alignment.center,
-                      child: Text('Không có dữ liệu',
-                          style: ThemeText.bodyRegular
-                              .copyWith(color: AppColors.red)),
-                    ),
-            )
-          ],
-        ),
-      );
-    });
+                          },
+                        ),
+                      )
+                    : Align(
+                        alignment: Alignment.center,
+                        child: Text(
+                          'Không có dữ liệu',
+                          style: ThemeText.bodyMedium.red,
+                        ),
+                      ),
+              )
+            ],
+          ),
+        );
+      },
+    );
   }
 }

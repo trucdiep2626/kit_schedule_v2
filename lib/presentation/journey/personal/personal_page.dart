@@ -26,10 +26,13 @@ class PersonalPage extends GetView<PersonalController> {
               children: [
                 Container(
                     margin: EdgeInsets.only(
-                        top: Get.mediaQuery.padding.top + 20.sp),
+                      top: Get.mediaQuery.padding.top + 20.sp,
+                    ),
                     padding: EdgeInsets.all(16.sp),
                     decoration: const BoxDecoration(
-                        color: AppColors.blue100, shape: BoxShape.circle),
+                      color: AppColors.blue100,
+                      shape: BoxShape.circle,
+                    ),
                     child: Icon(
                       Icons.person,
                       color: AppColors.blue900,
@@ -44,7 +47,7 @@ class PersonalPage extends GetView<PersonalController> {
                           textAlign: TextAlign.center,
                           style: ThemeText.bodySemibold.s20.blue900,
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 4,
                         ),
                         Text(
@@ -71,27 +74,30 @@ class PersonalPage extends GetView<PersonalController> {
           //     },
           //     title: ''),
           _buildListTile(
-              icon: Icons.notifications_none,
-              onTap: () {
-                showDialog(
-                    context: context,
-                    builder: (dialogContext) => settingDialog(context));
-              },
-              title: 'Cài đặt thông báo'),
+            icon: Icons.notifications_none,
+            onTap: () {
+              showDialog(
+                  context: context,
+                  builder: (dialogContext) => settingDialog(context));
+            },
+            title: 'Cài đặt thông báo',
+          ),
           _buildListTile(
-              icon: Icons.info_outline,
-              onTap: _launchURL,
-              title: 'Về chúng tôi'),
+            icon: Icons.info_outline,
+            onTap: _launchURL,
+            title: 'Về chúng tôi',
+          ),
           _buildListTile(
-              icon: Icons.star_rate_outlined,
-              onTap: _launchURL,
-              //() {
-              // StoreRedirect.redirect(
-              //   androidAppId: ProfileConstants.androidAppId,
-              // );
-              //key: 'kma.hatuan314.schedule'
-              // },
-              title: 'Đánh giá'),
+            icon: Icons.star_rate_outlined,
+            onTap: _launchURL,
+            //() {
+            // StoreRedirect.redirect(
+            //   androidAppId: ProfileConstants.androidAppId,
+            // );
+            //key: 'kma.hatuan314.schedule'
+            // },
+            title: 'Đánh giá',
+          ),
           _buildListTile(
             icon:
                 //profileState.isLogIn ?
@@ -181,10 +187,10 @@ class PersonalPage extends GetView<PersonalController> {
             SizedBox(
               width: 12.w,
             ),
-            Text(title,
-                style: ThemeText.bodyRegular.copyWith(
-                  color: AppColors.blue900,
-                )),
+            Text(
+              title,
+              style: ThemeText.bodyMedium.blue900,
+            ),
           ],
         ),
       ),

@@ -18,9 +18,9 @@ class HomePage extends GetView<HomeController> {
           child: Column(
             children: <Widget>[
               Obx(() => CalendarView(
-                schedules: controller.studentSchedule.value,
-                personals: controller.personalSchedule.value,
-              )),
+                    schedules: controller.studentSchedule.value,
+                    personals: controller.personalSchedule.value,
+                  )),
               const Expanded(child: ScheduleView()),
             ],
           ),

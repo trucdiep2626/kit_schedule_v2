@@ -5,10 +5,10 @@ class AppColors {
   static const Color primary = Color(0xFF012A4A);
   static const Color text = black;
   static Color? background = grey50;
-   static const backgroundColor = Color(0xffFCFAF3);
-   static const bianca = Color(0xffFCFAF3);
- // static const backgroundColor = Color(0xfff6f6f6);
- // static const bianca = Color(0xfff6f6f6);
+  static const backgroundColor = Color(0xffFCFAF3);
+  static const bianca = Color(0xffFCFAF3);
+  // static const backgroundColor = Color(0xfff6f6f6);
+  // static const bianca = Color(0xfff6f6f6);
   static const Color charade = Color(0xff012A4A);
   static const Color white = Colors.white;
 
@@ -37,26 +37,26 @@ class AppColors {
   static Color transparent = Colors.transparent;
 
   //blue
-  static const Color blue100 = Color(0xFFDCEEF3);
-  static const Color blue200 = Color(0xFFC2E2EA);
-  static const Color blue300 = Color(0xFFA7D5E1);
-  static const Color blue400 = Color(0xFF8DC8D8);
-  static const Color blue500 = Color(0xFF72BBCE);
-  static const Color blue600 = Color(0xFF2A6F97);
-  static const Color blue700 = Color(0xFF014F86);
-  static const Color blue800 = Color(0xFF01497C);
-  static const Color blue900 = Color(0xFF013A63);
+  // static const Color blue100 = Color(0xFFDCEEF3);
+  // static const Color blue200 = Color(0xFFC2E2EA);
+  // static const Color blue300 = Color(0xFFA7D5E1);
+  // static const Color blue400 = Color(0xFF8DC8D8);
+  // static const Color blue500 = Color(0xFF72BBCE);
+  // static const Color blue600 = Color(0xFF2A6F97);
+  // static const Color blue700 = Color(0xFF014F86);
+  // static const Color blue800 = Color(0xFF01497C);
+  // static const Color blue900 = Color(0xFF013A63);
 
   // //blue
-  // static const Color blue100 = Color(0xFFBBDEFB);
-  // static const Color blue200 = Color(0xFF90CAF9);
-  // static const Color blue300 = Color(0xFF64B5F6);
-  // static const Color blue400 = Color(0xFF42A5F5);
-  // static const Color blue500 = Color(0xFF2196F3);
-  // static const Color blue600 = Color(0xFF1E88E5);
-  // static const Color blue700 = Color(0xFF1976D2);
-  // static const Color blue800 = Color(0xFF1565C0);
-  // static const Color blue900 = Color(0xFF0D47A1);
+  static const Color blue100 = Color(0xFFBBDEFB);
+  static const Color blue200 = Color(0xFF90CAF9);
+  static const Color blue300 = Color(0xFF64B5F6);
+  static const Color blue400 = Color(0xFF42A5F5);
+  static const Color blue500 = Color(0xFF2196F3);
+  static const Color blue600 = Color(0xFF1E88E5);
+  static const Color blue700 = Color(0xFF1976D2);
+  static const Color blue800 = Color(0xFF1565C0);
+  static const Color blue900 = Color(0xFF0D47A1);
 
   static const Color borderColor = blue400;
   //red
@@ -147,5 +147,3 @@ class AppColors {
   // static Color? black45 = Colors.black45;
 
 }
-
-

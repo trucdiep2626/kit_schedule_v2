@@ -26,10 +26,12 @@ class AppBarWidget extends StatelessWidget implements PreferredSizeWidget {
                 Container(
                   width: 30.sp,
                   height: 2.5.sp,
-                  decoration: BoxDecoration(
-                      color:AppColors.blue900,
-                      borderRadius:
-                          const BorderRadius.all(Radius.circular(10))),
+                  decoration: const BoxDecoration(
+                    color: AppColors.blue900,
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(10),
+                    ),
+                  ),
                 ),
               ],
             ),

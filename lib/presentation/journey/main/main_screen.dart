@@ -13,20 +13,38 @@ import 'main_controller.dart';
 class MainScreen extends GetView<MainController> {
   const MainScreen({Key? key}) : super(key: key);
 
-
   Widget _buildBottomNavigationBar(BuildContext context) {
     return Container(
-      decoration: BoxDecoration(color: AppColors.bianca, boxShadow: [
-        BoxShadow(blurRadius: 20, color: AppColors.charade.withOpacity(.1))
-      ]),
+      decoration: BoxDecoration(
+        color: AppColors.bianca,
+        boxShadow: [
+          BoxShadow(
+            blurRadius: 20,
+            color: AppColors.charade.withOpacity(0.1),
+          )
+        ],
+      ),
       child: SafeArea(
         child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 16.sp, vertical: 8.sp),
+          padding: EdgeInsets.symmetric(
+            horizontal: 16.sp,
+            vertical: 8.sp,
+          ),
           child: Row(
-            children: List.generate(MainItem.values.length, (index) {
-              return Expanded(
-                  flex: 1, child: Obx(() => navBarItem(context, index)));
-            }),
+            children: List.generate(
+              MainItem.values.length,
+              (index) {
+                return Expanded(
+                  flex: 1,
+                  child: Obx(
+                    () => navBarItem(
+                      context,
+                      index,
+                    ),
+                  ),
+                );
+              },
+            ),
           ),
         ),
       ),
@@ -58,7 +76,7 @@ class MainScreen extends GetView<MainController> {
 
     final List<Widget> listScreenTab = [
       const HomePage(),
-      ScorePage(),
+      const ScorePage(),
       const TodoPage(),
       PersonalPage(),
     ];
@@ -77,19 +95,4 @@ class MainScreen extends GetView<MainController> {
   }
   // }
 
-  // @override
-  // Widget build(BuildContext context) {
-  //   final List<Widget> pages = [
-  //      HomePage(),
-  //     ScorePage(),
-  //     TodoPage(),
-  //     PersonalPage(),
-  //   ];
-  //
-  //   return Scaffold(
-  //     backgroundColor: AppColors.grey100,
-  //     body: Obx(() => pages[controller.rxCurrentNavIndex.value]),
-  //     bottomNavigationBar: _buildBottomNavigationBar(context),
-  //   );
-  // }
 }

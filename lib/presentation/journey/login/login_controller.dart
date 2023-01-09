@@ -15,7 +15,6 @@ class LoginController extends GetxController with MixinController {
   TextEditingController accountController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   Rx<LoadedType> rxLoginLoadedType = LoadedType.finish.obs;
-
   RxBool isShow = false.obs;
 
   SchoolUseCase schoolUseCase;
@@ -47,6 +46,7 @@ class LoginController extends GetxController with MixinController {
       if (!isNullEmpty(result)) {
         schoolUseCase.insertSchoolScheduleLocal(result?.studentSchedule ?? []);
         schoolUseCase.setStudentInfoLocal(result?.studentInfo ?? StudentInfo());
+
         if (!isNullEmpty(result?.studentSchedule) ||
             !isNullEmpty(result?.studentInfo)) {
           sharePreferencesConstants.setIsLogIn(isLogIn: true);
