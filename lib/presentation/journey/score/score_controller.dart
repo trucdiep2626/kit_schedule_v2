@@ -11,8 +11,8 @@ import 'package:kit_schedule_v2/presentation/widgets/snack_bar/app_snack_bar.dar
 class ScoreController extends GetxController with MixinController {
   final MainController mainController = Get.find<MainController>();
   Rx<LoadedType> rxScoreLoadedType = LoadedType.finish.obs;
-  SchoolUseCase schoolUseCase;
-  Rx<StudentScores?> studentScores = (null as StudentScores?).obs;
+  RxList<bool> rxExpandedList = <bool>[].obs;
+  Rx<StudentScores?> rxStudentScores = (null).obs;
 
   ScoreController(this.schoolUseCase);
 

@@ -57,17 +57,16 @@ class MainScreen extends GetView<MainController> {
   ) {
     final mainItem = MainItem.values.elementAt(index);
 
-    return GestureDetector(
-        onTap: () async => await controller.onChangedNav(index),
-        child: SizedBox(
-          height: 50.sp,
-          child: Icon(
+    return IconButton(
+      splashRadius: AppDimens.space_12,
+        onPressed: () async => await controller.onChangedNav(index),
+        icon: Icon(
             mainItem.getIcon(),
             color: controller.rxCurrentNavIndex.value == index
                 ? AppColors.blue500
                 : AppColors.charade,
           ),
-        ));
+        );
   }
 
   @override
