@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:kit_schedule_v2/common/common_export.dart';
 import 'package:kit_schedule_v2/common/extensions/number_extension.dart';
-import 'package:kit_schedule_v2/common/utils/app_screen_utils/flutter_screenutils.dart';
 import 'package:kit_schedule_v2/presentation/theme/theme_color.dart';
 import 'package:kit_schedule_v2/presentation/theme/theme_text.dart';
 import 'package:syncfusion_flutter_gauges/gauges.dart';
@@ -60,7 +59,7 @@ class GPACharWidget extends StatelessWidget {
                     textAlign: TextAlign.center,
                   ),
                   SizedBox(
-                    height: 4.sp,
+                    height: AppDimens.height_4,
                   ),
                   Text(
                     score?.gpaTextScore ?? "",
