@@ -18,4 +18,5 @@ extension StringExtensions on String {
   String formatDayOfWeek() {
     return '${this[0].toUpperCase()}${this[length - 1]}';
   }
+
 }

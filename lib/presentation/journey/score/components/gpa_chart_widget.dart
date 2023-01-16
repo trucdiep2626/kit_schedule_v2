@@ -1,0 +1,77 @@
+import 'package:flutter/material.dart';
+import 'package:kit_schedule_v2/common/common_export.dart';
+import 'package:kit_schedule_v2/common/extensions/number_extension.dart';
+import 'package:kit_schedule_v2/common/utils/app_screen_utils/flutter_screenutils.dart';
+import 'package:kit_schedule_v2/presentation/theme/theme_color.dart';
+import 'package:kit_schedule_v2/presentation/theme/theme_text.dart';
+import 'package:syncfusion_flutter_gauges/gauges.dart';
+
+class GPACharWidget extends StatelessWidget {
+  const GPACharWidget({
+    Key? key,
+    this.score,
+  }) : super(key: key);
+
+  final double? score;
+
+  @override
+  Widget build(BuildContext context) {
+    return SfRadialGauge(
+      enableLoadingAnimation: true,
+      axes: <RadialAxis>[
+        RadialAxis(
+          axisLineStyle: const AxisLineStyle(
+            cornerStyle: CornerStyle.bothCurve
+          ),
+          showLabels: false,
+          canScaleToFit: true,
+          startAngle: 120,
+          endAngle: 60,
+          maximum: 4,
+          minimum: 0,
+          pointers: [
+            RangePointer(
+              value: score ?? 0.0,
+              color: AppColors.blue900,
+              cornerStyle: CornerStyle.bothCurve,
+            ),
+            MarkerPointer(
+              value: score ?? 0.0,
+              markerOffset: -10,
+            ),
+
+          ],
+          annotations: [
+            GaugeAnnotation(
+              positionFactor: 0.04,
+              widget: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Text(
+                    "GPA",
+                    style: ThemeText.bodyRegular,
+                  ),
+                  SizedBox(
+                    height: AppDimens.height_4,
+                  ),
+                  Text(
+                    score?.toString() ?? "0.0",
+                    style: ThemeText.heading1.s40,
+                    textAlign: TextAlign.center,
+                  ),
+                  SizedBox(
+                    height: 4.sp,
+                  ),
+                  Text(
+                    score?.gpaTextScore ?? "",
+                    style: ThemeText.heading3,
+                  )
+                ],
+              ),
+            )
+          ],
+        )
+      ],
+    );
+  }
+}

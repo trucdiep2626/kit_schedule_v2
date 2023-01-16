@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:kit_schedule_v2/common/common_export.dart';
 import 'package:kit_schedule_v2/common/config/network/network_state.dart';
@@ -10,9 +9,11 @@ import 'package:kit_schedule_v2/presentation/widgets/snack_bar/app_snack_bar.dar
 
 class ScoreController extends GetxController with MixinController {
   final MainController mainController = Get.find<MainController>();
+  final SchoolUseCase schoolUseCase;
+
   Rx<LoadedType> rxScoreLoadedType = LoadedType.finish.obs;
   RxList<bool> rxExpandedList = <bool>[].obs;
-  Rx<StudentScores?> rxStudentScores = (null).obs;
+  Rx<StudentScores?> rxStudentScores = (null as StudentScores?).obs;
 
   ScoreController(this.schoolUseCase);
 
@@ -43,24 +44,28 @@ class ScoreController extends GetxController with MixinController {
       final result = await schoolUseCase.getScore(studentCode: studentCode);
 
       if (!isNullEmpty(result)) {
-        studentScores.value = result!;
+        rxStudentScores.value = result!;
+        rxExpandedList.value =
+            List.generate(result.scores?.length ?? 0, (index) => false);
       }
     } catch (e) {
-      showTopSnackBar(context,
-          message: 'Đã có lỗi xảy ra. Vui lòng thử lại',
-          type: SnackBarType.error);
+      showTopSnackBar(
+        Get.context!,
+        message: 'Đã có lỗi xảy ra. Vui lòng thử lại',
+        type: SnackBarType.error,
+      );
     }
     rxScoreLoadedType.value = LoadedType.finish;
-  }
-
-  @override
-  void onInit() {
-    super.onInit();
   }
 
   @override
   Future<void> onReady() async {
     super.onReady();
     onRefresh();
+  }
+
+  void setExpandedCell(int index, bool expanded) {
+    rxExpandedList.fillRange(0, rxExpandedList.length, false);
+    rxExpandedList[index] = !expanded;
   }
 }
