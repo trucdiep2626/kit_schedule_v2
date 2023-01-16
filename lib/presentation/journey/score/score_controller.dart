@@ -6,6 +6,8 @@ import 'package:kit_schedule_v2/domain/models/score_model.dart';
 import 'package:kit_schedule_v2/domain/usecases/school_usecase.dart';
 import 'package:kit_schedule_v2/presentation/controllers/mixin/export.dart';
 import 'package:kit_schedule_v2/presentation/journey/main/main_controller.dart';
+import 'package:kit_schedule_v2/presentation/journey/score/components/text_field_add_score.dart';
+import 'package:kit_schedule_v2/presentation/theme/export.dart';
 import 'package:kit_schedule_v2/presentation/widgets/snack_bar/app_snack_bar.dart';
 
 class ScoreController extends GetxController with MixinController {
@@ -15,7 +17,6 @@ class ScoreController extends GetxController with MixinController {
   Rx<StudentScores?> studentScores = (null as StudentScores?).obs;
 
   ScoreController(this.schoolUseCase);
-
   Future<void> onRefresh() async {
     if (!await NetworkState.isConnected) {
       showTopSnackBar(context,
@@ -51,6 +52,56 @@ class ScoreController extends GetxController with MixinController {
           type: SnackBarType.error);
     }
     rxScoreLoadedType.value = LoadedType.finish;
+  }
+
+// Future<void> _showDialogAddScore() async{
+//     return showDialog(context: context, builder: (context) {
+//         return Dialog()
+//     }, );
+// }
+  Future<void> displayTextInputDialog() async {
+    return showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            // shape: ,
+            title: Container(
+              padding: EdgeInsets.all(16.sp),
+              width: MediaQuery.of(context).size.width,
+              color: AppColors.blue900,
+              child: Text(
+                'Thêm môn học',
+                style: ThemeText.bodySemibold
+                    .copyWith(color: AppColors.bianca, fontSize: 18.sp),
+                textAlign: TextAlign.center,
+              ),
+            ),
+            content: SizedBox(
+              height: 200,
+              width: 300,
+              child: Column(
+                children: const [
+                  TextFieldAddScore(),
+                  TextFieldAddScore(),
+                  TextFieldAddScore(),
+                ],
+              ),
+            ),
+            actions: <Widget>[
+              ElevatedButton(
+                //  color: Colors.green,
+                //  textColor: Colors.white,
+                child: Text('OK'),
+                onPressed: () {
+                  //  setState(() {
+                  //    codeDialog = valueText;
+                  //    Navigator.pop(context);
+                  //  });
+                },
+              ),
+            ],
+          );
+        });
   }
 
   @override

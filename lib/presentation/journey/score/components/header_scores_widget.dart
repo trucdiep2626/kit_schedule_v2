@@ -10,9 +10,8 @@ class HeaderScoresWidget extends StatelessWidget {
     return Container(
       height: 80.sp,
       width: double.maxFinite,
-      decoration: BoxDecoration(
-          border: Border(
-              bottom: BorderSide(color: AppColors.blue800))),
+      decoration:  const BoxDecoration(
+          border: Border(bottom: BorderSide(color: AppColors.blue800))),
       child: Row(
         mainAxisSize: MainAxisSize.max,
         children: [
@@ -66,6 +65,7 @@ class HeaderScoresWidget extends StatelessWidget {
           //     ),
           //   ),
           // )
+
         ],
       ),
     );
@@ -77,9 +77,8 @@ class HeaderScoresWidget extends StatelessWidget {
           color: Colors.transparent,
           border: Border(
               right: BorderSide(
-                  color: isBorderRight
-                      ? AppColors.blue800
-                      : Colors.transparent))),
+                  color:
+                      isBorderRight ? AppColors.blue800 : Colors.transparent))),
       alignment: Alignment.center,
       child: Text(
         title,

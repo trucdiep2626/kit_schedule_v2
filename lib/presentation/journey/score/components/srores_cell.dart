@@ -18,10 +18,9 @@ class ScoresCell extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       height: 45.sp,
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
           color: Colors.transparent,
-          border: Border(
-              bottom: BorderSide(color: AppColors.blue800))),
+          border: Border(bottom: BorderSide(color: AppColors.blue800))),
       child: Row(
         children: [
           Expanded(
@@ -51,13 +50,11 @@ class ScoresCell extends StatelessWidget {
       decoration: BoxDecoration(
           border: Border(
               right: BorderSide(
-                  color: isBorderRight
-                      ? AppColors.blue800
-                      : Colors.transparent))),
+                  color:
+                      isBorderRight ? AppColors.blue800 : Colors.transparent))),
       alignment: Alignment.center,
       child: Text(score,
-          textAlign: TextAlign.center,
-          style: ThemeText.bodyMedium.s12),
+          textAlign: TextAlign.center, style: ThemeText.bodyMedium.s12),
     );
   }
 }

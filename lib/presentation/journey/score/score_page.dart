@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:kit_schedule_v2/common/common_export.dart';
 import 'package:kit_schedule_v2/domain/models/score_model.dart';
+import 'package:kit_schedule_v2/presentation/journey/score/components/popup_menu.dart';
 import 'package:kit_schedule_v2/presentation/journey/score/components/srores_cell.dart';
 import 'package:kit_schedule_v2/presentation/journey/score/score_controller.dart';
 import 'package:kit_schedule_v2/presentation/theme/export.dart';
@@ -38,14 +39,15 @@ class ScorePage extends GetView<ScoreController> {
                         style: ThemeText.bodySemibold.s18,
                       ),
                     ),
-                    IconButton(
-                        padding: EdgeInsets.zero,
-                        onPressed: () async => await controller.onRefresh(),
-                        icon: Icon(
-                          Icons.update,
-                          color: AppColors.blue900,
-                          size: 24.sp,
-                        ))
+                    // IconButton(
+                    //     padding: EdgeInsets.zero,
+                    // onPressed: () async => await controller.onRefresh(),
+                    //     icon: Icon(
+                    //       Icons.update,
+                    //       color: AppColors.blue900,
+                    //       size: 24.sp,
+                    //     ))
+                    const PopUpMenuScores()
                   ],
                 ),
                 Obx(() => controller.rxScoreLoadedType.value == LoadedType.start
@@ -169,7 +171,7 @@ class ScorePage extends GetView<ScoreController> {
                             }),
                       ],
                     ),
-                  )
+                  ),
                 ],
               ),
             ),
@@ -227,8 +229,7 @@ class ScorePage extends GetView<ScoreController> {
             style: ThemeText.bodySemibold.blue900.s16,
             children: <TextSpan>[
               TextSpan(
-                  text: info,
-                  style: ThemeText.bodySemibold.blue900.s16.w400()),
+                  text: info, style: ThemeText.bodySemibold.blue900.s16.w400()),
             ],
           ),
         ),
