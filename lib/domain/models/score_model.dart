@@ -65,10 +65,10 @@ class Score {
   Score.fromJson(Map<String, dynamic> json) {
     subject =
         json['subject'] != null ? Subject.fromJson(json['subject']) : null;
-    firstComponentScore = json['firstComponentScore'];
-    secondComponentScore = json['secondComponentScore'];
-    examScore = json['examScore'];
-    avgScore = json['avgScore'];
+    firstComponentScore = (json['firstComponentScore'] as String? ?? "").replaceAll(",", ".");
+    secondComponentScore = (json['secondComponentScore'] as String? ?? "").replaceAll(",", ".");
+    examScore = (json['examScore'] as String? ?? "").replaceAll(",", ".");
+    avgScore = (json['avgScore'] as String? ?? "").replaceAll(",", ".");
     alphabetScore = json['alphabetScore'];
   }
 
