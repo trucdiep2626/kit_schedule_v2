@@ -54,11 +54,6 @@ class ScoreController extends GetxController with MixinController {
     rxScoreLoadedType.value = LoadedType.finish;
   }
 
-// Future<void> _showDialogAddScore() async{
-//     return showDialog(context: context, builder: (context) {
-//         return Dialog()
-//     }, );
-// }
   Future<void> displayTextInputDialog() async {
     return showDialog(
         context: context,
@@ -77,10 +72,11 @@ class ScoreController extends GetxController with MixinController {
               ),
             ),
             content: SizedBox(
-              height: 200,
-              width: 300,
+              height: 270.h,
+              width: 300.w,
               child: Column(
                 children: const [
+                  TextFieldAddScore(),
                   TextFieldAddScore(),
                   TextFieldAddScore(),
                   TextFieldAddScore(),
@@ -89,15 +85,8 @@ class ScoreController extends GetxController with MixinController {
             ),
             actions: <Widget>[
               ElevatedButton(
-                //  color: Colors.green,
-                //  textColor: Colors.white,
                 child: Text('OK'),
-                onPressed: () {
-                  //  setState(() {
-                  //    codeDialog = valueText;
-                  //    Navigator.pop(context);
-                  //  });
-                },
+                onPressed: () {},
               ),
             ],
           );
