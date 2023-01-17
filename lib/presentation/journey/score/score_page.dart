@@ -18,19 +18,23 @@ class ScorePage extends GetView<ScoreController> {
       backgroundColor: AppColors.backgroundColor,
       body: Obx(
         () {
-          if (controller.rxLoadedType.value == LoadedType.start) {
-            return const Center(
-              child: AppLoadingWidget(),
-            );
-          }
-          return CustomScrollView(
-            slivers: [
-              _buildHeader(),
-              _buildSubjectTableHeader(),
-              if (!isNullEmpty(controller.rxStudentScores))
-                _buildScoreTableData(),
-            ],
+          return AnimatedSwitcher(
+            duration: kThemeAnimationDuration,
+            child: controller.rxLoadedType.value == LoadedType.start
+                ? Center(
+                    child: AppLoadingWidget(
+                    ),
+                  )
+                : CustomScrollView(
+                    slivers: [
+                      _buildHeader(),
+                      _buildSubjectTableHeader(),
+                      if (!isNullEmpty(controller.rxStudentScores))
+                        _buildScoreTableData(),
+                    ],
+                  ),
           );
+
         },
       ),
     );
@@ -39,9 +43,8 @@ class ScorePage extends GetView<ScoreController> {
   SliverList _buildScoreTableData() {
     return SliverList(
       delegate: SliverChildBuilderDelegate(
-            (context, index) {
-          final scores =
-              controller.rxStudentScores.value?.scores ?? [];
+        (context, index) {
+          final scores = controller.rxStudentScores.value?.scores ?? [];
           if (scores.isEmpty) {
             return SizedBox(
               height: AppDimens.height_80,
@@ -53,14 +56,13 @@ class ScorePage extends GetView<ScoreController> {
           return Padding(
             padding: EdgeInsets.all(AppDimens.space_16).copyWith(top: 0),
             child: Obx(
-                  () => AppExpansionPanelList(
+              () => AppExpansionPanelList(
                 expandedHeaderPadding: EdgeInsets.only(top: AppDimens.height_8),
                 dividerColor: AppColors.blue100,
                 elevation: 0,
                 children: [
                   for (int i = 0; i < scores.length; i++)
-                    _buildScoreCell(
-                        i, controller.rxExpandedList[i], scores[i])
+                    _buildScoreCell(i, controller.rxExpandedList[i], scores[i])
                 ],
                 expansionCallback: controller.setExpandedCell,
               ),
@@ -78,7 +80,8 @@ class ScorePage extends GetView<ScoreController> {
       backgroundColor: AppColors.backgroundColor,
       pinned: true,
       floating: false,
-      expandedHeight: Get.height > 800 ? AppDimens.height_220 : AppDimens.height_260,
+      expandedHeight:
+          Get.height > 800 ? AppDimens.height_220 : AppDimens.height_260,
       actions: [
         IconButton(
           padding: EdgeInsets.zero,
@@ -106,7 +109,9 @@ class ScorePage extends GetView<ScoreController> {
               height: AppDimens.height_90,
             ),
             SizedBox(
-              height: Get.height > 800 ? AppDimens.height_160 : AppDimens.height_180,
+              height: Get.height > 800
+                  ? AppDimens.height_160
+                  : AppDimens.height_180,
               child: GPACharWidget(
                 score: controller.rxStudentScores.value?.avgScore,
               ),
@@ -145,8 +150,6 @@ class ScorePage extends GetView<ScoreController> {
                 child: Text(
                   score.subject?.name ?? "Unknown",
                   style: ThemeText.bodySemibold,
-                  maxLines: isExpanded ? 2 : 1,
-                  overflow: TextOverflow.ellipsis,
                 ),
               ),
               if (!isExpanded) ...[
@@ -172,7 +175,8 @@ class ScorePage extends GetView<ScoreController> {
       body: AppTouchable(
         onPressed: () => controller.setExpandedCell(index, isExpanded),
         child: Container(
-          padding: EdgeInsets.all(AppDimens.space_12).copyWith(top: AppDimens.height_8),
+          padding: EdgeInsets.all(AppDimens.space_12)
+              .copyWith(top: AppDimens.height_8),
           decoration: BoxDecoration(
             color: isExpanded
                 ? AppColors.blue100.withOpacity(0.5)
@@ -306,9 +310,8 @@ class ScorePage extends GetView<ScoreController> {
   SliverAppBar _buildSubjectTableHeader() {
     return SliverAppBar(
       pinned: true,
-      collapsedHeight: Get.height > 800
-          ? AppDimens.height_64
-          : AppDimens.height_112,
+      collapsedHeight:
+          Get.height > 800 ? AppDimens.height_64 : AppDimens.height_112,
       backgroundColor: AppColors.backgroundColor,
       flexibleSpace: Padding(
         padding: EdgeInsets.symmetric(horizontal: AppDimens.space_16),
@@ -338,9 +341,8 @@ class ScorePage extends GetView<ScoreController> {
                           width: AppDimens.width_4,
                         ),
                         Text(
-                          (controller.rxStudentScores.value
-                              ?.passedSubjects ??
-                              0)
+                          (controller.rxStudentScores.value?.passedSubjects ??
+                                  0)
                               .toString(),
                           style: ThemeText.heading2.s24,
                         ),
@@ -369,9 +371,8 @@ class ScorePage extends GetView<ScoreController> {
                           width: AppDimens.space_4,
                         ),
                         Text(
-                          (controller.rxStudentScores.value
-                              ?.failedSubjects ??
-                              0)
+                          (controller.rxStudentScores.value?.failedSubjects ??
+                                  0)
                               .toString(),
                           style: ThemeText.heading2.s24,
                         ),
@@ -390,7 +391,7 @@ class ScorePage extends GetView<ScoreController> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  const Expanded(
+                  Expanded(
                     child: Text(
                       "Môn học",
                       style: ThemeText.heading4,
@@ -398,7 +399,7 @@ class ScorePage extends GetView<ScoreController> {
                   ),
                   SizedBox(
                     width: AppDimens.width_56,
-                    child: const Text(
+                    child: Text(
                       "Điểm",
                       style: ThemeText.heading4,
                       textAlign: TextAlign.center,
