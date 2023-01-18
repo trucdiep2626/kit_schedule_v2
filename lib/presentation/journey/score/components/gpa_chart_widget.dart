@@ -42,16 +42,14 @@ class GPACharWidget extends StatelessWidget {
           ],
           annotations: [
             GaugeAnnotation(
-              positionFactor: 0.04,
+              axisValue: 2.0,
+              angle: 90,
               widget: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const Text(
+                  Text(
                     "GPA",
                     style: ThemeText.bodyRegular,
-                  ),
-                  SizedBox(
-                    height: AppDimens.height_4,
                   ),
                   Text(
                     score?.toString() ?? "0.0",

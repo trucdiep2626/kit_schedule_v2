@@ -11,7 +11,6 @@ class ScoreController extends GetxController with MixinController {
   final MainController mainController = Get.find<MainController>();
   final SchoolUseCase schoolUseCase;
 
-  Rx<LoadedType> rxScoreLoadedType = LoadedType.finish.obs;
   RxList<bool> rxExpandedList = <bool>[].obs;
   Rx<StudentScores?> rxStudentScores = (null as StudentScores?).obs;
 
@@ -24,19 +23,19 @@ class ScoreController extends GetxController with MixinController {
       return;
     }
 
-    rxScoreLoadedType.value = LoadedType.start;
+    rxLoadedType.value = LoadedType.start;
     await getScores();
-    rxScoreLoadedType.value = LoadedType.finish;
+    rxLoadedType.value = LoadedType.finish;
   }
 
   Future<void> getScores() async {
-    rxScoreLoadedType.value = LoadedType.start;
+    rxLoadedType.value = LoadedType.start;
 
     final studentCode =
         Get.find<MainController>().studentInfo.value.studentCode;
 
     if (studentCode == null || studentCode.isEmpty) {
-      rxScoreLoadedType.value = LoadedType.finish;
+      rxLoadedType.value = LoadedType.finish;
       return;
     }
 
@@ -55,7 +54,7 @@ class ScoreController extends GetxController with MixinController {
         type: SnackBarType.error,
       );
     }
-    rxScoreLoadedType.value = LoadedType.finish;
+    rxLoadedType.value = LoadedType.finish;
   }
 
   @override

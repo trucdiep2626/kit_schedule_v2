@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:kit_schedule_v2/common/utils/export.dart';
+// import 'package:kit_schedule_v2/presentation/journey/demo_widget.dart';
 import 'package:kit_schedule_v2/presentation/journey/main/main_controller.dart';
 import 'package:kit_schedule_v2/presentation/journey/personal/personal_controller.dart';
 import 'package:kit_schedule_v2/presentation/theme/export.dart';
@@ -110,6 +111,12 @@ class PersonalPage extends GetView<PersonalController> {
             },
             title: 'Đăng xuất',
           ),
+          // _buildListTile(onTap: () {
+          //   Navigator.of(context).push(MaterialPageRoute(builder:
+          //     (context) {
+          //     return const DemoWidget();
+          //   }));
+          // }, title: "Widgets", icon: Icons.widgets)
           // if (profileState.isLogIn)
           //   _buildListTile(
           //     onTap: () => _actionDeleteAccount(context),
