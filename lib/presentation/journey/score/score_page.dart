@@ -311,7 +311,7 @@ class ScorePage extends GetView<ScoreController> {
     return SliverAppBar(
       pinned: true,
       collapsedHeight:
-          Get.height > 800 ? AppDimens.height_64 : AppDimens.height_112,
+          Get.height > 800 ? AppDimens.height_68 : AppDimens.height_112,
       backgroundColor: AppColors.backgroundColor,
       flexibleSpace: Padding(
         padding: EdgeInsets.symmetric(horizontal: AppDimens.space_16),

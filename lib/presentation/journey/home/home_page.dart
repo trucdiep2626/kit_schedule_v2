@@ -13,17 +13,18 @@ class HomePage extends GetView<HomeController> {
   Widget build(BuildContext context) {
     controller.context = context;
     return Scaffold(
-        backgroundColor: AppColors.backgroundColor,
-        body: SafeArea(
-          child: Column(
-            children: <Widget>[
-              Obx(() => CalendarView(
-                    schedules: controller.studentSchedule.value,
-                    personals: controller.personalSchedule.value,
-                  )),
-              const Expanded(child: ScheduleView()),
-            ],
-          ),
-        ));
+      backgroundColor: AppColors.backgroundColor,
+      body: SafeArea(
+        child: Column(
+          children: <Widget>[
+            Obx(() => CalendarView(
+                  schedules: controller.studentSchedule.value,
+                  personals: controller.personalSchedule.value,
+                )),
+            const Expanded(child: ScheduleView()),
+          ],
+        ),
+      ),
+    );
   }
 }

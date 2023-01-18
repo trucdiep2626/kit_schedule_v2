@@ -12,14 +12,14 @@ import 'package:kit_schedule_v2/presentation/theme/export.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 class CalendarView extends StatefulWidget {
-  CalendarView({
+  const CalendarView({
     Key? key,
     required this.schedules,
     required this.personals,
   }) : super(key: key);
 
-  List<StudentSchedule> schedules;
-  List<PersonalScheduleModel> personals;
+  final List<StudentSchedule> schedules;
+  final List<PersonalScheduleModel> personals;
 
   @override
   _CalendarViewState createState() => _CalendarViewState();
