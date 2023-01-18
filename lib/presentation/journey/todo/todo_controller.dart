@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:get/get.dart';
@@ -23,10 +25,10 @@ class TodoController extends GetxController with MixinController {
   RxBool isKeyboard = false.obs;
   //GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
-  Rx<PersonalScheduleModel?> personalSchedule = (null as PersonalScheduleModel?).obs;
-  RxString validateText= ''.obs;
+  Rx<PersonalScheduleModel?> personalSchedule =
+      (null as PersonalScheduleModel?).obs;
+  RxString validateText = ''.obs;
   String msv = '';
-
 
   // String _date = DateTime.utc(DateTime.now().year, DateTime.now().month,
   //     DateTime.now().day, 0, 0, 0, 0)
@@ -51,12 +53,12 @@ class TodoController extends GetxController with MixinController {
   //   // debugPrint('----------${selectedDate.value}----${selectedTime.value}');
   // }
 
-  void checkValidateInput()
-  {
-    if(nameController.text.trim().isEmpty)
-      {
-        validateText.value = 'Thông tin này không được phép bỏ trống';
-      }
+  bool checkValidateInput() {
+    if (nameController.text.trim().isEmpty) {
+      validateText.value = 'Thông tin này không được phép bỏ trống';
+      return false;
+    }
+    return true;
   }
 
   void onSelectDate(DateTime newSelectedDate) {
@@ -72,12 +74,9 @@ class TodoController extends GetxController with MixinController {
   }
 
   Future<void> createTodo() async {
-    checkValidateInput();
-
-    if(!isNullEmpty(validateText.value))
-      {
-        return;
-      }
+    if (!checkValidateInput()) {
+      return;
+    }
 
     rxTodoLoadedType.value = LoadedType.start;
     final String now = DateTime.now().millisecondsSinceEpoch.toString();
@@ -93,6 +92,7 @@ class TodoController extends GetxController with MixinController {
       ));
       showTopSnackBar(context,
           message: 'Tạo ghi chú thành công', type: SnackBarType.done);
+
       await Get.find<HomeController>().getPersonalScheduleLocal();
       resetData();
     } catch (e) {
@@ -104,19 +104,14 @@ class TodoController extends GetxController with MixinController {
   }
 
   Future<void> updateTodo() async {
-    checkValidateInput();
-
-    if(!isNullEmpty(validateText.value))
-    {
+    if (!checkValidateInput()) {
       return;
     }
-
-
 
     rxTodoLoadedType.value = LoadedType.start;
     final String now = DateTime.now().millisecondsSinceEpoch.toString();
 
-     try {
+    try {
       final result = await personalUsecase
           .updatePersonalScheduleDataLocal(PersonalScheduleModel(
         date: selectedDate.value,
@@ -145,14 +140,14 @@ class TodoController extends GetxController with MixinController {
     rxTodoLoadedType.value = LoadedType.finish;
   }
 
-  void resetData(){
+  void resetData() {
+    validateText.value = '';
     nameController.clear();
     noteController.clear();
     personalSchedule.value = null;
     selectedDate.value = DateTimeFormatter.formatDate(DateTime.now());
     selectedTime.value = '${Convert.timerConvert(TimeOfDay.now())}';
   }
-
 
   Future<void> deleteTodo() async {
     rxTodoLoadedType.value = LoadedType.start;
@@ -185,9 +180,8 @@ class TodoController extends GetxController with MixinController {
     noteController.text = personalSchedule.value?.note ?? '';
     selectedDate.value = personalSchedule.value?.date ??
         DateTimeFormatter.formatDate(DateTime.now());
-    selectedTime.value =
-        personalSchedule.value?.timer ?? '${Convert.timerConvert(TimeOfDay.now())}';
-
+    selectedTime.value = personalSchedule.value?.timer ??
+        '${Convert.timerConvert(TimeOfDay.now())}';
   }
 
   @override
@@ -195,12 +189,12 @@ class TodoController extends GetxController with MixinController {
     //
     // final args = Get.arguments;
     // debugPrint('1=============$args');
-   // if (args != null) {
-     //
-   // } else {
-      selectedDate.value = DateTimeFormatter.formatDate(DateTime.now());
-      selectedTime.value = '${Convert.timerConvert(TimeOfDay.now())}';
-   // }
+    // if (args != null) {
+    //
+    // } else {
+    selectedDate.value = DateTimeFormatter.formatDate(DateTime.now());
+    selectedTime.value = '${Convert.timerConvert(TimeOfDay.now())}';
+    // }
 
     KeyboardVisibilityController().onChange.listen((event) async {
       isKeyboard.value = event;
@@ -211,7 +205,6 @@ class TodoController extends GetxController with MixinController {
         // if (mounted) setState(() {});
       }
     });
-
 
     debugPrint('----------${selectedDate.value}----${selectedTime.value}');
   }
