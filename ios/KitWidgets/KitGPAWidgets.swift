@@ -215,7 +215,6 @@ struct KitGPAWidgetView : View {
                         .lineLimit(1)
                     }
                     .frame(minWidth: 20)
-//                    .padding(.leading, widgetFamily == .systemMedium ? 18 : 0)
                     if ([WidgetFamily.systemMedium, WidgetFamily.systemLarge].contains(widgetFamily)) {
                         Spacer()
                         VStack(alignment: .leading) {
