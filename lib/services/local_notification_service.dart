@@ -24,8 +24,6 @@ class LocalNotificationService {
       required DateTime scheduleDateTime,
       required int notiId,
       String? androidIconPath,
-      AndroidBitmap<Object>? largeIcon,
-      DateTimeComponents? matchDateTimeComponents,
       String? payload}) async {
     FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
         FlutterLocalNotificationsPlugin();
@@ -57,13 +55,14 @@ class LocalNotificationService {
         tzTimeSchedule,
         NotificationDetails(
             android: AndroidNotificationDetails(
-              'blood_pressure_notiId',
-              'Blood Pressure Notifications',
-              channelDescription: 'Blood Pressure Notifications Des',
+              'class_schedule_notification',
+              'Class schedule notification',
+              channelDescription: 'Class schedule notification Des',
               icon: androidIconPath ?? "@mipmap/ic_launcher",
               priority: Priority.high,
               importance: Importance.max,
-              largeIcon: largeIcon,
+              largeIcon:
+                  const DrawableResourceAndroidBitmap("@mipmap/ic_launcher"),
             ),
             iOS: const DarwinNotificationDetails(
               presentAlert: true,
