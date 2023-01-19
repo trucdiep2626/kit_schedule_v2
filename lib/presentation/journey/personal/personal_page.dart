@@ -76,11 +76,11 @@ class PersonalPage extends GetView<PersonalController> {
           //     },
           //     title: ''),
           _buildListTile(
-            icon: Icons.notifications_none,
+            icon: Icons.settings_outlined,
             onTap: () {
-              Get.to(() => SettingPage());
+              Get.to(() => const SettingPage());
             },
-            title: 'Cài đặt thông báo',
+            title: 'Cài đặt',
           ),
           _buildListTile(
             icon: Icons.info_outline,
