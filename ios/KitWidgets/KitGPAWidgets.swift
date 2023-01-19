@@ -8,15 +8,6 @@
 import WidgetKit
 import SwiftUI
 
-extension Color {
-    init(r: Int, g: Int, b: Int, a: Int) {
-        self.init(red: Double(r) / 255.0, green: Double(g)/255.0, blue: Double(b)/255.0)
-    }
-    
-    static let appPrimaryColor = Color.init(red: 0.10196078431372549, green: 0.13725490196078433, blue: 0.4980392156862745)
-    static let appPrimaryLightColor = Color.init(r: 194, g: 221, b: 248, a: 255)
-    static let appBackgroundColor = Color.init(r: 252, g: 250, b: 243, a: 255)
-}
 
 
 struct GPAData: Codable {
@@ -61,6 +52,7 @@ struct GPAData: Codable {
 struct GPAProvider: TimelineProvider {
     let dataKey = "gpa-widget-data"
     
+    typealias Entry = GPAEntry
     func placeholder(in context: Context) -> GPAEntry {
         GPAEntry(date: Date(), data: GPAData(score: 3.6, passedSubjects: 32, failedSubjects: 0))
     }
@@ -314,7 +306,7 @@ struct GPAAccessoryCircularWidget : View {
     }
 }
 
-struct KitWidgets: Widget {
+struct KitGPAWidget: Widget {
     let kind: String = "gpa-widget-data"
     
     var body: some WidgetConfiguration {
@@ -327,7 +319,7 @@ struct KitWidgets: Widget {
     }
 }
 
-struct KitWidgets_Previews: PreviewProvider {
+struct KitGPAWidget_Previews: PreviewProvider {
     static var previews: some View {
         KitGPAWidgetView(entry: GPAEntry(date: Date(), data: nil))
             .previewContext(WidgetPreviewContext(family: .systemSmall))

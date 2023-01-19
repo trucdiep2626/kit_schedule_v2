@@ -11,6 +11,7 @@ import SwiftUI
 @main
 struct KitWidgetsBundle: WidgetBundle {
     var body: some Widget {
-        KitWidgets()
+        KitGPAWidget()
+        ScheduleWidget()
     }
 }

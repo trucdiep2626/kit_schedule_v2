@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+import 'package:kit_schedule_v2/common/utils/date_time_format.dart';
 import 'package:timezone/timezone.dart' as tz;
 
 class Convert {
   static Map<String, String> startTimeLessonMap = {
+    '0': "00:00",
     '1': '07:00',
     '2': '07:50',
     '3': '08:40',
@@ -19,6 +22,7 @@ class Convert {
   };
 
   static Map<String, String> endTimeLessonMap = {
+    '0': '00:00',
     '1': '07:45',
     '2': '08:35',
     '3': '09:25',
@@ -87,5 +91,15 @@ class Convert {
       return 'F';
     }
     return 'F';
+  }
+
+  static DateTime? convertScheduleTime(String? day, [String? time]) {
+    try {
+      String pattern = "dd/MM/yyyy${time == null ? "" : " hh:mm"}";
+      final formatter = DateFormat(pattern);
+      return formatter.parse("$day ${time ?? ""}".trim());
+    } on FormatException catch (_) {
+      rethrow;
+    }
   }
 }

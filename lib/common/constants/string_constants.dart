@@ -1,4 +1,9 @@
 class StringConstants {
+  // widget group id
+  static const iOSGroupId = "group.kit.schedule";
+
+
+
   /// Argument Key
   static const String argumentPreviousRoute = 'argument.previousRoute';
   static const String argumentWalletModel = 'argument.walletModel';

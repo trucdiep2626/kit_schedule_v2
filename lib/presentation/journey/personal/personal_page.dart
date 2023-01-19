@@ -8,6 +8,8 @@ import 'package:kit_schedule_v2/presentation/theme/export.dart';
 import 'package:kit_schedule_v2/presentation/widgets/warning_dialog.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
+import '../demo_widget.dart';
+
 class PersonalPage extends GetView<PersonalController> {
   final MainController _mainController = Get.find<MainController>();
 
@@ -111,12 +113,12 @@ class PersonalPage extends GetView<PersonalController> {
             },
             title: 'Đăng xuất',
           ),
-          // _buildListTile(onTap: () {
-          //   Navigator.of(context).push(MaterialPageRoute(builder:
-          //     (context) {
-          //     return const DemoWidget();
-          //   }));
-          // }, title: "Widgets", icon: Icons.widgets)
+          _buildListTile(onTap: () {
+            Navigator.of(context).push(MaterialPageRoute(builder:
+              (context) {
+              return const DemoWidget();
+            }));
+          }, title: "Widgets", icon: Icons.widgets)
           // if (profileState.isLogIn)
           //   _buildListTile(
           //     onTap: () => _actionDeleteAccount(context),
@@ -143,29 +145,11 @@ class PersonalPage extends GetView<PersonalController> {
 
   void actionLogIn(
     BuildContext context,
-    //bool isLogIn
   ) {
-    //   if (isLogIn) {
     warningDialog(
         context: context,
-        //isSynch: true,
         btnOk: controller.logOut,
         btnCancel: () => Get.back());
-    //   } else {
-    //     Navigator.pushNamed(context, '/sign-in').then((value) {
-    //       if (value is bool && value) {
-    //         BlocProvider.of<HomeBloc>(context)
-    //             .add(OnTabChangeEvent(MainItem.CalendarTabScreenItem));
-    //         BlocProvider.of<CalendarBloc>(context).add(GetAllScheduleDataEvent());
-    //         BlocProvider.of<TodoBloc>(context).add(GetUserNameEvent());
-    //         BlocProvider.of<ProfileBloc>(context)
-    //             .add(GetUserNameInProfileEvent());
-    //         BlocProvider.of<ScoresBloc>(context)
-    //           ..add(InitEvent())
-    //           ..add(LoadScoresEvent());
-    //       }
-    //     });
-    //   }
   }
 
   bool isEnglish(String isEng) {

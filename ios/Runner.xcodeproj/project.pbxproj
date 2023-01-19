@@ -20,6 +20,10 @@
 		A0197BFC2975B5B000433B9B /* KitGPAWidgets.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0197BFB2975B5B000433B9B /* KitGPAWidgets.swift */; };
 		A0197BFE2975B5B100433B9B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A0197BFD2975B5B100433B9B /* Assets.xcassets */; };
 		A0197C022975B5B100433B9B /* KitWidgetsExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = A0197BF32975B5B000433B9B /* KitWidgetsExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		A0F0F6C32977992D0064CD82 /* Color+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0F0F6C12977988D0064CD82 /* Color+Extension.swift */; };
+		A0F0F6C5297799550064CD82 /* KitScheduleWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0F0F6C4297799550064CD82 /* KitScheduleWidget.swift */; };
+		A0F0F6C72977FB790064CD82 /* Date+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0F0F6C62977FB790064CD82 /* Date+Extension.swift */; };
+		A0F0F6C92977FB9C0064CD82 /* CGFLoat+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0F0F6C82977FB9C0064CD82 /* CGFLoat+Extension.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -83,6 +87,10 @@
 		A0197BFF2975B5B100433B9B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A0197C082975B5C000433B9B /* Runner.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Runner.entitlements; sourceTree = "<group>"; };
 		A0197C092975B5C700433B9B /* KitWidgetsExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = KitWidgetsExtension.entitlements; sourceTree = "<group>"; };
+		A0F0F6C12977988D0064CD82 /* Color+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+Extension.swift"; sourceTree = "<group>"; };
+		A0F0F6C4297799550064CD82 /* KitScheduleWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KitScheduleWidget.swift; sourceTree = "<group>"; };
+		A0F0F6C62977FB790064CD82 /* Date+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Extension.swift"; sourceTree = "<group>"; };
+		A0F0F6C82977FB9C0064CD82 /* CGFLoat+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CGFLoat+Extension.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -162,6 +170,10 @@
 				A0197BFB2975B5B000433B9B /* KitGPAWidgets.swift */,
 				A0197BFD2975B5B100433B9B /* Assets.xcassets */,
 				A0197BFF2975B5B100433B9B /* Info.plist */,
+				A0F0F6C12977988D0064CD82 /* Color+Extension.swift */,
+				A0F0F6C4297799550064CD82 /* KitScheduleWidget.swift */,
+				A0F0F6C62977FB790064CD82 /* Date+Extension.swift */,
+				A0F0F6C82977FB9C0064CD82 /* CGFLoat+Extension.swift */,
 			);
 			path = KitWidgets;
 			sourceTree = "<group>";
@@ -374,8 +386,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A0F0F6C92977FB9C0064CD82 /* CGFLoat+Extension.swift in Sources */,
+				A0F0F6C72977FB790064CD82 /* Date+Extension.swift in Sources */,
 				A0197BFC2975B5B000433B9B /* KitGPAWidgets.swift in Sources */,
+				A0F0F6C32977992D0064CD82 /* Color+Extension.swift in Sources */,
 				A0197BFA2975B5B000433B9B /* KitWidgetsBundle.swift in Sources */,
+				A0F0F6C5297799550064CD82 /* KitScheduleWidget.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -477,8 +493,12 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.example.kitScheduleV2;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_OBJC_BRIDGING_HEADER = "Runner/Runner-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Profile;
@@ -608,9 +628,13 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.example.kitScheduleV2;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_OBJC_BRIDGING_HEADER = "Runner/Runner-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Debug;
@@ -636,8 +660,12 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.example.kitScheduleV2;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_OBJC_BRIDGING_HEADER = "Runner/Runner-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Release;
