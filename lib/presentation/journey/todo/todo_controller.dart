@@ -11,6 +11,7 @@ import 'package:kit_schedule_v2/domain/usecases/personal_usecase.dart';
 import 'package:kit_schedule_v2/presentation/controllers/mixin/export.dart';
 import 'package:kit_schedule_v2/presentation/journey/home/home_controller.dart';
 import 'package:kit_schedule_v2/presentation/journey/main/main_controller.dart';
+import 'package:kit_schedule_v2/presentation/journey/setting/setting_controller.dart';
 import 'package:kit_schedule_v2/presentation/widgets/export.dart';
 
 class TodoController extends GetxController with MixinController {
@@ -94,6 +95,7 @@ class TodoController extends GetxController with MixinController {
           message: 'Tạo ghi chú thành công', type: SnackBarType.done);
 
       await Get.find<HomeController>().getPersonalScheduleLocal();
+      Get.find<SettingController>().notifications();
       resetData();
     } catch (e) {
       showTopSnackBar(context,
@@ -125,6 +127,7 @@ class TodoController extends GetxController with MixinController {
         showTopSnackBar(context,
             message: 'Cập nhật ghi chú thành công', type: SnackBarType.done);
         await Get.find<HomeController>().getPersonalScheduleLocal();
+        Get.find<SettingController>().notifications();
         resetData();
         Get.back();
       } else {
@@ -159,6 +162,7 @@ class TodoController extends GetxController with MixinController {
         showTopSnackBar(context,
             message: 'Xoá ghi chú thành công', type: SnackBarType.done);
         await Get.find<HomeController>().getPersonalScheduleLocal();
+        Get.find<SettingController>().notifications();
         resetData();
         Get.back(result: true);
       } else {

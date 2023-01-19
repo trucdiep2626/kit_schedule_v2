@@ -14,10 +14,7 @@ import 'package:kit_schedule_v2/services/local_notification_service.dart';
 import 'package:kit_schedule_v2/common/utils/export.dart';
 
 class SettingPage extends GetView<SettingController> {
-  HomeController _homeController = Get.find<HomeController>();
-  final SettingController _settingController = Get.find<SettingController>();
-
-  SettingPage({super.key});
+  const SettingPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -53,31 +50,24 @@ class SettingPage extends GetView<SettingController> {
                   child: Switch(
                     materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
                     //splashRadius: 5.h,
-                    value: _settingController.isNotification.value,
+                    value: controller.isNotification.value,
                     onChanged: (value) {
-                      _settingController.onChangedNotification(value);
-                      if (value) {
-                        _scheduleNotifications();
-                      } else {
-                        LocalNotificationService
-                            .cancelAllScheduleNotification();
-                      }
+                      controller.onChangedNotification(value);
+                      controller.notifications();
                     },
                   ),
                 ),
               ),
               _buildListTile(
                 onTap: () {
-                  if (_settingController.isNotification.value) {
-                    _scheduleNotifications();
-                  }
+                  controller.notifications();
                   _scheduleTimeBottomSheet(context);
                 },
                 title: "Thông báo trước",
                 icon: Icons.timer_outlined,
                 trailing: Text.rich(
                   TextSpan(
-                    text: _settingController.timeNotification.value.toString(),
+                    text: controller.timeNotification.value.toString(),
                     style: ThemeText.bodySemibold.blue900,
                     children: [
                       TextSpan(
@@ -163,10 +153,8 @@ class SettingPage extends GetView<SettingController> {
                       title: Text("$index phút",
                           style: ThemeText.bodyMedium.blue900),
                       onTap: () {
-                        _settingController.onChangedTimeNotification(index);
-                        if (_settingController.isNotification.value) {
-                          _scheduleNotifications();
-                        }
+                        controller.onChangedTimeNotification(index);
+                        controller.notifications();
                         Navigator.of(context).pop();
                       },
                     );
@@ -178,41 +166,5 @@ class SettingPage extends GetView<SettingController> {
         );
       },
     );
-  }
-
-  void _scheduleNotifications() async {
-    await LocalNotificationService.cancelAllScheduleNotification();
-    List<StudentSchedule>? schoolSchedules =
-        (Get.find<HomeController>().studentSchedule).where((element) {
-      List lessonNumbers = element.lesson!.split(',');
-      String startLesson = lessonNumbers[0];
-
-      DateTime date = Convert.dateTimeConvert(
-              Convert.startTimeLessonMap[startLesson]!, element.day!)
-          .add(Duration(minutes: -_settingController.timeNotification.value));
-      if (date.isAfter(DateTime.now())) {
-        return true;
-      }
-      return false;
-    }).toList();
-
-    for (var element in schoolSchedules) {
-      if (schoolSchedules.indexOf(element) > 50) break;
-
-      List lessonNumbers = element.lesson!.split(',');
-      String startLesson = lessonNumbers[0];
-
-      DateTime date = Convert.dateTimeConvert(
-              Convert.startTimeLessonMap[startLesson]!, element.day!)
-          .add(Duration(minutes: -_settingController.timeNotification.value));
-
-      String time = '${DateFormat('HH:mm').format(date)} |  ${element.room!}';
-
-      LocalNotificationService.setupNotification(
-          title: element.subjectName.toString(),
-          content: time,
-          scheduleDateTime: date,
-          notiId: schoolSchedules.indexOf(element));
-    }
   }
 }
