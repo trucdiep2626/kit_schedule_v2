@@ -65,17 +65,29 @@ class SettingPage extends GetView<SettingController> {
                 },
                 title: "Thông báo trước",
                 icon: Icons.timer_outlined,
-                trailing: Text.rich(
-                  TextSpan(
-                    text: controller.timeNotification.value.toString(),
-                    style: ThemeText.bodySemibold.blue900,
-                    children: [
+                trailing: Row(
+                  children: [
+                    Text.rich(
                       TextSpan(
-                        text: " phút",
-                        style: ThemeText.bodyMedium.blue900,
+                        text: controller.timeNotification.value.toString(),
+                        style: ThemeText.bodySemibold.blue900,
+                        children: [
+                          TextSpan(
+                            text: " phút",
+                            style: ThemeText.bodyMedium.blue900,
+                          ),
+                        ],
                       ),
-                    ],
-                  ),
+                    ),
+                    SizedBox(
+                      width: 8.w,
+                    ),
+                    Icon(
+                      Icons.keyboard_arrow_down_outlined,
+                      color: AppColors.blue900,
+                      size: 16.sp,
+                    ),
+                  ],
                 ),
               ),
               _buildListTile(
