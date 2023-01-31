@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
@@ -76,7 +77,6 @@ class ApiClient {
             body: json.encode(params),
           )
           .then((value) => _handleResponse(value));
-
       return result;
     } on TimeoutException catch (_) {
       throw TimeOutError(
@@ -122,6 +122,7 @@ class ApiClient {
 
     logger.v(
       isLogResponse ? json.decode(response.body) : 'No log',
+      // json.decode(response.body),
       'Response │ Status: $statusCode\n$url',
     );
 

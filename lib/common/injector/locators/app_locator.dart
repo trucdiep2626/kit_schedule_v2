@@ -3,6 +3,7 @@ import 'package:kit_schedule_v2/common/config/database/hive_config.dart';
 import 'package:kit_schedule_v2/common/constants/shared_preferences_constants.dart';
 import 'package:kit_schedule_v2/data/local_repository.dart';
 import 'package:kit_schedule_v2/data/remote/school_repository.dart';
+import 'package:kit_schedule_v2/data/remote/score_repository.dart';
 import 'package:kit_schedule_v2/domain/usecases/personal_usecase.dart';
 import 'package:kit_schedule_v2/domain/usecases/school_usecase.dart';
 import 'package:kit_schedule_v2/presentation/controllers/app_controller.dart';
@@ -51,6 +52,7 @@ void configLocator() {
       () => SchoolRepository(getIt<HiveConfig>()));
   getIt.registerFactory<SharePreferencesConstants>(
       () => SharePreferencesConstants());
-
+  getIt.registerFactory<ScoreRepository>(
+      () => ScoreRepository(getIt<HiveConfig>()));
   getIt.registerLazySingleton<HiveConfig>(() => HiveConfig());
 }

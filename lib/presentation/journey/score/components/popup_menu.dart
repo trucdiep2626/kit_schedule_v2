@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:kit_schedule_v2/presentation/journey/score/components/text_field_add_score.dart';
+import 'package:kit_schedule_v2/presentation/journey/score/components/button_add_scores.dart';
 import 'package:kit_schedule_v2/presentation/journey/score/score_controller.dart';
 import 'package:kit_schedule_v2/presentation/theme/export.dart';
 
