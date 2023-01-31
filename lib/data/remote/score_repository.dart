@@ -71,14 +71,14 @@ class ScoreRepository {
   //   }
   // }
   // ignore: body_might_complete_normally_nullable
-  bool? checkDuplicate(StudentScores result, int index) {
-    hiveConfig.hiveScoresCell.values.where((element) {
-      if (element.id == result.scores![index].subject!.id) {
-        return true;
-      }
-      return false;
-    });
-  }
+  // bool? checkDuplicate(StudentScores result, int index) {
+  //   hiveConfig.hiveScoresCell.values.where((element) {
+  //     if (element.id == result.scores![index].subject!.id) {
+  //       return true;
+  //     }
+  //     return false;
+  //   });
+  // }
 
   double? calAvgScore(HiveScoresCell hiveScoresCell) {
     return (double.parse(hiveScoresCell.firstComponentScore!) * 0.7 +

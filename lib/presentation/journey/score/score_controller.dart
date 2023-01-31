@@ -86,9 +86,12 @@ class ScoreController extends GetxController with MixinController {
               result.scores![index].subject!.id!.contains("ATQGTC5")) {
             index++;
           } else {
-            if (getIt<ScoreRepository>()
-                    .checkDuplicate(result, index) == // mắc logic chỗ này!!!
-                false) {
+            if (getIt<HiveConfig>()
+                .hiveScoresCell
+                .values
+                .where((element) =>
+                    element.id == result.scores![index].subject!.id)
+                .isEmpty) {
               getIt<HiveConfig>().hiveScoresCell.add(HiveScoresCell(
                     alphabetScore: result.scores![index].alphabetScore,
                     avgScore: result.scores![index].avgScore,
