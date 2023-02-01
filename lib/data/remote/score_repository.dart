@@ -149,8 +149,11 @@ class ScoreRepository {
 
   double calTotalCredits() {
     double totalCredits = 0;
+
     for (int i = 0; i < hiveConfig.hiveScoresCell.length; i++) {
-      totalCredits += hiveConfig.hiveScoresCell.getAt(i)!.numberOfCredits!;
+      hiveConfig.hiveScoresCell.getAt(i)!.numberOfCredits != null
+          ? totalCredits += hiveConfig.hiveScoresCell.getAt(i)!.numberOfCredits!
+          : 0;
     }
     return totalCredits;
   }
@@ -158,9 +161,11 @@ class ScoreRepository {
   double calSumScoresCell() {
     double sumSCoresCell = 0;
     for (int i = 0; i < hiveConfig.hiveScoresCell.length; i++) {
-      sumSCoresCell += (calScorePointSystem4(
-              hiveConfig.hiveScoresCell.getAt(i)!.alphabetScore!) *
-          hiveConfig.hiveScoresCell.getAt(i)!.numberOfCredits!);
+      hiveConfig.hiveScoresCell.getAt(i)!.alphabetScore != null
+          ? sumSCoresCell += (calScorePointSystem4(
+                  hiveConfig.hiveScoresCell.getAt(i)!.alphabetScore) *
+              hiveConfig.hiveScoresCell.getAt(i)!.numberOfCredits!)
+          : 0;
     }
     return sumSCoresCell;
   }

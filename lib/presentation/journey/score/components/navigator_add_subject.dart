@@ -70,50 +70,41 @@ class NavigatorAddSubject extends StatelessWidget {
                       child: Container(
                     margin: EdgeInsets.only(right: 10.sp),
                     child: textField(
-                        onChanged: (p0) {
-                          // if (p0.trim().isEmpty) {
-                          //   return "Vui lòng điền đủ trường!!!";
-                          // } else {
-                          //   hiveScoresCell.firstComponentScore = p0;
-                          // }
-                          hiveScoresCell.firstComponentScore = p0;
-                        },
-                        hintText: "Điểm thành phần 1",
-                        textController: hiveScoresCell.firstComponentScore),
+                      onChanged: (p0) {
+                        hiveScoresCell.firstComponentScore = p0;
+                      },
+                      hintText: "Điểm thành phần 1",
+                    ),
                   )),
                   Expanded(
                       child: Container(
                     margin: EdgeInsets.only(left: 10.sp),
                     child: textField(
-                        onChanged: (p0) {
-                          // if (p0.trim().isEmpty) {
-                          //   return "Vui lòng điền đủ trường!!!";
-                          // } else {
-                          //   hiveScoresCell.secondComponentScore = p0;
-                          // }
-                          hiveScoresCell.secondComponentScore = p0;
-                        },
-                        hintText: "Điểm thành phần 2",
-                        textController: hiveScoresCell.secondComponentScore),
+                      onChanged: (p0) {
+                        hiveScoresCell.secondComponentScore = p0;
+                      },
+                      hintText: "Điểm thành phần 2",
+                    ),
                   )),
                 ],
               ),
             ),
             Container(
-              margin: EdgeInsets.only(bottom: 40.sp, left: 10.sp, right: 10.sp),
+              margin: EdgeInsets.only(bottom: 50.sp, left: 10.sp, right: 10.sp),
               child: Row(
                 children: [
                   Expanded(
                       child: textField(
-                          onChanged: (p0) {
-                            // if (p0.trim().isEmpty) {
-                            //   return "Vui lòng điền đủ trường!!!";
-                            // } else {
-                            hiveScoresCell.examScore = p0;
-                            // }
-                          },
-                          hintText: "Điểm thi",
-                          textController: hiveScoresCell.examScore)),
+                    onChanged: (p0) {
+                      if (p0.trim().isEmpty) {
+                        hiveScoresCell.examScore = 'null';
+                      } else {
+                        hiveScoresCell.examScore = p0;
+                      }
+                      // }
+                    },
+                    hintText: "Điểm thi",
+                  )),
                 ],
               ),
             ),
@@ -131,18 +122,6 @@ class NavigatorAddSubject extends StatelessWidget {
                   fixedSize: Size(400.sp, 47.sp),
                 ),
                 onPressed: () {
-                  // if (hiveScoresCell.examScore!.trim().isEmpty ||
-                  //     hiveScoresCell.firstComponentScore!.trim().isEmpty ||
-                  //     hiveScoresCell.secondComponentScore!.trim().isEmpty) {
-                  //   ScaffoldMessenger.of(context).showSnackBar(
-                  //     SnackBar(
-                  //       content: const Text('Vui lòng điền đủ trường!!!'),
-                  //       elevation: 15.sp,
-                  //       behavior: SnackBarBehavior.floating,
-                  //       duration: const Duration(seconds: 1),
-                  //     ),
-                  //   );
-                  // } else {
                   int n = 0;
                   for (int i = 0;
                       i < getIt<HiveConfig>().hiveScoresCell.length;
@@ -157,50 +136,43 @@ class NavigatorAddSubject extends StatelessWidget {
                     }
                   }
                   if (n == 0) {
-                    //  else {
-                    getIt<ScoreRepository>().insertScoreEng(
-                        getIt<ScoreRepository>()
-                            .calAvgScore(hiveScoresCell)!
-                            .toString(),
-                        name,
-                        id,
-                        int.parse(numberOfCredits),
-                        getIt<ScoreRepository>()
-                            .calAlphabetScore(hiveScoresCell)!,
-                        hiveScoresCell.examScore!,
-                        hiveScoresCell.firstComponentScore!,
-                        hiveScoresCell.secondComponentScore!);
-                    showTopSnackBar(context,
-                        message: 'Thêm môn học thành công',
-                        type: SnackBarType.done);
-                    // }
+                    try {
+                      getIt<ScoreRepository>().insertScoreEng(
+                          getIt<ScoreRepository>()
+                              .calAvgScore(hiveScoresCell)!
+                              .toString(),
+                          name,
+                          id,
+                          int.parse(numberOfCredits),
+                          getIt<ScoreRepository>()
+                              .calAlphabetScore(hiveScoresCell)!,
+                          hiveScoresCell.examScore!,
+                          hiveScoresCell.firstComponentScore!,
+                          hiveScoresCell.secondComponentScore!);
+                      showTopSnackBar(context,
+                          message: 'Thêm môn học thành công',
+                          type: SnackBarType.done);
+                      Get.back();
+                      // }
+                    } catch (e) {
+                      showTopSnackBar(context,
+                          message:
+                              'Các trường phải được điền chính xác và không được bỏ trống',
+                          type: SnackBarType.error);
+                    }
                   }
                   if (n != 0) {
-                    showTopSnackBar(context,
-                        message: 'Môn học đã tồn tại',
-                        type: SnackBarType.error);
+                    try {
+                      showTopSnackBar(context,
+                          message: 'Môn học đã tồn tại',
+                          type: SnackBarType.error);
+                    } catch (e) {
+                      showTopSnackBar(context,
+                          message:
+                              'Các trường phải điền chính xác và không được bỏ trống',
+                          type: SnackBarType.error);
+                    }
                   }
-                  // log(getIt<ScoreRepository>().calSumScoresCell().toString());
-                  // log(getIt<ScoreRepository>().calTotalCredits().toString());
-                  // log((getIt<ScoreRepository>().calSumScoresCell() /
-                  //         getIt<ScoreRepository>().calTotalCredits())
-                  //     .toStringAsFixed(2));
-
-                  // getIt<HiveConfig>().hiveScoresCell.add(HiveScoresCell(
-                  //       alphabetScore:
-                  //           hiveScoresCell.calAlphabetScore(hiveScoresCell),
-                  //       examScore: hiveScoresCell.examScore,
-                  //       firstComponentScore: hiveScoresCell.firstComponentScore,
-                  //       secondComponentScore: hiveScoresCell.secondComponentScore,
-                  //       avgScore: hiveScoresCell
-                  //           .calAvgScore(hiveScoresCell)!
-                  //           .toStringAsFixed(1),
-                  //       id: id,
-                  //       name: name,
-                  //       numberOfCredits: 3,
-                  //     ));
-                  Get.back();
-                  // }
                 },
                 child: Text(
                   'Lưu',
@@ -215,20 +187,8 @@ class NavigatorAddSubject extends StatelessWidget {
     );
   }
 
-  // void checkValidateInput(HiveScoresCell hiveScoresCell)
-  // {
-  //   if(hiveScoresCell.examScore!.trim().isEmpty)
-  //     {
-  //       validateText.value = 'Thông tin này không được phép bỏ trống';
-  //     }
-  // }
   Widget textField(
-      {required String hintText,
-      required String? textController,
-      required Function(String) onChanged}) {
-    // controller.text != null
-    //     ? textController = controller.text
-    //     : textController = "";
+      {required String hintText, required Function(String) onChanged}) {
     return Container(
       margin: const EdgeInsets.only(top: 10),
       child: Column(
@@ -254,23 +214,6 @@ class NavigatorAddSubject extends StatelessWidget {
               decoration: const InputDecoration(
                 border: InputBorder.none,
               ),
-              // decoration: const InputDecoration(
-              //   disabledBorder: OutlineInputBorder(
-              //       borderSide: BorderSide(color: AppColors.blue800, width: 1)),
-              //   border: OutlineInputBorder(
-              //       borderSide: BorderSide(color: AppColors.blue800, width: 1),
-              //       borderRadius: BorderRadius.all(Radius.circular(8))),
-              //   focusedBorder: OutlineInputBorder(
-              //       borderSide: BorderSide(color: AppColors.blue800, width: 1),
-              //       borderRadius: BorderRadius.all(Radius.circular(8))),
-              //   errorBorder: OutlineInputBorder(
-              //       borderSide:
-              //           BorderSide(color: AppColors.errorColor, width: 1),
-              //       borderRadius: BorderRadius.all(Radius.circular(8))),
-              //   focusedErrorBorder: OutlineInputBorder(
-              //       borderSide: BorderSide(color: AppColors.blue800, width: 1),
-              //       borderRadius: BorderRadius.all(Radius.circular(8))),
-              // ),
             ),
           ),
         ],
@@ -282,7 +225,7 @@ class NavigatorAddSubject extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(title, style: ThemeText.bodySemibold.s18),
+        Text(title, style: ThemeText.bodySemibold.s16),
         SizedBox(
           height: 5.sp,
         ),
