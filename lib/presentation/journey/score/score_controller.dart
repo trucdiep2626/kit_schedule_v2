@@ -158,39 +158,60 @@ class ScoreController extends GetxController with MixinController {
               ),
             ),
             content: SizedBox(
-              height: 186.h,
-              width: 300.w,
+              height: 190.sp,
+              // width: 300.sp,
               child: Column(
                 children: [
-                  ButtonAddScore(
-                    subjectName: "Tiếng Anh 1",
-                    onPressed: () {
-                      Get.to(() => const NavigatorAddSubject(
-                            id: "ATCBNN1",
-                            name: "Tiếng Anh 1",
-                            numberOfCredits: "3",
-                          ));
-                    },
+                  Expanded(
+                    child: ButtonAddScore(
+                      subjectName: "Tiếng Anh 1",
+                      onPressed: () {
+                        Get.to(() => const NavigatorAddSubject(
+                              id: "ATCBNN1",
+                              name: "Tiếng Anh 1",
+                              numberOfCredits: "3",
+                            ));
+                      },
+                    ),
                   ),
-                  ButtonAddScore(
-                    subjectName: "Tiếng Anh 2",
-                    onPressed: () {
-                      Get.to(() => const NavigatorAddSubject(
-                            id: "LTCBNN2",
-                            name: "Tiếng Anh 2",
-                            numberOfCredits: "3",
-                          ));
-                    },
+                  const Divider(
+                    color: AppColors.blue800,
+                    height: 1,
+                    thickness: 1,
                   ),
-                  ButtonAddScore(
-                    subjectName: "Tiếng Anh 3",
-                    onPressed: () {
-                      Get.to(() => const NavigatorAddSubject(
-                            id: "ATCBNN6",
-                            name: "Tiếng Anh 3",
-                            numberOfCredits: "4",
-                          ));
-                    },
+                  Expanded(
+                    child: ButtonAddScore(
+                      subjectName: "Tiếng Anh 2",
+                      onPressed: () {
+                        Get.to(() => const NavigatorAddSubject(
+                              id: "LTCBNN2",
+                              name: "Tiếng Anh 2",
+                              numberOfCredits: "3",
+                            ));
+                      },
+                    ),
+                  ),
+                  const Divider(
+                    color: AppColors.blue800,
+                    height: 1,
+                    thickness: 1,
+                  ),
+                  Expanded(
+                    child: ButtonAddScore(
+                      subjectName: "Tiếng Anh 3",
+                      onPressed: () {
+                        Get.to(() => const NavigatorAddSubject(
+                              id: "ATCBNN6",
+                              name: "Tiếng Anh 3",
+                              numberOfCredits: "4",
+                            ));
+                      },
+                    ),
+                  ),
+                  const Divider(
+                    color: AppColors.blue800,
+                    height: 1,
+                    thickness: 1,
                   ),
                 ],
               ),

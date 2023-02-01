@@ -30,7 +30,7 @@ class NavigatorAddSubject extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
             Container(
-              margin: EdgeInsets.only(top: 40.h, bottom: 10.h),
+              margin: EdgeInsets.only(top: 40.sp, bottom: 40.sp),
               child: Row(
                 children: [
                   IconButton(
@@ -44,33 +44,31 @@ class NavigatorAddSubject extends StatelessWidget {
               ),
             ),
             Container(
-              margin: EdgeInsets.only(
-                  bottom: 20.sp, top: 20.sp, left: 10.sp, right: 10.sp),
+              margin: EdgeInsets.only(bottom: 40.sp, left: 10.sp, right: 10.sp),
               child: Row(
                 children: [
                   Expanded(
                     flex: 2,
                     child: Container(
-                      margin: EdgeInsets.only(right: 10.w),
+                      margin: EdgeInsets.only(right: 10.sp),
                       child: nameContainer(name, "Tên môn học"),
                     ),
                   ),
                   Expanded(
                       flex: 1,
                       child: Container(
-                          margin: EdgeInsets.only(left: 10.w),
+                          margin: EdgeInsets.only(left: 10.sp),
                           child: nameContainer(numberOfCredits, "Số tín chỉ"))),
                 ],
               ),
             ),
             Container(
-              margin: EdgeInsets.only(
-                  bottom: 20.sp, top: 20.sp, left: 10.sp, right: 10.sp),
+              margin: EdgeInsets.only(bottom: 40.sp, left: 10.sp, right: 10.sp),
               child: Row(
                 children: [
                   Expanded(
                       child: Container(
-                    margin: EdgeInsets.only(right: 10.w),
+                    margin: EdgeInsets.only(right: 10.sp),
                     child: textField(
                         onChanged: (p0) {
                           // if (p0.trim().isEmpty) {
@@ -85,7 +83,7 @@ class NavigatorAddSubject extends StatelessWidget {
                   )),
                   Expanded(
                       child: Container(
-                    margin: EdgeInsets.only(left: 10.w),
+                    margin: EdgeInsets.only(left: 10.sp),
                     child: textField(
                         onChanged: (p0) {
                           // if (p0.trim().isEmpty) {
@@ -102,8 +100,7 @@ class NavigatorAddSubject extends StatelessWidget {
               ),
             ),
             Container(
-              margin: EdgeInsets.only(
-                  bottom: 40.sp, top: 20.sp, left: 10.sp, right: 10.sp),
+              margin: EdgeInsets.only(bottom: 40.sp, left: 10.sp, right: 10.sp),
               child: Row(
                 children: [
                   Expanded(
@@ -121,7 +118,7 @@ class NavigatorAddSubject extends StatelessWidget {
               ),
             ),
             SizedBox(
-              height: 250.sp,
+              height: 220.sp,
             ),
             Container(
               margin: EdgeInsets.only(left: 10.sp, right: 10.sp),
@@ -241,33 +238,39 @@ class NavigatorAddSubject extends StatelessWidget {
             hintText,
             style: ThemeText.bodySemibold.s16,
           ),
+          SizedBox(
+            height: 5.sp,
+          ),
           Container(
             height: 45.sp,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(8),
-              border: Border.all(color: AppColors.blue800),
+              border: Border.all(color: AppColors.blue800, width: 0.5),
             ),
             child: TextField(
               style: ThemeText.bodyMedium.s16,
               keyboardType: TextInputType.number,
               onChanged: onChanged,
               decoration: const InputDecoration(
-                disabledBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: AppColors.blue800, width: 1)),
-                border: OutlineInputBorder(
-                    borderSide: BorderSide(color: AppColors.blue800, width: 1),
-                    borderRadius: BorderRadius.all(Radius.circular(8))),
-                focusedBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: AppColors.blue800, width: 1),
-                    borderRadius: BorderRadius.all(Radius.circular(8))),
-                errorBorder: OutlineInputBorder(
-                    borderSide:
-                        BorderSide(color: AppColors.errorColor, width: 1),
-                    borderRadius: BorderRadius.all(Radius.circular(8))),
-                focusedErrorBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: AppColors.blue800, width: 1),
-                    borderRadius: BorderRadius.all(Radius.circular(8))),
+                border: InputBorder.none,
               ),
+              // decoration: const InputDecoration(
+              //   disabledBorder: OutlineInputBorder(
+              //       borderSide: BorderSide(color: AppColors.blue800, width: 1)),
+              //   border: OutlineInputBorder(
+              //       borderSide: BorderSide(color: AppColors.blue800, width: 1),
+              //       borderRadius: BorderRadius.all(Radius.circular(8))),
+              //   focusedBorder: OutlineInputBorder(
+              //       borderSide: BorderSide(color: AppColors.blue800, width: 1),
+              //       borderRadius: BorderRadius.all(Radius.circular(8))),
+              //   errorBorder: OutlineInputBorder(
+              //       borderSide:
+              //           BorderSide(color: AppColors.errorColor, width: 1),
+              //       borderRadius: BorderRadius.all(Radius.circular(8))),
+              //   focusedErrorBorder: OutlineInputBorder(
+              //       borderSide: BorderSide(color: AppColors.blue800, width: 1),
+              //       borderRadius: BorderRadius.all(Radius.circular(8))),
+              // ),
             ),
           ),
         ],
@@ -280,11 +283,14 @@ class NavigatorAddSubject extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(title, style: ThemeText.bodySemibold.s18),
+        SizedBox(
+          height: 5.sp,
+        ),
         Container(
           width: 400.sp,
           height: 45.sp,
           decoration: BoxDecoration(
-            border: Border.all(color: AppColors.blue800, width: 1),
+            border: Border.all(color: AppColors.blue800, width: 0.5),
             borderRadius: BorderRadius.circular(7),
           ),
           child: Padding(

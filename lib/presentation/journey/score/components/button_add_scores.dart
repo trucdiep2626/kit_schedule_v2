@@ -17,7 +17,7 @@ class ButtonAddScore extends StatelessWidget {
           child: Container(
             alignment: Alignment.center,
             // margin: EdgeInsets.only(top: 10.h),
-            height: 45.h,
+            height: 45.sp,
             // width: double.infinity,
             // decoration: const BoxDecoration(
             //     color: Colors.transparent,
@@ -32,11 +32,11 @@ class ButtonAddScore extends StatelessWidget {
           //   color: AppColors.blue800,
           // ),
         ),
-        const Divider(
-          color: AppColors.blue800,
-          height: 1,
-          thickness: 1,
-        ),
+        // const Divider(
+        //   color: AppColors.blue800,
+        //   height: 1,
+        //   thickness: 1,
+        // ),
       ],
     );
   }

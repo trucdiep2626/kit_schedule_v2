@@ -166,11 +166,11 @@ class ScorePage extends GetView<ScoreController> {
                                 .getAt(index)!
                                 .numberOfCredits
                                 .toString(),
-                            score: getIt<HiveConfig>()
+                            score: double.parse(getIt<HiveConfig>()
                                     .hiveScoresCell
                                     .getAt(index)!
-                                    .avgScore ??
-                                '0.0',
+                                    .avgScore!)
+                                .toStringAsFixed(1),
                             letterScore: getIt<HiveConfig>()
                                     .hiveScoresCell
                                     .getAt(index)!
@@ -234,8 +234,14 @@ class ScorePage extends GetView<ScoreController> {
             _buildDetailInfo(context,
                 title: 'Điểm tổng kết',
                 info:
-                    getIt<HiveConfig>().hiveScoresCell.getAt(index)!.avgScore ??
-                        ''),
+                    getIt<HiveConfig>().hiveScoresCell.getAt(index)!.avgScore !=
+                            null
+                        ? double.parse(getIt<HiveConfig>()
+                                .hiveScoresCell
+                                .getAt(index)!
+                                .avgScore!)
+                            .toStringAsFixed(1)
+                        : ''),
             _buildDetailInfo(context,
                 title: 'Điểm chữ',
                 info: getIt<HiveConfig>()
