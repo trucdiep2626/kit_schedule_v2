@@ -37,9 +37,27 @@ class AppDimens {
   static double height_52 = 52.h;
   static double height_56 = 56.h;
   static double height_60 = 60.h;
+  static double height_64 = 64.h;
+  static double height_68 = 68.sp;
+  static double height_70 = 70.h;
+  static double height_72 = 72.h;
+  static double height_80 = 80.h;
+  static double height_90 = 90.h;
+  static double height_102 = 102.h;
+  static double height_112 = 112.h;
+  static double height_160 = 160.h;
+  static double height_180 = 180.h;
+  static double height_220 = 220.h;
+  static double height_240 = 240.h;
+  static double height_250 = 250.h;
+  static double height_260 = 260.h;
 
   /// Width
+  static double width_4 = 4.w;
   static double width_8 = 8.w;
   static double width_12 = 12.w;
   static double width_16 = 16.w;
+  static double width_56 = 56.w;
+  static double width_40 = 40.w;
+
 }

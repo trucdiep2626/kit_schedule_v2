@@ -2,235 +2,417 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:kit_schedule_v2/common/common_export.dart';
 import 'package:kit_schedule_v2/domain/models/score_model.dart';
-import 'package:kit_schedule_v2/presentation/journey/score/components/srores_cell.dart';
+import 'package:kit_schedule_v2/presentation/journey/score/components/gpa_chart_widget.dart';
 import 'package:kit_schedule_v2/presentation/journey/score/score_controller.dart';
 import 'package:kit_schedule_v2/presentation/theme/export.dart';
-import 'package:kit_schedule_v2/presentation/widgets/app_refresh_widget.dart';
-import 'package:kit_schedule_v2/presentation/widgets/loading_widget.dart';
-
-import 'components/header_scores_widget.dart';
+import 'package:kit_schedule_v2/presentation/widgets/app_expansion_panel_list.dart';
+import 'package:kit_schedule_v2/presentation/widgets/app_loading_widget.dart';
+import 'package:kit_schedule_v2/presentation/widgets/app_touchable.dart';
 
 class ScorePage extends GetView<ScoreController> {
   const ScorePage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    controller.context = context;
     return Scaffold(
-      backgroundColor: AppColors.bianca,
-      body: Padding(
-          padding: EdgeInsets.only(
-              left: 16.sp,
-              right: 16.sp,
-              top: Get.mediaQuery.padding.top + 16.sp),
-          child: SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  mainAxisSize: MainAxisSize.max,
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Expanded(
-                      child: Text(
-                        'Điểm của tôi',
-                        textAlign: TextAlign.left,
-                        style: ThemeText.bodySemibold.s18,
-                      ),
+      backgroundColor: AppColors.backgroundColor,
+      body: Obx(
+        () {
+          return AnimatedSwitcher(
+            duration: kThemeAnimationDuration,
+            child: controller.rxLoadedType.value == LoadedType.start
+                ? Center(
+                    child: AppLoadingWidget(
                     ),
-                    IconButton(
-                        padding: EdgeInsets.zero,
-                        onPressed: () async => await controller.onRefresh(),
-                        icon: Icon(
-                          Icons.update,
-                          color: AppColors.blue900,
-                          size: 24.sp,
-                        ))
-                  ],
-                ),
-                Obx(() => controller.rxScoreLoadedType.value == LoadedType.start
-                    ? SizedBox(
-                        width: Get.width,
-                        height: Get.height -
-                            18.sp -
-                            Get.mediaQuery.padding.top +
-                            16.sp,
-                        child: const Center(child: LoadingWidget()))
-                    : _buildBody()),
-              ],
-            ),
-          )),
+                  )
+                : CustomScrollView(
+                    slivers: [
+                      _buildHeader(),
+                      _buildSubjectTableHeader(),
+                      if (!isNullEmpty(controller.rxStudentScores))
+                        _buildScoreTableData(),
+                    ],
+                  ),
+          );
+
+        },
+      ),
     );
   }
 
-  Widget _buildBody() {
-    return controller.studentScores.value == null
-        ? const SizedBox.shrink() // TODO(dieptt): add no data widget
-        : SingleChildScrollView(
-            child: SizedBox(
-              width: double.infinity,
-              child: Column(
+  SliverList _buildScoreTableData() {
+    return SliverList(
+      delegate: SliverChildBuilderDelegate(
+        (context, index) {
+          final scores = controller.rxStudentScores.value?.scores ?? [];
+          if (scores.isEmpty) {
+            return SizedBox(
+              height: AppDimens.height_80,
+              child: const Center(
+                child: Text("Không có dữ liệu"),
+              ),
+            );
+          }
+          return Padding(
+            padding: EdgeInsets.all(AppDimens.space_16).copyWith(top: 0),
+            child: Obx(
+              () => AppExpansionPanelList(
+                expandedHeaderPadding: EdgeInsets.only(top: AppDimens.height_8),
+                dividerColor: AppColors.blue100,
+                elevation: 0,
                 children: [
-                  SizedBox(
-                    height: 16.sp,
-                  ),
-                  SizedBox(
-                    width: double.maxFinite,
-                    child: Column(
-                      children: [
-                        Container(
-                          padding: EdgeInsets.all(20.sp),
-                          decoration: const BoxDecoration(
-                              color: AppColors.blue100, shape: BoxShape.circle),
-                          child: Text(
-                            (controller.studentScores.value?.avgScore ?? '')
-                                .toString(),
-                            style: ThemeText.bodySemibold
-                                .copyWith(fontSize: 25.sp),
-                          ),
-                        ),
-                        Padding(
-                          padding: EdgeInsets.symmetric(vertical: 16.sp),
-                          child: Text(
-                            controller.studentScores.value?.id ?? '',
-                            textAlign: TextAlign.center,
-                            style: ThemeText.bodySemibold,
-                          ),
-                        )
-                      ],
+                  for (int i = 0; i < scores.length; i++)
+                    _buildScoreCell(i, controller.rxExpandedList[i], scores[i])
+                ],
+                expansionCallback: controller.setExpandedCell,
+              ),
+            ),
+          );
+        },
+        childCount: 1,
+      ),
+    );
+  }
+
+  SliverAppBar _buildHeader() {
+    return SliverAppBar(
+      centerTitle: false,
+      backgroundColor: AppColors.backgroundColor,
+      pinned: true,
+      floating: false,
+      expandedHeight:
+          Get.height > 800 ? AppDimens.height_220 : AppDimens.height_260,
+      actions: [
+        IconButton(
+          padding: EdgeInsets.zero,
+          onPressed: () async => await controller.onRefresh(),
+          icon: Icon(
+            Icons.update,
+            color: AppColors.blue900,
+            size: AppDimens.space_24,
+          ),
+        ),
+        IconButton(
+          onPressed: () {},
+          icon: Icon(
+            Icons.info_outline_rounded,
+            color: AppColors.blue900,
+            size: AppDimens.height_24,
+          ),
+        )
+      ],
+      flexibleSpace: FlexibleSpaceBar(
+        collapseMode: CollapseMode.parallax,
+        background: Column(
+          children: [
+            SizedBox(
+              height: AppDimens.height_90,
+            ),
+            SizedBox(
+              height: Get.height > 800
+                  ? AppDimens.height_160
+                  : AppDimens.height_180,
+              child: GPACharWidget(
+                score: controller.rxStudentScores.value?.avgScore,
+              ),
+            ),
+          ],
+        ),
+      ),
+      title: Text(
+        'Điểm của bạn',
+        style: ThemeText.bodySemibold.s18,
+      ),
+    );
+  }
+
+  ExpansionPanel _buildScoreCell(int index, bool isExpanded, Score score) {
+    return ExpansionPanel(
+      canTapOnHeader: true,
+      backgroundColor:
+          isExpanded ? AppColors.transparent : AppColors.backgroundColor,
+      isExpanded: isExpanded,
+      headerBuilder: (context, isExpanded) {
+        return Container(
+          padding: EdgeInsets.symmetric(horizontal: AppDimens.width_12),
+          decoration: BoxDecoration(
+            color: isExpanded
+                ? AppColors.blue100.withOpacity(0.5)
+                : AppColors.transparent,
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(AppDimens.space_8),
+              topRight: Radius.circular(AppDimens.space_8),
+            ),
+          ),
+          child: Row(
+            children: [
+              Expanded(
+                child: Text(
+                  score.subject?.name ?? "Unknown",
+                  style: ThemeText.bodySemibold,
+                ),
+              ),
+              if (!isExpanded) ...[
+                SizedBox(
+                  width: AppDimens.width_12,
+                ),
+                SizedBox(
+                  width: AppDimens.width_40,
+                  child: Align(
+                    alignment: Alignment.centerLeft,
+                    child: Text(
+                      isExpanded ? "" : score.alphabetScore ?? "?",
+                      textAlign: TextAlign.start,
+                      style: ThemeText.heading2,
                     ),
                   ),
-                  Container(
-                    margin: EdgeInsets.symmetric(vertical: 8.h),
-                    decoration: BoxDecoration(
-                        border: Border.all(color: AppColors.blue800),
-                        borderRadius:
-                            const BorderRadius.all(Radius.circular(8))),
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
+                )
+              ]
+            ],
+          ),
+        );
+      },
+      body: AppTouchable(
+        onPressed: () => controller.setExpandedCell(index, isExpanded),
+        child: Container(
+          padding: EdgeInsets.all(AppDimens.space_12)
+              .copyWith(top: AppDimens.height_8),
+          decoration: BoxDecoration(
+            color: isExpanded
+                ? AppColors.blue100.withOpacity(0.5)
+                : AppColors.transparent,
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.zero,
+              topRight: Radius.zero,
+              bottomLeft: Radius.circular(AppDimens.space_8),
+              bottomRight: Radius.circular(AppDimens.space_8),
+            ),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              _buildSubjectInfoRow("Mã môn học", score.subject?.id),
+              _buildSubjectInfoRow(
+                "Số tin chỉ",
+                score.subject?.numberOfCredits?.toString(),
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  Column(
+                    children: [
+                      Text(
+                        "TP 1",
+                        style: ThemeText.description
+                            .copyWith(color: AppColors.blue600),
+                      ),
+                      SizedBox(
+                        height: AppDimens.height_4,
+                      ),
+                      Text(
+                        score.firstComponentScore ?? "?",
+                        style: ThemeText.heading2,
+                      )
+                    ],
+                  ),
+                  Column(
+                    children: [
+                      Text(
+                        "TP 2",
+                        style: ThemeText.description
+                            .copyWith(color: AppColors.blue600),
+                      ),
+                      SizedBox(
+                        height: AppDimens.height_4,
+                      ),
+                      Text(
+                        score.secondComponentScore ?? "?",
+                        style: ThemeText.heading2,
+                      )
+                    ],
+                  ),
+                  Column(
+                    children: [
+                      Text(
+                        "HK",
+                        style: ThemeText.description
+                            .copyWith(color: AppColors.blue600),
+                      ),
+                      SizedBox(
+                        height: AppDimens.height_4,
+                      ),
+                      Text(
+                        score.examScore ?? "?",
+                        style: ThemeText.heading2,
+                      )
+                    ],
+                  ),
+                  Column(
+                    children: [
+                      Text(
+                        "TK",
+                        style: ThemeText.description
+                            .copyWith(color: AppColors.blue600),
+                      ),
+                      SizedBox(
+                        height: AppDimens.height_4,
+                      ),
+                      Text(
+                        score.avgScore ?? "?",
+                        style: ThemeText.heading2,
+                      )
+                    ],
+                  ),
+                  Column(
+                    children: [
+                      Text(
+                        "Đ. chữ",
+                        style: ThemeText.description
+                            .copyWith(color: AppColors.blue600),
+                      ),
+                      SizedBox(
+                        height: AppDimens.height_4,
+                      ),
+                      Text(
+                        score.alphabetScore ?? "?",
+                        style: ThemeText.heading2,
+                      )
+                    ],
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildSubjectInfoRow(String field, String? description) {
+    return Padding(
+      padding: EdgeInsets.only(bottom: AppDimens.height_8),
+      child: Text.rich(
+        TextSpan(
+          text: "$field: ",
+          style: ThemeText.description.copyWith(color: AppColors.black),
+          children: [
+            TextSpan(
+              text: description ?? "None",
+              style:
+                  ThemeText.description.copyWith(fontWeight: FontWeight.w600),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  SliverAppBar _buildSubjectTableHeader() {
+    return SliverAppBar(
+      pinned: true,
+      collapsedHeight:
+          Get.height > 800 ? AppDimens.height_68 : AppDimens.height_112,
+      backgroundColor: AppColors.backgroundColor,
+      flexibleSpace: Padding(
+        padding: EdgeInsets.symmetric(horizontal: AppDimens.space_16),
+        child: Column(
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                Column(
+                  children: [
+                    Text(
+                      "Số môn hoàn thành",
+                      style: ThemeText.bodyRegular
+                          .copyWith(color: AppColors.black),
+                    ),
+                    SizedBox(
+                      height: AppDimens.space_8,
+                    ),
+                    Row(
                       children: [
-                        const HeaderScoresWidget(),
-                        ListView.builder(
-                            padding: EdgeInsets.zero,
-                            shrinkWrap: true,
-                            physics: const NeverScrollableScrollPhysics(),
-                            itemCount:
-                                (controller.studentScores.value?.scores ?? [])
-                                    .length,
-                            itemBuilder: (context, index) {
-                              return
-                                  // Dismissible(
-                                  // key: Key((controller.studentScores.scores ?? []).scores[index].id
-                                  //     .toString()),
-                                  // onDismissed: (direction) {
-                                  //   BlocProvider.of<ScoresBloc>(context)
-                                  //       .add(DeleteScoreEvent(
-                                  //       scoresState.scores[index]));
-                                  //   BlocProvider.of<ScoresBloc>(context)
-                                  //       .add(CalculateGpaScoreEvent());
-                                  // },
-                                  //    child:
-                                  GestureDetector(
-                                onTap: () => showDialog(
-                                    context: context,
-                                    builder: (dialogContext) =>
-                                        _scoreDetailsDialog(
-                                            context,
-                                            (controller.studentScores.value
-                                                    ?.scores ??
-                                                [])[index])),
-                                child: ScoresCell(
-                                  subject:
-                                      (controller.studentScores.value?.scores ??
-                                                  [])[index]
-                                              .subject
-                                              ?.name ??
-                                          '',
-                                  credits:
-                                      (controller.studentScores.value?.scores ??
-                                                  [])[index]
-                                              .subject
-                                              ?.numberOfCredits
-                                              .toString() ??
-                                          '0',
-                                  score:
-                                      (controller.studentScores.value?.scores ??
-                                                  [])[index]
-                                              .avgScore ??
-                                          '0.0',
-                                  letterScore:
-                                      (controller.studentScores.value?.scores ??
-                                                  [])[index]
-                                              .alphabetScore ??
-                                          'F',
-                                ),
-                              );
-                              // );
-                            }),
+                        Icon(
+                          Icons.check_rounded,
+                          size: AppDimens.space_24,
+                          color: AppColors.blue800,
+                        ),
+                        SizedBox(
+                          width: AppDimens.width_4,
+                        ),
+                        Text(
+                          (controller.rxStudentScores.value?.passedSubjects ??
+                                  0)
+                              .toString(),
+                          style: ThemeText.heading2.s24,
+                        ),
                       ],
+                    )
+                  ],
+                ),
+                Column(
+                  children: [
+                    Text(
+                      "Số môn chưa đạt",
+                      style: ThemeText.bodyRegular
+                          .copyWith(color: AppColors.black),
+                    ),
+                    SizedBox(
+                      height: AppDimens.height_8,
+                    ),
+                    Row(
+                      children: [
+                        Icon(
+                          Icons.warning_amber_rounded,
+                          size: AppDimens.height_24,
+                          color: AppColors.blue800,
+                        ),
+                        SizedBox(
+                          width: AppDimens.space_4,
+                        ),
+                        Text(
+                          (controller.rxStudentScores.value?.failedSubjects ??
+                                  0)
+                              .toString(),
+                          style: ThemeText.heading2.s24,
+                        ),
+                      ],
+                    )
+                  ],
+                ),
+              ],
+            ),
+            Padding(
+              padding: EdgeInsets.symmetric(
+                horizontal: AppDimens.space_12,
+              ).copyWith(
+                top: AppDimens.space_24,
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Expanded(
+                    child: Text(
+                      "Môn học",
+                      style: ThemeText.heading4,
+                    ),
+                  ),
+                  SizedBox(
+                    width: AppDimens.width_56,
+                    child: Text(
+                      "Điểm",
+                      style: ThemeText.heading4,
+                      textAlign: TextAlign.center,
                     ),
                   )
                 ],
               ),
             ),
-          );
-  }
-
-  Widget _scoreDetailsDialog(BuildContext context, Score score) {
-    return SimpleDialog(
-      titlePadding: EdgeInsets.zero,
-      contentPadding: EdgeInsets.symmetric(
-        vertical: 12.sp,
-        horizontal: 16.sp,
-      ),
-      title: Container(
-        padding: EdgeInsets.all(16.sp),
-        width: MediaQuery.of(context).size.width,
-        color: AppColors.blue900,
-        child: Text(
-          score.subject?.name ?? '',
-          style: ThemeText.bodySemibold
-              .copyWith(color: AppColors.bianca, fontSize: 18.sp),
-        ),
-      ),
-      children: [
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            _buildDetailInfo(context,
-                title: 'Điểm thành phần 1',
-                info: score.firstComponentScore ?? ''),
-            _buildDetailInfo(context,
-                title: 'Điểm thành phần 2',
-                info: score.secondComponentScore ?? ''),
-            _buildDetailInfo(context,
-                title: 'Điểm thi cuối kì', info: score.examScore ?? ''),
-            _buildDetailInfo(context,
-                title: 'Điểm tổng kết', info: score.avgScore ?? ''),
-            _buildDetailInfo(context,
-                title: 'Điểm chữ', info: score.alphabetScore ?? ''),
+            const Divider(
+              indent: 0,
+              color: AppColors.primary,
+            )
           ],
-        ),
-      ],
-    );
-  }
-
-  Widget _buildDetailInfo(BuildContext context,
-      {required String title, required String info}) {
-    return Padding(
-      padding: EdgeInsets.only(bottom: 8.sp),
-      child: SizedBox(
-        width: MediaQuery.of(context).size.width,
-        child: RichText(
-          text: TextSpan(
-            text: '$title: ',
-            style: ThemeText.bodySemibold.blue900.s16,
-            children: <TextSpan>[
-              TextSpan(
-                  text: info,
-                  style: ThemeText.bodySemibold.blue900.s16.w400()),
-            ],
-          ),
         ),
       ),
     );

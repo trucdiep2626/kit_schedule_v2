@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:kit_schedule_v2/common/common_export.dart';
 import 'package:kit_schedule_v2/common/config/network/network_state.dart';
@@ -10,9 +9,10 @@ import 'package:kit_schedule_v2/presentation/widgets/snack_bar/app_snack_bar.dar
 
 class ScoreController extends GetxController with MixinController {
   final MainController mainController = Get.find<MainController>();
-  Rx<LoadedType> rxScoreLoadedType = LoadedType.finish.obs;
-  SchoolUseCase schoolUseCase;
-  Rx<StudentScores?> studentScores = (null as StudentScores?).obs;
+  final SchoolUseCase schoolUseCase;
+
+  RxList<bool> rxExpandedList = <bool>[].obs;
+  Rx<StudentScores?> rxStudentScores = (null as StudentScores?).obs;
 
   ScoreController(this.schoolUseCase);
 
@@ -23,19 +23,19 @@ class ScoreController extends GetxController with MixinController {
       return;
     }
 
-    rxScoreLoadedType.value = LoadedType.start;
+    rxLoadedType.value = LoadedType.start;
     await getScores();
-    rxScoreLoadedType.value = LoadedType.finish;
+    rxLoadedType.value = LoadedType.finish;
   }
 
   Future<void> getScores() async {
-    rxScoreLoadedType.value = LoadedType.start;
+    rxLoadedType.value = LoadedType.start;
 
     final studentCode =
         Get.find<MainController>().studentInfo.value.studentCode;
 
     if (studentCode == null || studentCode.isEmpty) {
-      rxScoreLoadedType.value = LoadedType.finish;
+      rxLoadedType.value = LoadedType.finish;
       return;
     }
 
@@ -43,24 +43,28 @@ class ScoreController extends GetxController with MixinController {
       final result = await schoolUseCase.getScore(studentCode: studentCode);
 
       if (!isNullEmpty(result)) {
-        studentScores.value = result!;
+        rxStudentScores.value = result!;
+        rxExpandedList.value =
+            List.generate(result.scores?.length ?? 0, (index) => false);
       }
     } catch (e) {
-      showTopSnackBar(context,
-          message: 'Đã có lỗi xảy ra. Vui lòng thử lại',
-          type: SnackBarType.error);
+      showTopSnackBar(
+        Get.context!,
+        message: 'Đã có lỗi xảy ra. Vui lòng thử lại',
+        type: SnackBarType.error,
+      );
     }
-    rxScoreLoadedType.value = LoadedType.finish;
-  }
-
-  @override
-  void onInit() {
-    super.onInit();
+    rxLoadedType.value = LoadedType.finish;
   }
 
   @override
   Future<void> onReady() async {
     super.onReady();
     onRefresh();
+  }
+
+  void setExpandedCell(int index, bool expanded) {
+    rxExpandedList.fillRange(0, rxExpandedList.length, false);
+    rxExpandedList[index] = !expanded;
   }
 }

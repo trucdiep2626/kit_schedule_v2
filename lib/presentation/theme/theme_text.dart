@@ -6,9 +6,9 @@ import 'theme_color.dart';
 
 class ThemeText {
   /// Text style
-  static const TextStyle bodyRegular = TextStyle(
+  static final TextStyle bodyRegular = TextStyle(
     fontWeight: FontWeight.w400,
-    fontSize: 14,
+    fontSize: 14.sp,
     fontFamily: FontFamily.mr,
     color: AppColors.blue900,
   );
@@ -41,47 +41,47 @@ class ThemeText {
   );
 
   static final TextStyle description = bodyRegular.copyWith(
-    fontSize: 12,
+    fontSize: 12.sp,
   );
 
-  static const TextStyle bodySmall = TextStyle(
+  static final TextStyle bodySmall = TextStyle(
     fontWeight: FontWeight.w500,
-    fontSize: 10,
+    fontSize: 10.sp,
     fontFamily: FontFamily.mr,
     color: AppColors.blue900,
   );
 
-  static const TextStyle heading1 = TextStyle(
+  static final TextStyle heading1 = TextStyle(
     fontWeight: FontWeight.w600,
-    fontSize: 32,
+    fontSize: 32.sp,
     fontFamily: FontFamily.mr,
     color: AppColors.blue900,
   );
 
-  static const TextStyle heading2 = TextStyle(
+  static final TextStyle heading2 = TextStyle(
     fontWeight: FontWeight.w600,
-    fontSize: 20,
+    fontSize: 20.sp,
     fontFamily: FontFamily.mr,
     color: AppColors.blue900,
   );
 
-  static const TextStyle heading3 = TextStyle(
+  static final TextStyle heading3 = TextStyle(
     fontWeight: FontWeight.w600,
-    fontSize: 16,
+    fontSize: 16.sp,
     fontFamily: FontFamily.mr,
     color: AppColors.blue900,
   );
 
-  static const TextStyle heading4 = TextStyle(
+  static final TextStyle heading4 = TextStyle(
     fontWeight: FontWeight.w600,
-    fontSize: 14,
+    fontSize: 14.sp,
     fontFamily: FontFamily.mr,
     color: AppColors.blue900,
   );
 
-  static const TextStyle errorText = TextStyle(
+  static final TextStyle errorText = TextStyle(
     fontWeight: FontWeight.w500,
-    fontSize: 10,
+    fontSize: 10.sp,
     fontFamily: FontFamily.mr,
   );
 }
@@ -150,67 +150,67 @@ extension CommonFontSize on TextStyle {
 
   /// fontSize: 10
   TextStyle get s10 => copyWith(
-        fontSize: 10,
+        fontSize: 10.sp,
       );
 
   /// fontSize: 12
   TextStyle get s12 => copyWith(
-        fontSize: 12,
+        fontSize: 12.sp,
       );
 
   /// fontSize: 14
   TextStyle get s14 => copyWith(
-        fontSize: 14,
+        fontSize: 14.sp,
       );
 
   /// fontSize: 15
   TextStyle get s15 => copyWith(
-        fontSize: 15,
+        fontSize: 15.sp,
       );
 
   /// fontSize: 16
   TextStyle get s16 => copyWith(
-        fontSize: 16,
+        fontSize: 16.sp,
       );
 
   /// fontSize: 17
   TextStyle get s17 => copyWith(
-        fontSize: 17,
+        fontSize: 17.sp,
       );
 
   /// fontSize: 18
   TextStyle get s18 => copyWith(
-        fontSize: 18,
+        fontSize: 18.sp,
       );
 
   /// fontSize: 20
   TextStyle get s20 => copyWith(
-        fontSize: 20,
+        fontSize: 20.sp,
       );
 
   /// fontSize: 24
   TextStyle get s24 => copyWith(
-        fontSize: 24,
+        fontSize: 24.sp,
       );
 
   /// fontSize: 32
   TextStyle get s32 => copyWith(
-        fontSize: 32,
+        fontSize: 32.sp,
       );
 
   /// fontSize: 36
   TextStyle get s36 => copyWith(
-        fontSize: 36,
+        fontSize: 36.sp,
       );
 
   /// fontSize: 40
   TextStyle get s40 => copyWith(
-        fontSize: 40,
+        fontSize: 40.sp,
       );
 
   /// fontSize: 48
   TextStyle get s48 => copyWith(
-        fontSize: 48,
+        fontSize: 48.sp,
       );
 }
 
@@ -493,13 +493,13 @@ extension CommonFontColor on TextStyle {
 //     fontFamily: "MR");
 //
 // static TextStyle buttonLabelStyle = TextStyle(
-//     color: const Color(0xffFCFAF3),
+//     color: final Color(0xffFCFAF3),
 //     fontSize: ScreenUtil().setSp(18),
 //     fontFamily: 'MR',
 //     fontWeight: FontWeight.w600);
 //
 // static TextStyle dayOfWeekStyle =
-// const TextStyle(fontFamily: 'MR', fontWeight: FontWeight.w400);
+// final TextStyle(fontFamily: 'MR', fontWeight: FontWeight.w400);
 
 /*static TextStyle errorTextStyle = TextStyle(
       color: AppColors.errorColor,
