@@ -1,15 +1,12 @@
-import 'dart:developer';
-
 import 'package:get/get.dart';
-import 'package:intl/intl.dart';
+import 'package:kit_schedule_v2/common/constants/shared_preferences_constants.dart';
+
 import 'package:kit_schedule_v2/common/utils/app_convert.dart';
 import 'package:kit_schedule_v2/domain/models/personal_schedule_model.dart';
 import 'package:kit_schedule_v2/domain/models/student_schedule_model.dart';
 import 'package:kit_schedule_v2/presentation/controllers/mixin/mixin_controller.dart';
+import 'package:kit_schedule_v2/presentation/journey/home/home_controller.dart';
 import 'package:kit_schedule_v2/services/local_notification_service.dart';
-
-import '../../../common/constants/shared_preferences_constants.dart';
-import '../home/home_controller.dart';
 
 class SettingController extends GetxController with MixinController {
   RxBool isNotification = SharePreferencesConstants().getIsNotification().obs;

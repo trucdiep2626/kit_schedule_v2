@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:intl/intl.dart';
 import 'package:kit_schedule_v2/common/common_export.dart';
 import 'package:kit_schedule_v2/common/config/database/hive_config.dart';
+import 'package:kit_schedule_v2/common/utils/date_time_format.dart';
 import 'package:kit_schedule_v2/domain/models/personal_schedule_model.dart';
 
 class LocalRepository {
@@ -97,9 +98,8 @@ class LocalRepository {
   }
 
   int _sortScheduleByTime(PersonalScheduleModel a, PersonalScheduleModel b) {
-    if (DateFormat('dd/MM/yyyy')
-            .parse(a.date!)
-            .compareTo(DateFormat('dd/MM/yyyy').parse(b.date!)) ==
+    if (DateTimeFormatter.stringToDate(a.date!)
+            .compareTo(DateTimeFormatter.stringToDate(b.date!)) ==
         0) {
       if (a.timer!.compareTo(b.timer!) > 0) {
         return 1;
@@ -107,8 +107,7 @@ class LocalRepository {
         return -1;
       }
     }
-    return DateFormat('dd/MM/yyyy')
-        .parse(a.date!)
-        .compareTo(DateFormat('dd/MM/yyyy').parse(b.date!));
+    return DateTimeFormatter.stringToDate(a.date!)
+        .compareTo(DateTimeFormatter.stringToDate(b.date!));
   }
 }

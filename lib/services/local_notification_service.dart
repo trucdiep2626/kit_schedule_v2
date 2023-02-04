@@ -31,7 +31,6 @@ class LocalNotificationService {
         .resolvePlatformSpecificImplementation<
             AndroidFlutterLocalNotificationsPlugin>()!
         .requestPermission();
-    // final tzTimeNow = tz.TZDateTime.now(tz.local);
     final curentTimeZone = tz.getLocation('Asia/Ho_Chi_Minh');
 
     final scheduleTime = tz.TZDateTime(
@@ -72,8 +71,6 @@ class LocalNotificationService {
             )),
         payload: payload,
         androidAllowWhileIdle: true,
-        // matchDateTimeComponents:
-        //     matchDateTimeComponents ?? DateTimeComponents.dayOfMonthAndTime,
         uiLocalNotificationDateInterpretation:
             UILocalNotificationDateInterpretation.absoluteTime);
     debugPrint('-------Notification Added with ID: $notiId--------');

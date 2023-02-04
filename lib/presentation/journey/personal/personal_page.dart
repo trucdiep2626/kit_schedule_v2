@@ -253,53 +253,53 @@ class PersonalPage extends GetView<PersonalController> {
   //       visible: true,
   //     ),
   //   ]);
-}
 
-Widget _dialogItem(
-    {required String title,
-    required BuildContext context,
-    //  required bool isLanguageDialog,
-    required Function()? onTap,
-    required bool visible}) {
-  return GestureDetector(
-      onTap: onTap,
-      child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-        Container(
-          padding: EdgeInsets.all(16.sp),
-          color: Colors.white,
-          child: Row(
-            children: [
-              Expanded(
-                flex: 10,
-                child: Align(
-                  alignment: Alignment.centerLeft,
-                  child: Text(
-                    title,
-                    style: ThemeText.bodyMedium.blue900,
+  Widget _dialogItem(
+      {required String title,
+      required BuildContext context,
+      //  required bool isLanguageDialog,
+      required Function()? onTap,
+      required bool visible}) {
+    return GestureDetector(
+        onTap: onTap,
+        child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+          Container(
+            padding: EdgeInsets.all(16.sp),
+            color: Colors.white,
+            child: Row(
+              children: [
+                Expanded(
+                  flex: 10,
+                  child: Align(
+                    alignment: Alignment.centerLeft,
+                    child: Text(
+                      title,
+                      style: ThemeText.bodyMedium.blue900,
+                    ),
                   ),
                 ),
-              ),
-              Visibility(
-                  visible: visible,
-                  child: const Icon(
-                    Icons.check,
-                    color: AppColors.blue900,
-                  ))
-            ],
+                Visibility(
+                    visible: visible,
+                    child: const Icon(
+                      Icons.check,
+                      color: AppColors.blue900,
+                    ))
+              ],
+            ),
           ),
-        ),
-        Container(
-            height: 0.2,
-            width: MediaQuery.of(context).size.width - 50,
-            color: AppColors.grey400),
-      ]));
-}
+          Container(
+              height: 0.2,
+              width: MediaQuery.of(context).size.width - 50,
+              color: AppColors.grey400),
+        ]));
+  }
 
-_launchURL() async {
-  const url = 'https://actvn.edu.vn/';
-  if (await canLaunchUrlString(url)) {
-    await launchUrlString(url);
-  } else {
-    debugPrint('Could not launch $url');
+  _launchURL() async {
+    const url = 'https://actvn.edu.vn/';
+    if (await canLaunchUrlString(url)) {
+      await launchUrlString(url);
+    } else {
+      debugPrint('Could not launch $url');
+    }
   }
 }
