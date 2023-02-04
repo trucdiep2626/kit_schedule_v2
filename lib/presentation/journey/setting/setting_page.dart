@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:kit_schedule_v2/common/constants/enums.dart';
 import 'package:kit_schedule_v2/common/utils/app_convert.dart';
 import 'package:kit_schedule_v2/common/utils/app_screen_utils/flutter_screenutils.dart';
 import 'package:kit_schedule_v2/domain/models/student_schedule_model.dart';
@@ -10,6 +11,7 @@ import 'package:kit_schedule_v2/presentation/journey/home/home_controller.dart';
 import 'package:kit_schedule_v2/presentation/journey/personal/personal_controller.dart';
 import 'package:kit_schedule_v2/presentation/journey/setting/setting_controller.dart';
 import 'package:kit_schedule_v2/presentation/theme/export.dart';
+import 'package:kit_schedule_v2/presentation/widgets/snack_bar/app_snack_bar.dart';
 import 'package:kit_schedule_v2/services/local_notification_service.dart';
 import 'package:kit_schedule_v2/common/utils/export.dart';
 
@@ -30,11 +32,8 @@ class SettingPage extends GetView<SettingController> {
           icon: const Icon(Icons.arrow_back_ios),
         ),
         title: Text(
-          'Setting',
-          style: TextStyle(
-            fontSize: 20.sp,
-            fontWeight: FontWeight.bold,
-          ),
+          'Cài đặt',
+          style: ThemeText.heading2.copyWith(color: AppColors.bianca),
         ),
       ),
       body: Obx(
@@ -49,11 +48,13 @@ class SettingPage extends GetView<SettingController> {
                   height: 16.h,
                   child: Switch(
                     materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                    //splashRadius: 5.h,
                     value: controller.isNotification.value,
                     onChanged: (value) {
                       controller.onChangedNotification(value);
                       controller.notifications();
+                      showTopSnackBar(context,
+                          message: "Đã ${value ? "bật" : "tắt"} thông báo",
+                          type: SnackBarType.done);
                     },
                   ),
                 ),
@@ -167,6 +168,10 @@ class SettingPage extends GetView<SettingController> {
                       onTap: () {
                         controller.onChangedTimeNotification(index);
                         controller.notifications();
+                        showTopSnackBar(context,
+                            message:
+                                "Đã đặt thời gian thông báo trước $index phút",
+                            type: SnackBarType.done);
                         Navigator.of(context).pop();
                       },
                     );
