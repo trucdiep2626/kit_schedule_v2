@@ -9,6 +9,38 @@
 
 import 'package:flutter/widgets.dart';
 
+class $AssetsFontsGen {
+  const $AssetsFontsGen();
+
+  /// File path: assets/fonts/Montserrat-Bold.ttf
+  String get montserratBold => 'assets/fonts/Montserrat-Bold.ttf';
+
+  /// File path: assets/fonts/Montserrat-ExtraBold.ttf
+  String get montserratExtraBold => 'assets/fonts/Montserrat-ExtraBold.ttf';
+
+  /// File path: assets/fonts/Montserrat-Light.ttf
+  String get montserratLight => 'assets/fonts/Montserrat-Light.ttf';
+
+  /// File path: assets/fonts/Montserrat-Medium.ttf
+  String get montserratMedium => 'assets/fonts/Montserrat-Medium.ttf';
+
+  /// File path: assets/fonts/Montserrat-Regular.ttf
+  String get montserratRegular => 'assets/fonts/Montserrat-Regular.ttf';
+
+  /// File path: assets/fonts/Montserrat-SemiBold.ttf
+  String get montserratSemiBold => 'assets/fonts/Montserrat-SemiBold.ttf';
+
+  /// List of all assets
+  List<String> get values => [
+        montserratBold,
+        montserratExtraBold,
+        montserratLight,
+        montserratMedium,
+        montserratRegular,
+        montserratSemiBold
+      ];
+}
+
 class $AssetsIconsGen {
   const $AssetsIconsGen();
 
@@ -70,6 +102,7 @@ class $AssetsImagesGen {
 class Assets {
   Assets._();
 
+  static const $AssetsFontsGen fonts = $AssetsFontsGen();
   static const $AssetsIconsGen icons = $AssetsIconsGen();
   static const $AssetsImagesGen images = $AssetsImagesGen();
 }

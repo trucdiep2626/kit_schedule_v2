@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:kit_schedule_v2/common/common_export.dart';
-import 'package:kit_schedule_v2/domain/models/score_model.dart';
+import 'package:kit_schedule_v2/common/config/database/hive_config.dart';
+import 'package:kit_schedule_v2/data/remote/score_respository.dart';
 import 'package:kit_schedule_v2/presentation/journey/score/components/gpa_chart_widget.dart';
+import 'package:kit_schedule_v2/presentation/journey/score/components/popup_menu.dart';
 import 'package:kit_schedule_v2/presentation/journey/score/score_controller.dart';
 import 'package:kit_schedule_v2/presentation/theme/export.dart';
 import 'package:kit_schedule_v2/presentation/widgets/app_expansion_panel_list.dart';
@@ -14,6 +16,7 @@ class ScorePage extends GetView<ScoreController> {
 
   @override
   Widget build(BuildContext context) {
+    controller.context = context;
     return Scaffold(
       backgroundColor: AppColors.backgroundColor,
       body: Obx(
@@ -22,8 +25,7 @@ class ScorePage extends GetView<ScoreController> {
             duration: kThemeAnimationDuration,
             child: controller.rxLoadedType.value == LoadedType.start
                 ? Center(
-                    child: AppLoadingWidget(
-                    ),
+                    child: AppLoadingWidget(),
                   )
                 : CustomScrollView(
                     slivers: [
@@ -34,7 +36,6 @@ class ScorePage extends GetView<ScoreController> {
                     ],
                   ),
           );
-
         },
       ),
     );
@@ -44,7 +45,7 @@ class ScorePage extends GetView<ScoreController> {
     return SliverList(
       delegate: SliverChildBuilderDelegate(
         (context, index) {
-          final scores = controller.rxStudentScores.value?.scores ?? [];
+          final scores = getIt<HiveConfig>().hiveScoresCell.values.toList();
           if (scores.isEmpty) {
             return SizedBox(
               height: AppDimens.height_80,
@@ -61,8 +62,10 @@ class ScorePage extends GetView<ScoreController> {
                 dividerColor: AppColors.blue100,
                 elevation: 0,
                 children: [
-                  for (int i = 0; i < scores.length; i++)
-                    _buildScoreCell(i, controller.rxExpandedList[i], scores[i])
+                  for (int i = 0;
+                      i < getIt<HiveConfig>().hiveScoresCell.length;
+                      i++)
+                    _buildScoreCell(i, controller.rxExpandedList[i])
                 ],
                 expansionCallback: controller.setExpandedCell,
               ),
@@ -92,14 +95,7 @@ class ScorePage extends GetView<ScoreController> {
             size: AppDimens.space_24,
           ),
         ),
-        IconButton(
-          onPressed: () {},
-          icon: Icon(
-            Icons.info_outline_rounded,
-            color: AppColors.blue900,
-            size: AppDimens.height_24,
-          ),
-        )
+        const PopUpMenuScores(),
       ],
       flexibleSpace: FlexibleSpaceBar(
         collapseMode: CollapseMode.parallax,
@@ -113,7 +109,9 @@ class ScorePage extends GetView<ScoreController> {
                   ? AppDimens.height_160
                   : AppDimens.height_180,
               child: GPACharWidget(
-                score: controller.rxStudentScores.value?.avgScore,
+                score: double.parse(getIt<ScoreRepository>()
+                    .avgScoresCell()!
+                    .toStringAsFixed(2)),
               ),
             ),
           ],
@@ -126,7 +124,7 @@ class ScorePage extends GetView<ScoreController> {
     );
   }
 
-  ExpansionPanel _buildScoreCell(int index, bool isExpanded, Score score) {
+  ExpansionPanel _buildScoreCell(int index, bool isExpanded) {
     return ExpansionPanel(
       canTapOnHeader: true,
       backgroundColor:
@@ -148,7 +146,8 @@ class ScorePage extends GetView<ScoreController> {
             children: [
               Expanded(
                 child: Text(
-                  score.subject?.name ?? "Unknown",
+                  getIt<HiveConfig>().hiveScoresCell.getAt(index)!.name ??
+                      "Unknown",
                   style: ThemeText.bodySemibold,
                 ),
               ),
@@ -161,7 +160,13 @@ class ScorePage extends GetView<ScoreController> {
                   child: Align(
                     alignment: Alignment.centerLeft,
                     child: Text(
-                      isExpanded ? "" : score.alphabetScore ?? "?",
+                      isExpanded
+                          ? ""
+                          : getIt<HiveConfig>()
+                                  .hiveScoresCell
+                                  .getAt(index)!
+                                  .alphabetScore ??
+                              "?",
                       textAlign: TextAlign.start,
                       style: ThemeText.heading2,
                     ),
@@ -191,10 +196,15 @@ class ScorePage extends GetView<ScoreController> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              _buildSubjectInfoRow("Mã môn học", score.subject?.id),
+              _buildSubjectInfoRow("Mã môn học",
+                  getIt<HiveConfig>().hiveScoresCell.getAt(index)!.id),
               _buildSubjectInfoRow(
                 "Số tin chỉ",
-                score.subject?.numberOfCredits?.toString(),
+                getIt<HiveConfig>()
+                    .hiveScoresCell
+                    .getAt(index)!
+                    .numberOfCredits
+                    .toString(),
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -210,7 +220,11 @@ class ScorePage extends GetView<ScoreController> {
                         height: AppDimens.height_4,
                       ),
                       Text(
-                        score.firstComponentScore ?? "?",
+                        getIt<HiveConfig>()
+                                .hiveScoresCell
+                                .getAt(index)!
+                                .firstComponentScore ??
+                            "?",
                         style: ThemeText.heading2,
                       )
                     ],
@@ -226,7 +240,11 @@ class ScorePage extends GetView<ScoreController> {
                         height: AppDimens.height_4,
                       ),
                       Text(
-                        score.secondComponentScore ?? "?",
+                        getIt<HiveConfig>()
+                                .hiveScoresCell
+                                .getAt(index)!
+                                .secondComponentScore ??
+                            "?",
                         style: ThemeText.heading2,
                       )
                     ],
@@ -242,7 +260,11 @@ class ScorePage extends GetView<ScoreController> {
                         height: AppDimens.height_4,
                       ),
                       Text(
-                        score.examScore ?? "?",
+                        getIt<HiveConfig>()
+                                .hiveScoresCell
+                                .getAt(index)!
+                                .examScore ??
+                            "?",
                         style: ThemeText.heading2,
                       )
                     ],
@@ -258,7 +280,11 @@ class ScorePage extends GetView<ScoreController> {
                         height: AppDimens.height_4,
                       ),
                       Text(
-                        score.avgScore ?? "?",
+                        getIt<HiveConfig>()
+                                .hiveScoresCell
+                                .getAt(index)!
+                                .avgScore ??
+                            "?",
                         style: ThemeText.heading2,
                       )
                     ],
@@ -274,7 +300,11 @@ class ScorePage extends GetView<ScoreController> {
                         height: AppDimens.height_4,
                       ),
                       Text(
-                        score.alphabetScore ?? "?",
+                        getIt<HiveConfig>()
+                                .hiveScoresCell
+                                .getAt(index)!
+                                .alphabetScore ??
+                            "?",
                         style: ThemeText.heading2,
                       )
                     ],
@@ -341,9 +371,10 @@ class ScorePage extends GetView<ScoreController> {
                           width: AppDimens.width_4,
                         ),
                         Text(
-                          (controller.rxStudentScores.value?.passedSubjects ??
-                                  0)
-                              .toString(),
+                          !getIt<ScoreRepository>().calPassedSubjects().isNaN
+                              ? (getIt<ScoreRepository>().calPassedSubjects())
+                                  .toString()
+                              : '0',
                           style: ThemeText.heading2.s24,
                         ),
                       ],
@@ -371,9 +402,11 @@ class ScorePage extends GetView<ScoreController> {
                           width: AppDimens.space_4,
                         ),
                         Text(
-                          (controller.rxStudentScores.value?.failedSubjects ??
-                                  0)
-                              .toString(),
+                          // ignore: unnecessary_null_comparison
+                          !getIt<ScoreRepository>().calNoPassedSubjects().isNaN
+                              ? (getIt<ScoreRepository>().calNoPassedSubjects())
+                                  .toString()
+                              : '0',
                           style: ThemeText.heading2.s24,
                         ),
                       ],
