@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:kit_schedule_v2/common/common_export.dart';
 import 'package:kit_schedule_v2/common/config/database/hive_config.dart';
 import 'package:kit_schedule_v2/data/remote/score_respository.dart';
+import 'package:kit_schedule_v2/domain/models/hive_score_cell.dart';
 import 'package:kit_schedule_v2/presentation/journey/score/components/gpa_chart_widget.dart';
-import 'package:kit_schedule_v2/presentation/journey/score/components/popup_menu.dart';
+import 'package:kit_schedule_v2/presentation/journey/score/components/popup_menu_add_subject.dart';
+import 'package:kit_schedule_v2/presentation/journey/score/components/popup_menu_del_subject.dart';
 import 'package:kit_schedule_v2/presentation/journey/score/score_controller.dart';
 import 'package:kit_schedule_v2/presentation/theme/export.dart';
 import 'package:kit_schedule_v2/presentation/widgets/app_expansion_panel_list.dart';
@@ -19,25 +22,30 @@ class ScorePage extends GetView<ScoreController> {
     controller.context = context;
     return Scaffold(
       backgroundColor: AppColors.backgroundColor,
-      body: Obx(
-        () {
-          return AnimatedSwitcher(
-            duration: kThemeAnimationDuration,
-            child: controller.rxLoadedType.value == LoadedType.start
-                ? Center(
-                    child: AppLoadingWidget(),
-                  )
-                : CustomScrollView(
-                    slivers: [
-                      _buildHeader(),
-                      _buildSubjectTableHeader(),
-                      if (!isNullEmpty(controller.rxStudentScores))
-                        _buildScoreTableData(),
-                    ],
-                  ),
-          );
-        },
-      ),
+      body: ValueListenableBuilder(
+          valueListenable: getIt<HiveConfig>().hiveScoresCell.listenable(),
+          builder: (context, Box<HiveScoresCell> box, _) {
+            return Obx(
+              () {
+                return AnimatedSwitcher(
+                  duration: kThemeAnimationDuration,
+                  child: controller.rxLoadedType.value == LoadedType.start
+                      ? Center(
+                          child: AppLoadingWidget(),
+                        )
+                      : CustomScrollView(
+                          slivers: [
+                            _buildHeader(),
+                            _buildSubjectTableHeader(),
+                            if (!isNullEmpty(
+                                getIt<HiveConfig>().hiveScoresCell.values))
+                              _buildScoreTableData(),
+                          ],
+                        ),
+                );
+              },
+            );
+          }),
     );
   }
 
@@ -95,7 +103,7 @@ class ScorePage extends GetView<ScoreController> {
             size: AppDimens.space_24,
           ),
         ),
-        const PopUpMenuScores(),
+        const PopUpMenuAddSubject(),
       ],
       flexibleSpace: FlexibleSpaceBar(
         collapseMode: CollapseMode.parallax,
@@ -151,6 +159,18 @@ class ScorePage extends GetView<ScoreController> {
                   style: ThemeText.bodySemibold,
                 ),
               ),
+              if (isExpanded) ...[
+                SizedBox(
+                  width: AppDimens.width_12,
+                ),
+                SizedBox(
+                  width: AppDimens.width_40,
+                  child: Align(
+                    alignment: Alignment.centerLeft,
+                    child: PopUpMenuDelSubject(index: index),
+                  ),
+                )
+              ],
               if (!isExpanded) ...[
                 SizedBox(
                   width: AppDimens.width_12,
@@ -173,6 +193,28 @@ class ScorePage extends GetView<ScoreController> {
                   ),
                 )
               ]
+              //  else if (isExpanded) ...[
+              //   SizedBox(
+              //     width: AppDimens.width_12,
+              //   ),
+              //   SizedBox(
+              //     width: AppDimens.width_40,
+              //     child: Align(
+              //       alignment: Alignment.centerLeft,
+              //       child: Text(
+              //         isExpanded
+              //             ? ""
+              //             : getIt<HiveConfig>()
+              //                     .hiveScoresCell
+              //                     .getAt(index)!
+              //                     .alphabetScore ??
+              //                 "?",
+              //         textAlign: TextAlign.start,
+              //         style: ThemeText.heading2,
+              //       ),
+              //     ),
+              //   )
+              // ]
             ],
           ),
         );

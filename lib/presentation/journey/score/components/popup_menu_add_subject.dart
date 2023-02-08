@@ -4,8 +4,8 @@ import 'package:kit_schedule_v2/presentation/journey/score/components/button_add
 import 'package:kit_schedule_v2/presentation/journey/score/score_controller.dart';
 import 'package:kit_schedule_v2/presentation/theme/export.dart';
 
-class PopUpMenuScores extends GetView<ScoreController> {
-  const PopUpMenuScores({super.key});
+class PopUpMenuAddSubject extends GetView<ScoreController> {
+  const PopUpMenuAddSubject({super.key});
 
   @override
   Widget build(BuildContext context) {

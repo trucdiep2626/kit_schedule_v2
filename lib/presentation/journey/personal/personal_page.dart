@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:kit_schedule_v2/common/common_export.dart';
+import 'package:kit_schedule_v2/common/config/database/hive_config.dart';
 import 'package:kit_schedule_v2/common/utils/export.dart';
 import 'package:kit_schedule_v2/presentation/journey/main/main_controller.dart';
 import 'package:kit_schedule_v2/presentation/journey/personal/personal_controller.dart';
@@ -104,6 +106,7 @@ class PersonalPage extends GetView<PersonalController> {
                 Icons.logout,
             //: Icons.login,
             onTap: () {
+              getIt<HiveConfig>().hiveScoresCell.clear;
               actionLogIn(
                 context,
               );
