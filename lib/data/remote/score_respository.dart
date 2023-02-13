@@ -8,43 +8,33 @@ import '../../domain/models/hive_score_cell.dart';
 class ScoreRepository {
   final HiveConfig hiveConfig;
   ScoreRepository(this.hiveConfig);
-
-  Future<void> insertScoreEng(
-      String avgScore,
-      String name,
-      String id,
-      int numberOfCredits,
-      String alphabetScore,
-      String examScore,
-      String firstComponentScore,
-      String secondComponentScore) async {
-    await hiveConfig.hiveScoresCell.add(
-      HiveScoresCell(
-        alphabetScore: alphabetScore,
-        examScore: examScore,
-        firstComponentScore: firstComponentScore,
-        secondComponentScore: secondComponentScore,
-        avgScore: avgScore,
-        id: id,
-        name: name,
-        numberOfCredits: numberOfCredits,
-      ),
-    );
+  Future<void> insertScoreEng(HiveScoresCell HiveScoresCell) async {
+    await hiveConfig.hiveScoresCell.add(HiveScoresCell);
   }
 
-  Future<Score?> getScore({
-    required String studentCode,
-  }) async {
-    final result =
-        await ApiClient.getRequest('${ApiEndpoints.getScores}$studentCode');
-    if (result is Map<String, dynamic>) {
-      final scoresCells = Score.fromJson(result);
-      return scoresCells;
-    } else {
-      return null;
-    }
+  Future<void> insertSubjectFromAPI(
+      StudentScores studentScores, int index) async {
+    studentScores.scores != null
+        ? await hiveConfig.hiveScoresCell.add(
+            HiveScoresCell(
+              alphabetScore: studentScores.scores![index].alphabetScore,
+              examScore: studentScores.scores![index].examScore,
+              firstComponentScore:
+                  studentScores.scores![index].firstComponentScore,
+              secondComponentScore:
+                  studentScores.scores![index].secondComponentScore,
+              avgScore: studentScores.scores![index].avgScore,
+              id: studentScores.scores![index].subject!.id,
+              name: studentScores.scores![index].subject!.name,
+              numberOfCredits:
+                  studentScores.scores![index].subject!.numberOfCredits,
+            ),
+          )
+        : '';
   }
-
+  Future<void> clearDataScore()async{
+    await hiveConfig.hiveScoresCell.clear();
+  }
   Future<StudentScores?> getScoresStudents({
     required String studentCode,
   }) async {
@@ -58,11 +48,23 @@ class ScoreRepository {
     }
   }
 
-  double? calAvgScore(HiveScoresCell hiveScoresCell) {
-    return (double.parse(hiveScoresCell.firstComponentScore!) * 0.7 +
-                double.parse(hiveScoresCell.secondComponentScore!) * 0.3) *
+  bool isDuplicate(StudentScores result, int index) {
+    if (hiveConfig.hiveScoresCell.values
+        .where((element) => element.id == result.scores![index].subject!.id)
+        .isEmpty) {
+      return true;
+    }
+    return false;
+  }
+
+  double? calAvgScore(
+      {required String? firstComponentScore,
+      required String? secondComponentScore,
+      required String? examScore}) {
+    return (double.parse(firstComponentScore!) * 0.7 +
+                double.parse(secondComponentScore!) * 0.3) *
             0.3 +
-        double.parse(hiveScoresCell.examScore!) * 0.7;
+        double.parse(examScore!) * 0.7;
   }
 
   double? avgScoresCell() {
@@ -72,8 +74,12 @@ class ScoreRepository {
   int calNoPassedSubjects() {
     int calNoPassedSubjects = 0;
     for (int i = 0; i < hiveConfig.hiveScoresCell.length; i++) {
-      if (double.parse(hiveConfig.hiveScoresCell.getAt(i)!.avgScore!) >= 0 &&
-          double.parse(hiveConfig.hiveScoresCell.getAt(i)!.avgScore!) < 4) {
+      if ((double.parse(hiveConfig.hiveScoresCell.getAt(i)!.examScore!) >= 0 &&
+              double.parse(hiveConfig.hiveScoresCell.getAt(i)!.examScore!) <
+                  4) &&
+          (double.parse(hiveConfig.hiveScoresCell.getAt(i)!.avgScore!) >= 0 &&
+              double.parse(hiveConfig.hiveScoresCell.getAt(i)!.avgScore!) <
+                  4)) {
         calNoPassedSubjects = calNoPassedSubjects + 1;
       } else {
         i++;
@@ -82,34 +88,49 @@ class ScoreRepository {
     return calNoPassedSubjects;
   }
 
-  String? calAlphabetScore(HiveScoresCell hiveScoresCell) {
-    hiveScoresCell.avgScore = calAvgScore(hiveScoresCell).toString();
-    if (double.parse(hiveScoresCell.avgScore!) >= 0.0 &&
-        double.parse(hiveScoresCell.avgScore!) < 4.0) {
+  int calPassedSubjects() {
+    int calPassedSubjects = 0;
+    for (int i = 0; i < hiveConfig.hiveScoresCell.length; i++) {
+      if ((double.parse(hiveConfig.hiveScoresCell.getAt(i)!.examScore!) >= 4 &&
+              double.parse(hiveConfig.hiveScoresCell.getAt(i)!.examScore!) <=
+                  10) &&
+          (double.parse(hiveConfig.hiveScoresCell.getAt(i)!.avgScore!) >= 4 &&
+              double.parse(hiveConfig.hiveScoresCell.getAt(i)!.avgScore!) <=
+                  10)) {
+        calPassedSubjects = calPassedSubjects + 1;
+      } else {
+        i++;
+      }
+    }
+    return calPassedSubjects;
+  }
+
+  String? calAlphabetScore(
+      {required String? firstComponentScore,
+      required String? secondComponentScore,
+      required String? examScore}) {
+    final avgScore = calAvgScore(
+            firstComponentScore: firstComponentScore,
+            secondComponentScore: secondComponentScore,
+            examScore: examScore)
+        .toString();
+    if (double.parse(avgScore) >= 0.0 && double.parse(avgScore) < 4.0) {
       return 'F';
-    } else if (double.parse(hiveScoresCell.avgScore!) >= 4.0 &&
-        double.parse(hiveScoresCell.avgScore!) < 4.8) {
+    } else if (double.parse(avgScore) >= 4.0 && double.parse(avgScore) < 4.8) {
       return 'D';
-    } else if (double.parse(hiveScoresCell.avgScore!) >= 4.8 &&
-        double.parse(hiveScoresCell.avgScore!) < 5.5) {
+    } else if (double.parse(avgScore) >= 4.8 && double.parse(avgScore) < 5.5) {
       return 'D+';
-    } else if (double.parse(hiveScoresCell.avgScore!) >= 5.5 &&
-        double.parse(hiveScoresCell.avgScore!) < 6.3) {
+    } else if (double.parse(avgScore) >= 5.5 && double.parse(avgScore) < 6.3) {
       return 'C';
-    } else if (double.parse(hiveScoresCell.avgScore!) >= 6.3 &&
-        double.parse(hiveScoresCell.avgScore!) < 7.0) {
+    } else if (double.parse(avgScore) >= 6.3 && double.parse(avgScore) < 7.0) {
       return 'C+';
-    } else if (double.parse(hiveScoresCell.avgScore!) >= 7.0 &&
-        double.parse(hiveScoresCell.avgScore!) < 7.8) {
+    } else if (double.parse(avgScore) >= 7.0 && double.parse(avgScore) < 7.8) {
       return 'B';
-    } else if (double.parse(hiveScoresCell.avgScore!) >= 7.8 &&
-        double.parse(hiveScoresCell.avgScore!) < 8.5) {
+    } else if (double.parse(avgScore) >= 7.8 && double.parse(avgScore) < 8.5) {
       return 'B+';
-    } else if (double.parse(hiveScoresCell.avgScore!) >= 8.5 &&
-        double.parse(hiveScoresCell.avgScore!) < 9) {
+    } else if (double.parse(avgScore) >= 8.5 && double.parse(avgScore) < 9) {
       return 'A';
-    } else if (double.parse(hiveScoresCell.avgScore!) >= 9 &&
-        double.parse(hiveScoresCell.avgScore!) <= 10) {
+    } else if (double.parse(avgScore) >= 9 && double.parse(avgScore) <= 10) {
       return 'A+';
     }
     return 'F';
@@ -138,6 +159,14 @@ class ScoreRepository {
     return 0.0;
   }
 
+  Future<void> delSubject(int index) {
+    return hiveConfig.hiveScoresCell.deleteAt(index);
+  }
+
+  int getLengthHiveScoresCell() {
+    return hiveConfig.hiveScoresCell.length;
+  }
+
   double calTotalCredits() {
     double totalCredits = 0;
 
@@ -147,19 +176,6 @@ class ScoreRepository {
           : 0;
     }
     return totalCredits;
-  }
-
-  int calPassedSubjects() {
-    int calPassedSubjects = 0;
-    for (int i = 0; i < hiveConfig.hiveScoresCell.length; i++) {
-      if (double.parse(hiveConfig.hiveScoresCell.getAt(i)!.avgScore!) >= 4 &&
-          double.parse(hiveConfig.hiveScoresCell.getAt(i)!.avgScore!) <= 10) {
-        calPassedSubjects = calPassedSubjects + 1;
-      } else {
-        i++;
-      }
-    }
-    return calPassedSubjects;
   }
 
   double calSumScoresCell() {
@@ -174,24 +190,24 @@ class ScoreRepository {
     return sumSCoresCell;
   }
 
-  Future<void> deleteScoreCell(HiveScoresCell hiveScoresCell) async {
-    await hiveConfig.hiveScoresCell.deleteAt(indexOfScoreCell(hiveScoresCell));
-  }
+  // Future<void> deleteScoreCell(HiveScoresCell hiveScoresCell) async {
+  //   await hiveConfig.hiveScoresCell.deleteAt(indexOfScoreCell(hiveScoresCell));
+  // }
 
-  int indexOfScoreCell(HiveScoresCell hiveScoresCell) {
-    return hiveConfig.hiveScoresCell.values.toList().indexOf(hiveScoresCell);
-  }
+  // int indexOfScoreCell(HiveScoresCell hiveScoresCell) {
+  //   return hiveConfig.hiveScoresCell.values.toList().indexOf(hiveScoresCell);
+  // }
 
-  Future<void> insertScoreCell(Score score, Subject subject) async {
-    await hiveConfig.hiveScoresCell.add(HiveScoresCell(
-      name: subject.name,
-      id: subject.id,
-      numberOfCredits: subject.numberOfCredits,
-      alphabetScore: score.alphabetScore,
-      avgScore: score.avgScore,
-      examScore: score.examScore,
-      firstComponentScore: score.firstComponentScore,
-      secondComponentScore: score.secondComponentScore,
-    ));
-  }
+  // Future<void> insertScoreCell(Score score) async {
+  //   await hiveConfig.hiveScoresCell.add(HiveScoresCell(
+  //     name: score.subject!.name,
+  //     id: score.subject!.id,
+  //     numberOfCredits: score.subject!.numberOfCredits,
+  //     alphabetScore: score.alphabetScore,
+  //     avgScore: score.avgScore,
+  //     examScore: score.examScore,
+  //     firstComponentScore: score.firstComponentScore,
+  //     secondComponentScore: score.secondComponentScore,
+  //   ));
+  // }
 }

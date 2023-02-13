@@ -19,7 +19,7 @@ class ScorePage extends GetView<ScoreController> {
 
   @override
   Widget build(BuildContext context) {
-    controller.context = context;
+    // controller.context = context;
     return Scaffold(
       backgroundColor: AppColors.backgroundColor,
       body: ValueListenableBuilder(
@@ -70,9 +70,7 @@ class ScorePage extends GetView<ScoreController> {
                 dividerColor: AppColors.blue100,
                 elevation: 0,
                 children: [
-                  for (int i = 0;
-                      i < getIt<HiveConfig>().hiveScoresCell.length;
-                      i++)
+                  for (int i = 0; i < scores.length; i++)
                     _buildScoreCell(i, controller.rxExpandedList[i])
                 ],
                 expansionCallback: controller.setExpandedCell,
@@ -117,7 +115,7 @@ class ScorePage extends GetView<ScoreController> {
                   ? AppDimens.height_160
                   : AppDimens.height_180,
               child: GPACharWidget(
-                score: double.parse(getIt<ScoreRepository>()
+                score: double.parse(controller.scoreUseCase
                     .avgScoresCell()!
                     .toStringAsFixed(2)),
               ),
@@ -413,8 +411,8 @@ class ScorePage extends GetView<ScoreController> {
                           width: AppDimens.width_4,
                         ),
                         Text(
-                          !getIt<ScoreRepository>().calPassedSubjects().isNaN
-                              ? (getIt<ScoreRepository>().calPassedSubjects())
+                          !controller.scoreUseCase.calPassedSubjects().isNaN
+                              ? (controller.scoreUseCase.calPassedSubjects())
                                   .toString()
                               : '0',
                           style: ThemeText.heading2.s24,
@@ -445,8 +443,8 @@ class ScorePage extends GetView<ScoreController> {
                         ),
                         Text(
                           // ignore: unnecessary_null_comparison
-                          !getIt<ScoreRepository>().calNoPassedSubjects().isNaN
-                              ? (getIt<ScoreRepository>().calNoPassedSubjects())
+                          !controller.scoreUseCase.calNoPassedSubjects().isNaN
+                              ? (controller.scoreUseCase.calNoPassedSubjects())
                                   .toString()
                               : '0',
                           style: ThemeText.heading2.s24,

@@ -7,6 +7,7 @@ import 'package:kit_schedule_v2/data/remote/score_respository.dart';
 import 'package:kit_schedule_v2/domain/models/hive_score_cell.dart';
 import 'package:kit_schedule_v2/domain/models/score_model.dart';
 import 'package:kit_schedule_v2/domain/usecases/school_usecase.dart';
+import 'package:kit_schedule_v2/domain/usecases/score_usecase.dart';
 import 'package:kit_schedule_v2/presentation/controllers/mixin/export.dart';
 import 'package:kit_schedule_v2/presentation/journey/main/main_controller.dart';
 import 'package:kit_schedule_v2/presentation/theme/export.dart';
@@ -19,12 +20,14 @@ import 'components/navigator_add_subject.dart';
 class ScoreController extends GetxController with MixinController {
   final MainController mainController = Get.find<MainController>();
   final SchoolUseCase schoolUseCase;
-
+  final ScoreUseCase scoreUseCase;
+  Rx<HiveScoresCell> rxHiveScoresCell = (null as HiveScoresCell).obs;
   RxList<bool> rxExpandedList = <bool>[].obs;
   Rx<StudentScores?> rxStudentScores = (null as StudentScores?).obs;
-
-  ScoreController(this.schoolUseCase);
-
+  ScoreController(this.schoolUseCase, this.scoreUseCase);
+  TextEditingController firstComponentScore = TextEditingController();
+  TextEditingController secondComponentScore = TextEditingController();
+  TextEditingController examScore = TextEditingController();
   Future<void> onRefresh() async {
     if (!await NetworkState.isConnected) {
       showTopSnackBar(context,
@@ -49,12 +52,12 @@ class ScoreController extends GetxController with MixinController {
     }
 
     try {
-      final result = await getIt<ScoreRepository>()
-          .getScoresStudents(studentCode: studentCode);
+      final result =
+          await scoreUseCase.getScoresStudents(studentCode: studentCode);
       if (!isNullEmpty(result)) {
         rxStudentScores.value = result!;
-        rxExpandedList.value =
-            List.generate(result.scores?.length ?? 0, (index) => false);
+        rxExpandedList.value = List.generate(
+            scoreUseCase.getLengthHiveScoresCell(), (index) => false);
       }
       for (int index = 0; index < result!.scores!.length; index++) {
         if (!isNullEmpty(result)) {
@@ -65,25 +68,8 @@ class ScoreController extends GetxController with MixinController {
               result.scores![index].subject!.id!.contains("ATQGTC5")) {
             index++;
           } else {
-            if (getIt<HiveConfig>()
-                .hiveScoresCell
-                .values
-                .where((element) =>
-                    element.id == result.scores![index].subject!.id)
-                .isEmpty) {
-              getIt<HiveConfig>().hiveScoresCell.add(HiveScoresCell(
-                    alphabetScore: result.scores![index].alphabetScore,
-                    avgScore: result.scores![index].avgScore,
-                    examScore: result.scores![index].examScore,
-                    firstComponentScore:
-                        result.scores![index].firstComponentScore,
-                    secondComponentScore:
-                        result.scores![index].secondComponentScore,
-                    name: result.scores![index].subject!.name,
-                    id: result.scores![index].subject!.id,
-                    numberOfCredits:
-                        result.scores![index].subject!.numberOfCredits,
-                  ));
+            if (scoreUseCase.isDuplicate(result, index)) {
+              scoreUseCase.insertSubjectFromAPI(result, index);
             }
           }
         }
@@ -98,84 +84,56 @@ class ScoreController extends GetxController with MixinController {
     rxLoadedType.value = LoadedType.finish;
   }
 
-  Future<void> displayTextInputDialog() async {
-    return showDialog(
-        context: context,
-        builder: (context) {
-          return AlertDialog(
-            titlePadding: EdgeInsets.zero,
-            contentPadding: EdgeInsets.zero,
-            title: Container(
-              padding: EdgeInsets.all(16.sp),
-              width: MediaQuery.of(context).size.width,
-              color: AppColors.blue900,
-              child: Text(
-                'Thêm môn học',
-                style: ThemeText.bodySemibold
-                    .copyWith(color: AppColors.bianca, fontSize: 18.sp),
-                textAlign: TextAlign.center,
-              ),
-            ),
-            content: SizedBox(
-              height: 190.sp,
-              child: Column(
-                children: [
-                  Expanded(
-                    child: ButtonAddScore(
-                      subjectName: "Tiếng Anh 1",
-                      onPressed: () {
-                        Get.to(() => const NavigatorAddSubject(
-                              id: "ATCBNN1",
-                              name: "Tiếng Anh 1",
-                              numberOfCredits: "3",
-                            ));
-                      },
-                    ),
-                  ),
-                  const Divider(
-                    color: AppColors.blue800,
-                    height: 1,
-                    thickness: 1,
-                  ),
-                  Expanded(
-                    child: ButtonAddScore(
-                      subjectName: "Tiếng Anh 2",
-                      onPressed: () {
-                        Get.to(() => const NavigatorAddSubject(
-                              id: "LTCBNN2",
-                              name: "Tiếng Anh 2",
-                              numberOfCredits: "3",
-                            ));
-                      },
-                    ),
-                  ),
-                  const Divider(
-                    color: AppColors.blue800,
-                    height: 1,
-                    thickness: 1,
-                  ),
-                  Expanded(
-                    child: ButtonAddScore(
-                      subjectName: "Tiếng Anh 3",
-                      onPressed: () {
-                        Get.to(() => const NavigatorAddSubject(
-                              id: "ATCBNN6",
-                              name: "Tiếng Anh 3",
-                              numberOfCredits: "4",
-                            ));
-                      },
-                    ),
-                  ),
-                  const Divider(
-                    color: AppColors.blue800,
-                    height: 1,
-                    thickness: 1,
-                  ),
-                ],
-              ),
-            ),
-          );
-        });
+  Future<void> addScoreEng(
+      String? name, String? id, String? numberOfCredits) async {
+    int n = 0;
+    for (int i = 0; i < getIt<HiveConfig>().hiveScoresCell.length; i++) {
+      if (getIt<HiveConfig>().hiveScoresCell.values.elementAt(i).name == name) {
+        n++;
+      }
+    }
+    if (n == 0) {
+      try {
+        scoreUseCase.insertScoreEng(
+          HiveScoresCell(
+            alphabetScore: scoreUseCase.calAlphabetScore(
+                examScore: examScore.text,
+                firstComponentScore: firstComponentScore.text,
+                secondComponentScore: secondComponentScore.text),
+            avgScore: scoreUseCase
+                .calAvgScore(
+                    examScore: examScore.text,
+                    firstComponentScore: firstComponentScore.text,
+                    secondComponentScore: secondComponentScore.text)!
+                .toStringAsFixed(2),
+            examScore: examScore.text.trim(),
+            firstComponentScore: firstComponentScore.text.trim(),
+            id: id,
+            name: name,
+            numberOfCredits: int.parse(numberOfCredits!),
+            secondComponentScore: secondComponentScore.text.trim(),
+          ),
+        );
+        showTopSnackBar(context,
+            message: 'Thêm môn học thành công', type: SnackBarType.done);
+        Get.back();
+      } catch (e) {
+        showTopSnackBar(context,
+            message:
+                'Các trường phải được điền chính xác và không được bỏ trống',
+            type: SnackBarType.error);
+      }
+    }
+    if (n != 0) {
+      try {
+        showTopSnackBar(context,
+            message: 'Môn học đã tồn tại', type: SnackBarType.error);
+      } catch (e) {
+        showTopSnackBar(context,
+            message: 'Các trường phải điền chính xác và không được bỏ trống',
+            type: SnackBarType.error);
+      }
+    }
   }
 
   @override

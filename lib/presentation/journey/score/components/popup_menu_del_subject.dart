@@ -4,6 +4,7 @@ import 'package:kit_schedule_v2/common/common_export.dart';
 import 'package:kit_schedule_v2/common/config/database/hive_config.dart';
 import 'package:kit_schedule_v2/presentation/journey/score/score_controller.dart';
 import 'package:kit_schedule_v2/presentation/theme/export.dart';
+import 'package:kit_schedule_v2/presentation/widgets/export.dart';
 
 class PopUpMenuDelSubject extends GetView<ScoreController> {
   final int index;
@@ -24,6 +25,11 @@ class PopUpMenuDelSubject extends GetView<ScoreController> {
       onSelected: (value) async {
         if (value == 1) {
           getIt<HiveConfig>().hiveScoresCell.deleteAt(index);
+          showTopSnackBar(
+            context,
+            message: 'Xóa môn học thành công',
+            type: SnackBarType.done,
+          );
         }
       },
     );

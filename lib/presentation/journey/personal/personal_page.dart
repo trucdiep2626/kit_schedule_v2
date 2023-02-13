@@ -106,7 +106,6 @@ class PersonalPage extends GetView<PersonalController> {
                 Icons.logout,
             //: Icons.login,
             onTap: () {
-              getIt<HiveConfig>().hiveScoresCell.clear;
               actionLogIn(
                 context,
               );

@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:kit_schedule_v2/presentation/journey/score/components/button_add_scores.dart';
 import 'package:kit_schedule_v2/presentation/journey/score/score_controller.dart';
 import 'package:kit_schedule_v2/presentation/theme/export.dart';
+import 'package:kit_schedule_v2/presentation/widgets/text_input_dialog.dart';
 
 class PopUpMenuAddSubject extends GetView<ScoreController> {
   const PopUpMenuAddSubject({super.key});
@@ -21,7 +22,7 @@ class PopUpMenuAddSubject extends GetView<ScoreController> {
       ],
       onSelected: (value) async {
         if (value == 1) {
-          controller.displayTextInputDialog();
+          displayTextInputDialog(context);
         }
       },
     );
