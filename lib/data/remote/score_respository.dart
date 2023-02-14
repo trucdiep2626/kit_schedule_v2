@@ -1,3 +1,4 @@
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:kit_schedule_v2/common/config/database/hive_config.dart';
 import 'package:kit_schedule_v2/common/config/network/api_client.dart';
 import 'package:kit_schedule_v2/common/config/network/api_endpoints.dart';
@@ -32,9 +33,48 @@ class ScoreRepository {
           )
         : '';
   }
-  Future<void> clearDataScore()async{
+
+  bool compareToName(int i, String name) {
+    if (hiveConfig.hiveScoresCell.values.elementAt(i).name == name) return true;
+    return false;
+  }
+
+  String? getName(int index) {
+    return hiveConfig.hiveScoresCell.getAt(index)!.name;
+  }
+
+  String? getID(int index) {
+    return hiveConfig.hiveScoresCell.getAt(index)!.id;
+  }
+
+  String? getAlphabetScore(int index) {
+    return hiveConfig.hiveScoresCell.getAt(index)!.alphabetScore;
+  }
+
+  int? getNumberOfCredits(int index) {
+    return hiveConfig.hiveScoresCell.getAt(index)!.numberOfCredits;
+  }
+
+  String? getFirstComponentScore(int index) {
+    return hiveConfig.hiveScoresCell.getAt(index)!.firstComponentScore;
+  }
+
+  String? getSecondComponentScore(int index) {
+    return hiveConfig.hiveScoresCell.getAt(index)!.secondComponentScore;
+  }
+
+  String? getExamScore(int index) {
+    return hiveConfig.hiveScoresCell.getAt(index)!.examScore;
+  }
+
+  String? getAvgScore(int index) {
+    return hiveConfig.hiveScoresCell.getAt(index)!.avgScore;
+  }
+
+  Future<void> clearDataScore() async {
     await hiveConfig.hiveScoresCell.clear();
   }
+
   Future<StudentScores?> getScoresStudents({
     required String studentCode,
   }) async {
@@ -189,25 +229,11 @@ class ScoreRepository {
     }
     return sumSCoresCell;
   }
-
-  // Future<void> deleteScoreCell(HiveScoresCell hiveScoresCell) async {
-  //   await hiveConfig.hiveScoresCell.deleteAt(indexOfScoreCell(hiveScoresCell));
-  // }
-
-  // int indexOfScoreCell(HiveScoresCell hiveScoresCell) {
-  //   return hiveConfig.hiveScoresCell.values.toList().indexOf(hiveScoresCell);
-  // }
-
-  // Future<void> insertScoreCell(Score score) async {
-  //   await hiveConfig.hiveScoresCell.add(HiveScoresCell(
-  //     name: score.subject!.name,
-  //     id: score.subject!.id,
-  //     numberOfCredits: score.subject!.numberOfCredits,
-  //     alphabetScore: score.alphabetScore,
-  //     avgScore: score.avgScore,
-  //     examScore: score.examScore,
-  //     firstComponentScore: score.firstComponentScore,
-  //     secondComponentScore: score.secondComponentScore,
-  //   ));
-  // }
+  List<HiveScoresCell> getHiveScoresCell() {
+    return hiveConfig.hiveScoresCell.values.toList();
+  }
+  Box<HiveScoresCell> getHiveScoresCellBox() {
+    return hiveConfig.hiveScoresCell;
+  }
+  
 }

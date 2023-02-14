@@ -22,8 +22,8 @@ class ScoreController extends GetxController with MixinController {
   final SchoolUseCase schoolUseCase;
   final ScoreUseCase scoreUseCase;
   Rx<HiveScoresCell> rxHiveScoresCell = (null as HiveScoresCell).obs;
-  RxList<bool> rxExpandedList = <bool>[].obs;
   Rx<StudentScores?> rxStudentScores = (null as StudentScores?).obs;
+  RxList<bool> rxExpandedList = <bool>[].obs;
   ScoreController(this.schoolUseCase, this.scoreUseCase);
   TextEditingController firstComponentScore = TextEditingController();
   TextEditingController secondComponentScore = TextEditingController();
@@ -55,7 +55,7 @@ class ScoreController extends GetxController with MixinController {
       final result =
           await scoreUseCase.getScoresStudents(studentCode: studentCode);
       if (!isNullEmpty(result)) {
-        rxStudentScores.value = result!;
+        rxStudentScores.value = result;
         rxExpandedList.value = List.generate(
             scoreUseCase.getLengthHiveScoresCell(), (index) => false);
       }
@@ -84,11 +84,15 @@ class ScoreController extends GetxController with MixinController {
     rxLoadedType.value = LoadedType.finish;
   }
 
+  Future<void> delSubject(int index) async {
+    await scoreUseCase.delSubject(index);
+  }
+
   Future<void> addScoreEng(
       String? name, String? id, String? numberOfCredits) async {
     int n = 0;
-    for (int i = 0; i < getIt<HiveConfig>().hiveScoresCell.length; i++) {
-      if (getIt<HiveConfig>().hiveScoresCell.values.elementAt(i).name == name) {
+    for (int i = 0; i < scoreUseCase.getLengthHiveScoresCell(); i++) {
+      if (scoreUseCase.compareToName(i, name!)) {
         n++;
       }
     }
@@ -134,6 +138,19 @@ class ScoreController extends GetxController with MixinController {
             type: SnackBarType.error);
       }
     }
+  }
+
+  Function(int?) onSelected(int index) {
+    return (value) {
+      if (value == 1) {
+        delSubject(index);
+        showTopSnackBar(
+          context,
+          message: 'Xóa môn học thành công',
+          type: SnackBarType.done,
+        );
+      }
+    };
   }
 
   @override
