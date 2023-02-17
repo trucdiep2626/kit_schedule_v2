@@ -1,8 +1,11 @@
+import 'package:get/get_rx/src/rx_types/rx_types.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:kit_schedule_v2/common/config/database/hive_config.dart';
 import 'package:kit_schedule_v2/common/config/network/api_client.dart';
 import 'package:kit_schedule_v2/common/config/network/api_endpoints.dart';
+import 'package:kit_schedule_v2/common/utils/app_convert.dart';
 import 'package:kit_schedule_v2/domain/models/score_model.dart';
+import 'package:kit_schedule_v2/domain/usecases/score_usecase.dart';
 
 import '../../domain/models/hive_score_cell.dart';
 
@@ -32,6 +35,35 @@ class ScoreRepository {
             ),
           )
         : '';
+  }
+
+  Future<void> insertScoreIntoHive(
+      Rx<StudentScores?> rxStudentScores, ScoreUseCase scoreUseCase) async {
+    rxStudentScores.value!.scores!.length =
+        scoreUseCase.getLengthHiveScoresCell();
+    rxStudentScores.value!.avgScore = scoreUseCase.avgScoresCell();
+    rxStudentScores.value!.passedSubjects = scoreUseCase.calPassedSubjects();
+    rxStudentScores.value!.failedSubjects = scoreUseCase.calNoPassedSubjects();
+    for (int index = 0;
+        index < scoreUseCase.getLengthHiveScoresCell();
+        index++) {
+      rxStudentScores.value!.scores![index].subject!.name =
+          scoreUseCase.getName(index);
+      rxStudentScores.value!.scores![index].subject!.id =
+          scoreUseCase.getID(index);
+      rxStudentScores.value!.scores![index].subject!.numberOfCredits =
+          scoreUseCase.getNumberOfCredits(index);
+      rxStudentScores.value!.scores![index].firstComponentScore =
+          scoreUseCase.getFirstComponentScore(index);
+      rxStudentScores.value!.scores![index].secondComponentScore =
+          scoreUseCase.getSecondComponentScore(index);
+      rxStudentScores.value!.scores![index].examScore =
+          scoreUseCase.getExamScore(index);
+      rxStudentScores.value!.scores![index].avgScore =
+          scoreUseCase.getAvgScore(index);
+      rxStudentScores.value!.scores![index].alphabetScore =
+          scoreUseCase.getAlphabetScore(index);
+    }
   }
 
   bool compareToName(int i, String name) {
@@ -154,26 +186,7 @@ class ScoreRepository {
             secondComponentScore: secondComponentScore,
             examScore: examScore)
         .toString();
-    if (double.parse(avgScore) >= 0.0 && double.parse(avgScore) < 4.0) {
-      return 'F';
-    } else if (double.parse(avgScore) >= 4.0 && double.parse(avgScore) < 4.8) {
-      return 'D';
-    } else if (double.parse(avgScore) >= 4.8 && double.parse(avgScore) < 5.5) {
-      return 'D+';
-    } else if (double.parse(avgScore) >= 5.5 && double.parse(avgScore) < 6.3) {
-      return 'C';
-    } else if (double.parse(avgScore) >= 6.3 && double.parse(avgScore) < 7.0) {
-      return 'C+';
-    } else if (double.parse(avgScore) >= 7.0 && double.parse(avgScore) < 7.8) {
-      return 'B';
-    } else if (double.parse(avgScore) >= 7.8 && double.parse(avgScore) < 8.5) {
-      return 'B+';
-    } else if (double.parse(avgScore) >= 8.5 && double.parse(avgScore) < 9) {
-      return 'A';
-    } else if (double.parse(avgScore) >= 9 && double.parse(avgScore) <= 10) {
-      return 'A+';
-    }
-    return 'F';
+    return Convert.scoreConvert(double.parse(avgScore));
   }
 
   double calScorePointSystem4(String? alphabetScore) {
@@ -229,11 +242,12 @@ class ScoreRepository {
     }
     return sumSCoresCell;
   }
+
   List<HiveScoresCell> getHiveScoresCell() {
     return hiveConfig.hiveScoresCell.values.toList();
   }
+
   Box<HiveScoresCell> getHiveScoresCellBox() {
     return hiveConfig.hiveScoresCell;
   }
-  
 }

@@ -1,34 +1,28 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:kit_schedule_v2/common/common_export.dart';
-import 'package:kit_schedule_v2/common/config/database/hive_config.dart';
 import 'package:kit_schedule_v2/common/config/network/network_state.dart';
-import 'package:kit_schedule_v2/data/remote/score_respository.dart';
 import 'package:kit_schedule_v2/domain/models/hive_score_cell.dart';
 import 'package:kit_schedule_v2/domain/models/score_model.dart';
 import 'package:kit_schedule_v2/domain/usecases/school_usecase.dart';
 import 'package:kit_schedule_v2/domain/usecases/score_usecase.dart';
 import 'package:kit_schedule_v2/presentation/controllers/mixin/export.dart';
 import 'package:kit_schedule_v2/presentation/journey/main/main_controller.dart';
-import 'package:kit_schedule_v2/presentation/theme/export.dart';
-import 'package:kit_schedule_v2/presentation/theme/theme_color.dart';
 import 'package:kit_schedule_v2/presentation/widgets/snack_bar/app_snack_bar.dart';
-
-import 'components/button_add_scores.dart';
-import 'components/navigator_add_subject.dart';
 
 class ScoreController extends GetxController with MixinController {
   final MainController mainController = Get.find<MainController>();
   final SchoolUseCase schoolUseCase;
   final ScoreUseCase scoreUseCase;
-  Rx<HiveScoresCell> rxHiveScoresCell = (null as HiveScoresCell).obs;
   Rx<StudentScores?> rxStudentScores = (null as StudentScores?).obs;
   RxList<bool> rxExpandedList = <bool>[].obs;
   ScoreController(this.schoolUseCase, this.scoreUseCase);
   TextEditingController firstComponentScore = TextEditingController();
   TextEditingController secondComponentScore = TextEditingController();
   TextEditingController examScore = TextEditingController();
-  Future<void> onRefresh() async {
+  Future<void> onRefresh(bool isAdd) async {
     if (!await NetworkState.isConnected) {
       showTopSnackBar(context,
           message: 'Không có kết nối Internet', type: SnackBarType.error);
@@ -36,11 +30,11 @@ class ScoreController extends GetxController with MixinController {
     }
 
     rxLoadedType.value = LoadedType.start;
-    await getScores();
+    await getScores(isAdd);
     rxLoadedType.value = LoadedType.finish;
   }
 
-  Future<void> getScores() async {
+  Future<void> getScores(bool isAdd) async {
     rxLoadedType.value = LoadedType.start;
 
     final studentCode =
@@ -50,17 +44,19 @@ class ScoreController extends GetxController with MixinController {
       rxLoadedType.value = LoadedType.finish;
       return;
     }
-
     try {
       final result =
           await scoreUseCase.getScoresStudents(studentCode: studentCode);
-      if (!isNullEmpty(result)) {
-        rxStudentScores.value = result;
-        rxExpandedList.value = List.generate(
-            scoreUseCase.getLengthHiveScoresCell(), (index) => false);
+      rxStudentScores.value = result;
+      if (!isAdd) {
+        scoreUseCase.insertScoreIntoHive(rxStudentScores, scoreUseCase);
       }
-      for (int index = 0; index < result!.scores!.length; index++) {
-        if (!isNullEmpty(result)) {
+      if (!isNullEmpty(result)) {
+        rxExpandedList.value = List.generate(
+            rxStudentScores.value!.scores!.length, (index) => false);
+      }
+      if (!isNullEmpty(result)) {
+        for (int index = 0; index < result!.scores!.length; index++) {
           if (result.scores![index].subject!.id!.contains("ATQGTC1") ||
               result.scores![index].subject!.id!.contains("ATQGTC2") ||
               result.scores![index].subject!.id!.contains("ATQGTC3") ||
@@ -74,6 +70,9 @@ class ScoreController extends GetxController with MixinController {
           }
         }
       }
+      if (isAdd) {
+        scoreUseCase.insertScoreIntoHive(rxStudentScores, scoreUseCase);
+      }
     } catch (e) {
       showTopSnackBar(
         Get.context!,
@@ -84,8 +83,15 @@ class ScoreController extends GetxController with MixinController {
     rxLoadedType.value = LoadedType.finish;
   }
 
+  Future<void> insertScoreIntoHive(bool isAdd) async {
+    if (isAdd) {
+      scoreUseCase.insertScoreIntoHive(rxStudentScores, scoreUseCase);
+    }
+  }
+
   Future<void> delSubject(int index) async {
     await scoreUseCase.delSubject(index);
+    await onRefresh(false);
   }
 
   Future<void> addScoreEng(
@@ -109,7 +115,7 @@ class ScoreController extends GetxController with MixinController {
                     examScore: examScore.text,
                     firstComponentScore: firstComponentScore.text,
                     secondComponentScore: secondComponentScore.text)!
-                .toStringAsFixed(2),
+                .toStringAsFixed(1),
             examScore: examScore.text.trim(),
             firstComponentScore: firstComponentScore.text.trim(),
             id: id,
@@ -120,7 +126,8 @@ class ScoreController extends GetxController with MixinController {
         );
         showTopSnackBar(context,
             message: 'Thêm môn học thành công', type: SnackBarType.done);
-        Get.back();
+        Get.close(2);
+        await onRefresh(false);
       } catch (e) {
         showTopSnackBar(context,
             message:
@@ -156,7 +163,7 @@ class ScoreController extends GetxController with MixinController {
   @override
   Future<void> onReady() async {
     super.onReady();
-    onRefresh();
+    onRefresh(true);
   }
 
   void setExpandedCell(int index, bool expanded) {

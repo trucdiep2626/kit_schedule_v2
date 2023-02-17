@@ -1,3 +1,4 @@
+import 'package:get/get_rx/src/rx_types/rx_types.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:kit_schedule_v2/data/remote/score_respository.dart';
 import 'package:kit_schedule_v2/domain/models/hive_score_cell.dart';
@@ -47,6 +48,12 @@ class ScoreUseCase {
     return scoreRepository.getAlphabetScore(index);
   }
 
+
+  Future<void> insertScoreIntoHive(
+      Rx<StudentScores?> rxStudentScores, ScoreUseCase scoreUseCase) {
+    return scoreRepository.insertScoreIntoHive(rxStudentScores, scoreUseCase);
+  }
+
   String? getFirstComponentScore(int index) {
     return scoreRepository.getFirstComponentScore(index);
   }
@@ -66,12 +73,15 @@ class ScoreUseCase {
   int getLengthHiveScoresCell() {
     return scoreRepository.getLengthHiveScoresCell();
   }
+
   List<HiveScoresCell> getHiveScoresCell() {
     return scoreRepository.getHiveScoresCell();
   }
+
   Box<HiveScoresCell> getHiveScoresCellBox() {
     return scoreRepository.getHiveScoresCellBox();
   }
+
   Future<StudentScores?> getScoresStudents({required String studentCode}) {
     return scoreRepository.getScoresStudents(studentCode: studentCode);
   }

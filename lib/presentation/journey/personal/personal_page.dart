@@ -106,6 +106,7 @@ class PersonalPage extends GetView<PersonalController> {
                 Icons.logout,
             //: Icons.login,
             onTap: () {
+              controller.clearDataScore();
               actionLogIn(
                 context,
               );

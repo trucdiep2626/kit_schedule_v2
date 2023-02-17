@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:hive_flutter/hive_flutter.dart';
 import 'package:kit_schedule_v2/common/common_export.dart';
 import 'package:kit_schedule_v2/common/config/database/hive_config.dart';
-import 'package:kit_schedule_v2/domain/models/hive_score_cell.dart';
+import 'package:kit_schedule_v2/domain/models/score_model.dart';
 import 'package:kit_schedule_v2/presentation/journey/score/components/gpa_chart_widget.dart';
-import 'package:kit_schedule_v2/presentation/journey/score/components/popup_menu_add_subject.dart';
-import 'package:kit_schedule_v2/presentation/journey/score/components/popup_menu_del_subject.dart';
 import 'package:kit_schedule_v2/presentation/journey/score/score_controller.dart';
 import 'package:kit_schedule_v2/presentation/theme/export.dart';
 import 'package:kit_schedule_v2/presentation/widgets/app_expansion_panel_list.dart';
 import 'package:kit_schedule_v2/presentation/widgets/app_loading_widget.dart';
 import 'package:kit_schedule_v2/presentation/widgets/app_touchable.dart';
+
+import 'components/popup_menu_add_subject.dart';
+import 'components/popup_menu_del_subject.dart';
 
 class ScorePage extends GetView<ScoreController> {
   const ScorePage({Key? key}) : super(key: key);
@@ -21,33 +21,25 @@ class ScorePage extends GetView<ScoreController> {
     controller.context = context;
     return Scaffold(
       backgroundColor: AppColors.backgroundColor,
-      body: ValueListenableBuilder(
-          valueListenable:
-              controller.scoreUseCase.getHiveScoresCellBox().listenable(),
-          builder: (context, Box<HiveScoresCell> box, _) {
-            return Obx(
-              () {
-                return AnimatedSwitcher(
-                  duration: kThemeAnimationDuration,
-                  child: controller.rxLoadedType.value == LoadedType.start
-                      ? Center(
-                          child: AppLoadingWidget(),
-                        )
-                      : CustomScrollView(
-                          semanticChildCount: 10,
-                          slivers: [
-                            _buildHeader(),
-                            _buildSubjectTableHeader(),
-                            if (!isNullEmpty(controller.scoreUseCase
-                                .getHiveScoresCellBox()
-                                .values))
-                              _buildScoreTableData(),
-                          ],
-                        ),
-                );
-              },
-            );
-          }),
+      body: Obx(
+        () {
+          return AnimatedSwitcher(
+            duration: kThemeAnimationDuration,
+            child: controller.rxLoadedType.value == LoadedType.start
+                ? Center(
+                    child: AppLoadingWidget(),
+                  )
+                : CustomScrollView(
+                    slivers: [
+                      _buildHeader(),
+                      _buildSubjectTableHeader(),
+                      if (!isNullEmpty(controller.rxStudentScores))
+                        _buildScoreTableData(),
+                    ],
+                  ),
+          );
+        },
+      ),
     );
   }
 
@@ -55,7 +47,7 @@ class ScorePage extends GetView<ScoreController> {
     return SliverList(
       delegate: SliverChildBuilderDelegate(
         (context, index) {
-          final scores = controller.scoreUseCase.getHiveScoresCell();
+          final scores = controller.rxStudentScores.value?.scores ?? [];
           if (scores.isEmpty) {
             return SizedBox(
               height: AppDimens.height_80,
@@ -73,7 +65,7 @@ class ScorePage extends GetView<ScoreController> {
                 elevation: 0,
                 children: [
                   for (int i = 0; i < scores.length; i++)
-                    _buildScoreCell(i, controller.rxExpandedList[i])
+                    _buildScoreCell(i, controller.rxExpandedList[i], scores[i])
                 ],
                 expansionCallback: controller.setExpandedCell,
               ),
@@ -96,7 +88,7 @@ class ScorePage extends GetView<ScoreController> {
       actions: [
         IconButton(
           padding: EdgeInsets.zero,
-          onPressed: () async => await controller.onRefresh(),
+          onPressed: () async => await controller.onRefresh(true),
           icon: Icon(
             Icons.update,
             color: AppColors.blue900,
@@ -117,9 +109,10 @@ class ScorePage extends GetView<ScoreController> {
                   ? AppDimens.height_160
                   : AppDimens.height_180,
               child: GPACharWidget(
-                score: double.parse(controller.scoreUseCase
-                    .avgScoresCell()!
-                    .toStringAsFixed(2)),
+                score: controller.rxStudentScores.value?.avgScore != null
+                    ? double.parse(controller.rxStudentScores.value!.avgScore!
+                        .toStringAsFixed(2))
+                    : 0,
               ),
             ),
           ],
@@ -132,7 +125,7 @@ class ScorePage extends GetView<ScoreController> {
     );
   }
 
-  ExpansionPanel _buildScoreCell(int index, bool isExpanded) {
+  ExpansionPanel _buildScoreCell(int index, bool isExpanded, Score score) {
     return ExpansionPanel(
       canTapOnHeader: true,
       backgroundColor:
@@ -154,7 +147,7 @@ class ScorePage extends GetView<ScoreController> {
             children: [
               Expanded(
                 child: Text(
-                  controller.scoreUseCase.getName(index) ?? "Unknown",
+                  score.subject?.name ?? "Unknown",
                   style: ThemeText.bodySemibold,
                 ),
               ),
@@ -180,10 +173,7 @@ class ScorePage extends GetView<ScoreController> {
                   child: Align(
                     alignment: Alignment.centerLeft,
                     child: Text(
-                      isExpanded
-                          ? ""
-                          : controller.scoreUseCase.getAlphabetScore(index) ??
-                              "?",
+                      isExpanded ? "" : score.alphabetScore ?? "?",
                       textAlign: TextAlign.start,
                       style: ThemeText.heading2,
                     ),
@@ -214,12 +204,10 @@ class ScorePage extends GetView<ScoreController> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               _buildSubjectInfoRow(
-                "Mã môn học",
-                controller.scoreUseCase.getID(index),
-              ),
+                  "Mã môn học", score.subject?.id ?? 'unknown'),
               _buildSubjectInfoRow(
                 "Số tin chỉ",
-                controller.scoreUseCase.getNumberOfCredits(index).toString(),
+                score.subject?.numberOfCredits?.toString(),
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -235,8 +223,7 @@ class ScorePage extends GetView<ScoreController> {
                         height: AppDimens.height_4,
                       ),
                       Text(
-                        controller.scoreUseCase.getFirstComponentScore(index) ??
-                            "?",
+                        score.firstComponentScore ?? "?",
                         style: ThemeText.heading2,
                       )
                     ],
@@ -252,9 +239,7 @@ class ScorePage extends GetView<ScoreController> {
                         height: AppDimens.height_4,
                       ),
                       Text(
-                        controller.scoreUseCase
-                                .getSecondComponentScore(index) ??
-                            "?",
+                        score.secondComponentScore ?? "?",
                         style: ThemeText.heading2,
                       )
                     ],
@@ -270,7 +255,7 @@ class ScorePage extends GetView<ScoreController> {
                         height: AppDimens.height_4,
                       ),
                       Text(
-                        controller.scoreUseCase.getExamScore(index) ?? "?",
+                        score.examScore ?? "?",
                         style: ThemeText.heading2,
                       )
                     ],
@@ -286,7 +271,7 @@ class ScorePage extends GetView<ScoreController> {
                         height: AppDimens.height_4,
                       ),
                       Text(
-                        controller.scoreUseCase.getAvgScore(index) ?? "?",
+                        score.avgScore ?? "?",
                         style: ThemeText.heading2,
                       )
                     ],
@@ -302,7 +287,7 @@ class ScorePage extends GetView<ScoreController> {
                         height: AppDimens.height_4,
                       ),
                       Text(
-                        controller.scoreUseCase.getAlphabetScore(index) ?? "?",
+                        score.alphabetScore ?? "?",
                         style: ThemeText.heading2,
                       )
                     ],
@@ -369,10 +354,9 @@ class ScorePage extends GetView<ScoreController> {
                           width: AppDimens.width_4,
                         ),
                         Text(
-                          !controller.scoreUseCase.calPassedSubjects().isNaN
-                              ? (controller.scoreUseCase.calPassedSubjects())
-                                  .toString()
-                              : '0',
+                          (controller.rxStudentScores.value?.passedSubjects ??
+                                  0)
+                              .toString(),
                           style: ThemeText.heading2.s24,
                         ),
                       ],
@@ -400,11 +384,9 @@ class ScorePage extends GetView<ScoreController> {
                           width: AppDimens.space_4,
                         ),
                         Text(
-                          // ignore: unnecessary_null_comparison
-                          !controller.scoreUseCase.calNoPassedSubjects().isNaN
-                              ? (controller.scoreUseCase.calNoPassedSubjects())
-                                  .toString()
-                              : '0',
+                          (controller.rxStudentScores.value?.failedSubjects ??
+                                  0)
+                              .toString(),
                           style: ThemeText.heading2.s24,
                         ),
                       ],
