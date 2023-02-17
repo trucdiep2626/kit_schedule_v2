@@ -87,13 +87,14 @@ class NavigatorAddSubject extends GetView<ScoreController> {
                     ),
                   ),
                   Expanded(
-                      child: Container(
-                    margin: EdgeInsets.only(left: 10.sp),
-                    child: textField(
-                      controller: controller.secondComponentScore,
-                      hintText: "Điểm TP2",
+                    child: Container(
+                      margin: EdgeInsets.only(left: 10.sp),
+                      child: textField(
+                        controller: controller.secondComponentScore,
+                        hintText: "Điểm TP2",
+                      ),
                     ),
-                  )),
+                  ),
                 ],
               ),
             ),
@@ -147,8 +148,10 @@ class NavigatorAddSubject extends GetView<ScoreController> {
                   padding: EdgeInsets.symmetric(vertical: 12.sp),
                   child: Text(
                     'Lưu',
-                    style: ThemeText.bodySemibold
-                        .copyWith(color: AppColors.bianca, fontSize: 18.sp),
+                    style: ThemeText.bodySemibold.copyWith(
+                      color: AppColors.bianca,
+                      fontSize: 18.sp,
+                    ),
                   ),
                 ),
               ),

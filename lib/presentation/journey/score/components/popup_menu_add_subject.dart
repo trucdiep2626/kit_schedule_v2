@@ -17,8 +17,9 @@ class PopUpMenuAddSubject extends GetView<ScoreController> {
       ),
       itemBuilder: (_) => <PopupMenuItem<int>>[
         PopupMenuItem(
-            value: 1,
-            child: Text("Thêm môn học", style: ThemeText.bodySemibold.s16)),
+          value: 1,
+          child: Text("Thêm môn học", style: ThemeText.bodySemibold.s16),
+        ),
       ],
       onSelected: (value) async {
         if (value == 1) {

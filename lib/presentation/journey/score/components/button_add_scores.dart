@@ -17,14 +17,12 @@ class ButtonAddScore extends StatelessWidget {
           child: Container(
             alignment: Alignment.center,
             height: 45.sp,
-
             child: Text(
               subjectName,
               style: ThemeText.bodySemibold.s18,
               textAlign: TextAlign.center,
             ),
           ),
-
         ),
       ],
     );
