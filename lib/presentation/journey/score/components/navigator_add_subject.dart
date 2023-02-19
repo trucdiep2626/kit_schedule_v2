@@ -232,5 +232,8 @@ class NavigatorAddSubject extends GetView<ScoreController> {
 
   _buttonSaveEng(BuildContext context) async {
     await controller.addScoreEng(name, id, numberOfCredits);
+    controller.firstComponentScore.clear();
+    controller.secondComponentScore.clear();
+    controller.examScore.clear();
   }
 }
