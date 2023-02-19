@@ -11,6 +11,7 @@ import 'package:kit_schedule_v2/presentation/journey/login/login_controller.dart
 import 'package:kit_schedule_v2/presentation/journey/main/main_controller.dart';
 import 'package:kit_schedule_v2/presentation/journey/personal/personal_controller.dart';
 import 'package:kit_schedule_v2/presentation/journey/score/score_controller.dart';
+import 'package:kit_schedule_v2/presentation/journey/setting/setting_controller.dart';
 import 'package:kit_schedule_v2/presentation/journey/splash/splash_controller.dart';
 import 'package:kit_schedule_v2/presentation/journey/todo/todo_controller.dart';
 
@@ -36,6 +37,8 @@ void configLocator() {
   getIt.registerFactory<PersonalController>(() => PersonalController(
       schoolUseCase: getIt<SchoolUseCase>(),
       personalUsecase: getIt<PersonalUsecase>(),
+      sharePreferencesConstants: getIt<SharePreferencesConstants>()));
+  getIt.registerFactory<SettingController>(() => SettingController(
       sharePreferencesConstants: getIt<SharePreferencesConstants>()));
 
   /// UseCases

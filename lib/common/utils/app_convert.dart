@@ -88,4 +88,12 @@ class Convert {
     }
     return 'F';
   }
+
+  static DateTime dateTimeConvert(String time, String day) {
+    List<String> times = time.split(':');
+    List<String> days = day.split('/');
+
+    return DateTime.parse(
+        '${days[2]}-${days[1]}-${days[0]} ${times[0]}:${times[1]}:00');
+  }
 }

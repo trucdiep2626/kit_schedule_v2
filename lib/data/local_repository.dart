@@ -1,8 +1,10 @@
 import 'dart:developer';
 
 import 'package:flutter/cupertino.dart';
+import 'package:intl/intl.dart';
 import 'package:kit_schedule_v2/common/common_export.dart';
 import 'package:kit_schedule_v2/common/config/database/hive_config.dart';
+import 'package:kit_schedule_v2/common/utils/date_time_format.dart';
 import 'package:kit_schedule_v2/domain/models/personal_schedule_model.dart';
 
 class LocalRepository {
@@ -39,7 +41,9 @@ class LocalRepository {
     List<PersonalScheduleModel> result = hiveConfig.personalBox.values
         .where((element) => element.updateAt != '0')
         .toList();
-    result.sort((a, b) => a.date!.compareTo(b.date!));
+
+    result.sort((a, b) => _sortScheduleByTime(a, b));
+
     return result;
   }
 
@@ -48,7 +52,7 @@ class LocalRepository {
     final result = hiveConfig.personalBox.values
         .where((element) => element.date == date)
         .toList();
-    result.sort((a, b) => int.parse(a.date!).compareTo(int.parse(b.date!)));
+    result.sort((a, b) => a.date!.compareTo(b.date!));
     return result;
   }
 
@@ -91,5 +95,19 @@ class LocalRepository {
 
   Future<void> deleteAllPersonalSchedulesLocal() async {
     await hiveConfig.personalBox.clear();
+  }
+
+  int _sortScheduleByTime(PersonalScheduleModel a, PersonalScheduleModel b) {
+    if (DateTimeFormatter.stringToDate(a.date!)
+            .compareTo(DateTimeFormatter.stringToDate(b.date!)) ==
+        0) {
+      if (a.timer!.compareTo(b.timer!) > 0) {
+        return 1;
+      } else {
+        return -1;
+      }
+    }
+    return DateTimeFormatter.stringToDate(a.date!)
+        .compareTo(DateTimeFormatter.stringToDate(b.date!));
   }
 }

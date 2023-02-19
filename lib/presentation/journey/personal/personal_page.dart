@@ -3,6 +3,8 @@ import 'package:get/get.dart';
 import 'package:kit_schedule_v2/common/utils/export.dart';
 import 'package:kit_schedule_v2/presentation/journey/main/main_controller.dart';
 import 'package:kit_schedule_v2/presentation/journey/personal/personal_controller.dart';
+import 'package:kit_schedule_v2/presentation/journey/setting/setting_controller.dart';
+import 'package:kit_schedule_v2/presentation/journey/setting/setting_page.dart';
 import 'package:kit_schedule_v2/presentation/theme/export.dart';
 import 'package:kit_schedule_v2/presentation/widgets/warning_dialog.dart';
 import 'package:url_launcher/url_launcher_string.dart';
@@ -74,13 +76,11 @@ class PersonalPage extends GetView<PersonalController> {
           //     },
           //     title: ''),
           _buildListTile(
-            icon: Icons.notifications_none,
+            icon: Icons.settings_outlined,
             onTap: () {
-              showDialog(
-                  context: context,
-                  builder: (dialogContext) => settingDialog(context));
+              Get.to(() => const SettingPage());
             },
-            title: 'Cài đặt thông báo',
+            title: 'Cài đặt',
           ),
           _buildListTile(
             icon: Icons.info_outline,
@@ -197,138 +197,62 @@ class PersonalPage extends GetView<PersonalController> {
     );
   }
 
-  Widget settingDialog(
-    BuildContext context,
-  ) {
-    return SimpleDialog(
-      titlePadding: EdgeInsets.zero,
-      contentPadding: EdgeInsets.symmetric(
-        vertical: 12.sp,
-        horizontal: 16.sp,
-      ),
-      title: Container(
-        padding: EdgeInsets.all(16.sp),
-        width: MediaQuery.of(context).size.width,
-        color: AppColors.blue900,
-        child: Text(
-          'Cài đặt thông báo',
-          style: ThemeText.bodySemibold
-              .copyWith(color: AppColors.bianca, fontSize: 18.sp),
-        ),
-      ),
-      children: [
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            _dialogItem(
-              title: 'Bật thông báo',
-              context: context,
-              onTap: () {},
-              // isLanguageDialog
-              //     ? () {
-              //   Injector.getIt<LanguageSelect>().changeLanguage(true);
-              // }
-              //     : !profileState.hasNoti
-              //     ? () async {
-              //   if (await Permission.calendar.isDenied) {
-              //     Navigator.pop(context);
-              //     openSettingDiaLog(
-              //       context: context,
-              //     );
-              //     return;
-              //   } else {
-              //     BlocProvider.of<ProfileBloc>(context)
-              //         .add(TurnOnNotificationEvent());
-              //     Navigator.pop(context);
-              //     BlocProvider.of<ProfileBloc>(context)
-              //         .add(GetUserNameInProfileEvent());
-              //   }
-              // }
-              //     : () {},
-              visible: false,
-            ),
-            _dialogItem(
-              title: 'Tắt thông báo',
-              context: context,
-              onTap:
-                  // isLanguageDialog
-                  //     ? () {
-                  //   Injector.getIt<LanguageSelect>().changeLanguage(false);
-                  // }
-                  //     : profileState.hasNoti
-                  //     ? () {
-                  //   BlocProvider.of<ProfileBloc>(context)
-                  //       .add(TurnOffNotificationEvent());
-                  //   Navigator.pop(context);
-                  //   BlocProvider.of<ProfileBloc>(context)
-                  //       .add(GetUserNameInProfileEvent());
-                  // }
-                  //     :
-                  () {},
-              visible: true,
-            )
-          ],
-        ),
-      ],
-    );
-
-    // SimpleDialog(
-    //   contentPadding: EdgeInsets.only(
-    //     bottom: 16.sp,
-    //     top: 16.sp,
-    //   ),
-    //   title: Text('Thông báo',
-    //       style: ThemeText.bodySemibold.copyWith(color: AppColors.blue900)),
-    //   children: [
-    //     _dialogItem(
-    //       title: 'Bật thông báo',
-    //       context: context,
-    //       onTap: () {},
-    //       // isLanguageDialog
-    //       //     ? () {
-    //       //   Injector.getIt<LanguageSelect>().changeLanguage(true);
-    //       // }
-    //       //     : !profileState.hasNoti
-    //       //     ? () async {
-    //       //   if (await Permission.calendar.isDenied) {
-    //       //     Navigator.pop(context);
-    //       //     openSettingDiaLog(
-    //       //       context: context,
-    //       //     );
-    //       //     return;
-    //       //   } else {
-    //       //     BlocProvider.of<ProfileBloc>(context)
-    //       //         .add(TurnOnNotificationEvent());
-    //       //     Navigator.pop(context);
-    //       //     BlocProvider.of<ProfileBloc>(context)
-    //       //         .add(GetUserNameInProfileEvent());
-    //       //   }
-    //       // }
-    //       //     : () {},
-    //       visible: false,
-    //     ),
-    //     _dialogItem(
-    //       title: 'Tắt thông báo',
-    //       context: context,
-    //       onTap:
-    //           // isLanguageDialog
-    //           //     ? () {
-    //           //   Injector.getIt<LanguageSelect>().changeLanguage(false);
-    //           // }
-    //           //     : profileState.hasNoti
-    //           //     ? () {
-    //           //   BlocProvider.of<ProfileBloc>(context)
-    //           //       .add(TurnOffNotificationEvent());
-    //           //   Navigator.pop(context);
-    //           //   BlocProvider.of<ProfileBloc>(context)
-    //           //       .add(GetUserNameInProfileEvent());
-    //           // }
-    //           //     :
-    //           () {},
-    //       visible: true,
-    //     ),
-    //   ]);
-  }
+  // SimpleDialog(
+  //   contentPadding: EdgeInsets.only(
+  //     bottom: 16.sp,
+  //     top: 16.sp,
+  //   ),
+  //   title: Text('Thông báo',
+  //       style: ThemeText.bodySemibold.copyWith(color: AppColors.blue900)),
+  //   children: [
+  //     _dialogItem(
+  //       title: 'Bật thông báo',
+  //       context: context,
+  //       onTap: () {},
+  //       // isLanguageDialog
+  //       //     ? () {
+  //       //   Injector.getIt<LanguageSelect>().changeLanguage(true);
+  //       // }
+  //       //     : !profileState.hasNoti
+  //       //     ? () async {
+  //       //   if (await Permission.calendar.isDenied) {
+  //       //     Navigator.pop(context);
+  //       //     openSettingDiaLog(
+  //       //       context: context,
+  //       //     );
+  //       //     return;
+  //       //   } else {
+  //       //     BlocProvider.of<ProfileBloc>(context)
+  //       //         .add(TurnOnNotificationEvent());
+  //       //     Navigator.pop(context);
+  //       //     BlocProvider.of<ProfileBloc>(context)
+  //       //         .add(GetUserNameInProfileEvent());
+  //       //   }
+  //       // }
+  //       //     : () {},
+  //       visible: false,
+  //     ),
+  //     _dialogItem(
+  //       title: 'Tắt thông báo',
+  //       context: context,
+  //       onTap:
+  //           // isLanguageDialog
+  //           //     ? () {
+  //           //   Injector.getIt<LanguageSelect>().changeLanguage(false);
+  //           // }
+  //           //     : profileState.hasNoti
+  //           //     ? () {
+  //           //   BlocProvider.of<ProfileBloc>(context)
+  //           //       .add(TurnOffNotificationEvent());
+  //           //   Navigator.pop(context);
+  //           //   BlocProvider.of<ProfileBloc>(context)
+  //           //       .add(GetUserNameInProfileEvent());
+  //           // }
+  //           //     :
+  //           () {},
+  //       visible: true,
+  //     ),
+  //   ]);
 
   Widget _dialogItem(
       {required String title,

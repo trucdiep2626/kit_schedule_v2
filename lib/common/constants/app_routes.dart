@@ -5,4 +5,5 @@ class AppRoutes {
   static const String todo = '/todo';
   static const String personal = '/personal';
   static const String score = '/score';
+  static const String setting = '/setting';
 }
