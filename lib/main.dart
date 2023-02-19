@@ -14,6 +14,5 @@ Future<void> main() async {
   final hiveSetUp = getIt<HiveConfig>();
   await hiveSetUp.init();
   await SharePreferencesConstants().init();
-
   runApp(const App());
 }

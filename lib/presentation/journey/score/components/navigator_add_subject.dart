@@ -1,0 +1,236 @@
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:kit_schedule_v2/common/common_export.dart';
+import 'package:kit_schedule_v2/presentation/journey/score/score_controller.dart';
+import 'package:kit_schedule_v2/presentation/theme/theme_color.dart';
+import 'package:kit_schedule_v2/presentation/theme/theme_text.dart';
+
+class NavigatorAddSubject extends GetView<ScoreController> {
+  final String name;
+  final String id;
+  final String numberOfCredits;
+  const NavigatorAddSubject(
+      {required this.id,
+      required this.name,
+      required this.numberOfCredits,
+      super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    controller.context = context;
+    return Scaffold(
+      body: SingleChildScrollView(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            Container(
+              margin: EdgeInsets.only(
+                top: 40.sp,
+                bottom: 40.sp,
+              ),
+              child: Row(
+                children: [
+                  IconButton(
+                    onPressed: () {
+                      Get.back();
+                    },
+                    icon: const Icon(
+                      Icons.arrow_back,
+                      color: AppColors.blue800,
+                      size: 30,
+                    ),
+                  ),
+                  Text("Thêm môn học", style: ThemeText.bodySemibold.s18),
+                ],
+              ),
+            ),
+            Container(
+              margin: EdgeInsets.only(
+                bottom: 40.sp,
+                left: 10.sp,
+                right: 10.sp,
+              ),
+              child: Row(
+                children: [
+                  Expanded(
+                    flex: 2,
+                    child: Container(
+                      margin: EdgeInsets.only(right: 10.sp),
+                      child: nameContainer(name, "Tên môn học"),
+                    ),
+                  ),
+                  Expanded(
+                    flex: 1,
+                    child: Container(
+                      margin: EdgeInsets.only(left: 10.sp),
+                      child: nameContainer(numberOfCredits, "Số tín chỉ"),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Container(
+              margin: EdgeInsets.only(
+                bottom: 50.sp,
+                left: 10.sp,
+                right: 10.sp,
+              ),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: Container(
+                      margin: EdgeInsets.only(right: 10.sp),
+                      child: textField(
+                        controller: controller.firstComponentScore,
+                        hintText: "Điểm TP1",
+                      ),
+                    ),
+                  ),
+                  Expanded(
+                    child: Container(
+                      margin: EdgeInsets.only(left: 10.sp),
+                      child: textField(
+                        controller: controller.secondComponentScore,
+                        hintText: "Điểm TP2",
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Container(
+              margin: EdgeInsets.only(
+                bottom: 50.sp,
+                left: 10.sp,
+                right: 10.sp,
+              ),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: textField(
+                      controller: controller.examScore,
+                      hintText: "Điểm thi",
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            SizedBox(
+              height: 160.sp,
+            ),
+            Container(
+              margin: EdgeInsets.only(
+                left: 10.sp,
+                right: 10.sp,
+              ),
+              child: GestureDetector(
+                onTap:
+                    //() {},
+                    () async => await (_buttonSaveEng(context)),
+                child: Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(20),
+                    color: AppColors.blue900,
+                    boxShadow: [
+                      BoxShadow(
+                        color: AppColors.charade.withOpacity(0.3),
+                        blurRadius: 5,
+                        spreadRadius: 1,
+                        offset: const Offset(
+                          0,
+                          3,
+                        ),
+                      )
+                    ],
+                  ),
+                  width: double.infinity,
+                  alignment: Alignment.center,
+                  padding: EdgeInsets.symmetric(vertical: 12.sp),
+                  child: Text(
+                    'Lưu',
+                    style: ThemeText.bodySemibold.copyWith(
+                      color: AppColors.bianca,
+                      fontSize: 18.sp,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget textField(
+      {required String hintText, required TextEditingController controller}) {
+    return Container(
+      margin: const EdgeInsets.only(top: 10),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            hintText,
+            style: ThemeText.bodySemibold.s15,
+          ),
+          SizedBox(
+            height: 5.sp,
+          ),
+          Container(
+            height: 45.sp,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(8),
+              border: Border.all(
+                color: AppColors.blue800,
+                width: 0.5,
+              ),
+            ),
+            child: TextField(
+              style: ThemeText.bodyMedium.s16,
+              keyboardType: TextInputType.number,
+              controller: controller,
+              decoration: const InputDecoration(
+                border: InputBorder.none,
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget nameContainer(String name, String title) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(title, style: ThemeText.bodySemibold.s16),
+        SizedBox(
+          height: 5.sp,
+        ),
+        Container(
+          width: 400.sp,
+          height: 45.sp,
+          decoration: BoxDecoration(
+            border: Border.all(
+              color: AppColors.blue800,
+              width: 0.5,
+            ),
+            borderRadius: BorderRadius.circular(7),
+          ),
+          child: Padding(
+            padding: EdgeInsets.only(top: 12.sp),
+            child: Text(
+              name,
+              textAlign: TextAlign.center,
+              style: ThemeText.bodyMedium.s16,
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  _buttonSaveEng(BuildContext context) async {
+    await controller.addScoreEng(name, id, numberOfCredits);
+  }
+}
