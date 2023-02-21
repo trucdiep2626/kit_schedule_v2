@@ -4,7 +4,7 @@ class AppDimens {
   /// Common
   static double paddingBottom = height_36;
   static double paddingHorizontal = width_16;
-  static double appBarHeight = height_50;
+  static double appBarHeight = height_86;
 
   /// Radius
   static const double radius_12 = 12;
@@ -26,6 +26,7 @@ class AppDimens {
   static double height_4 = 4.h;
   static double height_8 = 8.h;
   static double height_12 = 12.h;
+  static double height_14 = 14.h;
   static double height_16 = 16.h;
   static double height_18 = 18.h;
   static double height_20 = 20.h;
@@ -42,6 +43,7 @@ class AppDimens {
   static double height_70 = 70.h;
   static double height_72 = 72.h;
   static double height_80 = 80.h;
+  static double height_86 = 86.h;
   static double height_90 = 90.h;
   static double height_102 = 102.h;
   static double height_112 = 112.h;
@@ -54,10 +56,14 @@ class AppDimens {
 
   /// Width
   static double width_4 = 4.w;
+  static double width_6 = 6.w;
   static double width_8 = 8.w;
   static double width_12 = 12.w;
   static double width_16 = 16.w;
   static double width_56 = 56.w;
   static double width_40 = 40.w;
+
+
+
 
 }

@@ -79,6 +79,7 @@ class ScoreController extends GetxController with MixinController {
         message: 'Đã có lỗi xảy ra. Vui lòng thử lại',
         type: SnackBarType.error,
       );
+      rethrow;
     }
     rxLoadedType.value = LoadedType.finish;
   }
