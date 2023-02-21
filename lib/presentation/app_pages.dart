@@ -4,11 +4,13 @@ import 'package:kit_schedule_v2/common/injector/bindings/home_binding.dart';
 import 'package:kit_schedule_v2/common/injector/bindings/login_binding.dart';
 import 'package:kit_schedule_v2/common/injector/bindings/personal_binding.dart';
 import 'package:kit_schedule_v2/common/injector/bindings/score_binding.dart';
+import 'package:kit_schedule_v2/common/injector/bindings/setting_binding.dart';
 import 'package:kit_schedule_v2/common/injector/bindings/todo_binding.dart';
 import 'package:kit_schedule_v2/presentation/journey/login/login_page.dart';
 import 'package:kit_schedule_v2/presentation/journey/todo/todo_page.dart';
 
 import 'journey/main/main_screen.dart';
+import 'journey/setting/setting_page.dart';
 import 'journey/splash/splash_screen.dart';
 
 List<GetPage> myPages = [
@@ -22,6 +24,7 @@ List<GetPage> myPages = [
     TodoBinding(),
     ScoreBinding(),
     PersonalBinding(),
+    SettingBinding(),
   ]),
   GetPage(
       name: AppRoutes.login,
@@ -39,4 +42,8 @@ List<GetPage> myPages = [
       name: AppRoutes.personal,
       page: () => const LoginPage(),
       binding: PersonalBinding()),
+  GetPage(
+      name: AppRoutes.setting,
+      page: () => SettingPage(),
+      binding: SettingBinding()),
 ];

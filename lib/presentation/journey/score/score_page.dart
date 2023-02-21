@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:kit_schedule_v2/common/common_export.dart';
+import 'package:kit_schedule_v2/common/config/database/hive_config.dart';
 import 'package:kit_schedule_v2/domain/models/score_model.dart';
 import 'package:kit_schedule_v2/presentation/journey/score/components/gpa_chart_widget.dart';
 import 'package:kit_schedule_v2/presentation/journey/score/score_controller.dart';
@@ -9,11 +10,15 @@ import 'package:kit_schedule_v2/presentation/widgets/app_expansion_panel_list.da
 import 'package:kit_schedule_v2/presentation/widgets/app_loading_widget.dart';
 import 'package:kit_schedule_v2/presentation/widgets/app_touchable.dart';
 
+import 'components/popup_menu_add_subject.dart';
+import 'components/popup_menu_del_subject.dart';
+
 class ScorePage extends GetView<ScoreController> {
   const ScorePage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    controller.context = context;
     return Scaffold(
       backgroundColor: AppColors.backgroundColor,
       body: Obx(
@@ -22,8 +27,7 @@ class ScorePage extends GetView<ScoreController> {
             duration: kThemeAnimationDuration,
             child: controller.rxLoadedType.value == LoadedType.start
                 ? Center(
-                    child: AppLoadingWidget(
-                    ),
+                    child: AppLoadingWidget(),
                   )
                 : CustomScrollView(
                     slivers: [
@@ -34,7 +38,6 @@ class ScorePage extends GetView<ScoreController> {
                     ],
                   ),
           );
-
         },
       ),
     );
@@ -85,21 +88,14 @@ class ScorePage extends GetView<ScoreController> {
       actions: [
         IconButton(
           padding: EdgeInsets.zero,
-          onPressed: () async => await controller.onRefresh(),
+          onPressed: () async => await controller.onRefresh(true),
           icon: Icon(
             Icons.update,
             color: AppColors.blue900,
             size: AppDimens.space_24,
           ),
         ),
-        IconButton(
-          onPressed: () {},
-          icon: Icon(
-            Icons.info_outline_rounded,
-            color: AppColors.blue900,
-            size: AppDimens.height_24,
-          ),
-        )
+        const PopUpMenuAddSubject(),
       ],
       flexibleSpace: FlexibleSpaceBar(
         collapseMode: CollapseMode.parallax,
@@ -113,7 +109,10 @@ class ScorePage extends GetView<ScoreController> {
                   ? AppDimens.height_160
                   : AppDimens.height_180,
               child: GPACharWidget(
-                score: controller.rxStudentScores.value?.avgScore,
+                score: controller.rxStudentScores.value?.avgScore != null
+                    ? double.parse(controller.rxStudentScores.value!.avgScore!
+                        .toStringAsFixed(2))
+                    : 0,
               ),
             ),
           ],
@@ -152,6 +151,19 @@ class ScorePage extends GetView<ScoreController> {
                   style: ThemeText.bodySemibold,
                 ),
               ),
+              if (isExpanded) ...[
+                SizedBox(
+                  width: AppDimens.width_12,
+                ),
+                SizedBox(
+                  width: AppDimens.width_40,
+                  child: Align(
+                    alignment: Alignment.centerLeft,
+                    child: PopUpMenuDelSubject(
+                        index: index, onSelected: controller.onSelected(index)),
+                  ),
+                )
+              ],
               if (!isExpanded) ...[
                 SizedBox(
                   width: AppDimens.width_12,
@@ -191,7 +203,8 @@ class ScorePage extends GetView<ScoreController> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              _buildSubjectInfoRow("Mã môn học", score.subject?.id),
+              _buildSubjectInfoRow(
+                  "Mã môn học", score.subject?.id ?? 'unknown'),
               _buildSubjectInfoRow(
                 "Số tin chỉ",
                 score.subject?.numberOfCredits?.toString(),
