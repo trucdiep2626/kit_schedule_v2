@@ -66,6 +66,11 @@ class ScoreRepository {
     }
   }
 
+  bool compareToId(int i, String id) {
+    if (hiveConfig.hiveScoresCell.values.elementAt(i).id == id) return true;
+    return false;
+  }
+
   bool compareToName(int i, String name) {
     if (hiveConfig.hiveScoresCell.values.elementAt(i).name == name) return true;
     return false;
