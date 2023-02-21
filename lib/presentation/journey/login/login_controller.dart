@@ -14,6 +14,8 @@ class LoginController extends GetxController with MixinController {
   GlobalKey<FormState> textFormKey = GlobalKey<FormState>();
   TextEditingController accountController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
+  FocusNode accountFocusNode = FocusNode();
+  FocusNode passwordFocusNode = FocusNode();
   Rx<LoadedType> rxLoginLoadedType = LoadedType.finish.obs;
   RxBool isShow = false.obs;
 

@@ -53,6 +53,15 @@ class LoginPage extends GetView<LoginController> {
                           controller: controller.accountController,
                           textStyle: ThemeText.bodyRegular.blue900,
                           colorBoder: AppColors.blue900,
+                          onSubmitted: (account) {
+                            if (controller.textFormKey.currentState!
+                                .validate()) {
+                              controller.accountController.text = account;
+                              controller.passwordFocusNode.requestFocus();
+                            }
+                          },
+                          focusNode: controller.accountFocusNode,
+                          inputAction: TextInputAction.next,
                         ),
                         SizedBox(
                           height: 15.h,
@@ -69,6 +78,8 @@ class LoginPage extends GetView<LoginController> {
                               controller: controller.passwordController,
                               textStyle: ThemeText.bodyRegular.blue900,
                               obscureText: !controller.isShow.value,
+                              focusNode: controller.passwordFocusNode,
+                              inputAction: TextInputAction.done,
                               seffixIcon: IconButton(
                                 onPressed: controller.rxLoginLoadedType.value ==
                                         LoadedType.start
