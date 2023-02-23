@@ -10,22 +10,27 @@ class PopUpMenuAddSubject extends GetView<ScoreController> {
 
   @override
   Widget build(BuildContext context) {
-    return PopupMenuButton<int>(
-      child: const Icon(
-        Icons.info_outline_rounded,
-        color: AppColors.blue900,
+    return Theme(
+      data: Theme.of(context).copyWith(
+        cardColor: AppColors.backgroundColor,
       ),
-      itemBuilder: (_) => <PopupMenuItem<int>>[
-        PopupMenuItem(
-          value: 1,
-          child: Text("Thêm môn học", style: ThemeText.bodySemibold.s16),
+      child: PopupMenuButton<int>(
+        child: const Icon(
+          Icons.info_outline_rounded,
+          color: AppColors.blue900,
         ),
-      ],
-      onSelected: (value) async {
-        if (value == 1) {
-          displayTextInputDialog(context);
-        }
-      },
+        itemBuilder: (_) => <PopupMenuItem<int>>[
+          PopupMenuItem(
+            value: 1,
+            child: Text("Thêm môn học", style: ThemeText.bodySemibold.s16),
+          ),
+        ],
+        onSelected: (value) async {
+          if (value == 1) {
+            displayTextInputDialog(context);
+          }
+        },
+      ),
     );
   }
 }
