@@ -13,7 +13,6 @@ class LoginPage extends GetView<LoginController> {
   @override
   Widget build(BuildContext context) {
     controller.context = context;
-
     return Scaffold(
         backgroundColor: AppColors.bianca,
         appBar: AppBarWidget(),
@@ -40,6 +39,7 @@ class LoginPage extends GetView<LoginController> {
                 SizedBox(height: 65.sp),
                 Form(
                     key: controller.textFormKey,
+                    autovalidateMode: AutovalidateMode.always,
                     child: Column(
                       children: [
                         TextFieldWidget(
@@ -49,6 +49,7 @@ class LoginPage extends GetView<LoginController> {
                             }
                             return null;
                           },
+                          autovalidateMode: AutovalidateMode.onUserInteraction,
                           labelText: "Tài khoản",
                           controller: controller.accountController,
                           textStyle: ThemeText.bodyRegular.blue900,
@@ -57,6 +58,7 @@ class LoginPage extends GetView<LoginController> {
                             if (controller.textFormKey.currentState!
                                 .validate()) {
                               controller.accountController.text = account;
+                              // isFocus = true;
                               controller.passwordFocusNode.requestFocus();
                             }
                           },
@@ -68,11 +70,14 @@ class LoginPage extends GetView<LoginController> {
                         ),
                         Obx(() => TextFieldWidget(
                               validate: (value) {
-                                if (value!.isEmpty) {
+                                if (value!.isEmpty &&
+                                    controller.isFocusPassword.value) {
                                   return "Mật khẩu không được bỏ trống";
                                 }
                                 return null;
                               },
+                              autovalidateMode:
+                                  AutovalidateMode.onUserInteraction,
                               colorBoder: AppColors.blue900,
                               labelText: "Mật khẩu",
                               controller: controller.passwordController,
@@ -94,6 +99,7 @@ class LoginPage extends GetView<LoginController> {
                               ),
                               onSubmitted: (pass) {
                                 controller.passwordController.text = pass;
+                                controller.isFocusPassword.value = true;
                                 _setOnClickLoginButton(context);
                               },
                             )),

@@ -18,6 +18,7 @@ class LoginController extends GetxController with MixinController {
   FocusNode passwordFocusNode = FocusNode();
   Rx<LoadedType> rxLoginLoadedType = LoadedType.finish.obs;
   RxBool isShow = false.obs;
+  RxBool isFocusPassword = false.obs;
 
   SchoolUseCase schoolUseCase;
   SharePreferencesConstants sharePreferencesConstants;
