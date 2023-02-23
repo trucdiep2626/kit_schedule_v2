@@ -31,7 +31,6 @@ class ScoreController extends GetxController with MixinController {
           message: 'Không có kết nối Internet', type: SnackBarType.error);
       return;
     }
-
     rxLoadedType.value = LoadedType.start;
     await getScores(isAdd);
     rxLoadedType.value = LoadedType.finish;
@@ -76,6 +75,15 @@ class ScoreController extends GetxController with MixinController {
       if (isAdd) {
         scoreUseCase.insertScoreIntoHive(rxStudentScores, scoreUseCase);
       }
+
+      if (isExist("ATCBNN1") && isExist("LTCBNN2") && isExist("ATCBNN6")) {
+        Future.delayed(const Duration(seconds: 1), () async {
+          showTopSnackBar(context,
+              message:
+                  "Số môn học hiện tại đã đủ, chức năng thêm môn học sẽ không hiện ra",
+              type: SnackBarType.warning);
+        });
+      }
     } catch (e) {
       showTopSnackBar(
         Get.context!,
@@ -99,13 +107,6 @@ class ScoreController extends GetxController with MixinController {
 
   Future<void> addScoreEng(
       String? name, String? id, String? numberOfCredits) async {
-    // int n = 0;
-    // for (int i = 0; i < scoreUseCase.getLengthHiveScoresCell(); i++) {
-    //   if (scoreUseCase.compareToName(i, name!)) {
-    //     n++;
-    //   }
-    // }
-    // if (n == 0) {
     try {
       scoreUseCase.insertScoreEng(
         HiveScoresCell(
