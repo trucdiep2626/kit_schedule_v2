@@ -6,7 +6,6 @@ import 'package:kit_schedule_v2/presentation/journey/score/components/gpa_chart_
 import 'package:kit_schedule_v2/presentation/journey/score/score_controller.dart';
 import 'package:kit_schedule_v2/presentation/theme/export.dart';
 import 'package:kit_schedule_v2/presentation/widgets/app_expansion_panel_list.dart';
-import 'package:kit_schedule_v2/presentation/widgets/app_loading_widget.dart';
 import 'package:kit_schedule_v2/presentation/widgets/app_touchable.dart';
 
 import 'components/popup_menu_add_subject.dart';
@@ -22,15 +21,16 @@ class ScorePage extends GetView<ScoreController> {
       backgroundColor: AppColors.backgroundColor,
       body: Obx(
         () {
-          return AnimatedSwitcher(
-            duration: kThemeAnimationDuration,
-            child: controller.rxLoadedType.value == LoadedType.start
-                ? Center(
-                    child: AppLoadingWidget(),
-                  )
-                : Stack(
-                    children: [
-                      CustomScrollView(
+          return Stack(
+            children: [
+              AnimatedSwitcher(
+                duration: kThemeAnimationDuration,
+                child: controller.rxLoadedType.value == LoadedType.start
+                    ? const Center(
+                        child: CircularProgressIndicator.adaptive(),
+                      )
+                    : CustomScrollView(
+                        // physics: const ClampingScrollPhysics(),
                         slivers: [
                           _buildHeader(),
                           _buildSubjectTableHeader(),
@@ -38,35 +38,34 @@ class ScorePage extends GetView<ScoreController> {
                             _buildScoreTableData(),
                         ],
                       ),
-                      SizedBox(
-                        height: AppDimens.appBarHeight,
-                        child: AppBar(
-                          backgroundColor: AppColors.backgroundColor,
-                          elevation: 0,
-                          title: Text(
-                            'Điểm của bạn',
-                            style: ThemeText.bodySemibold.s18,
-                          ),
-                          actions: [
-                            IconButton(
-                              padding: EdgeInsets.zero,
-                              onPressed: () async =>
-                                  await controller.onRefresh(true),
-                              icon: Icon(
-                                Icons.update,
-                                color: AppColors.blue900,
-                                size: AppDimens.space_24,
-                              ),
-                            ),
-                            const PopUpMenuAddSubject(),
-                            SizedBox(
-                              width: AppDimens.width_12,
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
+              ),
+              SizedBox(
+                height: AppDimens.appBarHeight,
+                child: AppBar(
+                  backgroundColor: AppColors.backgroundColor,
+                  elevation: 0,
+                  title: Text(
+                    'Điểm của bạn',
+                    style: ThemeText.bodySemibold.s18,
                   ),
+                  actions: [
+                    AppTouchable(
+                      padding: EdgeInsets.symmetric(horizontal: AppDimens.width_12),
+                      onPressed: () async => await controller.onRefresh(true),
+                      child: Icon(
+                        Icons.update,
+                        color: AppColors.blue900,
+                        size: AppDimens.space_24,
+                      ),
+                    ),
+                    const PopUpMenuAddSubject(),
+                    SizedBox(
+                      width: AppDimens.width_12,
+                    ),
+                  ],
+                ),
+              ),
+            ],
           );
         },
       ),
