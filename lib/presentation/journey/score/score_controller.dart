@@ -80,7 +80,7 @@ class ScoreController extends GetxController with MixinController {
         Future.delayed(const Duration(seconds: 1), () async {
           showTopSnackBar(context,
               message:
-                  "Số môn học hiện tại đã đủ, chức năng thêm môn học sẽ không hiện ra",
+                  "Số môn học trong bảng điểm đã đủ",
               type: SnackBarType.warning);
         });
       }
