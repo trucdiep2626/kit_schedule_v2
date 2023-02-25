@@ -1,4 +1,5 @@
 import 'dart:developer';
+import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -126,6 +127,9 @@ class ScoreController extends GetxController with MixinController {
         );
         showTopSnackBar(context,
             message: 'Thêm môn học thành công', type: SnackBarType.done);
+        firstComponentScore.clear();
+        secondComponentScore.clear();
+        examScore.clear();
         Get.close(2);
         await onRefresh(false);
       } catch (e) {
@@ -157,6 +161,15 @@ class ScoreController extends GetxController with MixinController {
           type: SnackBarType.done,
         );
       }
+    };
+  }
+
+  Function() onTapBackScorePage() {
+    return () {
+      firstComponentScore.clear();
+      secondComponentScore.clear();
+      examScore.clear();
+      Get.back();
     };
   }
 

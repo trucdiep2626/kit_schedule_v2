@@ -33,12 +33,7 @@ class NavigatorAddSubject extends GetView<ScoreController> {
             Row(
               children: [
                 GestureDetector(
-                  onTap: () {
-                    controller.firstComponentScore.clear();
-                    controller.secondComponentScore.clear();
-                    controller.examScore.clear();
-                    Get.back();
-                  },
+                  onTap: controller.onTapBackScorePage(),
                   child: const Icon(
                     Icons.arrow_back,
                     color: AppColors.blue800,
@@ -205,8 +200,5 @@ class NavigatorAddSubject extends GetView<ScoreController> {
 
   _buttonSaveEng(BuildContext context) async {
     await controller.addScoreEng(name, id, numberOfCredits);
-    controller.firstComponentScore.clear();
-    controller.secondComponentScore.clear();
-    controller.examScore.clear();
   }
 }
