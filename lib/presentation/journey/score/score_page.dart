@@ -114,8 +114,11 @@ class ScorePage extends GetView<ScoreController> {
       pinned: true,
       floating: true,
       snap: true,
-      expandedHeight:
-          Get.height > 800 ? AppDimens.height_220 : AppDimens.height_260,
+      expandedHeight: Get.height > 800
+          ? AppDimens.height_236
+          : Get.height > 700
+              ? AppDimens.height_260
+              : AppDimens.height_280,
       flexibleSpace: FlexibleSpaceBar(
         collapseMode: CollapseMode.parallax,
         background: Column(
@@ -125,8 +128,10 @@ class ScorePage extends GetView<ScoreController> {
             ),
             SizedBox(
               height: Get.height > 800
-                  ? AppDimens.height_160
-                  : AppDimens.height_180,
+                  ? AppDimens.height_168
+                  : Get.height > 700
+                      ? AppDimens.height_180
+                      : AppDimens.height_192,
               child: GPACharWidget(
                 score: controller.rxStudentScores.value?.avgScore != null
                     ? double.parse(controller.rxStudentScores.value!.avgScore!
@@ -343,8 +348,13 @@ class ScorePage extends GetView<ScoreController> {
   SliverAppBar _buildSubjectTableHeader() {
     return SliverAppBar(
       pinned: true,
-      collapsedHeight:
-          Get.height > 800 ? AppDimens.height_68 : AppDimens.height_112,
+      collapsedHeight: Get.height > 850
+          ? 70.h
+          : Get.height > 780
+              ? 94.h
+              : Get.height > 700
+                  ? AppDimens.height_112
+                  : AppDimens.height_122,
       backgroundColor: AppColors.backgroundColor,
       flexibleSpace: Padding(
         padding: EdgeInsets.symmetric(horizontal: AppDimens.space_16),
