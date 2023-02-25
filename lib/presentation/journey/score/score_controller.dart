@@ -62,7 +62,7 @@ class ScoreController extends GetxController with MixinController {
               result.scores![index].subject!.id!.contains("ATQGTC3") ||
               result.scores![index].subject!.id!.contains("ATQGTC4") ||
               result.scores![index].subject!.id!.contains("ATQGTC5")) {
-            index++;
+            continue;
           } else {
             if (scoreUseCase.isDuplicate(result, index)) {
               scoreUseCase.insertSubjectFromAPI(result, index);
