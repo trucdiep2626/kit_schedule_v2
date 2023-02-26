@@ -1,5 +1,8 @@
+import 'dart:math';
+
 import 'package:get/get_rx/src/rx_types/rx_types.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:kit_schedule_v2/common/common_export.dart';
 import 'package:kit_schedule_v2/common/config/database/hive_config.dart';
 import 'package:kit_schedule_v2/common/config/network/api_client.dart';
 import 'package:kit_schedule_v2/common/config/network/api_endpoints.dart';
@@ -144,34 +147,26 @@ class ScoreRepository {
   }
 
   int calNoPassedSubjects() {
-    int calNoPassedSubjects = 0;
-    for (int i = 0; i < hiveConfig.hiveScoresCell.length; i++) {
-      if ((double.parse(hiveConfig.hiveScoresCell.getAt(i)!.examScore!) >= 0 &&
-              double.parse(hiveConfig.hiveScoresCell.getAt(i)!.examScore!) <
-                  4) &&
-          (double.parse(hiveConfig.hiveScoresCell.getAt(i)!.avgScore!) >= 0 &&
-              double.parse(hiveConfig.hiveScoresCell.getAt(i)!.avgScore!) <
-                  4)) {
-        calNoPassedSubjects = calNoPassedSubjects + 1;
-      } else {
-        i++;
-      }
-    }
-    return calNoPassedSubjects;
+    return hiveConfig.hiveScoresCell.length - calPassedSubjects();
   }
 
   int calPassedSubjects() {
     int calPassedSubjects = 0;
+
     for (int i = 0; i < hiveConfig.hiveScoresCell.length; i++) {
-      if ((double.parse(hiveConfig.hiveScoresCell.getAt(i)!.examScore!) >= 4 &&
-              double.parse(hiveConfig.hiveScoresCell.getAt(i)!.examScore!) <=
-                  10) &&
-          (double.parse(hiveConfig.hiveScoresCell.getAt(i)!.avgScore!) >= 4 &&
-              double.parse(hiveConfig.hiveScoresCell.getAt(i)!.avgScore!) <=
-                  10)) {
-        calPassedSubjects = calPassedSubjects + 1;
-      } else {
-        i++;
+      if (isNumeric(hiveConfig.hiveScoresCell.getAt(i)!.examScore!) &&
+          isNumeric(hiveConfig.hiveScoresCell.getAt(i)!.avgScore!)) {
+        if ((double.parse(hiveConfig.hiveScoresCell.getAt(i)!.examScore!) >=
+                    4 &&
+                double.parse(hiveConfig.hiveScoresCell.getAt(i)!.examScore!) <=
+                    10) &&
+            (double.parse(hiveConfig.hiveScoresCell.getAt(i)!.avgScore!) >= 4 &&
+                double.parse(hiveConfig.hiveScoresCell.getAt(i)!.avgScore!) <=
+                    10)) {
+          calPassedSubjects = calPassedSubjects + 1;
+        } else {
+          i++;
+        }
       }
     }
     return calPassedSubjects;
