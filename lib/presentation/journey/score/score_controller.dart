@@ -1,4 +1,5 @@
 import 'dart:developer';
+import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -197,6 +198,15 @@ class ScoreController extends GetxController with MixinController {
         );
         delSubject(index);
       }
+    };
+  }
+
+  Function() onTapBackScorePage() {
+    return () {
+      firstComponentScore.clear();
+      secondComponentScore.clear();
+      examScore.clear();
+      Get.back();
     };
   }
 
