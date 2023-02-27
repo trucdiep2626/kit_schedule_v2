@@ -64,7 +64,7 @@ class ScoreController extends GetxController with MixinController {
               result.scores![index].subject!.id!.contains("ATQGTC3") ||
               result.scores![index].subject!.id!.contains("ATQGTC4") ||
               result.scores![index].subject!.id!.contains("ATQGTC5")) {
-            index++;
+            continue;
           } else {
             if (scoreUseCase.isDuplicate(result, index)) {
               scoreUseCase.insertSubjectFromAPI(result, index);
@@ -79,8 +79,7 @@ class ScoreController extends GetxController with MixinController {
       if (isExist("ATCBNN1") && isExist("LTCBNN2") && isExist("ATCBNN6")) {
         Future.delayed(const Duration(seconds: 1), () async {
           showTopSnackBar(context,
-              message:
-                  "Số môn học trong bảng điểm đã đủ",
+              message: "Số môn học trong bảng điểm đã đủ",
               type: SnackBarType.warning);
         });
       }
