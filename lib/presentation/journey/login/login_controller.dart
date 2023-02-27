@@ -70,6 +70,7 @@ class LoginController extends GetxController with MixinController {
           message: 'Đã có lỗi xảy ra. Vui lòng thử lại',
           type: SnackBarType.error);
     }
+    accountFocusNode.requestFocus();
     rxLoginLoadedType.value = LoadedType.finish;
   }
 
