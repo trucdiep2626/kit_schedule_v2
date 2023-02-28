@@ -119,6 +119,9 @@ class ScorePage extends GetView<ScoreController> {
                 score: controller.rxStudentScores.value?.avgScore != null
                     ? double.parse(controller.rxStudentScores.value!.avgScore!
                         .toStringAsFixed(2))
+                    // ? (controller.rxStudentScores.value!.avgScore! * 100)
+                    //         .truncateToDouble() /
+                    //     100
                     : 0,
               ),
             ),
