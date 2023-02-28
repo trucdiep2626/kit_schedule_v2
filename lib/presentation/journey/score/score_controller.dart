@@ -139,7 +139,7 @@ class ScoreController extends GetxController with MixinController {
     }
   }
 
-  Function onPressedAddSubject(
+  Function() onPressedAddSubject(
       {required String name,
       required String id,
       required String numberOfCredits}) {
