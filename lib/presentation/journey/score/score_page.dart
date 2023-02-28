@@ -7,6 +7,8 @@ import 'package:kit_schedule_v2/presentation/journey/score/score_controller.dart
 import 'package:kit_schedule_v2/presentation/theme/export.dart';
 import 'package:kit_schedule_v2/presentation/widgets/app_expansion_panel_list.dart';
 import 'package:kit_schedule_v2/presentation/widgets/app_touchable.dart';
+import 'package:kit_schedule_v2/presentation/widgets/export.dart';
+import 'package:kit_schedule_v2/presentation/widgets/snack_bar/flash.dart';
 
 import 'components/popup_menu_add_subject.dart';
 import 'components/popup_menu_del_subject.dart';
@@ -23,21 +25,19 @@ class ScorePage extends GetView<ScoreController> {
         () {
           return Stack(
             children: [
-              AnimatedSwitcher(
-                duration: kThemeAnimationDuration,
-                child: controller.rxLoadedType.value == LoadedType.start
-                    ? const Center(
-                        child: CircularProgressIndicator.adaptive(),
-                      )
-                    : CustomScrollView(
-                        // physics: const ClampingScrollPhysics(),
-                        slivers: [
-                          _buildHeader(),
-                          _buildSubjectTableHeader(),
-                          if (!isNullEmpty(controller.rxStudentScores))
-                            _buildScoreTableData(),
-                        ],
-                      ),
+              RefreshIndicator(
+                key: controller.refreshKey,
+                onRefresh: () => controller.onRefresh(false),
+                edgeOffset: AppDimens.appBarHeight,
+                child: CustomScrollView(
+                  // physics: const ClampingScrollPhysics(),
+                  slivers: [
+                    _buildHeader(),
+                    _buildSubjectTableHeader(),
+                    if (!isNullEmpty(controller.rxStudentScores))
+                      _buildScoreTableData(),
+                  ],
+                ),
               ),
               SizedBox(
                 height: AppDimens.appBarHeight,
@@ -50,8 +50,9 @@ class ScorePage extends GetView<ScoreController> {
                   ),
                   actions: [
                     AppTouchable(
-                      padding: EdgeInsets.symmetric(horizontal: AppDimens.width_12),
-                      onPressed: () async => await controller.onRefresh(true),
+                      padding:
+                          EdgeInsets.symmetric(horizontal: AppDimens.width_12),
+                      onPressed: controller.onPressRefresh,
                       child: Icon(
                         Icons.update,
                         color: AppColors.blue900,
