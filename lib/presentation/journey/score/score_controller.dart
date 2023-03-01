@@ -23,6 +23,10 @@ class ScoreController extends GetxController with MixinController {
   TextEditingController firstComponentScore = TextEditingController();
   TextEditingController secondComponentScore = TextEditingController();
   TextEditingController examScore = TextEditingController();
+  RxString validateFirstComponentScore = ''.obs;
+  RxString validateSecondComponentScore = ''.obs;
+  RxString validateExamScore = ''.obs;
+
   Future<void> onRefresh(bool isAdd) async {
     if (!await NetworkState.isConnected) {
       showTopSnackBar(context,
@@ -97,6 +101,11 @@ class ScoreController extends GetxController with MixinController {
 
   Future<void> addScoreEng(
       String? name, String? id, String? numberOfCredits) async {
+    if (!checkValidateFirstComponentScore() ||
+        !checkValidateExamScore() ||
+        !checkValidateSecondComponentScore()) {
+      return;
+    }
     int n = 0;
     for (int i = 0; i < scoreUseCase.getLengthHiveScoresCell(); i++) {
       if (scoreUseCase.compareToName(i, name!)) {
@@ -151,15 +160,39 @@ class ScoreController extends GetxController with MixinController {
     }
   }
 
+  bool checkValidateFirstComponentScore() {
+    if (double.parse(firstComponentScore.text.trim()) >= 10) {
+      validateFirstComponentScore.value = "Vui lòng nhập điểm <=10";
+      return false;
+    }
+    return true;
+  }
+
+  bool checkValidateSecondComponentScore() {
+    if (double.parse(secondComponentScore.text.trim()) >= 10) {
+      validateSecondComponentScore.value = "Vui lòng nhập điểm <=10";
+      return false;
+    }
+    return true;
+  }
+
+  bool checkValidateExamScore() {
+    if (double.parse(examScore.text.trim()) >= 10) {
+      validateExamScore.value = "Vui lòng nhập điểm <=10";
+      return false;
+    }
+    return true;
+  }
+
   Function(int?) onSelected(int index) {
     return (value) {
       if (value == 1) {
-        delSubject(index);
         showTopSnackBar(
           context,
           message: 'Xóa môn học thành công',
           type: SnackBarType.done,
         );
+        delSubject(index);
       }
     };
   }

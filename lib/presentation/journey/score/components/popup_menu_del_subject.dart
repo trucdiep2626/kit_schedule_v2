@@ -13,7 +13,7 @@ class PopUpMenuDelSubject extends StatelessWidget {
       itemBuilder: (_) => <PopupMenuItem<int>>[
         PopupMenuItem(
           value: 1,
-          child: Text("Xóa môn học này", style: ThemeText.bodySemibold.s16),
+          child: Text("Xóa môn học", style: ThemeText.bodySemibold.s16),
         ),
       ],
       onSelected: onSelected,

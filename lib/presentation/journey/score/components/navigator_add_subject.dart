@@ -22,90 +22,98 @@ class NavigatorAddSubject extends GetView<ScoreController> {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       backgroundColor: AppColors.backgroundColor,
-      body: Padding(
-        padding: EdgeInsets.only(
-          left: 16.sp,
-          right: 16.sp,
-          top: Get.mediaQuery.padding.top,
-        ),
-        child: Column(
-          children: [
-            Row(
-              children: [
-                GestureDetector(
-                  onTap: controller.onTapBackScorePage(),
-                  child: const Icon(
-                    Icons.arrow_back,
-                    color: AppColors.blue800,
-                    size: 30,
-                  ),
-                ),
-                Padding(
-                    padding: EdgeInsets.only(left: 10.sp),
-                    child: Text("Thêm môn học",
-                        style: ThemeText.bodySemibold.s18)),
-              ],
-            ),
-            SingleChildScrollView(
-              child: Column(
+      body: Obx(
+        () => Padding(
+          padding: EdgeInsets.only(
+            left: 16.sp,
+            right: 16.sp,
+            top: Get.mediaQuery.padding.top,
+          ),
+          child: Column(
+            children: [
+              Row(
                 children: [
-                  Container(
-                    margin: EdgeInsets.only(top: Get.mediaQuery.padding.top),
-                    child: Row(
-                      children: [
-                        Expanded(
-                          flex: 2,
-                          child: Container(
-                            margin: EdgeInsets.only(right: 10.sp),
-                            child: nameContainer(name, "Tên môn học"),
-                          ),
-                        ),
-                        Expanded(
-                          flex: 1,
-                          child: Container(
-                            margin: EdgeInsets.only(left: 10.sp),
-                            child: nameContainer(numberOfCredits, "Số tín chỉ"),
-                          ),
-                        ),
-                      ],
+                  GestureDetector(
+                    onTap: controller.onTapBackScorePage(),
+                    child: const Icon(
+                      Icons.arrow_back,
+                      color: AppColors.blue800,
+                      size: 30,
                     ),
                   ),
-                  Container(
-                    margin: EdgeInsets.only(top: Get.mediaQuery.padding.top),
-                    child: Row(
-                      children: [
-                        Expanded(
-                          child: Container(
-                            margin: EdgeInsets.only(right: 10.sp),
-                            child: textField(
-                              controller: controller.firstComponentScore,
-                              hintText: "Điểm TP1",
-                            ),
-                          ),
-                        ),
-                        Expanded(
-                          child: Container(
-                            margin: EdgeInsets.only(left: 10.sp),
-                            child: textField(
-                              controller: controller.secondComponentScore,
-                              hintText: "Điểm TP2",
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  Container(
-                    margin: EdgeInsets.only(top: Get.mediaQuery.padding.top),
-                    child: textField(
-                      controller: controller.examScore,
-                      hintText: "Điểm thi",
-                    ),
-                  ),
+                  Padding(
+                      padding: EdgeInsets.only(left: 10.sp),
+                      child: Text("Thêm môn học",
+                          style: ThemeText.bodySemibold.s18)),
                 ],
               ),
-            ),
-          ],
+              SingleChildScrollView(
+                child: Column(
+                  children: [
+                    Container(
+                      margin: EdgeInsets.only(top: Get.mediaQuery.padding.top),
+                      child: Row(
+                        children: [
+                          Expanded(
+                            flex: 2,
+                            child: Container(
+                              margin: EdgeInsets.only(right: 10.sp),
+                              child: nameContainer(name, "Tên môn học"),
+                            ),
+                          ),
+                          Expanded(
+                            flex: 1,
+                            child: Container(
+                              margin: EdgeInsets.only(left: 10.sp),
+                              child:
+                                  nameContainer(numberOfCredits, "Số tín chỉ"),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Container(
+                      margin: EdgeInsets.only(top: Get.mediaQuery.padding.top),
+                      child: Row(
+                        children: [
+                          Expanded(
+                            child: Container(
+                              margin: EdgeInsets.only(right: 10.sp),
+                              child: textField(
+                                errorText: controller
+                                    .validateFirstComponentScore.value,
+                                controller: controller.firstComponentScore,
+                                hintText: "Điểm TP1",
+                              ),
+                            ),
+                          ),
+                          Expanded(
+                            child: Container(
+                              margin: EdgeInsets.only(left: 10.sp),
+                              child: textField(
+                                errorText: controller
+                                    .validateSecondComponentScore.value,
+                                controller: controller.secondComponentScore,
+                                hintText: "Điểm TP2",
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Container(
+                      margin: EdgeInsets.only(top: Get.mediaQuery.padding.top),
+                      child: textField(
+                        errorText: controller.validateExamScore.value,
+                        controller: controller.examScore,
+                        hintText: "Điểm thi",
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
         ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
@@ -131,7 +139,9 @@ class NavigatorAddSubject extends GetView<ScoreController> {
   }
 
   Widget textField(
-      {required String hintText, required TextEditingController controller}) {
+      {required String hintText,
+      required TextEditingController controller,
+      required String? errorText}) {
     return Container(
       margin: const EdgeInsets.only(top: 10),
       child: Column(
@@ -153,12 +163,15 @@ class NavigatorAddSubject extends GetView<ScoreController> {
                 width: 0.5,
               ),
             ),
-            child: TextField(
-              style: ThemeText.bodyMedium.s16,
-              keyboardType: TextInputType.number,
-              controller: controller,
-              decoration: const InputDecoration(
-                border: InputBorder.none,
+            child: Form(
+              child: TextField(
+                style: ThemeText.bodyMedium.s16,
+                keyboardType: TextInputType.number,
+                controller: controller,
+                decoration: InputDecoration(
+                  border: InputBorder.none,
+                  errorText: errorText,
+                ),
               ),
             ),
           ),
