@@ -72,7 +72,7 @@ class ScoreRepository {
   }
 
   bool compareToName(int i, String name) {
-    if (hiveConfig.hiveScoresCell.values.elementAt(i).name == name) return true;
+    if (hiveConfig.hiveScoresCell.values.elementAt(i).name?.toLowerCase().compareTo(name.toLowerCase())==0) return true;
     return false;
   }
 

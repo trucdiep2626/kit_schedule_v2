@@ -91,9 +91,9 @@ class ScorePage extends GetView<ScoreController> {
             size: AppDimens.space_24,
           ),
         ),
-        if (!controller.isExist("ATCBNN1") ||
-            !controller.isExist("LTCBNN2") ||
-            !controller.isExist("ATCBNN6")) ...[
+        if (!controller.isExist("Tiếng anh 1") ||
+            !controller.isExist("Tiếng anh 2") ||
+            !controller.isExist("Tiếng anh 3")) ...[
           PopUpMenuSubject(
             icon: const Icon(
               Icons.info_outline_rounded,

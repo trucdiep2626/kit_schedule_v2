@@ -156,10 +156,10 @@ class ScoreController extends GetxController with MixinController {
     };
   }
 
-  bool isExist(String id) {
+  bool isExist(String name) {
     int n = 0;
     for (int i = 0; i < scoreUseCase.getLengthHiveScoresCell(); i++) {
-      if (scoreUseCase.compareToId(i, id)) {
+      if (scoreUseCase.compareToName(i, name)) {
         n++;
       }
     }
@@ -173,9 +173,9 @@ class ScoreController extends GetxController with MixinController {
     return (value) {
       if (value == 1) {
         displayTextInputDialog(
-          compareIdEnd1: !isExist('ATCBNN1'),
-          compareIdEnd2: !isExist('LTCBNN2'),
-          compareIdEnd3: !isExist('ATCBNN6'),
+          compareIdEnd1: !isExist('Tiếng anh 1'),
+          compareIdEnd2: !isExist('Tiếng anh 2'),
+          compareIdEnd3: !isExist('Tiếng anh 3'),
           Get.context!,
           onPressedEng1: onPressedAddSubject(
               name: "Tiếng Anh 1", id: 'ATCBNN1', numberOfCredits: '3')(),
