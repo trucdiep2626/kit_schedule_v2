@@ -172,12 +172,18 @@ class NavigatorAddSubject extends GetView<ScoreController> {
                 style: ThemeText.bodyMedium.s16,
                 keyboardType: TextInputType.number,
                 controller: controller,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   border: InputBorder.none,
-                  errorText: errorText,
                 ),
               ),
             ),
+          ),
+          SizedBox(
+            height: 5.sp,
+          ),
+          Text(
+            errorText!,
+            style: ThemeText.errorText.red,
           ),
         ],
       ),
