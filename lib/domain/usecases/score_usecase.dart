@@ -50,8 +50,8 @@ class ScoreUseCase {
 
 
   Future<void> insertScoreIntoHive(
-      Rx<StudentScores?> rxStudentScores, ScoreUseCase scoreUseCase) {
-    return scoreRepository.insertScoreIntoHive(rxStudentScores, scoreUseCase);
+      Rx<StudentScores?> rxStudentScores) {
+    return scoreRepository.insertScoreIntoHive(rxStudentScores);
   }
 
   String? getFirstComponentScore(int index) {

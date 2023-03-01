@@ -49,7 +49,7 @@ class ScoreController extends GetxController with MixinController {
           await scoreUseCase.getScoresStudents(studentCode: studentCode);
       rxStudentScores.value = result;
       if (!isAdd) {
-        scoreUseCase.insertScoreIntoHive(rxStudentScores, scoreUseCase);
+        scoreUseCase.insertScoreIntoHive(rxStudentScores);
       }
       if (!isNullEmpty(result)) {
         rxExpandedList.value = List.generate(
@@ -62,7 +62,7 @@ class ScoreController extends GetxController with MixinController {
               result.scores![index].subject!.id!.contains("ATQGTC3") ||
               result.scores![index].subject!.id!.contains("ATQGTC4") ||
               result.scores![index].subject!.id!.contains("ATQGTC5")) {
-            index++;
+            continue;
           } else {
             if (scoreUseCase.isDuplicate(result, index)) {
               scoreUseCase.insertSubjectFromAPI(result, index);
@@ -71,7 +71,7 @@ class ScoreController extends GetxController with MixinController {
         }
       }
       if (isAdd) {
-        scoreUseCase.insertScoreIntoHive(rxStudentScores, scoreUseCase);
+        scoreUseCase.insertScoreIntoHive(rxStudentScores);
       }
     } catch (e) {
       showTopSnackBar(
@@ -85,7 +85,7 @@ class ScoreController extends GetxController with MixinController {
 
   Future<void> insertScoreIntoHive(bool isAdd) async {
     if (isAdd) {
-      scoreUseCase.insertScoreIntoHive(rxStudentScores, scoreUseCase);
+      scoreUseCase.insertScoreIntoHive(rxStudentScores);
     }
   }
 
