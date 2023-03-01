@@ -136,9 +136,7 @@ class ScoreController extends GetxController with MixinController {
         );
         showTopSnackBar(context,
             message: 'Thêm môn học thành công', type: SnackBarType.done);
-        firstComponentScore.clear();
-        secondComponentScore.clear();
-        examScore.clear();
+        resetData();
         Get.close(2);
         await onRefresh(false);
       } catch (e) {
@@ -153,6 +151,7 @@ class ScoreController extends GetxController with MixinController {
         showTopSnackBar(context,
             message: 'Môn học đã tồn tại', type: SnackBarType.error);
       } catch (e) {
+        // ignore: use_build_context_synchronously
         showTopSnackBar(context,
             message: 'Các trường phải điền chính xác và không được bỏ trống',
             type: SnackBarType.error);
@@ -160,26 +159,50 @@ class ScoreController extends GetxController with MixinController {
     }
   }
 
+  void resetData() {
+    firstComponentScore.clear();
+    secondComponentScore.clear();
+    examScore.clear();
+    validateExamScore.value = '';
+    validateFirstComponentScore.value = '';
+    validateSecondComponentScore.value = '';
+  }
+
   bool checkValidateFirstComponentScore() {
-    if (double.parse(firstComponentScore.text.trim()) >= 10) {
-      validateFirstComponentScore.value = "Vui lòng nhập điểm <=10";
-      return false;
+    try {
+      if (double.parse(firstComponentScore.text.trim()) > 10) {
+        validateFirstComponentScore.value = "Vui lòng nhập điểm <=10";
+        return false;
+      }
+    } catch (e) {
+      showTopSnackBar(context,
+          message: "Vui lòng điền đủ các trường", type: SnackBarType.error);
     }
     return true;
   }
 
   bool checkValidateSecondComponentScore() {
-    if (double.parse(secondComponentScore.text.trim()) >= 10) {
-      validateSecondComponentScore.value = "Vui lòng nhập điểm <=10";
-      return false;
+    try {
+      if (double.parse(secondComponentScore.text.trim()) > 10) {
+        validateSecondComponentScore.value = "Vui lòng nhập điểm <=10";
+        return false;
+      }
+    } catch (e) {
+      showTopSnackBar(context,
+          message: "Vui lòng điền đủ các trường", type: SnackBarType.error);
     }
     return true;
   }
 
   bool checkValidateExamScore() {
-    if (double.parse(examScore.text.trim()) >= 10) {
-      validateExamScore.value = "Vui lòng nhập điểm <=10";
-      return false;
+    try {
+      if (double.parse(examScore.text.trim()) > 10) {
+        validateExamScore.value = "Vui lòng nhập điểm <=10";
+        return false;
+      }
+    } catch (e) {
+      showTopSnackBar(context,
+          message: "Vui lòng điền đủ các trường", type: SnackBarType.error);
     }
     return true;
   }
@@ -199,10 +222,8 @@ class ScoreController extends GetxController with MixinController {
 
   Function() onTapBackScorePage() {
     return () {
-      firstComponentScore.clear();
-      secondComponentScore.clear();
-      examScore.clear();
       Get.back();
+      resetData();
     };
   }
 

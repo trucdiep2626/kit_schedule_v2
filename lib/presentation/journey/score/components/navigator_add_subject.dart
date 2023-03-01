@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:kit_schedule_v2/common/common_export.dart';
 import 'package:kit_schedule_v2/presentation/journey/score/score_controller.dart';
@@ -163,8 +164,11 @@ class NavigatorAddSubject extends GetView<ScoreController> {
                 width: 0.5,
               ),
             ),
-            child: Form(
+            child: Center(
               child: TextField(
+                inputFormatters: <TextInputFormatter>[
+                  FilteringTextInputFormatter.allow(RegExp(r'^\d+\.?\d*'))
+                ],
                 style: ThemeText.bodyMedium.s16,
                 keyboardType: TextInputType.number,
                 controller: controller,
