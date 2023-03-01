@@ -14,8 +14,11 @@ class LoginController extends GetxController with MixinController {
   GlobalKey<FormState> textFormKey = GlobalKey<FormState>();
   TextEditingController accountController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
+  FocusNode accountFocusNode = FocusNode();
+  FocusNode passwordFocusNode = FocusNode();
   Rx<LoadedType> rxLoginLoadedType = LoadedType.finish.obs;
   RxBool isShow = false.obs;
+  RxBool isFocusPassword = false.obs;
 
   SchoolUseCase schoolUseCase;
   SharePreferencesConstants sharePreferencesConstants;
@@ -67,6 +70,7 @@ class LoginController extends GetxController with MixinController {
           message: 'Đã có lỗi xảy ra. Vui lòng thử lại',
           type: SnackBarType.error);
     }
+    accountFocusNode.requestFocus();
     rxLoginLoadedType.value = LoadedType.finish;
   }
 
