@@ -146,11 +146,13 @@ class ScoreController extends GetxController with MixinController {
     return () {
       if (!isExist(id)) {
         return () {
-          Get.to(() => NavigatorAddSubject(
-                id: id,
-                name: name,
-                numberOfCredits: numberOfCredits,
-              ));
+          Get.to(
+            () => NavigatorAddSubject(
+              id: id,
+              name: name,
+              numberOfCredits: numberOfCredits,
+            ),
+          );
         };
       }
     };
@@ -178,11 +180,19 @@ class ScoreController extends GetxController with MixinController {
           compareIdEnd3: !isExist('Tiếng anh 3'),
           Get.context!,
           onPressedEng1: onPressedAddSubject(
-              name: "Tiếng Anh 1", id: 'ATCBNN1', numberOfCredits: '3')(),
+            name: "Tiếng Anh 1",
+            id: 'ATCBNN1',
+            numberOfCredits: '3',
+          )(),
           onPressedEng2: onPressedAddSubject(
-              name: "Tiếng Anh 2", id: 'LTCBNN2', numberOfCredits: '3')(),
+              name: "Tiếng Anh 2",
+              id: 'LTCBNN2', // Mã môn không đồng nhất giữa các năm!!!
+              numberOfCredits: '3')(),
           onPressedEng3: onPressedAddSubject(
-              name: "Tiếng Anh 3", id: 'ATCBNN6', numberOfCredits: '4')(),
+            name: "Tiếng Anh 3",
+            id: 'ATCBNN6',
+            numberOfCredits: '4',
+          )(),
         );
       }
     };
