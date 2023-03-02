@@ -49,6 +49,7 @@ class ScoreController extends GetxController with MixinController {
           await scoreUseCase.getScoresStudents(studentCode: studentCode);
       rxStudentScores.value = result;
       if (!isAdd) {
+        scoreUseCase.clearDataScore();
         scoreUseCase.insertScoreIntoHive(rxStudentScores);
       }
       if (!isNullEmpty(result)) {
@@ -71,6 +72,7 @@ class ScoreController extends GetxController with MixinController {
         }
       }
       if (isAdd) {
+        scoreUseCase.clearDataScore();
         scoreUseCase.insertScoreIntoHive(rxStudentScores);
       }
     } catch (e) {

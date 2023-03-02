@@ -41,7 +41,6 @@ class ScoreRepository {
   }
 
   Future<void> insertScoreIntoHive(Rx<StudentScores?> rxStudentScores) async {
-    rxStudentScores.value!.scores!.length = getLengthHiveScoresCell();
     rxStudentScores.value!.avgScore = avgScoresCell();
     rxStudentScores.value!.passedSubjects = calPassedSubjects();
     rxStudentScores.value!.failedSubjects = calNoPassedSubjects();
