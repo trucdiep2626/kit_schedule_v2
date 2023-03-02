@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:flutter/services.dart';
 import 'package:kit_schedule_v2/common/common_export.dart';
 import 'package:kit_schedule_v2/presentation/journey/score/score_controller.dart';
 import 'package:kit_schedule_v2/presentation/theme/theme_color.dart';
@@ -11,6 +12,7 @@ class NavigatorAddSubject extends GetView<ScoreController> {
   final String name;
   final String id;
   final String numberOfCredits;
+
   const NavigatorAddSubject(
       {required this.id,
       required this.name,
@@ -119,20 +121,20 @@ class NavigatorAddSubject extends GetView<ScoreController> {
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: AppTouchable(
-        outlinedBorder: RoundedRectangleBorder(
-          side: BorderSide.none,
-          borderRadius: BorderRadius.circular(AppDimens.space_20),
-        ),
-        width: double.infinity,
-        margin: EdgeInsets.symmetric(horizontal: 16.sp),
-        padding: EdgeInsets.symmetric(vertical: AppDimens.height_12),
-        backgroundColor: AppColors.blue900,
         onPressed: () => _buttonSaveEng(context),
-        child: Text(
-          'Thêm môn học',
+        outlinedBorder: RoundedRectangleBorder(
+            side: BorderSide.none,
+            borderRadius: BorderRadius.circular(AppDimens.space_20)
+        ),
+        backgroundColor: AppColors.blue900,
+        width: double.infinity,
+        margin: EdgeInsets.symmetric(horizontal: 10.sp),
+        padding: EdgeInsets.symmetric(vertical: AppDimens.height_14),
+        child:Text(
+          'Lưu',
           style: ThemeText.bodySemibold.copyWith(
             color: AppColors.bianca,
-            fontSize: 18.sp,
+            fontSize: AppDimens.space_18,
           ),
         ),
       ),
