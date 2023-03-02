@@ -166,6 +166,7 @@ class NavigatorAddSubject extends GetView<ScoreController> {
             ),
             child: Center(
               child: TextField(
+                textAlign: TextAlign.center,
                 inputFormatters: <TextInputFormatter>[
                   FilteringTextInputFormatter.allow(RegExp(r'^\d+\.?\d*'))
                 ],

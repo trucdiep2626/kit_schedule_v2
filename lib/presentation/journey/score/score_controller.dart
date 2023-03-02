@@ -101,9 +101,11 @@ class ScoreController extends GetxController with MixinController {
 
   Future<void> addScoreEng(
       String? name, String? id, String? numberOfCredits) async {
-    if (!checkValidateFirstComponentScore() ||
-        !checkValidateExamScore() ||
-        !checkValidateSecondComponentScore()) {
+    if (!checkValidateFirstComponentScore()) {
+      return;
+    } else if (!checkValidateSecondComponentScore()) {
+      return;
+    } else if (!checkValidateExamScore()) {
       return;
     }
     int n = 0;
