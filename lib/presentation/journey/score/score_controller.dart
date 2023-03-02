@@ -65,16 +65,8 @@ class ScoreController extends GetxController with MixinController {
       }
       if (!isNullEmpty(result)) {
         for (int index = 0; index < result!.scores!.length; index++) {
-          if (result.scores![index].subject!.id!.contains("ATQGTC1") ||
-              result.scores![index].subject!.id!.contains("ATQGTC2") ||
-              result.scores![index].subject!.id!.contains("ATQGTC3") ||
-              result.scores![index].subject!.id!.contains("ATQGTC4") ||
-              result.scores![index].subject!.id!.contains("ATQGTC5")) {
-            continue;
-          } else {
-            if (scoreUseCase.isDuplicate(result, index)) {
-              scoreUseCase.insertSubjectFromAPI(result, index);
-            }
+          if (scoreUseCase.isDuplicate(result, index)) {
+            scoreUseCase.insertSubjectFromAPI(result, index);
           }
         }
       }

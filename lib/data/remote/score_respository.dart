@@ -72,7 +72,12 @@ class ScoreRepository {
   }
 
   bool compareToName(int i, String name) {
-    if (hiveConfig.hiveScoresCell.values.elementAt(i).name?.toLowerCase().compareTo(name.toLowerCase())==0) return true;
+    if (hiveConfig.hiveScoresCell.values
+            .elementAt(i)
+            .name
+            ?.toLowerCase()
+            .compareTo(name.toLowerCase()) ==
+        0) return true;
     return false;
   }
 
@@ -229,9 +234,15 @@ class ScoreRepository {
     double totalCredits = 0;
 
     for (int i = 0; i < hiveConfig.hiveScoresCell.length; i++) {
-      hiveConfig.hiveScoresCell.getAt(i)!.numberOfCredits != null
-          ? totalCredits += hiveConfig.hiveScoresCell.getAt(i)!.numberOfCredits!
-          : 0;
+      if (getID(i) == "ATQGTC1" ||
+          getID(i) == "ATQGTC2" ||
+          getID(i) == "ATQGTC3" ||
+          getID(i) == "ATQGTC4" ||
+          getID(i) == "ATQGTC5") {
+        continue;
+      } else {
+        totalCredits += hiveConfig.hiveScoresCell.getAt(i)!.numberOfCredits!;
+      }
     }
     return totalCredits;
   }
@@ -239,11 +250,17 @@ class ScoreRepository {
   double calSumScoresCell() {
     double sumSCoresCell = 0;
     for (int i = 0; i < hiveConfig.hiveScoresCell.length; i++) {
-      hiveConfig.hiveScoresCell.getAt(i)!.alphabetScore != null
-          ? sumSCoresCell += (calScorePointSystem4(
-                  hiveConfig.hiveScoresCell.getAt(i)!.alphabetScore) *
-              hiveConfig.hiveScoresCell.getAt(i)!.numberOfCredits!)
-          : 0;
+      if (getID(i) == "ATQGTC1" ||
+          getID(i) == "ATQGTC2" ||
+          getID(i) == "ATQGTC3" ||
+          getID(i) == "ATQGTC4" ||
+          getID(i) == "ATQGTC5") {
+        continue;
+      } else {
+        sumSCoresCell += (calScorePointSystem4(
+                hiveConfig.hiveScoresCell.getAt(i)!.alphabetScore) *
+            hiveConfig.hiveScoresCell.getAt(i)!.numberOfCredits!);
+      }
     }
     return sumSCoresCell;
   }
