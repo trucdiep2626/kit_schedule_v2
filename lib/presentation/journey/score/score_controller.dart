@@ -12,6 +12,9 @@ import 'package:kit_schedule_v2/domain/usecases/score_usecase.dart';
 import 'package:kit_schedule_v2/presentation/controllers/mixin/export.dart';
 import 'package:kit_schedule_v2/presentation/journey/main/main_controller.dart';
 import 'package:kit_schedule_v2/presentation/widgets/snack_bar/app_snack_bar.dart';
+import 'package:kit_schedule_v2/presentation/widgets/text_input_dialog.dart';
+
+import 'components/navigator_add_subject.dart';
 
 class ScoreController extends GetxController with MixinController {
   final MainController mainController = Get.find<MainController>();
@@ -29,7 +32,6 @@ class ScoreController extends GetxController with MixinController {
           message: 'Không có kết nối Internet', type: SnackBarType.error);
       return;
     }
-
     rxLoadedType.value = LoadedType.start;
     await getScores(isAdd);
     rxLoadedType.value = LoadedType.finish;
@@ -63,7 +65,7 @@ class ScoreController extends GetxController with MixinController {
               result.scores![index].subject!.id!.contains("ATQGTC3") ||
               result.scores![index].subject!.id!.contains("ATQGTC4") ||
               result.scores![index].subject!.id!.contains("ATQGTC5")) {
-            index++;
+            continue;
           } else {
             if (scoreUseCase.isDuplicate(result, index)) {
               scoreUseCase.insertSubjectFromAPI(result, index);
@@ -73,6 +75,14 @@ class ScoreController extends GetxController with MixinController {
       }
       if (isAdd) {
         scoreUseCase.insertScoreIntoHive(rxStudentScores, scoreUseCase);
+      }
+
+      if (isExist("ATCBNN1") && isExist("LTCBNN2") && isExist("ATCBNN6")) {
+        Future.delayed(const Duration(seconds: 1), () async {
+          showTopSnackBar(context,
+              message: "Số môn học trong bảng điểm đã đủ",
+              type: SnackBarType.warning);
+        });
       }
     } catch (e) {
       showTopSnackBar(
@@ -97,69 +107,106 @@ class ScoreController extends GetxController with MixinController {
 
   Future<void> addScoreEng(
       String? name, String? id, String? numberOfCredits) async {
-    int n = 0;
-    for (int i = 0; i < scoreUseCase.getLengthHiveScoresCell(); i++) {
-      if (scoreUseCase.compareToName(i, name!)) {
-        n++;
-      }
-    }
-    if (n == 0) {
-      try {
-        scoreUseCase.insertScoreEng(
-          HiveScoresCell(
-            alphabetScore: scoreUseCase.calAlphabetScore(
-                examScore: examScore.text,
-                firstComponentScore: firstComponentScore.text,
-                secondComponentScore: secondComponentScore.text),
-            avgScore: scoreUseCase
-                .calAvgScore(
-                    examScore: examScore.text,
-                    firstComponentScore: firstComponentScore.text,
-                    secondComponentScore: secondComponentScore.text)!
-                .toStringAsFixed(1),
-            examScore: examScore.text.trim(),
-            firstComponentScore: firstComponentScore.text.trim(),
-            id: id,
-            name: name,
-            numberOfCredits: int.parse(numberOfCredits!),
-            secondComponentScore: secondComponentScore.text.trim(),
-          ),
-        );
-        showTopSnackBar(context,
-            message: 'Thêm môn học thành công', type: SnackBarType.done);
-        firstComponentScore.clear();
-        secondComponentScore.clear();
-        examScore.clear();
-        Get.close(2);
-        await onRefresh(false);
-      } catch (e) {
-        showTopSnackBar(context,
-            message:
-                'Các trường phải được điền chính xác và không được bỏ trống',
-            type: SnackBarType.error);
-      }
-    }
-    if (n != 0) {
-      try {
-        showTopSnackBar(context,
-            message: 'Môn học đã tồn tại', type: SnackBarType.error);
-      } catch (e) {
-        showTopSnackBar(context,
-            message: 'Các trường phải điền chính xác và không được bỏ trống',
-            type: SnackBarType.error);
-      }
+    try {
+      scoreUseCase.insertScoreEng(
+        HiveScoresCell(
+          alphabetScore: scoreUseCase.calAlphabetScore(
+              examScore: examScore.text,
+              firstComponentScore: firstComponentScore.text,
+              secondComponentScore: secondComponentScore.text),
+          avgScore: scoreUseCase
+              .calAvgScore(
+                  examScore: examScore.text,
+                  firstComponentScore: firstComponentScore.text,
+                  secondComponentScore: secondComponentScore.text)!
+              .toStringAsFixed(1),
+          examScore: examScore.text.trim(),
+          firstComponentScore: firstComponentScore.text.trim(),
+          id: id,
+          name: name,
+          numberOfCredits: int.parse(numberOfCredits!),
+          secondComponentScore: secondComponentScore.text.trim(),
+        ),
+      );
+      showTopSnackBar(context,
+          message: 'Thêm môn học thành công', type: SnackBarType.done);
+      Get.close(2);
+      await onRefresh(false);
+    } catch (e) {
+      showTopSnackBar(context,
+          message: 'Các trường phải được điền chính xác và không được bỏ trống',
+          type: SnackBarType.error);
     }
   }
 
-  Function(int?) onSelected(int index) {
+  Function() onPressedAddSubject(
+      {required String name,
+      required String id,
+      required String numberOfCredits}) {
+    return () {
+      if (!isExist(id)) {
+        return () {
+          Get.to(
+            () => NavigatorAddSubject(
+              id: id,
+              name: name,
+              numberOfCredits: numberOfCredits,
+            ),
+          );
+        };
+      }
+    };
+  }
+
+  bool isExist(String name) {
+    int n = 0;
+    for (int i = 0; i < scoreUseCase.getLengthHiveScoresCell(); i++) {
+      if (scoreUseCase.compareToName(i, name)) {
+        n++;
+      }
+    }
+    if (n != 0) {
+      return true;
+    }
+    return false;
+  }
+
+  Function(int?) onSelectedAddSubject() {
     return (value) {
       if (value == 1) {
-        delSubject(index);
+        displayTextInputDialog(
+          compareIdEnd1: !isExist('Tiếng anh 1'),
+          compareIdEnd2: !isExist('Tiếng anh 2'),
+          compareIdEnd3: !isExist('Tiếng anh 3'),
+          Get.context!,
+          onPressedEng1: onPressedAddSubject(
+            name: "Tiếng Anh 1",
+            id: 'ATCBNN1',
+            numberOfCredits: '3',
+          )(),
+          onPressedEng2: onPressedAddSubject(
+              name: "Tiếng Anh 2",
+              id: 'LTCBNN2', // Mã môn không đồng nhất giữa các năm!!!
+              numberOfCredits: '3')(),
+          onPressedEng3: onPressedAddSubject(
+            name: "Tiếng Anh 3",
+            id: 'ATCBNN6',
+            numberOfCredits: '4',
+          )(),
+        );
+      }
+    };
+  }
+
+  Function(int?) onSelectedDelSubject(int index) {
+    return (value) {
+      if (value == 1) {
         showTopSnackBar(
-          context,
+          Get.context!,
           message: 'Xóa môn học thành công',
           type: SnackBarType.done,
         );
+        delSubject(index);
       }
     };
   }

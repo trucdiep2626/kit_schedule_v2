@@ -1,17 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:kit_schedule_v2/common/common_export.dart';
-import 'package:kit_schedule_v2/common/config/database/hive_config.dart';
 import 'package:kit_schedule_v2/domain/models/score_model.dart';
 import 'package:kit_schedule_v2/presentation/journey/score/components/gpa_chart_widget.dart';
 import 'package:kit_schedule_v2/presentation/journey/score/score_controller.dart';
 import 'package:kit_schedule_v2/presentation/theme/export.dart';
 import 'package:kit_schedule_v2/presentation/widgets/app_expansion_panel_list.dart';
-import 'package:kit_schedule_v2/presentation/widgets/app_loading_widget.dart';
-import 'package:kit_schedule_v2/presentation/widgets/app_touchable.dart';
-
+import 'package:kit_schedule_v2/presentation/widgets/export.dart';
 import 'components/popup_menu_add_subject.dart';
-import 'components/popup_menu_del_subject.dart';
 
 class ScorePage extends GetView<ScoreController> {
   const ScorePage({Key? key}) : super(key: key);
@@ -95,7 +91,18 @@ class ScorePage extends GetView<ScoreController> {
             size: AppDimens.space_24,
           ),
         ),
-        const PopUpMenuAddSubject(),
+        if (!controller.isExist("Tiếng anh 1") ||
+            !controller.isExist("Tiếng anh 2") ||
+            !controller.isExist("Tiếng anh 3")) ...[
+          PopUpMenuSubject(
+            icon: const Icon(
+              Icons.info_outline_rounded,
+              color: AppColors.blue900,
+            ),
+            title: 'Thêm môn học',
+            onSelected: controller.onSelectedAddSubject(),
+          ),
+        ],
       ],
       flexibleSpace: FlexibleSpaceBar(
         collapseMode: CollapseMode.parallax,
@@ -112,6 +119,9 @@ class ScorePage extends GetView<ScoreController> {
                 score: controller.rxStudentScores.value?.avgScore != null
                     ? double.parse(controller.rxStudentScores.value!.avgScore!
                         .toStringAsFixed(2))
+                    // ? (controller.rxStudentScores.value!.avgScore! * 100)
+                    //         .truncateToDouble() /
+                    //     100
                     : 0,
               ),
             ),
@@ -159,8 +169,11 @@ class ScorePage extends GetView<ScoreController> {
                   width: AppDimens.width_40,
                   child: Align(
                     alignment: Alignment.centerLeft,
-                    child: PopUpMenuDelSubject(
-                        index: index, onSelected: controller.onSelected(index)),
+                    child: PopUpMenuSubject(
+                      onSelected: controller.onSelectedDelSubject(index),
+                      title: "Xóa môn học",
+                      icon: const Icon(Icons.more_vert),
+                    ),
                   ),
                 )
               ],
