@@ -13,7 +13,6 @@ class LoginPage extends GetView<LoginController> {
   @override
   Widget build(BuildContext context) {
     controller.context = context;
-
     return Scaffold(
         backgroundColor: AppColors.bianca,
         appBar: AppBarWidget(),
@@ -40,11 +39,13 @@ class LoginPage extends GetView<LoginController> {
                 SizedBox(height: 65.sp),
                 Form(
                     key: controller.textFormKey,
+                    autovalidateMode: AutovalidateMode.always,
                     child: Column(
                       children: [
                         TextFieldWidget(
                           validate: (value) {
-                            if (value!.isEmpty) {
+                            if (value!.isEmpty &&
+                                controller.isFocusPassword.value) {
                               return "Tên đăng nhập không được bỏ trống";
                             }
                             return null;
@@ -53,39 +54,55 @@ class LoginPage extends GetView<LoginController> {
                           controller: controller.accountController,
                           textStyle: ThemeText.bodyRegular.blue900,
                           colorBoder: AppColors.blue900,
+                          onSubmitted: (account) {
+                            if (controller.textFormKey.currentState!
+                                .validate()) {
+                              controller.accountController.text = account;
+                              // isFocus = true;
+                              controller.passwordFocusNode.requestFocus();
+                            }
+                          },
+                          focusNode: controller.accountFocusNode,
+                          inputAction: TextInputAction.next,
                         ),
                         SizedBox(
                           height: 15.h,
                         ),
-                        Obx(() => TextFieldWidget(
-                              validate: (value) {
-                                if (value!.isEmpty) {
-                                  return "Mật khẩu không được bỏ trống";
-                                }
-                                return null;
-                              },
-                              colorBoder: AppColors.blue900,
-                              labelText: "Mật khẩu",
-                              controller: controller.passwordController,
-                              textStyle: ThemeText.bodyRegular.blue900,
-                              obscureText: !controller.isShow.value,
-                              seffixIcon: IconButton(
-                                onPressed: controller.rxLoginLoadedType.value ==
-                                        LoadedType.start
-                                    ? () {}
-                                    : () => controller.onPressedShowPassword(),
-                                icon: Icon(
-                                  !controller.isShow.value
-                                      ? Icons.visibility
-                                      : Icons.visibility_off,
-                                  color: AppColors.blue900,
-                                ),
+                        Obx(
+                          () => TextFieldWidget(
+                            validate: (value) {
+                              if (value!.isEmpty &&
+                                  controller.isFocusPassword.value) {
+                                return "Mật khẩu không được bỏ trống";
+                              }
+                              return null;
+                            },
+                            colorBoder: AppColors.blue900,
+                            labelText: "Mật khẩu",
+                            controller: controller.passwordController,
+                            textStyle: ThemeText.bodyRegular.blue900,
+                            obscureText: !controller.isShow.value,
+                            focusNode: controller.passwordFocusNode,
+                            inputAction: TextInputAction.done,
+                            seffixIcon: IconButton(
+                              onPressed: controller.rxLoginLoadedType.value ==
+                                      LoadedType.start
+                                  ? () {}
+                                  : () => controller.onPressedShowPassword(),
+                              icon: Icon(
+                                !controller.isShow.value
+                                    ? Icons.visibility
+                                    : Icons.visibility_off,
+                                color: AppColors.blue900,
                               ),
-                              onSubmitted: (pass) {
-                                controller.passwordController.text = pass;
-                                _setOnClickLoginButton(context);
-                              },
-                            )),
+                            ),
+                            onSubmitted: (pass) {
+                              controller.passwordController.text = pass;
+
+                              _setOnClickLoginButton(context);
+                            },
+                          ),
+                        ),
                       ],
                     )),
                 SizedBox(
@@ -147,7 +164,8 @@ class LoginPage extends GetView<LoginController> {
   }
 
   Future _setOnClickLoginButton(BuildContext context) async {
-    FocusScope.of(context).requestFocus(FocusNode());
+    controller.isFocusPassword.value = true;
+
     if (controller.textFormKey.currentState!.validate()) {
       await controller.onPressedLogin();
     }
