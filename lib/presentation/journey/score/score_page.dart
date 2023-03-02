@@ -58,7 +58,14 @@ class ScorePage extends GetView<ScoreController> {
                         size: AppDimens.space_24,
                       ),
                     ),
-                    const PopUpMenuAddSubject(),
+                    PopUpMenuSubject(
+                      onSelected: controller.onSelectedAddSubject(),
+                      title: "Thêm môn học",
+                      icon: const Icon(
+                        Icons.info_outline_rounded,
+                        color: AppColors.blue900,
+                      ),
+                    ),
                     SizedBox(
                       width: AppDimens.width_12,
                     ),
@@ -181,8 +188,11 @@ class ScorePage extends GetView<ScoreController> {
                   width: AppDimens.width_40,
                   child: Align(
                     alignment: Alignment.center,
-                    child: PopUpMenuDelSubject(
-                        index: index, onSelected: controller.onSelected(index)),
+                    child: PopUpMenuSubject(
+                      onSelected: controller.onSelectedDelSubject(index),
+                      title: "Xóa môn học",
+                      icon: Icon(Icons.more_vert),
+                    ),
                   ),
                 )
               ],
