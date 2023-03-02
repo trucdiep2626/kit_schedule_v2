@@ -67,5 +67,4 @@ class AppDimens {
   static double width_16 = 16.w;
   static double width_56 = 56.w;
   static double width_40 = 40.w;
-
 }

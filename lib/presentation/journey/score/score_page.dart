@@ -11,7 +11,6 @@ import 'package:kit_schedule_v2/presentation/widgets/export.dart';
 import 'package:kit_schedule_v2/presentation/widgets/snack_bar/flash.dart';
 
 import 'components/popup_menu_add_subject.dart';
-import 'components/popup_menu_del_subject.dart';
 
 class ScorePage extends GetView<ScoreController> {
   const ScorePage({Key? key}) : super(key: key);
@@ -136,6 +135,9 @@ class ScorePage extends GetView<ScoreController> {
                 score: controller.rxStudentScores.value?.avgScore != null
                     ? double.parse(controller.rxStudentScores.value!.avgScore!
                         .toStringAsFixed(2))
+                    // ? (controller.rxStudentScores.value!.avgScore! * 100)
+                    //         .truncateToDouble() /
+                    //     100
                     : 0,
               ),
             ),
