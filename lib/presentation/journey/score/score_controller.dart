@@ -20,12 +20,17 @@ class ScoreController extends GetxController with MixinController {
   final MainController mainController = Get.find<MainController>();
   final SchoolUseCase schoolUseCase;
   final ScoreUseCase scoreUseCase;
+  late final GlobalKey<RefreshIndicatorState> refreshKey;
+
   Rx<StudentScores?> rxStudentScores = (null as StudentScores?).obs;
   RxList<bool> rxExpandedList = <bool>[].obs;
+
   ScoreController(this.schoolUseCase, this.scoreUseCase);
+
   TextEditingController firstComponentScore = TextEditingController();
   TextEditingController secondComponentScore = TextEditingController();
   TextEditingController examScore = TextEditingController();
+
   Future<void> onRefresh(bool isAdd) async {
     if (!await NetworkState.isConnected) {
       showTopSnackBar(context,
@@ -90,6 +95,7 @@ class ScoreController extends GetxController with MixinController {
         message: 'Đã có lỗi xảy ra. Vui lòng thử lại',
         type: SnackBarType.error,
       );
+      rethrow;
     }
     rxLoadedType.value = LoadedType.finish;
   }
@@ -211,6 +217,13 @@ class ScoreController extends GetxController with MixinController {
     };
   }
 
+  void onPressRefresh() async {
+    refreshKey.currentState?.show();
+    await onRefresh(true);
+    showTopSnackBar(context,
+        message: "Cập nhật điểm thành công", type: SnackBarType.done);
+  }
+
   Function() onTapBackScorePage() {
     return () {
       firstComponentScore.clear();
@@ -224,6 +237,12 @@ class ScoreController extends GetxController with MixinController {
   Future<void> onReady() async {
     super.onReady();
     onRefresh(true);
+  }
+
+  @override
+  void onInit() {
+    super.onInit();
+    refreshKey = GlobalKey<RefreshIndicatorState>();
   }
 
   void setExpandedCell(int index, bool expanded) {

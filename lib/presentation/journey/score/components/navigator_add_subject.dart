@@ -11,6 +11,7 @@ class NavigatorAddSubject extends GetView<ScoreController> {
   final String name;
   final String id;
   final String numberOfCredits;
+
   const NavigatorAddSubject(
       {required this.id,
       required this.name,
@@ -21,110 +22,118 @@ class NavigatorAddSubject extends GetView<ScoreController> {
   Widget build(BuildContext context) {
     controller.context = context;
     return Scaffold(
-      resizeToAvoidBottomInset: false,
-      backgroundColor: AppColors.backgroundColor,
       body: Padding(
-        padding: EdgeInsets.only(
-          left: 16.sp,
-          right: 16.sp,
-          top: Get.mediaQuery.padding.top,
-        ),
-        child: Column(
-          children: [
-            Row(
-              children: [
-                GestureDetector(
-                  onTap: controller.onTapBackScorePage(),
-                  child: const Icon(
-                    Icons.arrow_back,
-                    color: AppColors.blue800,
-                    size: 30,
-                  ),
+        padding: EdgeInsets.symmetric(horizontal: 10.sp),
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              Container(
+                margin: EdgeInsets.only(
+                  top: 40.sp,
+                  bottom: 40.sp,
                 ),
-                Padding(
-                    padding: EdgeInsets.only(left: 10.sp),
-                    child: Text("Thêm môn học",
-                        style: ThemeText.bodySemibold.s18)),
-              ],
-            ),
-            SingleChildScrollView(
-              child: Column(
-                children: [
-                  Container(
-                    margin: EdgeInsets.only(top: Get.mediaQuery.padding.top),
-                    child: Row(
-                      children: [
-                        Expanded(
-                          flex: 2,
-                          child: Container(
-                            margin: EdgeInsets.only(right: 10.sp),
-                            child: nameContainer(name, "Tên môn học"),
-                          ),
-                        ),
-                        Expanded(
-                          flex: 1,
-                          child: Container(
-                            margin: EdgeInsets.only(left: 10.sp),
-                            child: nameContainer(numberOfCredits, "Số tín chỉ"),
-                          ),
-                        ),
-                      ],
+                child: Row(
+                  children: [
+                    IconButton(
+                      onPressed: () {
+                        Get.back();
+                      },
+                      icon: const Icon(
+                        Icons.arrow_back,
+                        color: AppColors.blue800,
+                        size: 30,
+                      ),
                     ),
-                  ),
-                  Container(
-                    margin: EdgeInsets.only(top: Get.mediaQuery.padding.top),
-                    child: Row(
-                      children: [
-                        Expanded(
-                          child: Container(
-                            margin: EdgeInsets.only(right: 10.sp),
-                            child: textField(
-                              controller: controller.firstComponentScore,
-                              hintText: "Điểm TP1",
-                            ),
-                          ),
-                        ),
-                        Expanded(
-                          child: Container(
-                            margin: EdgeInsets.only(left: 10.sp),
-                            child: textField(
-                              controller: controller.secondComponentScore,
-                              hintText: "Điểm TP2",
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  Container(
-                    margin: EdgeInsets.only(top: Get.mediaQuery.padding.top),
-                    child: textField(
-                      controller: controller.examScore,
-                      hintText: "Điểm thi",
-                    ),
-                  ),
-                ],
+                    Text("Thêm môn học", style: ThemeText.bodySemibold.s18),
+                  ],
+                ),
               ),
-            ),
-          ],
+              Container(
+                margin: EdgeInsets.only(
+                  bottom: 40.sp,
+                ),
+                child: Row(
+                  children: [
+                    Expanded(
+                      flex: 2,
+                      child: Container(
+                        margin: EdgeInsets.only(right: 10.sp),
+                        child: nameContainer(name, "Tên môn học"),
+                      ),
+                    ),
+                    Expanded(
+                      flex: 1,
+                      child: Container(
+                        margin: EdgeInsets.only(left: 10.sp),
+                        child: nameContainer(numberOfCredits, "Số tín chỉ"),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Container(
+                margin: EdgeInsets.only(
+                  bottom: 50.sp,
+                ),
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: Container(
+                        margin: EdgeInsets.only(right: 10.sp),
+                        child: textField(
+                          controller: controller.firstComponentScore,
+                          hintText: "Điểm TP1",
+                        ),
+                      ),
+                    ),
+                    Expanded(
+                      child: Container(
+                        margin: EdgeInsets.only(left: 10.sp),
+                        child: textField(
+                          controller: controller.secondComponentScore,
+                          hintText: "Điểm TP2",
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Container(
+                margin: EdgeInsets.only(
+                  bottom: 50.sp,
+                ),
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: textField(
+                        controller: controller.examScore,
+                        hintText: "Điểm thi",
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
         ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: AppTouchable(
-        outlinedBorder: RoundedRectangleBorder(
-          side: BorderSide.none,
-          borderRadius: BorderRadius.circular(AppDimens.space_20),
-        ),
-        width: double.infinity,
-        margin: EdgeInsets.symmetric(horizontal: 16.sp),
-        padding: EdgeInsets.symmetric(vertical: AppDimens.height_12),
-        backgroundColor: AppColors.blue900,
         onPressed: () => _buttonSaveEng(context),
-        child: Text(
-          'Thêm môn học',
+        outlinedBorder: RoundedRectangleBorder(
+            side: BorderSide.none,
+            borderRadius: BorderRadius.circular(AppDimens.space_20)
+        ),
+        backgroundColor: AppColors.blue900,
+        width: double.infinity,
+        margin: EdgeInsets.symmetric(horizontal: 10.sp),
+        padding: EdgeInsets.symmetric(vertical: AppDimens.height_14),
+        child:Text(
+          'Lưu',
           style: ThemeText.bodySemibold.copyWith(
             color: AppColors.bianca,
-            fontSize: 18.sp,
+            fontSize: AppDimens.space_18,
           ),
         ),
       ),
