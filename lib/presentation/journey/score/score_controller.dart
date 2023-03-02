@@ -102,7 +102,8 @@ class ScoreController extends GetxController with MixinController {
     }
     rxLoadedType.value = LoadedType.finish;
   }
-void resetData() {
+
+  void resetData() {
     firstComponentScore.clear();
     secondComponentScore.clear();
     examScore.clear();
@@ -149,6 +150,7 @@ void resetData() {
     }
     return true;
   }
+
   Future<void> insertScoreIntoHive(bool isAdd) async {
     if (isAdd) {
       scoreUseCase.insertScoreIntoHive(rxStudentScores, scoreUseCase);
@@ -159,7 +161,8 @@ void resetData() {
     await scoreUseCase.delSubject(index);
     await onRefresh(false);
   }
-bool isExist(String name) {
+
+  bool isExist(String name) {
     int n = 0;
     for (int i = 0; i < scoreUseCase.getLengthHiveScoresCell(); i++) {
       if (scoreUseCase.compareToName(i, name)) {
@@ -171,6 +174,7 @@ bool isExist(String name) {
     }
     return false;
   }
+
   Future<void> addScoreEng(
       String? name, String? id, String? numberOfCredits) async {
     if (!checkValidateFirstComponentScore()) {
@@ -180,42 +184,39 @@ bool isExist(String name) {
     } else if (!checkValidateExamScore()) {
       return;
     }
-  
-      try {
-        scoreUseCase.insertScoreEng(
-          HiveScoresCell(
-            alphabetScore: scoreUseCase.calAlphabetScore(
-                examScore: examScore.text,
-                firstComponentScore: firstComponentScore.text,
-                secondComponentScore: secondComponentScore.text),
-            avgScore: scoreUseCase
-                .calAvgScore(
-                    examScore: examScore.text,
-                    firstComponentScore: firstComponentScore.text,
-                    secondComponentScore: secondComponentScore.text)!
-                .toStringAsFixed(1),
-            examScore: examScore.text.trim(),
-            firstComponentScore: firstComponentScore.text.trim(),
-            id: id,
-            name: name,
-            numberOfCredits: int.parse(numberOfCredits!),
-            secondComponentScore: secondComponentScore.text.trim(),
-          ),
-        );
-        showTopSnackBar(context,
-            message: 'Thêm môn học thành công', type: SnackBarType.done);
-        resetData();
-        Get.close(2);
-        await onRefresh(false);
-      } catch (e) {
-        showTopSnackBar(context,
-            message:
-                'Các trường phải được điền chính xác và không được bỏ trống',
-            type: SnackBarType.error);
-      }
-    
-    
-   
+
+    try {
+      scoreUseCase.insertScoreEng(
+        HiveScoresCell(
+          alphabetScore: scoreUseCase.calAlphabetScore(
+              examScore: examScore.text,
+              firstComponentScore: firstComponentScore.text,
+              secondComponentScore: secondComponentScore.text),
+          avgScore: scoreUseCase
+              .calAvgScore(
+                  examScore: examScore.text,
+                  firstComponentScore: firstComponentScore.text,
+                  secondComponentScore: secondComponentScore.text)!
+              .toStringAsFixed(1),
+          examScore: examScore.text.trim(),
+          firstComponentScore: firstComponentScore.text.trim(),
+          id: id,
+          name: name,
+          numberOfCredits: int.parse(numberOfCredits!),
+          secondComponentScore: secondComponentScore.text.trim(),
+        ),
+      );
+      showTopSnackBar(context,
+          message: 'Thêm môn học thành công', type: SnackBarType.done);
+      resetData();
+      Get.close(2);
+      await onRefresh(false);
+    } catch (e) {
+      showTopSnackBar(context,
+          message: 'Các trường phải được điền chính xác và không được bỏ trống',
+          type: SnackBarType.error);
+    }
+  }
 
   Function() onPressedAddSubject(
       {required String name,
@@ -235,8 +236,6 @@ bool isExist(String name) {
       }
     };
   }
-
-  
 
   Function(int?) onSelectedAddSubject() {
     return (value) {
@@ -264,8 +263,6 @@ bool isExist(String name) {
       }
     };
   }
-
-  
 
   Function(int?) onSelectedDelSubject(int index) {
     return (value) {
@@ -310,5 +307,4 @@ bool isExist(String name) {
     rxExpandedList.fillRange(0, rxExpandedList.length, false);
     rxExpandedList[index] = !expanded;
   }
-}
 }
