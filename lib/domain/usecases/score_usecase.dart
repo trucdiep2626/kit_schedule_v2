@@ -20,6 +20,11 @@ class ScoreUseCase {
     return scoreRepository.insertSubjectFromAPI(studentScores, index);
   }
 
+  Future<void> saveDataIntoList(
+      Rx<StudentScores?> rxStudentScores) {
+    return scoreRepository.saveDataIntoList(rxStudentScores);
+  }
+
   bool isDuplicate(StudentScores studentScores, int index) {
     return scoreRepository.isDuplicate(studentScores, index);
   }
