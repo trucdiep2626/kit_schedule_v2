@@ -138,13 +138,9 @@ class ScorePage extends GetView<ScoreController> {
                       ? AppDimens.height_180
                       : AppDimens.height_192,
               child: GPACharWidget(
-                score: controller.rxStudentScores.value?.avgScore != null
-                    ? double.parse(controller.rxStudentScores.value!.avgScore!
-                        .toStringAsFixed(2))
-                    // ? (controller.rxStudentScores.value!.avgScore! * 100)
-                    //         .truncateToDouble() /
-                    //     100
-                    : 0,
+                score: double.parse(controller.rxStudentScores.value?.avgScore
+                        ?.toStringAsFixed(2) ??
+                    '0'),
               ),
             ),
           ],
@@ -196,7 +192,7 @@ class ScorePage extends GetView<ScoreController> {
                       onSelected: controller.onSelectedDelSubject(index),
                     ),
                   ),
-                )
+                ),
               ],
               if (!isExpanded) ...[
                 SizedBox(
