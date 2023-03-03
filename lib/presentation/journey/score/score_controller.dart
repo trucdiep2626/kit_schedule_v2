@@ -61,7 +61,7 @@ class ScoreController extends GetxController with MixinController {
       }
       if (!isNullEmpty(result)) {
         rxExpandedList.value = List.generate(
-            rxStudentScores.value!.scores!.length, (index) => false);
+            rxStudentScores.value?.scores?.length ?? 0, (index) => false);
       }
       if (!isNullEmpty(result)) {
         for (int index = 0; index < result!.scores!.length; index++) {
@@ -116,13 +116,13 @@ class ScoreController extends GetxController with MixinController {
               .calAvgScore(
                   examScore: examScore.text,
                   firstComponentScore: firstComponentScore.text,
-                  secondComponentScore: secondComponentScore.text)!
-              .toStringAsFixed(1),
+                  secondComponentScore: secondComponentScore.text)
+              ?.toStringAsFixed(1),
           examScore: examScore.text.trim(),
           firstComponentScore: firstComponentScore.text.trim(),
           id: id,
           name: name,
-          numberOfCredits: int.parse(numberOfCredits!),
+          numberOfCredits: int.parse(numberOfCredits ?? '0'),
           secondComponentScore: secondComponentScore.text.trim(),
         ),
       );

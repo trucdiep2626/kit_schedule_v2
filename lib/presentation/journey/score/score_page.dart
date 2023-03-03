@@ -8,7 +8,6 @@ import 'package:kit_schedule_v2/presentation/theme/export.dart';
 import 'package:kit_schedule_v2/presentation/widgets/app_expansion_panel_list.dart';
 import 'package:kit_schedule_v2/presentation/widgets/app_touchable.dart';
 import 'package:kit_schedule_v2/presentation/widgets/export.dart';
-import 'package:kit_schedule_v2/presentation/widgets/snack_bar/flash.dart';
 
 import 'components/popup_menu_add_subject.dart';
 
@@ -139,13 +138,9 @@ class ScorePage extends GetView<ScoreController> {
                       ? AppDimens.height_180
                       : AppDimens.height_192,
               child: GPACharWidget(
-                score: controller.rxStudentScores.value?.avgScore != null
-                    ? double.parse(controller.rxStudentScores.value!.avgScore!
-                        .toStringAsFixed(2))
-                    // ? (controller.rxStudentScores.value!.avgScore! * 100)
-                    //         .truncateToDouble() /
-                    //     100
-                    : 0,
+                score: double.parse(controller.rxStudentScores.value?.avgScore
+                        ?.toStringAsFixed(2) ??
+                    '0'),
               ),
             ),
           ],
@@ -191,7 +186,7 @@ class ScorePage extends GetView<ScoreController> {
                     child: PopUpMenuSubject(
                       onSelected: controller.onSelectedDelSubject(index),
                       title: "Xóa môn học",
-                      icon: Icon(
+                      icon: const Icon(
                         Icons.more_vert,
                         color: AppColors.blue900,
                       ),
