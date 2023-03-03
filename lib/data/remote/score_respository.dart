@@ -1,7 +1,8 @@
-import 'dart:developer';
+import 'dart:math';
 
 import 'package:get/get_rx/src/rx_types/rx_types.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:kit_schedule_v2/common/common_export.dart';
 import 'package:kit_schedule_v2/common/config/database/hive_config.dart';
 import 'package:kit_schedule_v2/common/config/network/api_client.dart';
 import 'package:kit_schedule_v2/common/config/network/api_endpoints.dart';
@@ -39,34 +40,25 @@ class ScoreRepository {
         : '';
   }
 
-  Future<void> insertScoreIntoHive(
-      Rx<StudentScores?> rxStudentScores, ScoreUseCase scoreUseCase) async {
+  Future<void> insertScoreIntoHive(Rx<StudentScores?> rxStudentScores) async {
     if (rxStudentScores.value != null) {
-      rxStudentScores.value?.scores?.length =
-          scoreUseCase.getLengthHiveScoresCell();
-      rxStudentScores.value?.avgScore = scoreUseCase.avgScoresCell();
-      rxStudentScores.value?.passedSubjects = scoreUseCase.calPassedSubjects();
-      rxStudentScores.value?.failedSubjects =
-          scoreUseCase.calNoPassedSubjects();
-      for (int index = 0;
-          index < scoreUseCase.getLengthHiveScoresCell();
-          index++) {
-        rxStudentScores.value?.scores?[index].subject?.name =
-            scoreUseCase.getName(index);
-        rxStudentScores.value?.scores?[index].subject?.id =
-            scoreUseCase.getID(index);
+      rxStudentScores.value?.scores?.length = getLengthHiveScoresCell();
+      rxStudentScores.value?.avgScore = avgScoresCell();
+      rxStudentScores.value?.passedSubjects = calPassedSubjects();
+      rxStudentScores.value?.failedSubjects = calNoPassedSubjects();
+      for (int index = 0; index < getLengthHiveScoresCell(); index++) {
+        rxStudentScores.value?.scores?[index].subject?.name = getName(index);
+        rxStudentScores.value?.scores?[index].subject?.id = getID(index);
         rxStudentScores.value?.scores?[index].subject?.numberOfCredits =
-            scoreUseCase.getNumberOfCredits(index);
+            getNumberOfCredits(index);
         rxStudentScores.value?.scores?[index].firstComponentScore =
-            scoreUseCase.getFirstComponentScore(index);
+            getFirstComponentScore(index);
         rxStudentScores.value?.scores?[index].secondComponentScore =
-            scoreUseCase.getSecondComponentScore(index);
-        rxStudentScores.value?.scores?[index].examScore =
-            scoreUseCase.getExamScore(index);
-        rxStudentScores.value?.scores?[index].avgScore =
-            scoreUseCase.getAvgScore(index);
+            getSecondComponentScore(index);
+        rxStudentScores.value?.scores?[index].examScore = getExamScore(index);
+        rxStudentScores.value?.scores?[index].avgScore = getAvgScore(index);
         rxStudentScores.value?.scores?[index].alphabetScore =
-            scoreUseCase.getAlphabetScore(index);
+            getAlphabetScore(index);
       }
     }
   }
@@ -159,42 +151,31 @@ class ScoreRepository {
   }
 
   int calNoPassedSubjects() {
-    int calNoPassedSubjects = 0;
-    for (int i = 0; i < hiveConfig.hiveScoresCell.length; i++) {
-      if ((double.parse(hiveConfig.hiveScoresCell.getAt(i)?.examScore ?? '0') >=
-                  0 &&
-              double.parse(
-                      hiveConfig.hiveScoresCell.getAt(i)?.examScore ?? '0') <
-                  4) ||
-          (double.parse(hiveConfig.hiveScoresCell.getAt(i)?.avgScore ?? '0') >=
-                  0 &&
-              double.parse(
-                      hiveConfig.hiveScoresCell.getAt(i)?.avgScore ?? '0') <
-                  4)) {
-        calNoPassedSubjects = calNoPassedSubjects + 1;
-      } else {
-        continue;
-      }
-    }
-    return calNoPassedSubjects;
+    return hiveConfig.hiveScoresCell.length - calPassedSubjects();
   }
 
   int calPassedSubjects() {
     int calPassedSubjects = 0;
+
     for (int i = 0; i < hiveConfig.hiveScoresCell.length; i++) {
-      if ((double.parse(hiveConfig.hiveScoresCell.getAt(i)?.examScore ?? '0') >=
-                  4 &&
-              double.parse(
-                      hiveConfig.hiveScoresCell.getAt(i)?.examScore ?? '0') <=
-                  10) &&
-          (double.parse(hiveConfig.hiveScoresCell.getAt(i)?.avgScore ?? '0') >=
-                  4 &&
-              double.parse(
-                      hiveConfig.hiveScoresCell.getAt(i)?.avgScore ?? '0') <=
-                  10)) {
-        calPassedSubjects = calPassedSubjects + 1;
-      } else {
-        continue;
+      if (isNumeric(hiveConfig.hiveScoresCell.getAt(i)?.examScore!) &&
+          isNumeric(hiveConfig.hiveScoresCell.getAt(i)?.avgScore!)) {
+        if ((double.parse(
+                        hiveConfig.hiveScoresCell.getAt(i)?.examScore ?? "0") >=
+                    4 &&
+                double.parse(
+                        hiveConfig.hiveScoresCell.getAt(i)?.examScore ?? '0') <=
+                    10) &&
+            (double.parse(
+                        hiveConfig.hiveScoresCell.getAt(i)?.avgScore ?? '0') >=
+                    4 &&
+                double.parse(
+                        hiveConfig.hiveScoresCell.getAt(i)?.avgScore ?? '0') <=
+                    10)) {
+          calPassedSubjects = calPassedSubjects + 1;
+        } else {
+          continue;
+        }
       }
     }
     return calPassedSubjects;

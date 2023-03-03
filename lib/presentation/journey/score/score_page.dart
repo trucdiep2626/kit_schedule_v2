@@ -184,12 +184,12 @@ class ScorePage extends GetView<ScoreController> {
                   child: Align(
                     alignment: Alignment.center,
                     child: PopUpMenuSubject(
-                      onSelected: controller.onSelectedDelSubject(index),
-                      title: "Xóa môn học",
+                      title: "Xoá môn học",
                       icon: const Icon(
                         Icons.more_vert,
                         color: AppColors.blue900,
                       ),
+                      onSelected: controller.onSelectedDelSubject(index),
                     ),
                   ),
                 ),
@@ -202,11 +202,17 @@ class ScorePage extends GetView<ScoreController> {
                   width: AppDimens.width_40,
                   child: Align(
                     alignment: Alignment.centerLeft,
-                    child: Text(
-                      isExpanded ? "" : score.alphabetScore ?? "?",
-                      textAlign: TextAlign.start,
-                      style: ThemeText.heading2,
-                    ),
+                    child: isNullEmpty(score.alphabetScore)
+                        ? Icon(
+                            Icons.warning_amber_rounded,
+                            color: AppColors.red,
+                            size: AppDimens.space_20,
+                          )
+                        : Text(
+                            isExpanded ? "" : score.alphabetScore ?? "?",
+                            textAlign: TextAlign.start,
+                            style: ThemeText.heading2,
+                          ),
                   ),
                 )
               ]
@@ -378,7 +384,7 @@ class ScorePage extends GetView<ScoreController> {
                     Text(
                       "Số môn hoàn thành",
                       style: ThemeText.bodyRegular
-                          .copyWith(color: AppColors.black),
+                          .copyWith(color: AppColors.blue900),
                     ),
                     SizedBox(
                       height: AppDimens.space_8,
@@ -408,7 +414,7 @@ class ScorePage extends GetView<ScoreController> {
                     Text(
                       "Số môn chưa đạt",
                       style: ThemeText.bodyRegular
-                          .copyWith(color: AppColors.black),
+                          .copyWith(color: AppColors.blue900),
                     ),
                     SizedBox(
                       height: AppDimens.height_8,
@@ -418,7 +424,7 @@ class ScorePage extends GetView<ScoreController> {
                         Icon(
                           Icons.warning_amber_rounded,
                           size: AppDimens.height_24,
-                          color: AppColors.blue800,
+                          color: AppColors.red,
                         ),
                         SizedBox(
                           width: AppDimens.space_4,
@@ -427,7 +433,8 @@ class ScorePage extends GetView<ScoreController> {
                           (controller.rxStudentScores.value?.failedSubjects ??
                                   0)
                               .toString(),
-                          style: ThemeText.heading2.s24,
+                          style: ThemeText.heading2.s24
+                              .copyWith(color: AppColors.red),
                         ),
                       ],
                     )
