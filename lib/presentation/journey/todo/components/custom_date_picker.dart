@@ -491,13 +491,20 @@ class CustomCupertinoDatePicker extends StatefulWidget {
 
     assert(longestText != '', 'column type is not appropriate');
 
-    return TextPainter.computeMaxIntrinsicWidth(
+    final TextPainter painter = TextPainter(
       text: TextSpan(
         style: _themeTextStyle(context),
         text: longestText,
       ),
       textDirection: Directionality.of(context),
     );
+
+    // This operation is expensive and should be avoided. It is called here only
+    // because there's no other way to get the information we want without
+    // laying out the text.
+    painter.layout();
+
+    return painter.maxIntrinsicWidth;
   }
 }
 
@@ -1767,7 +1774,7 @@ class _CupertinoTimerPickerState extends State<CupertinoTimerPicker> {
   void dispose() {
     PaintingBinding.instance.systemFonts
         .removeListener(_handleSystemFontsChange);
-    textPainter.dispose();
+
     super.dispose();
   }
 
