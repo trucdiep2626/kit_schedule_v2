@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:get/get_rx/src/rx_types/rx_types.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:kit_schedule_v2/common/config/database/hive_config.dart';
@@ -163,7 +165,7 @@ class ScoreRepository {
                   0 &&
               double.parse(
                       hiveConfig.hiveScoresCell.getAt(i)?.examScore ?? '0') <
-                  4) &&
+                  4) ||
           (double.parse(hiveConfig.hiveScoresCell.getAt(i)?.avgScore ?? '0') >=
                   0 &&
               double.parse(
@@ -171,7 +173,7 @@ class ScoreRepository {
                   4)) {
         calNoPassedSubjects = calNoPassedSubjects + 1;
       } else {
-        i++;
+        continue;
       }
     }
     return calNoPassedSubjects;
@@ -192,7 +194,7 @@ class ScoreRepository {
                   10)) {
         calPassedSubjects = calPassedSubjects + 1;
       } else {
-        i++;
+        continue;
       }
     }
     return calPassedSubjects;
