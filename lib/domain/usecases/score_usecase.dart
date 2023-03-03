@@ -24,6 +24,10 @@ class ScoreUseCase {
     return scoreRepository.isDuplicate(studentScores, index);
   }
 
+  bool compareToId(int i, String id) {
+    return scoreRepository.compareToId(i, id);
+  }
+
   bool compareToName(int i, String name) {
     return scoreRepository.compareToName(i, name);
   }
@@ -47,7 +51,6 @@ class ScoreUseCase {
   String? getAlphabetScore(int index) {
     return scoreRepository.getAlphabetScore(index);
   }
-
 
   Future<void> insertScoreIntoHive(
       Rx<StudentScores?> rxStudentScores) {

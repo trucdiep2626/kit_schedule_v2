@@ -1,17 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:kit_schedule_v2/common/common_export.dart';
-import 'package:kit_schedule_v2/common/config/database/hive_config.dart';
 import 'package:kit_schedule_v2/domain/models/score_model.dart';
 import 'package:kit_schedule_v2/presentation/journey/score/components/gpa_chart_widget.dart';
 import 'package:kit_schedule_v2/presentation/journey/score/score_controller.dart';
 import 'package:kit_schedule_v2/presentation/theme/export.dart';
 import 'package:kit_schedule_v2/presentation/widgets/app_expansion_panel_list.dart';
-import 'package:kit_schedule_v2/presentation/widgets/app_loading_widget.dart';
 import 'package:kit_schedule_v2/presentation/widgets/app_touchable.dart';
+import 'package:kit_schedule_v2/presentation/widgets/export.dart';
+import 'package:kit_schedule_v2/presentation/widgets/snack_bar/flash.dart';
 
 import 'components/popup_menu_add_subject.dart';
-import 'components/popup_menu_del_subject.dart';
 
 class ScorePage extends GetView<ScoreController> {
   const ScorePage({Key? key}) : super(key: key);
@@ -23,20 +22,50 @@ class ScorePage extends GetView<ScoreController> {
       backgroundColor: AppColors.backgroundColor,
       body: Obx(
         () {
-          return AnimatedSwitcher(
-            duration: kThemeAnimationDuration,
-            child: controller.rxLoadedType.value == LoadedType.start
-                ? Center(
-                    child: AppLoadingWidget(),
-                  )
-                : CustomScrollView(
-                    slivers: [
-                      _buildHeader(),
-                      _buildSubjectTableHeader(),
-                      if (!isNullEmpty(controller.rxStudentScores))
-                        _buildScoreTableData(),
-                    ],
+          return Stack(
+            children: [
+              RefreshIndicator(
+                key: controller.refreshKey,
+                onRefresh: () => controller.onRefresh(false),
+                edgeOffset: AppDimens.appBarHeight,
+                child: CustomScrollView(
+                  // physics: const ClampingScrollPhysics(),
+                  slivers: [
+                    _buildHeader(),
+                    _buildSubjectTableHeader(),
+                    if (!isNullEmpty(controller.rxStudentScores))
+                      _buildScoreTableData(),
+                  ],
+                ),
+              ),
+              SizedBox(
+                height: AppDimens.appBarHeight,
+                child: AppBar(
+                  backgroundColor: AppColors.backgroundColor,
+                  elevation: 0,
+                  title: Text(
+                    'Điểm của bạn',
+                    style: ThemeText.bodySemibold.s18,
                   ),
+                  actions: [
+                    AppTouchable(
+                      padding:
+                          EdgeInsets.symmetric(horizontal: AppDimens.width_12),
+                      onPressed: controller.onPressRefresh,
+                      child: Icon(
+                        Icons.update,
+                        color: AppColors.blue900,
+                        size: AppDimens.space_24,
+                      ),
+                    ),
+                    const PopUpMenuAddSubject(),
+                    SizedBox(
+                      width: AppDimens.width_12,
+                    ),
+                  ],
+                ),
+              ),
+            ],
           );
         },
       ),
@@ -82,21 +111,13 @@ class ScorePage extends GetView<ScoreController> {
       centerTitle: false,
       backgroundColor: AppColors.backgroundColor,
       pinned: true,
-      floating: false,
-      expandedHeight:
-          Get.height > 800 ? AppDimens.height_220 : AppDimens.height_260,
-      actions: [
-        IconButton(
-          padding: EdgeInsets.zero,
-          onPressed: () async => await controller.onRefresh(true),
-          icon: Icon(
-            Icons.update,
-            color: AppColors.blue900,
-            size: AppDimens.space_24,
-          ),
-        ),
-        const PopUpMenuAddSubject(),
-      ],
+      floating: true,
+      snap: true,
+      expandedHeight: Get.height > 800
+          ? AppDimens.height_236
+          : Get.height > 700
+              ? AppDimens.height_260
+              : AppDimens.height_280,
       flexibleSpace: FlexibleSpaceBar(
         collapseMode: CollapseMode.parallax,
         background: Column(
@@ -106,21 +127,22 @@ class ScorePage extends GetView<ScoreController> {
             ),
             SizedBox(
               height: Get.height > 800
-                  ? AppDimens.height_160
-                  : AppDimens.height_180,
+                  ? AppDimens.height_168
+                  : Get.height > 700
+                      ? AppDimens.height_180
+                      : AppDimens.height_192,
               child: GPACharWidget(
                 score: controller.rxStudentScores.value?.avgScore != null
                     ? double.parse(controller.rxStudentScores.value!.avgScore!
                         .toStringAsFixed(2))
+                    // ? (controller.rxStudentScores.value!.avgScore! * 100)
+                    //         .truncateToDouble() /
+                    //     100
                     : 0,
               ),
             ),
           ],
         ),
-      ),
-      title: Text(
-        'Điểm của bạn',
-        style: ThemeText.bodySemibold.s18,
       ),
     );
   }
@@ -158,7 +180,7 @@ class ScorePage extends GetView<ScoreController> {
                 SizedBox(
                   width: AppDimens.width_40,
                   child: Align(
-                    alignment: Alignment.centerLeft,
+                    alignment: Alignment.center,
                     child: PopUpMenuDelSubject(
                         index: index, onSelected: controller.onSelected(index)),
                   ),
@@ -210,95 +232,100 @@ class ScorePage extends GetView<ScoreController> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               _buildSubjectInfoRow(
-                  "Mã môn học", score.subject?.id ?? 'unknown'),
+                "Mã môn học",
+                score.subject?.id ?? 'unknown',
+              ),
               _buildSubjectInfoRow(
-                "Số tin chỉ",
+                "Số tín chỉ",
                 score.subject?.numberOfCredits?.toString(),
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  Column(
-                    children: [
-                      Text(
-                        "TP 1",
-                        style: ThemeText.description
-                            .copyWith(color: AppColors.blue600),
-                      ),
-                      SizedBox(
-                        height: AppDimens.height_4,
-                      ),
-                      Text(
-                        score.firstComponentScore ?? "?",
-                        style: ThemeText.heading2,
-                      )
-                    ],
-                  ),
-                  Column(
-                    children: [
-                      Text(
-                        "TP 2",
-                        style: ThemeText.description
-                            .copyWith(color: AppColors.blue600),
-                      ),
-                      SizedBox(
-                        height: AppDimens.height_4,
-                      ),
-                      Text(
-                        score.secondComponentScore ?? "?",
-                        style: ThemeText.heading2,
-                      )
-                    ],
-                  ),
-                  Column(
-                    children: [
-                      Text(
-                        "HK",
-                        style: ThemeText.description
-                            .copyWith(color: AppColors.blue600),
-                      ),
-                      SizedBox(
-                        height: AppDimens.height_4,
-                      ),
-                      Text(
-                        score.examScore ?? "?",
-                        style: ThemeText.heading2,
-                      )
-                    ],
-                  ),
-                  Column(
-                    children: [
-                      Text(
-                        "TK",
-                        style: ThemeText.description
-                            .copyWith(color: AppColors.blue600),
-                      ),
-                      SizedBox(
-                        height: AppDimens.height_4,
-                      ),
-                      Text(
-                        score.avgScore ?? "?",
-                        style: ThemeText.heading2,
-                      )
-                    ],
-                  ),
-                  Column(
-                    children: [
-                      Text(
-                        "Đ. chữ",
-                        style: ThemeText.description
-                            .copyWith(color: AppColors.blue600),
-                      ),
-                      SizedBox(
-                        height: AppDimens.height_4,
-                      ),
-                      Text(
-                        score.alphabetScore ?? "?",
-                        style: ThemeText.heading2,
-                      )
-                    ],
-                  ),
-                ],
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: AppDimens.width_8),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Column(
+                      children: [
+                        Text(
+                          "TP 1",
+                          style: ThemeText.description
+                              .copyWith(color: AppColors.blue600),
+                        ),
+                        SizedBox(
+                          height: AppDimens.height_4,
+                        ),
+                        Text(
+                          score.firstComponentScore ?? "?",
+                          style: ThemeText.heading2,
+                        )
+                      ],
+                    ),
+                    Column(
+                      children: [
+                        Text(
+                          "TP 2",
+                          style: ThemeText.description
+                              .copyWith(color: AppColors.blue600),
+                        ),
+                        SizedBox(
+                          height: AppDimens.height_4,
+                        ),
+                        Text(
+                          score.secondComponentScore ?? "?",
+                          style: ThemeText.heading2,
+                        )
+                      ],
+                    ),
+                    Column(
+                      children: [
+                        Text(
+                          "HK",
+                          style: ThemeText.description
+                              .copyWith(color: AppColors.blue600),
+                        ),
+                        SizedBox(
+                          height: AppDimens.height_4,
+                        ),
+                        Text(
+                          score.examScore ?? "?",
+                          style: ThemeText.heading2,
+                        )
+                      ],
+                    ),
+                    Column(
+                      children: [
+                        Text(
+                          "TK",
+                          style: ThemeText.description
+                              .copyWith(color: AppColors.blue600),
+                        ),
+                        SizedBox(
+                          height: AppDimens.height_4,
+                        ),
+                        Text(
+                          score.avgScore ?? "?",
+                          style: ThemeText.heading2,
+                        )
+                      ],
+                    ),
+                    Column(
+                      children: [
+                        Text(
+                          "Đ. chữ",
+                          style: ThemeText.description
+                              .copyWith(color: AppColors.blue600),
+                        ),
+                        SizedBox(
+                          height: AppDimens.height_4,
+                        ),
+                        Text(
+                          score.alphabetScore ?? "?",
+                          style: ThemeText.heading2,
+                        )
+                      ],
+                    ),
+                  ],
+                ),
               ),
             ],
           ),
@@ -309,7 +336,7 @@ class ScorePage extends GetView<ScoreController> {
 
   Widget _buildSubjectInfoRow(String field, String? description) {
     return Padding(
-      padding: EdgeInsets.only(bottom: AppDimens.height_8),
+      padding: EdgeInsets.only(bottom: AppDimens.height_14),
       child: Text.rich(
         TextSpan(
           text: "$field: ",
@@ -329,8 +356,13 @@ class ScorePage extends GetView<ScoreController> {
   SliverAppBar _buildSubjectTableHeader() {
     return SliverAppBar(
       pinned: true,
-      collapsedHeight:
-          Get.height > 800 ? AppDimens.height_68 : AppDimens.height_112,
+      collapsedHeight: Get.height > 850
+          ? 70.h
+          : Get.height > 780
+              ? 94.h
+              : Get.height > 700
+                  ? AppDimens.height_112
+                  : AppDimens.height_122,
       backgroundColor: AppColors.backgroundColor,
       flexibleSpace: Padding(
         padding: EdgeInsets.symmetric(horizontal: AppDimens.space_16),
