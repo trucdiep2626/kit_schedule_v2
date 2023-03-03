@@ -23,19 +23,14 @@ class ScorePage extends GetView<ScoreController> {
         () {
           return Stack(
             children: [
-              RefreshIndicator(
-                key: controller.refreshKey,
-                onRefresh: () => controller.onRefresh(true),
-                edgeOffset: AppDimens.appBarHeight,
-                child: CustomScrollView(
-                  // physics: const ClampingScrollPhysics(),
-                  slivers: [
-                    _buildHeader(),
-                    _buildSubjectTableHeader(),
-                    if (!isNullEmpty(controller.rxStudentScores))
-                      _buildScoreTableData(),
-                  ],
-                ),
+              CustomScrollView(
+                // physics: const ClampingScrollPhysics(),
+                slivers: [
+                  _buildHeader(),
+                  _buildSubjectTableHeader(),
+                  if (!isNullEmpty(controller.rxStudentScores))
+                    _buildScoreTableData(),
+                ],
               ),
               SizedBox(
                 height: AppDimens.appBarHeight,
