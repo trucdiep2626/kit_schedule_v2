@@ -25,7 +25,7 @@ class ScorePage extends GetView<ScoreController> {
             children: [
               RefreshIndicator(
                 key: controller.refreshKey,
-                onRefresh: () => controller.onRefresh(false),
+                onRefresh: () => controller.onRefresh(true),
                 edgeOffset: AppDimens.appBarHeight,
                 child: CustomScrollView(
                   // physics: const ClampingScrollPhysics(),
@@ -120,7 +120,7 @@ class ScorePage extends GetView<ScoreController> {
       floating: true,
       snap: true,
       expandedHeight: Get.height > 800
-          ? AppDimens.height_236
+          ? AppDimens.height_244
           : Get.height > 700
               ? AppDimens.height_260
               : AppDimens.height_280,
@@ -133,7 +133,7 @@ class ScorePage extends GetView<ScoreController> {
             ),
             SizedBox(
               height: Get.height > 800
-                  ? AppDimens.height_168
+                  ? AppDimens.height_176
                   : Get.height > 700
                       ? AppDimens.height_180
                       : AppDimens.height_192,
@@ -377,7 +377,9 @@ class ScorePage extends GetView<ScoreController> {
                   : AppDimens.height_122,
       backgroundColor: AppColors.backgroundColor,
       flexibleSpace: Padding(
-        padding: EdgeInsets.symmetric(horizontal: AppDimens.space_16),
+        padding: EdgeInsets.symmetric(horizontal: AppDimens.space_16).copyWith(
+          top: AppDimens.height_8,
+        ),
         child: Column(
           children: [
             Row(
@@ -450,7 +452,7 @@ class ScorePage extends GetView<ScoreController> {
               padding: EdgeInsets.symmetric(
                 horizontal: AppDimens.space_12,
               ).copyWith(
-                top: AppDimens.space_24,
+                top: AppDimens.height_15,
               ),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
