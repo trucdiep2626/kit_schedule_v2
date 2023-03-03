@@ -54,10 +54,10 @@ class ScoreController extends GetxController with MixinController {
     }
     try {
       final result =
-          await scoreUseCase.getScoresStudents(studentCode: studentCode);
-      rxStudentScores.value = result;
+          await scoreUseCase.getScoresStudents(studentCode: studentCode); //TODO
+      rxStudentScores.value = result; //TODO
       if (!isAdd) {
-        scoreUseCase.insertScoreIntoHive(rxStudentScores, scoreUseCase);
+        scoreUseCase.insertScoreIntoHive(rxStudentScores, scoreUseCase); //TODO
       }
       if (!isNullEmpty(result)) {
         rxExpandedList.value = List.generate(
