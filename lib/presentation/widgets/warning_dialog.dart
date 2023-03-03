@@ -56,7 +56,7 @@ void warningDialog(
               ),
               name == null
                   ? Text(
-                      'Các ghi chú đã tạo sẽ bị mất khi đăng xuất.',
+                      'Các ghi chú đã tạo và điểm được thêm vào sẽ bị mất khi đăng xuất.',
                       style: ThemeText.bodySemibold.copyWith(
                         color: AppColors.black54,
                         fontSize: 14.sp,

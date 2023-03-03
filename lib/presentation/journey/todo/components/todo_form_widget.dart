@@ -1,8 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
+import 'package:kit_schedule_v2/common/utils/app_convert.dart';
 import 'package:kit_schedule_v2/common/utils/date_time_format.dart';
 import 'package:kit_schedule_v2/common/utils/export.dart';
+import 'package:kit_schedule_v2/presentation/journey/todo/components/custom_date_picker.dart';
 import 'package:kit_schedule_v2/presentation/journey/todo/components/set_time_widget.dart';
 import 'package:kit_schedule_v2/presentation/journey/todo/todo_controller.dart';
 import 'package:kit_schedule_v2/presentation/theme/export.dart';
@@ -35,8 +38,7 @@ class TodoFormWidget extends GetView<TodoController> {
           Obx(() => TextFieldWidget(
                 controller: controller.nameController,
                 labelText: 'Tiêu đề',
-                textStyle:
-                    ThemeText.bodyRegular,
+                textStyle: ThemeText.bodyRegular,
                 colorBoder: AppColors.blue800,
                 errorText: controller.validateText.value,
               )),
@@ -73,8 +75,7 @@ class TodoFormWidget extends GetView<TodoController> {
           TextFieldWidget(
             controller: controller.noteController,
             labelText: 'Ghi chú',
-            textStyle:
-                ThemeText.bodyRegular,
+            textStyle: ThemeText.bodyRegular,
             colorBoder: AppColors.blue800,
             maxLines: 5,
           ),
@@ -100,8 +101,7 @@ class TodoFormWidget extends GetView<TodoController> {
                   onTap: () => Navigator.of(context).pop(),
                   child: Text(
                     'OK',
-                    style: ThemeText.bodyRegular
-                    ,
+                    style: ThemeText.bodyRegular,
                   ),
                 ),
               ),
@@ -109,18 +109,17 @@ class TodoFormWidget extends GetView<TodoController> {
               SizedBox(
                 //   color: AppColors.primary,
                 height: 300,
-                child: CupertinoDatePicker(
-                    //   borderRadius: 20,
-                    maximumYear: DateTime.now().year + 10,
-                    minimumYear: DateTime.now().year - 10,
+                child: CustomCupertinoDatePicker(
+                  //   borderRadius: 20,
+                  maximumYear: DateTime.now().year + 10,
+                  minimumYear: DateTime.now().year - 10,
 
-                    /// initialDate: initialDate,
-                    // textColor: AppColors.blue800,
-                    mode: CupertinoDatePickerMode.date,
-                    //  fontFamily: 'MR',
-                    initialDateTime: initialDate,
-                    onDateTimeChanged: (dateTime) =>
-                        controller.onSelectDate(dateTime)),
+                  mode: CupertinoDatePickerMode.date,
+
+                  initialDateTime: initialDate,
+                  onDateTimeChanged: (dateTime) =>
+                      controller.onSelectDate(dateTime),
+                ),
               ),
 
               // Close the modal
@@ -179,7 +178,7 @@ class TodoFormWidget extends GetView<TodoController> {
               SizedBox(
                 //   color: AppColors.primary,
                 height: 300,
-                child: CupertinoDatePicker(
+                child: CustomCupertinoDatePicker(
                   //   borderRadius: 20,
                   maximumYear: DateTime.now().year + 10,
                   minimumYear: DateTime.now().year - 10,
@@ -187,6 +186,7 @@ class TodoFormWidget extends GetView<TodoController> {
                   /// initialDate: initialDate,
                   // textColor: AppColors.blue800,
                   mode: CupertinoDatePickerMode.time,
+                  use24hFormat: true,
                   //  fontFamily: 'MR',
                   initialDateTime: a,
                   onDateTimeChanged: (dateTime) =>

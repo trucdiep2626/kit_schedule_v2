@@ -22,11 +22,13 @@ class AppDimens {
   static double space_36 = 36.sp;
   static double space_48 = 48.sp;
 
+
   /// Height
   static double height_4 = 4.h;
   static double height_8 = 8.h;
   static double height_12 = 12.h;
   static double height_14 = 14.h;
+  static double height_15 = 15.h;
   static double height_16 = 16.h;
   static double height_18 = 18.h;
   static double height_20 = 20.h;
@@ -50,14 +52,18 @@ class AppDimens {
   static double height_122 = 122.h;
   static double height_160 = 160.h;
   static double height_168 = 168.h;
+  static double height_176 = 176.h;
   static double height_180 = 180.h;
   static double height_192 = 192.h;
   static double height_220 = 220.h;
   static double height_236 = 236.h;
   static double height_240 = 240.h;
+  static double height_244 = 244.h;
   static double height_250 = 250.h;
   static double height_260 = 260.h;
   static double height_280 = 280.h;
+
+
 
   /// Width
   static double width_4 = 4.w;
@@ -67,4 +73,7 @@ class AppDimens {
   static double width_16 = 16.w;
   static double width_56 = 56.w;
   static double width_40 = 40.w;
+
+
+
 }
