@@ -11,7 +11,7 @@
         </intent>
     </queries>
    <application
-        android:label="KMA Schedule"
+        android:label="KIT Schedule"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity
