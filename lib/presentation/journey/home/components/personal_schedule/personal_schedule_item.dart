@@ -37,6 +37,7 @@ class PersonalScheduleElementWidget extends StatelessWidget {
                   border: Border(left: ThemeBorder.scheduleElementBorder)),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.center,
                 mainAxisSize: MainAxisSize.min,
                 children: <Widget>[
                   Text(
@@ -46,13 +47,14 @@ class PersonalScheduleElementWidget extends StatelessWidget {
                     overflow: TextOverflow.ellipsis,
                     style: ThemeText.bodySemibold.blue900,
                   ),
-                  Text(
-                    todo.note == null ? '' : todo.note as String,
-                    style: ThemeText.bodyRegular.blue900,
-                    maxLines: 1,
-                    softWrap: false,
-                    overflow: TextOverflow.ellipsis,
-                  ),
+                  if ((todo.note ?? '').isNotEmpty)
+                    Text(
+                      todo.note ?? '',
+                      style: ThemeText.bodyRegular.blue900,
+                      // maxLines: 1,
+                      softWrap: false,
+                      overflow: TextOverflow.ellipsis,
+                    ),
                 ],
               ),
             ),

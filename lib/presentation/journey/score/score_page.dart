@@ -23,19 +23,14 @@ class ScorePage extends GetView<ScoreController> {
         () {
           return Stack(
             children: [
-              RefreshIndicator(
-                key: controller.refreshKey,
-                onRefresh: () => controller.onRefresh(true),
-                edgeOffset: AppDimens.appBarHeight,
-                child: CustomScrollView(
-                  // physics: const ClampingScrollPhysics(),
-                  slivers: [
-                    _buildHeader(),
-                    _buildSubjectTableHeader(),
-                    if (!isNullEmpty(controller.rxStudentScores))
-                      _buildScoreTableData(),
-                  ],
-                ),
+              CustomScrollView(
+                // physics: const ClampingScrollPhysics(),
+                slivers: [
+                  _buildHeader(),
+                  _buildSubjectTableHeader(),
+                  if (!isNullEmpty(controller.rxStudentScores))
+                    _buildScoreTableData(),
+                ],
               ),
               SizedBox(
                 height: AppDimens.appBarHeight,
@@ -138,13 +133,9 @@ class ScorePage extends GetView<ScoreController> {
                       ? AppDimens.height_180
                       : AppDimens.height_192,
               child: GPACharWidget(
-                score: controller.rxStudentScores.value?.avgScore != null
-                    ? double.parse(controller.rxStudentScores.value!.avgScore!
-                        .toStringAsFixed(2))
-                    // ? (controller.rxStudentScores.value!.avgScore! * 100)
-                    //         .truncateToDouble() /
-                    //     100
-                    : 0,
+                score: double.parse(controller.rxStudentScores.value?.avgScore
+                        ?.toStringAsFixed(2) ??
+                    '0'),
               ),
             ),
           ],
@@ -196,7 +187,7 @@ class ScorePage extends GetView<ScoreController> {
                       onSelected: controller.onSelectedDelSubject(index),
                     ),
                   ),
-                )
+                ),
               ],
               if (!isExpanded) ...[
                 SizedBox(

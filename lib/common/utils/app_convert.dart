@@ -96,4 +96,6 @@ class Convert {
     return DateTime.parse(
         '${days[2]}-${days[1]}-${days[0]} ${times[0]}:${times[1]}:00');
   }
+
+  static String capitalize(String s) => s[0].toUpperCase() + s.substring(1);
 }

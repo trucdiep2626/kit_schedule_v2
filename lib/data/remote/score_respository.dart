@@ -24,39 +24,42 @@ class ScoreRepository {
     studentScores.scores != null
         ? await hiveConfig.hiveScoresCell.add(
             HiveScoresCell(
-              alphabetScore: studentScores.scores![index].alphabetScore,
-              examScore: studentScores.scores![index].examScore,
+              alphabetScore: studentScores.scores?[index].alphabetScore,
+              examScore: studentScores.scores?[index].examScore,
               firstComponentScore:
-                  studentScores.scores![index].firstComponentScore,
+                  studentScores.scores?[index].firstComponentScore,
               secondComponentScore:
-                  studentScores.scores![index].secondComponentScore,
-              avgScore: studentScores.scores![index].avgScore,
-              id: studentScores.scores![index].subject!.id,
-              name: studentScores.scores![index].subject!.name,
+                  studentScores.scores?[index].secondComponentScore,
+              avgScore: studentScores.scores?[index].avgScore,
+              id: studentScores.scores?[index].subject?.id,
+              name: studentScores.scores?[index].subject?.name,
               numberOfCredits:
-                  studentScores.scores![index].subject!.numberOfCredits,
+                  studentScores.scores?[index].subject?.numberOfCredits,
             ),
           )
         : '';
   }
 
   Future<void> insertScoreIntoHive(Rx<StudentScores?> rxStudentScores) async {
-    rxStudentScores.value!.avgScore = avgScoresCell();
-    rxStudentScores.value!.passedSubjects = calPassedSubjects();
-    rxStudentScores.value!.failedSubjects = calNoPassedSubjects();
-    for (int index = 0; index < getLengthHiveScoresCell(); index++) {
-      rxStudentScores.value!.scores![index].subject!.name = getName(index);
-      rxStudentScores.value!.scores![index].subject!.id = getID(index);
-      rxStudentScores.value!.scores![index].subject!.numberOfCredits =
-          getNumberOfCredits(index);
-      rxStudentScores.value!.scores![index].firstComponentScore =
-          getFirstComponentScore(index);
-      rxStudentScores.value!.scores![index].secondComponentScore =
-          getSecondComponentScore(index);
-      rxStudentScores.value!.scores![index].examScore = getExamScore(index);
-      rxStudentScores.value!.scores![index].avgScore = getAvgScore(index);
-      rxStudentScores.value!.scores![index].alphabetScore =
-          getAlphabetScore(index);
+    if (rxStudentScores.value != null) {
+      rxStudentScores.value?.scores?.length = getLengthHiveScoresCell();
+      rxStudentScores.value?.avgScore = avgScoresCell();
+      rxStudentScores.value?.passedSubjects = calPassedSubjects();
+      rxStudentScores.value?.failedSubjects = calNoPassedSubjects();
+      for (int index = 0; index < getLengthHiveScoresCell(); index++) {
+        rxStudentScores.value?.scores?[index].subject?.name = getName(index);
+        rxStudentScores.value?.scores?[index].subject?.id = getID(index);
+        rxStudentScores.value?.scores?[index].subject?.numberOfCredits =
+            getNumberOfCredits(index);
+        rxStudentScores.value?.scores?[index].firstComponentScore =
+            getFirstComponentScore(index);
+        rxStudentScores.value?.scores?[index].secondComponentScore =
+            getSecondComponentScore(index);
+        rxStudentScores.value?.scores?[index].examScore = getExamScore(index);
+        rxStudentScores.value?.scores?[index].avgScore = getAvgScore(index);
+        rxStudentScores.value?.scores?[index].alphabetScore =
+            getAlphabetScore(index);
+      }
     }
   }
 
@@ -66,40 +69,45 @@ class ScoreRepository {
   }
 
   bool compareToName(int i, String name) {
-    if (hiveConfig.hiveScoresCell.values.elementAt(i).name?.toLowerCase().compareTo(name.toLowerCase())==0) return true;
+    if (hiveConfig.hiveScoresCell.values
+            .elementAt(i)
+            .name
+            ?.toLowerCase()
+            .compareTo(name.toLowerCase()) ==
+        0) return true;
     return false;
   }
 
   String? getName(int index) {
-    return hiveConfig.hiveScoresCell.getAt(index)!.name;
+    return hiveConfig.hiveScoresCell.getAt(index)?.name;
   }
 
   String? getID(int index) {
-    return hiveConfig.hiveScoresCell.getAt(index)!.id;
+    return hiveConfig.hiveScoresCell.getAt(index)?.id;
   }
 
   String? getAlphabetScore(int index) {
-    return hiveConfig.hiveScoresCell.getAt(index)!.alphabetScore;
+    return hiveConfig.hiveScoresCell.getAt(index)?.alphabetScore;
   }
 
   int? getNumberOfCredits(int index) {
-    return hiveConfig.hiveScoresCell.getAt(index)!.numberOfCredits;
+    return hiveConfig.hiveScoresCell.getAt(index)?.numberOfCredits;
   }
 
   String? getFirstComponentScore(int index) {
-    return hiveConfig.hiveScoresCell.getAt(index)!.firstComponentScore;
+    return hiveConfig.hiveScoresCell.getAt(index)?.firstComponentScore;
   }
 
   String? getSecondComponentScore(int index) {
-    return hiveConfig.hiveScoresCell.getAt(index)!.secondComponentScore;
+    return hiveConfig.hiveScoresCell.getAt(index)?.secondComponentScore;
   }
 
   String? getExamScore(int index) {
-    return hiveConfig.hiveScoresCell.getAt(index)!.examScore;
+    return hiveConfig.hiveScoresCell.getAt(index)?.examScore;
   }
 
   String? getAvgScore(int index) {
-    return hiveConfig.hiveScoresCell.getAt(index)!.avgScore;
+    return hiveConfig.hiveScoresCell.getAt(index)?.avgScore;
   }
 
   Future<void> clearDataScore() async {
@@ -121,7 +129,7 @@ class ScoreRepository {
 
   bool isDuplicate(StudentScores result, int index) {
     if (hiveConfig.hiveScoresCell.values
-        .where((element) => element.id == result.scores![index].subject!.id)
+        .where((element) => element.id == result.scores?[index].subject?.id)
         .isEmpty) {
       return true;
     }
@@ -132,10 +140,10 @@ class ScoreRepository {
       {required String? firstComponentScore,
       required String? secondComponentScore,
       required String? examScore}) {
-    return (double.parse(firstComponentScore!) * 0.7 +
-                double.parse(secondComponentScore!) * 0.3) *
+    return (double.parse(firstComponentScore ?? '0') * 0.7 +
+                double.parse(secondComponentScore ?? '0') * 0.3) *
             0.3 +
-        double.parse(examScore!) * 0.7;
+        double.parse(examScore ?? '0') * 0.7;
   }
 
   double? avgScoresCell() {
@@ -150,18 +158,23 @@ class ScoreRepository {
     int calPassedSubjects = 0;
 
     for (int i = 0; i < hiveConfig.hiveScoresCell.length; i++) {
-      if (isNumeric(hiveConfig.hiveScoresCell.getAt(i)!.examScore!) &&
-          isNumeric(hiveConfig.hiveScoresCell.getAt(i)!.avgScore!)) {
-        if ((double.parse(hiveConfig.hiveScoresCell.getAt(i)!.examScore!) >=
+      if (isNumeric(hiveConfig.hiveScoresCell.getAt(i)?.examScore!) &&
+          isNumeric(hiveConfig.hiveScoresCell.getAt(i)?.avgScore!)) {
+        if ((double.parse(
+                        hiveConfig.hiveScoresCell.getAt(i)?.examScore ?? "0") >=
                     4 &&
-                double.parse(hiveConfig.hiveScoresCell.getAt(i)!.examScore!) <=
+                double.parse(
+                        hiveConfig.hiveScoresCell.getAt(i)?.examScore ?? '0') <=
                     10) &&
-            (double.parse(hiveConfig.hiveScoresCell.getAt(i)!.avgScore!) >= 4 &&
-                double.parse(hiveConfig.hiveScoresCell.getAt(i)!.avgScore!) <=
+            (double.parse(
+                        hiveConfig.hiveScoresCell.getAt(i)?.avgScore ?? '0') >=
+                    4 &&
+                double.parse(
+                        hiveConfig.hiveScoresCell.getAt(i)?.avgScore ?? '0') <=
                     10)) {
           calPassedSubjects = calPassedSubjects + 1;
         } else {
-          i++;
+          continue;
         }
       }
     }
@@ -215,9 +228,16 @@ class ScoreRepository {
     double totalCredits = 0;
 
     for (int i = 0; i < hiveConfig.hiveScoresCell.length; i++) {
-      hiveConfig.hiveScoresCell.getAt(i)!.numberOfCredits != null
-          ? totalCredits += hiveConfig.hiveScoresCell.getAt(i)!.numberOfCredits!
-          : 0;
+      if (getID(i) == "ATQGTC1" ||
+          getID(i) == "ATQGTC2" ||
+          getID(i) == "ATQGTC3" ||
+          getID(i) == "ATQGTC4" ||
+          getID(i) == "ATQGTC5") {
+        continue;
+      } else {
+        totalCredits +=
+            hiveConfig.hiveScoresCell.getAt(i)?.numberOfCredits ?? 0;
+      }
     }
     return totalCredits;
   }
@@ -225,11 +245,19 @@ class ScoreRepository {
   double calSumScoresCell() {
     double sumSCoresCell = 0;
     for (int i = 0; i < hiveConfig.hiveScoresCell.length; i++) {
-      hiveConfig.hiveScoresCell.getAt(i)!.alphabetScore != null
-          ? sumSCoresCell += (calScorePointSystem4(
-                  hiveConfig.hiveScoresCell.getAt(i)!.alphabetScore) *
-              hiveConfig.hiveScoresCell.getAt(i)!.numberOfCredits!)
-          : 0;
+      if (getID(i) == "ATQGTC1" ||
+          getID(i) == "ATQGTC2" ||
+          getID(i) == "ATQGTC3" ||
+          getID(i) == "ATQGTC4" ||
+          getID(i) == "ATQGTC5") {
+        continue;
+      } else {
+        if (hiveConfig.hiveScoresCell.getAt(i) != null) {
+          sumSCoresCell += (calScorePointSystem4(
+                  hiveConfig.hiveScoresCell.getAt(i)?.alphabetScore) *
+              hiveConfig.hiveScoresCell.getAt(i)!.numberOfCredits!);
+        }
+      }
     }
     return sumSCoresCell;
   }
