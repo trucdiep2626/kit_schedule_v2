@@ -16,26 +16,29 @@ class LoginController extends GetxController with MixinController {
   TextEditingController passwordController = TextEditingController();
   FocusNode accountFocusNode = FocusNode();
   FocusNode passwordFocusNode = FocusNode();
-  Rx<LoadedType> rxLoginLoadedType = LoadedType.finish.obs;
-  RxBool isShow = false.obs;
-  RxBool isFocusPassword = false.obs;
+  RxBool isShowingPassword = false.obs;
+  RxBool isPasswordFocused = false.obs;
 
   SchoolUseCase schoolUseCase;
   SharePreferencesConstants sharePreferencesConstants;
 
   void onPressedShowPassword() {
-    isShow.value = !isShow.value;
+    isShowingPassword.value = !isShowingPassword.value;
     debugPrint('hehehhe');
   }
 
   Future<void> onPressedLogin() async {
+    if (!textFormKey.currentState!.validate()) {
+      return;
+    }
+
     if (!await NetworkState.isConnected) {
       showTopSnackBar(context,
           message: 'Không có kết nối Internet', type: SnackBarType.error);
       return;
     }
 
-    rxLoginLoadedType.value = LoadedType.start;
+    rxLoadedType.value = LoadedType.start;
 
     if (accountController.text.trim().isEmpty ||
         passwordController.text.trim().isEmpty) {
@@ -71,12 +74,6 @@ class LoginController extends GetxController with MixinController {
           type: SnackBarType.error);
     }
     accountFocusNode.requestFocus();
-    rxLoginLoadedType.value = LoadedType.finish;
-  }
-
-  @override
-  void onReady() {
-    super.onReady();
-    rxLoadedType.value = LoadedType.start;
+    rxLoadedType.value = LoadedType.finish;
   }
 }
