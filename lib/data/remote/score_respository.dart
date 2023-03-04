@@ -40,13 +40,13 @@ class ScoreRepository {
         : '';
   }
 
-  Future<void> saveDataIntoList(Rx<StudentScores?> rxStudentScores) async {
-    rxStudentScores.value?.scores?.length = hiveConfig.hiveScoresCell.length;
-    rxStudentScores.value?.avgScore = avgScoresCell();
-    rxStudentScores.value?.passedSubjects = calPassedSubjects();
-    rxStudentScores.value?.failedSubjects = calNoPassedSubjects();
+  Future<void> saveDataIntoList(StudentScores? studentScores) async {
+    studentScores?.scores?.length = hiveConfig.hiveScoresCell.length;
+    studentScores?.avgScore = avgScoresCell();
+    studentScores?.passedSubjects = calPassedSubjects();
+    studentScores?.failedSubjects = calNoPassedSubjects();
     for (int index = 0; index < getLengthHiveScoresCell(); index++) {
-      rxStudentScores.value?.scores?.add(Score(
+      studentScores?.scores?.add(Score(
         alphabetScore: hiveConfig.hiveScoresCell.getAt(index)!.alphabetScore,
         avgScore: hiveConfig.hiveScoresCell.getAt(index)!.avgScore,
         examScore: hiveConfig.hiveScoresCell.getAt(index)!.examScore,
@@ -65,32 +65,28 @@ class ScoreRepository {
   }
 
   Future<void> insertScoreIntoHive(
-      Rx<StudentScores?> rxStudentScores, ScoreUseCase scoreUseCase) async {
-    if (rxStudentScores.value != null) {
-      rxStudentScores.value?.scores?.length =
-          scoreUseCase.getLengthHiveScoresCell();
-      rxStudentScores.value?.avgScore = scoreUseCase.avgScoresCell();
-      rxStudentScores.value?.passedSubjects = scoreUseCase.calPassedSubjects();
-      rxStudentScores.value?.failedSubjects =
-          scoreUseCase.calNoPassedSubjects();
+      StudentScores? studentScores, ScoreUseCase scoreUseCase) async {
+    if (studentScores != null) {
+      studentScores.scores?.length = scoreUseCase.getLengthHiveScoresCell();
+      studentScores.avgScore = scoreUseCase.avgScoresCell();
+      studentScores.passedSubjects = scoreUseCase.calPassedSubjects();
+      studentScores.failedSubjects = scoreUseCase.calNoPassedSubjects();
       for (int index = 0;
           index < scoreUseCase.getLengthHiveScoresCell();
           index++) {
-        rxStudentScores.value?.scores?[index].subject?.name =
+        studentScores.scores?[index].subject?.name =
             scoreUseCase.getName(index);
-        rxStudentScores.value?.scores?[index].subject?.id =
-            scoreUseCase.getID(index);
-        rxStudentScores.value?.scores?[index].subject?.numberOfCredits =
+        studentScores.scores?[index].subject?.id = scoreUseCase.getID(index);
+        studentScores.scores?[index].subject?.numberOfCredits =
             scoreUseCase.getNumberOfCredits(index);
-        rxStudentScores.value?.scores?[index].firstComponentScore =
+        studentScores.scores?[index].firstComponentScore =
             scoreUseCase.getFirstComponentScore(index);
-        rxStudentScores.value?.scores?[index].secondComponentScore =
+        studentScores.scores?[index].secondComponentScore =
             scoreUseCase.getSecondComponentScore(index);
-        rxStudentScores.value?.scores?[index].examScore =
+        studentScores.scores?[index].examScore =
             scoreUseCase.getExamScore(index);
-        rxStudentScores.value?.scores?[index].avgScore =
-            scoreUseCase.getAvgScore(index);
-        rxStudentScores.value?.scores?[index].alphabetScore =
+        studentScores.scores?[index].avgScore = scoreUseCase.getAvgScore(index);
+        studentScores.scores?[index].alphabetScore =
             scoreUseCase.getAlphabetScore(index);
       }
     }

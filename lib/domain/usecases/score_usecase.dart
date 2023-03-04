@@ -20,9 +20,8 @@ class ScoreUseCase {
     return scoreRepository.insertSubjectFromAPI(studentScores, index);
   }
 
-  Future<void> saveDataIntoList(
-      Rx<StudentScores?> rxStudentScores) {
-    return scoreRepository.saveDataIntoList(rxStudentScores);
+  Future<void> saveDataIntoList(StudentScores studentScores) {
+    return scoreRepository.saveDataIntoList(studentScores);
   }
 
   bool isDuplicate(StudentScores studentScores, int index) {
@@ -58,8 +57,8 @@ class ScoreUseCase {
   }
 
   Future<void> insertScoreIntoHive(
-      Rx<StudentScores?> rxStudentScores, ScoreUseCase scoreUseCase) {
-    return scoreRepository.insertScoreIntoHive(rxStudentScores, scoreUseCase);
+      StudentScores? studentScores, ScoreUseCase scoreUseCase) {
+    return scoreRepository.insertScoreIntoHive(studentScores, scoreUseCase);
   }
 
   String? getFirstComponentScore(int index) {
