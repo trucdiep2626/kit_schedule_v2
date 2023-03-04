@@ -64,24 +64,30 @@ class ScoreRepository {
     }
   }
 
-  Future<void> insertScoreIntoHive(StudentScores? studentScores) async {
+  Future<void> insertScoreIntoHive(
+      StudentScores? studentScores, ScoreUseCase scoreUseCase) async {
     if (studentScores != null) {
-      studentScores.scores?.length = getLengthHiveScoresCell();
-      studentScores.avgScore = avgScoresCell();
-      studentScores.passedSubjects = calPassedSubjects();
-      studentScores.failedSubjects = calNoPassedSubjects();
-      for (int index = 0; index < getLengthHiveScoresCell(); index++) {
-        studentScores.scores?[index].subject?.name = getName(index);
-        studentScores.scores?[index].subject?.id = getID(index);
+      studentScores.scores?.length = scoreUseCase.getLengthHiveScoresCell();
+      studentScores.avgScore = scoreUseCase.avgScoresCell();
+      studentScores.passedSubjects = scoreUseCase.calPassedSubjects();
+      studentScores.failedSubjects = scoreUseCase.calNoPassedSubjects();
+      for (int index = 0;
+          index < scoreUseCase.getLengthHiveScoresCell();
+          index++) {
+        studentScores.scores?[index].subject?.name =
+            scoreUseCase.getName(index);
+        studentScores.scores?[index].subject?.id = scoreUseCase.getID(index);
         studentScores.scores?[index].subject?.numberOfCredits =
-            getNumberOfCredits(index);
+            scoreUseCase.getNumberOfCredits(index);
         studentScores.scores?[index].firstComponentScore =
-            getFirstComponentScore(index);
+            scoreUseCase.getFirstComponentScore(index);
         studentScores.scores?[index].secondComponentScore =
-            getSecondComponentScore(index);
-        studentScores.scores?[index].examScore = getExamScore(index);
-        studentScores.scores?[index].avgScore = getAvgScore(index);
-        studentScores.scores?[index].alphabetScore = getAlphabetScore(index);
+            scoreUseCase.getSecondComponentScore(index);
+        studentScores.scores?[index].examScore =
+            scoreUseCase.getExamScore(index);
+        studentScores.scores?[index].avgScore = scoreUseCase.getAvgScore(index);
+        studentScores.scores?[index].alphabetScore =
+            scoreUseCase.getAlphabetScore(index);
       }
     }
   }
