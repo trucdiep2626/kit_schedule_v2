@@ -54,11 +54,11 @@ class ScoreController extends GetxController with MixinController {
     }
     try {
       final result =
-          await scoreUseCase.getScoresStudents(studentCode: studentCode);
-      rxStudentScores.value = result;
+          await scoreUseCase.getScoresStudents(studentCode: studentCode); //TODO
+      rxStudentScores.value = result; //TODO
       if (!isAdd) {
-        scoreUseCase.clearDataScore();
-        scoreUseCase.insertScoreIntoHive(rxStudentScores);
+        scoreUseCase.insertScoreIntoHive(
+            rxStudentScores.value, scoreUseCase); //TODO
       }
       if (!isNullEmpty(result)) {
         rxExpandedList.value = List.generate(
@@ -72,8 +72,7 @@ class ScoreController extends GetxController with MixinController {
         }
       }
       if (isAdd) {
-        scoreUseCase.clearDataScore();
-        scoreUseCase.insertScoreIntoHive(rxStudentScores);
+        scoreUseCase.insertScoreIntoHive(rxStudentScores.value, scoreUseCase);
       }
 
       if (isExist("ATCBNN1") && isExist("LTCBNN2") && isExist("ATCBNN6")) {
@@ -96,7 +95,7 @@ class ScoreController extends GetxController with MixinController {
 
   Future<void> insertScoreIntoHive(bool isAdd) async {
     if (isAdd) {
-      scoreUseCase.insertScoreIntoHive(rxStudentScores);
+      scoreUseCase.insertScoreIntoHive(rxStudentScores.value, scoreUseCase);
     }
   }
 

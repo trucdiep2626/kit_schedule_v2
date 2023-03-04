@@ -52,14 +52,18 @@ class ScorePage extends GetView<ScoreController> {
                         size: AppDimens.space_24,
                       ),
                     ),
-                    PopUpMenuSubject(
-                      onSelected: controller.onSelectedAddSubject(),
-                      title: "Thêm môn học",
-                      icon: const Icon(
-                        Icons.info_outline_rounded,
-                        color: AppColors.blue900,
+                    if (!controller.isExist("Tiếng anh 1") ||
+                        !controller.isExist("Tiếng anh 2") ||
+                        !controller.isExist("Tiếng anh 3")) ...[
+                      PopUpMenuSubject(
+                        onSelected: controller.onSelectedAddSubject(),
+                        title: "Thêm môn học",
+                        icon: const Icon(
+                          Icons.info_outline_rounded,
+                          color: AppColors.blue900,
+                        ),
                       ),
-                    ),
+                    ],
                     SizedBox(
                       width: AppDimens.width_12,
                     ),
@@ -179,12 +183,9 @@ class ScorePage extends GetView<ScoreController> {
                   child: Align(
                     alignment: Alignment.center,
                     child: PopUpMenuSubject(
-                      title: "Xoá môn học",
-                      icon: const Icon(
-                        Icons.more_vert,
-                        color: AppColors.blue900,
-                      ),
                       onSelected: controller.onSelectedDelSubject(index),
+                      title: "Xóa môn học",
+                      icon: Icon(Icons.more_vert),
                     ),
                   ),
                 ),
