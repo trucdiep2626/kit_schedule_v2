@@ -8,7 +8,6 @@ import 'package:kit_schedule_v2/presentation/theme/export.dart';
 import 'package:kit_schedule_v2/presentation/widgets/app_expansion_panel_list.dart';
 import 'package:kit_schedule_v2/presentation/widgets/app_touchable.dart';
 import 'package:kit_schedule_v2/presentation/widgets/export.dart';
-import 'package:kit_schedule_v2/presentation/widgets/snack_bar/flash.dart';
 
 import 'components/popup_menu_add_subject.dart';
 
@@ -24,19 +23,14 @@ class ScorePage extends GetView<ScoreController> {
         () {
           return Stack(
             children: [
-              RefreshIndicator(
-                key: controller.refreshKey,
-                onRefresh: () => controller.onRefresh(false),
-                edgeOffset: AppDimens.appBarHeight,
-                child: CustomScrollView(
-                  // physics: const ClampingScrollPhysics(),
-                  slivers: [
-                    _buildHeader(),
-                    _buildSubjectTableHeader(),
-                    if (!isNullEmpty(controller.rxStudentScores))
-                      _buildScoreTableData(),
-                  ],
-                ),
+              CustomScrollView(
+                // physics: const ClampingScrollPhysics(),
+                slivers: [
+                  _buildHeader(),
+                  _buildSubjectTableHeader(),
+                  if (!isNullEmpty(controller.rxStudentScores))
+                    _buildScoreTableData(),
+                ],
               ),
               SizedBox(
                 height: AppDimens.appBarHeight,
@@ -121,7 +115,7 @@ class ScorePage extends GetView<ScoreController> {
       floating: true,
       snap: true,
       expandedHeight: Get.height > 800
-          ? AppDimens.height_236
+          ? AppDimens.height_244
           : Get.height > 700
               ? AppDimens.height_260
               : AppDimens.height_280,
@@ -134,18 +128,14 @@ class ScorePage extends GetView<ScoreController> {
             ),
             SizedBox(
               height: Get.height > 800
-                  ? AppDimens.height_168
+                  ? AppDimens.height_176
                   : Get.height > 700
                       ? AppDimens.height_180
                       : AppDimens.height_192,
               child: GPACharWidget(
-                score: controller.rxStudentScores.value?.avgScore != null
-                    ? double.parse(controller.rxStudentScores.value!.avgScore!
-                        .toStringAsFixed(2))
-                    // ? (controller.rxStudentScores.value!.avgScore! * 100)
-                    //         .truncateToDouble() /
-                    //     100
-                    : 0,
+                score: double.parse(controller.rxStudentScores.value?.avgScore
+                        ?.toStringAsFixed(2) ??
+                    '0'),
               ),
             ),
           ],
@@ -189,12 +179,15 @@ class ScorePage extends GetView<ScoreController> {
                   child: Align(
                     alignment: Alignment.center,
                     child: PopUpMenuSubject(
+                      title: "Xoá môn học",
+                      icon: const Icon(
+                        Icons.more_vert,
+                        color: AppColors.blue900,
+                      ),
                       onSelected: controller.onSelectedDelSubject(index),
-                      title: "Xóa môn học",
-                      icon: Icon(Icons.more_vert),
                     ),
                   ),
-                )
+                ),
               ],
               if (!isExpanded) ...[
                 SizedBox(
@@ -204,11 +197,17 @@ class ScorePage extends GetView<ScoreController> {
                   width: AppDimens.width_40,
                   child: Align(
                     alignment: Alignment.centerLeft,
-                    child: Text(
-                      isExpanded ? "" : score.alphabetScore ?? "?",
-                      textAlign: TextAlign.start,
-                      style: ThemeText.heading2,
-                    ),
+                    child: isNullEmpty(score.alphabetScore)
+                        ? Icon(
+                            Icons.warning_amber_rounded,
+                            color: AppColors.red,
+                            size: AppDimens.space_20,
+                          )
+                        : Text(
+                            isExpanded ? "" : score.alphabetScore ?? "?",
+                            textAlign: TextAlign.start,
+                            style: ThemeText.heading2,
+                          ),
                   ),
                 )
               ]
@@ -369,7 +368,9 @@ class ScorePage extends GetView<ScoreController> {
                   : AppDimens.height_122,
       backgroundColor: AppColors.backgroundColor,
       flexibleSpace: Padding(
-        padding: EdgeInsets.symmetric(horizontal: AppDimens.space_16),
+        padding: EdgeInsets.symmetric(horizontal: AppDimens.space_16).copyWith(
+          top: AppDimens.height_8,
+        ),
         child: Column(
           children: [
             Row(
@@ -380,7 +381,7 @@ class ScorePage extends GetView<ScoreController> {
                     Text(
                       "Số môn hoàn thành",
                       style: ThemeText.bodyRegular
-                          .copyWith(color: AppColors.black),
+                          .copyWith(color: AppColors.blue900),
                     ),
                     SizedBox(
                       height: AppDimens.space_8,
@@ -410,7 +411,7 @@ class ScorePage extends GetView<ScoreController> {
                     Text(
                       "Số môn chưa đạt",
                       style: ThemeText.bodyRegular
-                          .copyWith(color: AppColors.black),
+                          .copyWith(color: AppColors.blue900),
                     ),
                     SizedBox(
                       height: AppDimens.height_8,
@@ -420,7 +421,7 @@ class ScorePage extends GetView<ScoreController> {
                         Icon(
                           Icons.warning_amber_rounded,
                           size: AppDimens.height_24,
-                          color: AppColors.blue800,
+                          color: AppColors.red,
                         ),
                         SizedBox(
                           width: AppDimens.space_4,
@@ -429,7 +430,8 @@ class ScorePage extends GetView<ScoreController> {
                           (controller.rxStudentScores.value?.failedSubjects ??
                                   0)
                               .toString(),
-                          style: ThemeText.heading2.s24,
+                          style: ThemeText.heading2.s24
+                              .copyWith(color: AppColors.red),
                         ),
                       ],
                     )
@@ -441,7 +443,7 @@ class ScorePage extends GetView<ScoreController> {
               padding: EdgeInsets.symmetric(
                 horizontal: AppDimens.space_12,
               ).copyWith(
-                top: AppDimens.space_24,
+                top: AppDimens.height_15,
               ),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,

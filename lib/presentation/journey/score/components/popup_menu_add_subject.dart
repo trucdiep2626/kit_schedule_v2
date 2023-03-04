@@ -13,18 +13,23 @@ class PopUpMenuSubject extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return PopupMenuButton<int>(
-      itemBuilder: (_) => <PopupMenuItem<int>>[
-        PopupMenuItem(
-          value: 1,
-          child: Text(
-            title,
-            style: ThemeText.bodySemibold.s16,
+    return Theme(
+      data: Theme.of(context).copyWith(
+        cardColor: AppColors.backgroundColor,
+      ),
+      child: PopupMenuButton<int>(
+        itemBuilder: (_) => <PopupMenuItem<int>>[
+          PopupMenuItem(
+            value: 1,
+            child: Text(
+              title,
+              style: ThemeText.bodySemibold.s16,
+            ),
           ),
-        ),
-      ],
-      onSelected: onSelected,
-      child: icon,
+        ],
+        onSelected: onSelected,
+        child: icon,
+      ),
     );
   }
 }
