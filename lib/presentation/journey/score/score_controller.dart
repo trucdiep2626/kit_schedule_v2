@@ -2,6 +2,7 @@ import 'dart:developer';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:form_field_validator/form_field_validator.dart';
 import 'package:get/get.dart';
 import 'package:kit_schedule_v2/common/common_export.dart';
 import 'package:kit_schedule_v2/common/config/network/network_state.dart';
@@ -13,6 +14,7 @@ import 'package:kit_schedule_v2/presentation/controllers/mixin/export.dart';
 import 'package:kit_schedule_v2/presentation/journey/main/main_controller.dart';
 import 'package:kit_schedule_v2/presentation/widgets/snack_bar/app_snack_bar.dart';
 import 'package:kit_schedule_v2/presentation/widgets/text_input_dialog.dart';
+import 'package:multi_validator/multi_validator.dart';
 
 import 'components/navigator_add_subject.dart';
 
@@ -106,41 +108,44 @@ class ScoreController extends GetxController with MixinController {
   }
 
   bool checkValidateFirstComponentScore() {
-    try {
+    if (firstComponentScore.text.trim().isNotEmpty) {
       if (double.parse(firstComponentScore.text.trim()) > 10) {
         validateFirstComponentScore.value = "Vui lòng nhập điểm <=10";
         return false;
       }
-    } catch (e) {
-      showTopSnackBar(context,
-          message: "Vui lòng điền đủ các trường", type: SnackBarType.error);
+    } else {
+      validateFirstComponentScore.value = "Vui lòng điền đủ các trường";
+      return false;
     }
+
     return true;
   }
 
   bool checkValidateSecondComponentScore() {
-    try {
+    if (secondComponentScore.text.trim().isNotEmpty) {
       if (double.parse(secondComponentScore.text.trim()) > 10) {
         validateSecondComponentScore.value = "Vui lòng nhập điểm <=10";
         return false;
       }
-    } catch (e) {
-      showTopSnackBar(context,
-          message: "Vui lòng điền đủ các trường", type: SnackBarType.error);
+    } else {
+      validateSecondComponentScore.value = "Vui lòng điền đủ các trường";
+      return false;
     }
+
     return true;
   }
 
   bool checkValidateExamScore() {
-    try {
+    if (examScore.text.trim().isNotEmpty) {
       if (double.parse(examScore.text.trim()) > 10) {
         validateExamScore.value = "Vui lòng nhập điểm <=10";
         return false;
       }
-    } catch (e) {
-      showTopSnackBar(context,
-          message: "Vui lòng điền đủ các trường", type: SnackBarType.error);
+    } else {
+      validateExamScore.value = "Vui lòng điền đủ các trường";
+      return false;
     }
+
     return true;
   }
 
