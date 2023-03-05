@@ -89,7 +89,7 @@ class ScorePage extends GetView<ScoreController> {
                           ];
                         },
                       ),
-                    ),
+                    ],
                     SizedBox(
                       width: AppDimens.width_12,
                     ),
