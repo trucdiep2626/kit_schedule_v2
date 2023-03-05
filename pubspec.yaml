@@ -76,8 +76,6 @@ dependencies:
   logger: 1.1.0
   syncfusion_flutter_gauges: 20.4.43
   hive_flutter: 1.1.0
-  multi_validator: 1.0.1
-  form_field_validator: ^1.1.0
 
 dev_dependencies:
 #  flutter_test:

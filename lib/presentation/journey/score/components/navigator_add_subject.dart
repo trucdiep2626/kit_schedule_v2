@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:form_field_validator/form_field_validator.dart';
 import 'package:get/get.dart';
 import 'package:flutter/services.dart';
 import 'package:kit_schedule_v2/common/common_export.dart';
@@ -8,7 +7,6 @@ import 'package:kit_schedule_v2/presentation/journey/score/score_controller.dart
 import 'package:kit_schedule_v2/presentation/theme/theme_color.dart';
 import 'package:kit_schedule_v2/presentation/theme/theme_text.dart';
 import 'package:kit_schedule_v2/presentation/widgets/app_touchable.dart';
-import 'package:multi_validator/multi_validator.dart';
 
 class NavigatorAddSubject extends GetView<ScoreController> {
   final String name;
