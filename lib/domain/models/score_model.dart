@@ -1,3 +1,5 @@
+import 'package:kit_schedule_v2/domain/models/hive_score_cell.dart';
+
 class StudentScores {
   double? avgScore;
   String? className;
@@ -107,6 +109,21 @@ class Score {
     data['avgScore'] = avgScore;
     data['alphabetScore'] = alphabetScore;
     return data;
+  }
+
+  factory Score.fromHiveCell(HiveScoresCell hiveScoresCell) {
+    return Score(
+      subject: Subject(
+        name: hiveScoresCell.name,
+        id: hiveScoresCell.id,
+        numberOfCredits: hiveScoresCell.numberOfCredits,
+      ),
+      firstComponentScore: hiveScoresCell.firstComponentScore,
+      secondComponentScore: hiveScoresCell.secondComponentScore,
+      examScore: hiveScoresCell.examScore,
+      avgScore: hiveScoresCell.avgScore,
+      alphabetScore: hiveScoresCell.alphabetScore,
+    );
   }
 }
 

@@ -251,20 +251,7 @@ class ScoreController extends GetxController with MixinController {
         passedSubjects: scoreUseCase.calPassedSubjects(),
         name: mainController.studentInfo.value.displayName,
         id: mainController.studentInfo.value.studentCode,
-        scores: scores.map((cell) {
-          return Score(
-            subject: Subject(
-              name: cell.name,
-              id: cell.id,
-              numberOfCredits: cell.numberOfCredits,
-            ),
-            firstComponentScore: cell.firstComponentScore,
-            secondComponentScore: cell.secondComponentScore,
-            examScore: cell.examScore,
-            avgScore: cell.avgScore,
-            alphabetScore: cell.alphabetScore,
-          );
-        }).toList()
+        scores: scores.map(Score.fromHiveCell).toList()
     );
     rxExpandedList.value = List.generate(scores.length, (index) => false);
   }
