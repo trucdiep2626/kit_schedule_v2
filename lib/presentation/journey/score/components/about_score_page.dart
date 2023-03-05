@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:kit_schedule_v2/gen/assets.gen.dart';
 import 'package:kit_schedule_v2/presentation/theme/export.dart';
-import 'package:kit_schedule_v2/presentation/theme/theme_text.dart';
+import 'package:kit_schedule_v2/presentation/widgets/app_touchable.dart';
 import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
-
 import 'package:kit_schedule_v2/common/constants/app_dimens.dart';
 
 class AboutScorePage extends StatelessWidget {
@@ -13,7 +13,13 @@ class AboutScorePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: const Icon(Icons.arrow_back_rounded),
+        leading: AppTouchable(
+          onPressed: Get.back,
+          child: const Icon(
+            Icons.arrow_back_rounded,
+            color: AppColors.blue900,
+          ),
+        ),
         backgroundColor: AppColors.backgroundColor,
         iconTheme: const IconThemeData(color: AppColors.blue900),
         titleTextStyle: ThemeText.bodySemibold.s18,
