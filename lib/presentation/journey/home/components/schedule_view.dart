@@ -29,10 +29,10 @@ class ScheduleView extends GetView<HomeController> {
   Widget buildPageView() {
     List<Widget> tabs = [
       SchoolScheduleWidget(
-        selectedDate: controller.selectedDate.value,
+        selectedDate: controller.currentDate.value,
       ),
       PersonalScheduleWidget(
-        selectedDate: controller.selectedDate.value,
+        selectedDate: controller.currentDate.value,
       )
     ];
 
