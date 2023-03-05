@@ -107,45 +107,16 @@ class ScoreController extends GetxController with MixinController {
     validateSecondComponentScore.value = '';
   }
 
-  bool checkValidateFirstComponentScore() {
-    if (firstComponentScore.text.trim().isNotEmpty) {
-      if (double.parse(firstComponentScore.text.trim()) > 10) {
-        validateFirstComponentScore.value = "Vui lòng nhập điểm <=10";
+  bool checkValiDateScore({required textValidator, required textController}) {
+    if (textController.trim().isNotEmpty) {
+      if (double.parse(textController.trim()) > 10) {
+        textValidator.value = "Vui lòng nhập điểm <=10";
         return false;
       }
     } else {
-      validateFirstComponentScore.value = "Vui lòng điền đủ các trường";
+      textValidator.value = "Vui lòng điền đủ các trường";
       return false;
     }
-
-    return true;
-  }
-
-  bool checkValidateSecondComponentScore() {
-    if (secondComponentScore.text.trim().isNotEmpty) {
-      if (double.parse(secondComponentScore.text.trim()) > 10) {
-        validateSecondComponentScore.value = "Vui lòng nhập điểm <=10";
-        return false;
-      }
-    } else {
-      validateSecondComponentScore.value = "Vui lòng điền đủ các trường";
-      return false;
-    }
-
-    return true;
-  }
-
-  bool checkValidateExamScore() {
-    if (examScore.text.trim().isNotEmpty) {
-      if (double.parse(examScore.text.trim()) > 10) {
-        validateExamScore.value = "Vui lòng nhập điểm <=10";
-        return false;
-      }
-    } else {
-      validateExamScore.value = "Vui lòng điền đủ các trường";
-      return false;
-    }
-
     return true;
   }
 
@@ -175,11 +146,16 @@ class ScoreController extends GetxController with MixinController {
 
   Future<void> addScoreEng(
       String? name, String? id, String? numberOfCredits) async {
-    if (!checkValidateFirstComponentScore()) {
+    if (!checkValiDateScore(
+        textValidator: validateFirstComponentScore,
+        textController: firstComponentScore.text)) {
       return;
-    } else if (!checkValidateSecondComponentScore()) {
+    } else if (!checkValiDateScore(
+        textValidator: validateSecondComponentScore,
+        textController: secondComponentScore.text)) {
       return;
-    } else if (!checkValidateExamScore()) {
+    } else if (!checkValiDateScore(
+        textValidator: validateExamScore, textController: examScore.text)) {
       return;
     }
 
