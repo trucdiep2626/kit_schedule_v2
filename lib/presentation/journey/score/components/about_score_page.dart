@@ -5,6 +5,7 @@ import 'package:kit_schedule_v2/presentation/theme/export.dart';
 import 'package:kit_schedule_v2/presentation/widgets/app_touchable.dart';
 import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
 import 'package:kit_schedule_v2/common/constants/app_dimens.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 
 class AboutScorePage extends StatelessWidget {
   const AboutScorePage({Key? key}) : super(key: key);
@@ -28,6 +29,10 @@ class AboutScorePage extends StatelessWidget {
       ),
       body: SfPdfViewer.asset(
         Assets.docs.aboutScore,
+        canShowHyperlinkDialog: false,
+        onHyperlinkClicked: (details) {
+          launchUrlString(details.uri);
+        },
       ),
     );
   }
