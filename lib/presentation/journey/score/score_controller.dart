@@ -33,7 +33,7 @@ class ScoreController extends GetxController with MixinController {
   RxString validateSecondComponentScore = ''.obs;
   RxString validateExamScore = ''.obs;
 
-  Future<void> onRefresh(bool isAdd) async {
+  Future<void> refreshRemote(bool isAdd) async {
     if (!await NetworkState.isConnected) {
       showTopSnackBar(context,
           message: 'Không có kết nối Internet', type: SnackBarType.error);
@@ -125,7 +125,7 @@ class ScoreController extends GetxController with MixinController {
 
   Future<void> delSubject(int index) async {
     await scoreUseCase.delSubject(index);
-    await onRefresh(false);
+    await refreshRemote(false);
   }
 
   bool isExist(String name) {
@@ -181,7 +181,7 @@ class ScoreController extends GetxController with MixinController {
           message: 'Thêm môn học thành công', type: SnackBarType.done);
       resetData();
       Get.close(2);
-      await onRefresh(false);
+      await refreshRemote(false);
     } catch (e) {
       showTopSnackBar(context,
           message: 'Các trường phải được điền chính xác và không được bỏ trống',
@@ -250,7 +250,7 @@ class ScoreController extends GetxController with MixinController {
 
   void onPressRefresh() async {
     refreshKey.currentState?.show();
-    await onRefresh(true);
+    await refreshRemote(true);
     showTopSnackBar(context,
         message: "Cập nhật điểm thành công", type: SnackBarType.done);
   }
@@ -265,7 +265,7 @@ class ScoreController extends GetxController with MixinController {
   @override
   Future<void> onReady() async {
     super.onReady();
-    onRefresh(true);
+    scoreUseCase.localDataExist ? _refreshLocal() : refreshRemote(true);
   }
 
   @override
@@ -277,5 +277,18 @@ class ScoreController extends GetxController with MixinController {
   void setExpandedCell(int index, bool expanded) {
     rxExpandedList.fillRange(0, rxExpandedList.length, false);
     rxExpandedList[index] = !expanded;
+  }
+
+  void _refreshLocal() {
+    final scores = scoreUseCase.getHiveScoresCell();
+    rxStudentScores.value = StudentScores(
+        avgScore: scoreUseCase.avgScoresCell(),
+        failedSubjects: scoreUseCase.calNoPassedSubjects(),
+        passedSubjects: scoreUseCase.calPassedSubjects(),
+        name: mainController.studentInfo.value.displayName,
+        id: mainController.studentInfo.value.studentCode,
+        scores: scores.map(Score.fromHiveCell).toList()
+    );
+    rxExpandedList.value = List.generate(scores.length, (index) => false);
   }
 }

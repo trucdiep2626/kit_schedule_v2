@@ -8,6 +8,8 @@ class ScoreUseCase {
   final ScoreRepository scoreRepository;
   ScoreUseCase(this.scoreRepository);
 
+
+
   Future<void> insertScoreEng(HiveScoresCell HiveScoresCell) {
     return scoreRepository.insertScoreEng(HiveScoresCell);
   }
@@ -136,4 +138,6 @@ class ScoreUseCase {
   double calScorePointSystem4(String? alphabetScore) {
     return scoreRepository.calScorePointSystem4(alphabetScore);
   }
+
+  bool get localDataExist => scoreRepository.getHiveScoresCell().isNotEmpty;
 }
