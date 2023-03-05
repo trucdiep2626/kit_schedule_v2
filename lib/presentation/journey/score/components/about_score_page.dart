@@ -13,6 +13,7 @@ class AboutScorePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        leading: const Icon(Icons.arrow_back_rounded),
         backgroundColor: AppColors.backgroundColor,
         iconTheme: const IconThemeData(color: AppColors.blue900),
         titleTextStyle: ThemeText.bodySemibold.s18,
