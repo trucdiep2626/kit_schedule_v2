@@ -518,7 +518,7 @@ class ScorePage extends GetView<ScoreController> {
                 color: AppColors.transparent,
               ),
           SizedBox(
-            width: AppDimens.width_12,
+            width: AppDimens.width_8,
           ),
           Text(
             title,
