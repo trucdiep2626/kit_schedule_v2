@@ -80,9 +80,6 @@ class MainScreen extends GetView<MainController> {
       PersonalPage(),
     ];
     return
-        //   WillPopScope(
-        // onWillPop: () => controller.onWillPop(context),
-        // child:
         Scaffold(
       body: Obx(() => IndexedStack(
             index: controller.rxCurrentNavIndex.value,

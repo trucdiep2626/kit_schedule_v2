@@ -62,7 +62,10 @@ class ScorePage extends GetView<ScoreController> {
                           return [
                             _buildAppBarPopUpItem(
                               title: "Cập nhật điểm",
-                              onTap: controller.onPressRefresh,
+                              onTap: () => Future.delayed(
+                                const Duration(),
+                                controller.onPressRefresh,
+                              ),
                               icon: const Icon(
                                 Icons.refresh_rounded,
                                 color: AppColors.blue900,

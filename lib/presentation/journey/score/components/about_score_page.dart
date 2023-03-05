@@ -3,12 +3,24 @@ import 'package:get/get.dart';
 import 'package:kit_schedule_v2/gen/assets.gen.dart';
 import 'package:kit_schedule_v2/presentation/theme/export.dart';
 import 'package:kit_schedule_v2/presentation/widgets/app_touchable.dart';
-import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
 import 'package:kit_schedule_v2/common/constants/app_dimens.dart';
-import 'package:url_launcher/url_launcher_string.dart';
+import 'package:pdfx/pdfx.dart';
 
-class AboutScorePage extends StatelessWidget {
-  const AboutScorePage({Key? key}) : super(key: key);
+class AboutScorePage extends StatefulWidget {
+  AboutScorePage({Key? key}) : super(key: key);
+
+  @override
+  State<AboutScorePage> createState() => _AboutScorePageState();
+}
+
+class _AboutScorePageState extends State<AboutScorePage> {
+  late PdfControllerPinch controllerPinch;
+
+  @override
+  void initState() {
+    super.initState();
+    controllerPinch = PdfControllerPinch(document: PdfDocument.openAsset(Assets.docs.aboutScore));
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -30,13 +42,10 @@ class AboutScorePage extends StatelessWidget {
         toolbarHeight: AppDimens.appBarHeight,
         title: const Text("Cách tính điểm"),
       ),
-      body: SfPdfViewer.asset(
-        Assets.docs.aboutScore,
-        canShowHyperlinkDialog: false,
-        onHyperlinkClicked: (details) {
-          launchUrlString(details.uri);
-        },
-      ),
+      body: PdfViewPinch(
+        controller: controllerPinch,
+      )
     );
   }
 }
+

@@ -76,7 +76,8 @@ dependencies:
   logger: 1.1.0
   syncfusion_flutter_gauges: 20.4.43
   hive_flutter: 1.1.0
-  syncfusion_flutter_pdfviewer: ^20.4.52
+  pdfx: 2.3.0
+
 
 dev_dependencies:
 #  flutter_test:

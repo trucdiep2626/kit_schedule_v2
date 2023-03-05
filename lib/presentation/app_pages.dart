@@ -50,6 +50,6 @@ List<GetPage> myPages = [
   ),
   GetPage(
     name: AppRoutes.aboutScore,
-    page: () => const AboutScorePage(),
+    page: () => AboutScorePage(),
   )
 ];
