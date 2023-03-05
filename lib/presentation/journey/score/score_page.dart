@@ -24,7 +24,6 @@ class ScorePage extends GetView<ScoreController> {
           return Stack(
             children: [
               CustomScrollView(
-                // physics: const ClampingScrollPhysics(),
                 slivers: [
                   _buildHeader(),
                   _buildSubjectTableHeader(),
@@ -198,16 +197,16 @@ class ScorePage extends GetView<ScoreController> {
                   width: AppDimens.width_40,
                   child: Align(
                     alignment: Alignment.centerLeft,
-                    child: isNullEmpty(score.alphabetScore)
-                        ? Icon(
-                            Icons.warning_amber_rounded,
-                            color: AppColors.red,
-                            size: AppDimens.space_20,
-                          )
-                        : Text(
+                    child: score.isPassed
+                        ? Text(
                             isExpanded ? "" : score.alphabetScore ?? "?",
                             textAlign: TextAlign.start,
                             style: ThemeText.heading2,
+                          )
+                        : Icon(
+                            Icons.warning_amber_rounded,
+                            color: AppColors.red,
+                            size: AppDimens.space_20,
                           ),
                   ),
                 )

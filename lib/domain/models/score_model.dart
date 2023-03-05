@@ -7,14 +7,15 @@ class StudentScores {
   int? passedSubjects;
   List<Score>? scores;
 
-  StudentScores(
-      {this.avgScore,
-      this.className,
-      this.failedSubjects,
-      this.id,
-      this.name,
-      this.passedSubjects,
-      this.scores});
+  StudentScores({
+    this.avgScore,
+    this.className,
+    this.failedSubjects,
+    this.id,
+    this.name,
+    this.passedSubjects,
+    this.scores,
+  });
 
   StudentScores.fromJson(Map<String, dynamic> json) {
     avgScore = json['avgScore'];
@@ -54,19 +55,42 @@ class Score {
   String? avgScore;
   String? alphabetScore;
 
-  Score(
-      {this.subject,
-      this.firstComponentScore,
-      this.secondComponentScore,
-      this.examScore,
-      this.avgScore,
-      this.alphabetScore});
+  Score({
+    this.subject,
+    this.firstComponentScore,
+    this.secondComponentScore,
+    this.examScore,
+    this.avgScore,
+    this.alphabetScore,
+  });
+
+  bool get isPassed {
+    if ((double.tryParse(firstComponentScore ?? "0") ?? 0) < 4.0) {
+      return false;
+    }
+
+    if ((double.tryParse(secondComponentScore ?? "0") ?? 0) < 4.0) {
+      return false;
+    }
+
+    if ((double.tryParse(examScore ?? "0") ?? 0) < 4.0) {
+      return false;
+    }
+
+    if ((double.tryParse(avgScore ?? "0") ?? 0) < 4.0) {
+      return false;
+    }
+
+    return true;
+  }
 
   Score.fromJson(Map<String, dynamic> json) {
     subject =
         json['subject'] != null ? Subject.fromJson(json['subject']) : null;
-    firstComponentScore = (json['firstComponentScore'] as String? ?? "").replaceAll(",", ".");
-    secondComponentScore = (json['secondComponentScore'] as String? ?? "").replaceAll(",", ".");
+    firstComponentScore =
+        (json['firstComponentScore'] as String? ?? "").replaceAll(",", ".");
+    secondComponentScore =
+        (json['secondComponentScore'] as String? ?? "").replaceAll(",", ".");
     examScore = (json['examScore'] as String? ?? "").replaceAll(",", ".");
     avgScore = (json['avgScore'] as String? ?? "").replaceAll(",", ".");
     alphabetScore = json['alphabetScore'];
