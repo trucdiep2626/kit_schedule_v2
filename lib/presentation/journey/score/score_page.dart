@@ -89,7 +89,7 @@ class ScorePage extends GetView<ScoreController> {
                           ];
                         },
                       ),
-                    ),
+                    ],
                     SizedBox(
                       width: AppDimens.width_12,
                     ),
@@ -209,12 +209,9 @@ class ScorePage extends GetView<ScoreController> {
                   child: Align(
                     alignment: Alignment.center,
                     child: PopUpMenuSubject(
-                      title: "Xoá môn học",
-                      icon: const Icon(
-                        Icons.more_vert,
-                        color: AppColors.blue900,
-                      ),
                       onSelected: controller.onSelectedDelSubject(index),
+                      title: "Xóa môn học",
+                      icon: Icon(Icons.more_vert),
                     ),
                   ),
                 ),
