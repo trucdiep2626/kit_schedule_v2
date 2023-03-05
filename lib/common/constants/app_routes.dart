@@ -6,4 +6,6 @@ class AppRoutes {
   static const String personal = '/personal';
   static const String score = '/score';
   static const String setting = '/setting';
+
+  static const String aboutScore = "/about_score";
 }

@@ -9,6 +9,16 @@
 
 import 'package:flutter/widgets.dart';
 
+class $AssetsDocsGen {
+  const $AssetsDocsGen();
+
+  /// File path: assets/docs/about_score.pdf
+  String get aboutScore => 'assets/docs/about_score.pdf';
+
+  /// List of all assets
+  List<String> get values => [aboutScore];
+}
+
 class $AssetsFontsGen {
   const $AssetsFontsGen();
 
@@ -102,6 +112,7 @@ class $AssetsImagesGen {
 class Assets {
   Assets._();
 
+  static const $AssetsDocsGen docs = $AssetsDocsGen();
   static const $AssetsFontsGen fonts = $AssetsFontsGen();
   static const $AssetsIconsGen icons = $AssetsIconsGen();
   static const $AssetsImagesGen images = $AssetsImagesGen();
