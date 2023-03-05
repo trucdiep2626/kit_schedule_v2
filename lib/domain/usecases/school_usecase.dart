@@ -17,11 +17,11 @@ class SchoolUseCase {
         username: username, password: password);
   }
 
-  Future<StudentScores?> getScore({
-    required String studentCode,
-  }) async {
-    return schoolRepository.getScore(studentCode: studentCode);
-  }
+  // Future<StudentScores?> getScore({
+  //   required String studentCode,
+  // }) async {
+  //   return schoolRepository.getScore(studentCode: studentCode);
+  // }
 
   Future<void> insertSchoolScheduleLocal(List<StudentSchedule> data) async {
     await schoolRepository.insertSchoolScheduleLocal(data);

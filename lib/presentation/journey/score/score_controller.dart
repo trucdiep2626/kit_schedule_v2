@@ -1,5 +1,4 @@
 import 'dart:developer';
-import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -30,8 +29,11 @@ class ScoreController extends GetxController with MixinController {
   TextEditingController firstComponentScore = TextEditingController();
   TextEditingController secondComponentScore = TextEditingController();
   TextEditingController examScore = TextEditingController();
+  RxString validateFirstComponentScore = ''.obs;
+  RxString validateSecondComponentScore = ''.obs;
+  RxString validateExamScore = ''.obs;
 
-  Future<void> onRefresh(bool isAdd) async {
+  Future<void> refreshRemote(bool isAdd) async {
     if (!await NetworkState.isConnected) {
       showTopSnackBar(context,
           message: 'Không có kết nối Internet', type: SnackBarType.error);
@@ -93,6 +95,28 @@ class ScoreController extends GetxController with MixinController {
     rxLoadedType.value = LoadedType.finish;
   }
 
+  void resetData() {
+    firstComponentScore.clear();
+    secondComponentScore.clear();
+    examScore.clear();
+    validateExamScore.value = '';
+    validateFirstComponentScore.value = '';
+    validateSecondComponentScore.value = '';
+  }
+
+  bool checkValiDateScore({required textValidator, required textController}) {
+    if (textController.trim().isNotEmpty) {
+      if (double.parse(textController.trim()) > 10) {
+        textValidator.value = "Vui lòng nhập điểm <=10";
+        return false;
+      }
+    } else {
+      textValidator.value = "Vui lòng điền đủ các trường";
+      return false;
+    }
+    return true;
+  }
+
   Future<void> insertScoreIntoHive(bool isAdd) async {
     if (isAdd) {
       scoreUseCase.insertScoreIntoHive(rxStudentScores.value, scoreUseCase);
@@ -101,11 +125,37 @@ class ScoreController extends GetxController with MixinController {
 
   Future<void> delSubject(int index) async {
     await scoreUseCase.delSubject(index);
-    await onRefresh(false);
+    await refreshRemote(false);
+  }
+
+  bool isExist(String name) {
+    int n = 0;
+    for (int i = 0; i < scoreUseCase.getLengthHiveScoresCell(); i++) {
+      if (scoreUseCase.compareToName(i, name)) {
+        n++;
+      }
+    }
+    if (n != 0) {
+      return true;
+    }
+    return false;
   }
 
   Future<void> addScoreEng(
       String? name, String? id, String? numberOfCredits) async {
+    if (!checkValiDateScore(
+        textValidator: validateFirstComponentScore,
+        textController: firstComponentScore.text)) {
+      return;
+    } else if (!checkValiDateScore(
+        textValidator: validateSecondComponentScore,
+        textController: secondComponentScore.text)) {
+      return;
+    } else if (!checkValiDateScore(
+        textValidator: validateExamScore, textController: examScore.text)) {
+      return;
+    }
+
     try {
       scoreUseCase.insertScoreEng(
         HiveScoresCell(
@@ -129,8 +179,9 @@ class ScoreController extends GetxController with MixinController {
       );
       showTopSnackBar(context,
           message: 'Thêm môn học thành công', type: SnackBarType.done);
+      resetData();
       Get.close(2);
-      await onRefresh(false);
+      await refreshRemote(false);
     } catch (e) {
       showTopSnackBar(context,
           message: 'Các trường phải được điền chính xác và không được bỏ trống',
@@ -155,19 +206,6 @@ class ScoreController extends GetxController with MixinController {
         };
       }
     };
-  }
-
-  bool isExist(String name) {
-    int n = 0;
-    for (int i = 0; i < scoreUseCase.getLengthHiveScoresCell(); i++) {
-      if (scoreUseCase.compareToName(i, name)) {
-        n++;
-      }
-    }
-    if (n != 0) {
-      return true;
-    }
-    return false;
   }
 
   Function(int?) onSelectedAddSubject() {
@@ -212,24 +250,22 @@ class ScoreController extends GetxController with MixinController {
 
   void onPressRefresh() async {
     refreshKey.currentState?.show();
-    await onRefresh(true);
+    await refreshRemote(true);
     showTopSnackBar(context,
         message: "Cập nhật điểm thành công", type: SnackBarType.done);
   }
 
   Function() onTapBackScorePage() {
     return () {
-      firstComponentScore.clear();
-      secondComponentScore.clear();
-      examScore.clear();
       Get.back();
+      resetData();
     };
   }
 
   @override
   Future<void> onReady() async {
     super.onReady();
-    onRefresh(true);
+    scoreUseCase.localDataExist ? _refreshLocal() : refreshRemote(true);
   }
 
   @override
@@ -241,5 +277,18 @@ class ScoreController extends GetxController with MixinController {
   void setExpandedCell(int index, bool expanded) {
     rxExpandedList.fillRange(0, rxExpandedList.length, false);
     rxExpandedList[index] = !expanded;
+  }
+
+  void _refreshLocal() {
+    final scores = scoreUseCase.getHiveScoresCell();
+    rxStudentScores.value = StudentScores(
+        avgScore: scoreUseCase.avgScoresCell(),
+        failedSubjects: scoreUseCase.calNoPassedSubjects(),
+        passedSubjects: scoreUseCase.calPassedSubjects(),
+        name: mainController.studentInfo.value.displayName,
+        id: mainController.studentInfo.value.studentCode,
+        scores: scores.map(Score.fromHiveCell).toList()
+    );
+    rxExpandedList.value = List.generate(scores.length, (index) => false);
   }
 }

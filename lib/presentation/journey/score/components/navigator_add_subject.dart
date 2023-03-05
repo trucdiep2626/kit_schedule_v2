@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:flutter/services.dart';
 import 'package:kit_schedule_v2/common/common_export.dart';
@@ -22,91 +23,91 @@ class NavigatorAddSubject extends GetView<ScoreController> {
   Widget build(BuildContext context) {
     controller.context = context;
     return Scaffold(
-      body: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 10.sp),
-        child: SingleChildScrollView(
+      resizeToAvoidBottomInset: false,
+      backgroundColor: AppColors.backgroundColor,
+      body: Obx(
+        () => Padding(
+          padding: EdgeInsets.only(
+            left: 16.sp,
+            right: 16.sp,
+            top: Get.mediaQuery.padding.top,
+          ),
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              Container(
-                margin: EdgeInsets.only(
-                  top: 40.sp,
-                  bottom: 40.sp,
-                ),
-                child: Row(
-                  children: [
-                    IconButton(
-                      onPressed: () {
-                        Get.back();
-                      },
-                      icon: const Icon(
-                        Icons.arrow_back,
-                        color: AppColors.blue800,
-                        size: 30,
-                      ),
+              Row(
+                children: [
+                  GestureDetector(
+                    onTap: controller.onTapBackScorePage(),
+                    child: const Icon(
+                      Icons.arrow_back,
+                      color: AppColors.blue800,
+                      size: 30,
                     ),
-                    Text("Thêm môn học", style: ThemeText.bodySemibold.s18),
-                  ],
-                ),
+                  ),
+                  Padding(
+                      padding: EdgeInsets.only(left: 10.sp),
+                      child: Text("Thêm môn học",
+                          style: ThemeText.bodySemibold.s18)),
+                ],
               ),
-              Container(
-                margin: EdgeInsets.only(
-                  bottom: 40.sp,
-                ),
-                child: Row(
+              SingleChildScrollView(
+                child: Column(
                   children: [
-                    Expanded(
-                      flex: 2,
-                      child: Container(
-                        margin: EdgeInsets.only(right: 10.sp),
-                        child: nameContainer(name, "Tên môn học"),
+                    Container(
+                      margin: EdgeInsets.only(top: Get.mediaQuery.padding.top),
+                      child: Row(
+                        children: [
+                          Expanded(
+                            flex: 2,
+                            child: Container(
+                              margin: EdgeInsets.only(right: 10.sp),
+                              child: nameContainer(name, "Tên môn học"),
+                            ),
+                          ),
+                          Expanded(
+                            flex: 1,
+                            child: Container(
+                              margin: EdgeInsets.only(left: 10.sp),
+                              child:
+                                  nameContainer(numberOfCredits, "Số tín chỉ"),
+                            ),
+                          ),
+                        ],
                       ),
                     ),
-                    Expanded(
-                      flex: 1,
-                      child: Container(
-                        margin: EdgeInsets.only(left: 10.sp),
-                        child: nameContainer(numberOfCredits, "Số tín chỉ"),
+                    Container(
+                      margin: EdgeInsets.only(top: Get.mediaQuery.padding.top),
+                      child: Row(
+                        children: [
+                          Expanded(
+                            child: Container(
+                              margin: EdgeInsets.only(right: 10.sp),
+                              child: textField(
+                                errorText: controller
+                                    .validateFirstComponentScore.value,
+                                controller: controller.firstComponentScore,
+                                hintText: "Điểm TP1",
+                              ),
+                            ),
+                          ),
+                          Expanded(
+                            child: Container(
+                              margin: EdgeInsets.only(left: 10.sp),
+                              child: textField(
+                                errorText: controller
+                                    .validateSecondComponentScore.value,
+                                controller: controller.secondComponentScore,
+                                hintText: "Điểm TP2",
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
                     ),
-                  ],
-                ),
-              ),
-              Container(
-                margin: EdgeInsets.only(
-                  bottom: 50.sp,
-                ),
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: Container(
-                        margin: EdgeInsets.only(right: 10.sp),
-                        child: textField(
-                          controller: controller.firstComponentScore,
-                          hintText: "Điểm TP1",
-                        ),
-                      ),
-                    ),
-                    Expanded(
-                      child: Container(
-                        margin: EdgeInsets.only(left: 10.sp),
-                        child: textField(
-                          controller: controller.secondComponentScore,
-                          hintText: "Điểm TP2",
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              Container(
-                margin: EdgeInsets.only(
-                  bottom: 50.sp,
-                ),
-                child: Row(
-                  children: [
-                    Expanded(
+                    Container(
+                      margin: EdgeInsets.only(top: Get.mediaQuery.padding.top),
                       child: textField(
+                        errorText: controller.validateExamScore.value,
                         controller: controller.examScore,
                         hintText: "Điểm thi",
                       ),
@@ -123,13 +124,12 @@ class NavigatorAddSubject extends GetView<ScoreController> {
         onPressed: () => _buttonSaveEng(context),
         outlinedBorder: RoundedRectangleBorder(
             side: BorderSide.none,
-            borderRadius: BorderRadius.circular(AppDimens.space_20)
-        ),
+            borderRadius: BorderRadius.circular(AppDimens.space_20)),
         backgroundColor: AppColors.blue900,
         width: double.infinity,
         margin: EdgeInsets.symmetric(horizontal: 10.sp),
         padding: EdgeInsets.symmetric(vertical: AppDimens.height_14),
-        child:Text(
+        child: Text(
           'Lưu',
           style: ThemeText.bodySemibold.copyWith(
             color: AppColors.bianca,
@@ -141,7 +141,9 @@ class NavigatorAddSubject extends GetView<ScoreController> {
   }
 
   Widget textField(
-      {required String hintText, required TextEditingController controller}) {
+      {required String hintText,
+      required TextEditingController controller,
+      required String? errorText}) {
     return Container(
       margin: const EdgeInsets.only(top: 10),
       child: Column(
@@ -163,14 +165,27 @@ class NavigatorAddSubject extends GetView<ScoreController> {
                 width: 0.5,
               ),
             ),
-            child: TextField(
-              style: ThemeText.bodyMedium.s16,
-              keyboardType: TextInputType.number,
-              controller: controller,
-              decoration: const InputDecoration(
-                border: InputBorder.none,
+            child: Center(
+              child: TextFormField(
+                textAlign: TextAlign.center,
+                inputFormatters: <TextInputFormatter>[
+                  FilteringTextInputFormatter.allow(RegExp(r'^\d+\.?\d*'))
+                ],
+                style: ThemeText.bodyMedium.s16,
+                keyboardType: TextInputType.number,
+                controller: controller,
+                decoration: const InputDecoration(
+                  border: InputBorder.none,
+                ),
               ),
             ),
+          ),
+          SizedBox(
+            height: 5.sp,
+          ),
+          Text(
+            errorText ?? '',
+            style: ThemeText.errorText.red,
           ),
         ],
       ),

@@ -29,19 +29,19 @@ class SchoolRepository {
     }
   }
 
-  Future<StudentScores?> getScore({
-    required String studentCode,
-  }) async {
-    final result = await ApiClient.getRequest(
-      '${ApiEndpoints.getScores}$studentCode'
-    );
-    if (result is Map<String,dynamic>){
-      final studentScores = StudentScores.fromJson(result);
-      return studentScores;
-    } else {
-      return null;
-    }
-  }
+  // Future<StudentScores?> getScore({
+  //   required String studentCode,
+  // }) async {
+  //   final result = await ApiClient.getRequest(
+  //     '${ApiEndpoints.getScores}$studentCode'
+  //   );
+  //   if (result is Map<String,dynamic>){
+  //     final studentScores = StudentScores.fromJson(result);
+  //     return studentScores;
+  //   } else {
+  //     return null;
+  //   }
+  // }
 
   Future<void> insertSchoolScheduleLocal(List<StudentSchedule> data) async {
     await hiveConfig.scheduleBox.addAll(data);
