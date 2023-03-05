@@ -14,7 +14,10 @@ class AboutScorePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        centerTitle: false,
+        leadingWidth: AppDimens.width_32,
         leading: AppTouchable(
+          padding: EdgeInsets.only(left: AppDimens.width_12),
           onPressed: Get.back,
           child: const Icon(
             Icons.arrow_back_rounded,

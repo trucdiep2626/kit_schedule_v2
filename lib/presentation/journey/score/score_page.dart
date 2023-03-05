@@ -41,6 +41,7 @@ class ScorePage extends GetView<ScoreController> {
               SizedBox(
                 height: AppDimens.appBarHeight,
                 child: AppBar(
+                  centerTitle: false,
                   backgroundColor: AppColors.backgroundColor,
                   elevation: 0,
                   title: Text(
