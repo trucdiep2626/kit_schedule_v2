@@ -185,12 +185,14 @@ class ScoreController extends GetxController with MixinController {
                 firstComponentScore: firstComponentScore.text,
                 secondComponentScore: secondComponentScore.text)
             ?.toStringAsFixed(1),
-        examScore: examScore.text.trim(),
-        firstComponentScore: firstComponentScore.text.trim(),
+        examScore: double.parse(examScore.text.trim()).toStringAsFixed(1),
+        firstComponentScore:
+            double.parse(firstComponentScore.text.trim()).toStringAsFixed(1),
         id: id,
         name: name,
         numberOfCredits: int.parse(numberOfCredits ?? '0'),
-        secondComponentScore: secondComponentScore.text.trim(),
+        secondComponentScore:
+            double.parse(secondComponentScore.text.trim()).toStringAsFixed(1),
       ),
     );
     showTopSnackBar(context,
