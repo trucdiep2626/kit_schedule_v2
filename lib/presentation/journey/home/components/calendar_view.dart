@@ -30,15 +30,19 @@ class CalendarView extends GetView<HomeController> {
       child: Obx(
         () => TableCalendar(
           locale: 'vi',
-          currentDay: controller.currentDate.value,
           firstDay: DateTime.utc(2010, 10, 16),
           lastDay: DateTime.utc(2030, 3, 14),
           focusedDay: controller.focusedDate.value,
+          calendarFormat: CalendarFormat.month,
+          rangeSelectionMode: RangeSelectionMode.toggledOff,
           eventLoader: _getEventsForDay,
           startingDayOfWeek: StartingDayOfWeek.monday,
+          selectedDayPredicate: (day) =>
+              isSameDay(controller.selectedDate.value, day),
           daysOfWeekStyle: DaysOfWeekStyle(
-              weekdayStyle: ThemeText.bodySemibold.black54,
-              weekendStyle: ThemeText.bodyRegular.red),
+            weekdayStyle: ThemeText.bodySemibold.black54,
+            weekendStyle: ThemeText.bodyRegular.red,
+          ),
           calendarStyle: CalendarStyle(
             isTodayHighlighted: true,
             markerDecoration: const BoxDecoration(
@@ -47,17 +51,18 @@ class CalendarView extends GetView<HomeController> {
             ),
             todayDecoration: const BoxDecoration(
               shape: BoxShape.circle,
-              color: AppColors.blue200,
+              color: AppColors.blue100,
             ),
             selectedDecoration: const BoxDecoration(
-              color: AppColors.blue900,
+              shape: BoxShape.circle,
+              color: AppColors.blue200,
             ),
             markerSize: 8.sp,
             rangeHighlightColor: AppColors.blue900,
             markersMaxCount: 1,
             outsideDaysVisible: true,
             weekendTextStyle: const TextStyle(color: AppColors.red),
-            selectedTextStyle: const TextStyle(color: AppColors.red),
+            selectedTextStyle: const TextStyle(color: AppColors.bianca),
             todayTextStyle: const TextStyle(
                 color: AppColors.bianca, fontWeight: FontWeight.bold),
           ),
@@ -78,11 +83,10 @@ class CalendarView extends GetView<HomeController> {
               color: AppColors.black54,
             ),
           ),
-          onDaySelected: (
-            selectedDay,
-            focusedDay,
-          ) =>
-              controller.onDaySelected(selectedDay, focusedDay, context),
+          onDaySelected: controller.onDaySelected,
+          onPageChanged: (focusedDay) {
+            controller.focusedDate.value = focusedDay;
+          },
         ),
       ),
     );

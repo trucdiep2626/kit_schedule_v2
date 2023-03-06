@@ -23,7 +23,7 @@ class HomeController extends GetxController with MixinController {
 
   final MainController mainController = Get.find<MainController>();
 
-  Rx<DateTime> currentDate = DateTime.now().obs;
+  Rx<DateTime> selectedDate = DateTime.now().obs;
   Rx<DateTime> focusedDate = DateTime.now().obs;
   RxInt currentViewIndex = 0.obs;
   Rx<LoadedType> rxHomeLoadedType = LoadedType.start.obs;
@@ -71,9 +71,10 @@ class HomeController extends GetxController with MixinController {
     Get.toNamed(AppRoutes.todo);
   }
 
-  onDaySelected(
-      DateTime selectedDay, DateTime focusedDay, BuildContext context) {
-    currentDate.value = focusedDay;
-    focusedDate.value = focusedDay;
+  void onDaySelected(DateTime selectedDay, DateTime focusedDay) {
+    if (!isSameDay(selectedDate.value, selectedDay)) {
+      selectedDate.value = selectedDay;
+      focusedDate.value = focusedDay;
+    }
   }
 }
