@@ -49,9 +49,13 @@ class CalendarView extends GetView<HomeController> {
               shape: BoxShape.circle,
               color: AppColors.blue600,
             ),
-            todayDecoration: const BoxDecoration(
+            todayDecoration: BoxDecoration(
               shape: BoxShape.circle,
-              color: AppColors.blue100,
+              color: AppColors.grey300,
+              border: Border.all(
+                color: AppColors.blue500,
+                width: 1.sp,
+              ),
             ),
             selectedDecoration: const BoxDecoration(
               shape: BoxShape.circle,
@@ -61,10 +65,15 @@ class CalendarView extends GetView<HomeController> {
             rangeHighlightColor: AppColors.blue900,
             markersMaxCount: 1,
             outsideDaysVisible: true,
-            weekendTextStyle: const TextStyle(color: AppColors.red),
-            selectedTextStyle: const TextStyle(color: AppColors.bianca),
+            weekendTextStyle: const TextStyle(
+              color: AppColors.red,
+            ),
+            selectedTextStyle: const TextStyle(
+              color: AppColors.bianca,
+            ),
             todayTextStyle: const TextStyle(
-                color: AppColors.bianca, fontWeight: FontWeight.bold),
+              color: AppColors.black,
+            ),
           ),
           headerStyle: HeaderStyle(
             titleTextStyle: ThemeText.bodySemibold.black54.s18,
