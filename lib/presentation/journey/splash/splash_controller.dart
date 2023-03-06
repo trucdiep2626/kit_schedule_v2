@@ -1,7 +1,7 @@
 import 'package:get/get.dart';
 import 'package:kit_schedule_v2/common/common_export.dart';
 import 'package:kit_schedule_v2/common/utils/analytics_utils.dart';
-import 'package:kit_schedule_v2/presentation/controllers/app_controller.dart';
+import 'package:kit_schedule_v2/presentation/controllers/analytics_controller.dart';
 import 'package:kit_schedule_v2/presentation/controllers/mixin/export.dart';
 
 class SplashController extends GetxController with MixinController {
@@ -18,7 +18,7 @@ class SplashController extends GetxController with MixinController {
   void onReady() {
     super.onReady();
     rxLoadedType.value = LoadedType.start;
-    Get.find<AppController>().logEvent(AnalyticsEventType.appLaunched);
+    getIt<AnalyticsController>().logEvent(AnalyticsEventType.appLaunched);
     final isLogin = sharedPref.getIsLogIn();
     rxLoadedType.value = LoadedType.finish;
     if(isLogin)

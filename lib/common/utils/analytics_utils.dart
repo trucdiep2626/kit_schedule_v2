@@ -1,11 +1,10 @@
-
-
 enum AnalyticsEventType {
   appLaunched,
   notification,
   viewSchedule,
   score,
-  todo
+  todo,
+  personal,
 }
 
 extension AnalyticsEventTypeExtension on AnalyticsEventType {
@@ -27,9 +26,10 @@ extension AnalyticsEventTypeExtension on AnalyticsEventType {
       case AnalyticsEventType.todo:
         string = 'todo';
         break;
+      case AnalyticsEventType.personal:
+        string = 'personal';
+        break;
     }
     return string;
   }
 }
-
-

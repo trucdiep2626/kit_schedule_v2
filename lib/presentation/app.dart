@@ -1,10 +1,8 @@
-import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:get/get.dart';
 import 'package:kit_schedule_v2/common/common_export.dart';
 import 'package:kit_schedule_v2/presentation/controllers/analytics_controller.dart';
-import 'package:kit_schedule_v2/presentation/controllers/app_controller.dart';
 
 import 'app_pages.dart';
 import 'theme/theme_data.dart';
@@ -33,8 +31,8 @@ class App extends StatelessWidget {
           fallbackLocale: appSupportedLocales.first,
           theme: appTheme,
           navigatorObservers: [
-            FirebaseAnalyticsObserver(
-                analytics: Get.put<AppController>(AppController()).analytics),
+
+              getIt<AnalyticsController>().getAnalyticsObserver()
           ],
           builder: (context, child) {
             return GestureDetector(
