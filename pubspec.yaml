@@ -77,6 +77,10 @@ dependencies:
   syncfusion_flutter_gauges: 20.4.43
   hive_flutter: 1.1.0
 
+  firebase_core: 2.7.0
+  firebase_analytics: 10.1.4
+  firebase_crashlytics: 3.0.15
+
 dev_dependencies:
 #  flutter_test:
 #    sdk: flutter
