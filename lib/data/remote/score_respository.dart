@@ -189,24 +189,17 @@ class ScoreRepository {
     for (int i = 0; i < hiveConfig.hiveScoresCell.length; i++) {
       if (isNumeric(hiveConfig.hiveScoresCell.getAt(i)?.examScore!) &&
           isNumeric(hiveConfig.hiveScoresCell.getAt(i)?.avgScore!)) {
-        if ((double.parse(hiveConfig.hiveScoresCell.getAt(i)?.examScore ?? "0") >= 4 &&
+        if ((double.parse(
+                        hiveConfig.hiveScoresCell.getAt(i)?.examScore ?? "0") >=
+                    4 &&
                 double.parse(
                         hiveConfig.hiveScoresCell.getAt(i)?.examScore ?? '0') <=
                     10) &&
-            (double.parse(hiveConfig.hiveScoresCell.getAt(i)?.avgScore ?? '0') >=
+            (double.parse(
+                        hiveConfig.hiveScoresCell.getAt(i)?.avgScore ?? '0') >=
                     4 &&
-                double.parse(hiveConfig.hiveScoresCell.getAt(i)?.avgScore ?? '0') <=
-                    10) &&
-            (double.parse(hiveConfig.hiveScoresCell.getAt(i)?.firstComponentScore ?? '0') >=
-                    4 &&
-                double.parse(hiveConfig.hiveScoresCell.getAt(i)?.firstComponentScore ?? '0') <=
-                    10) &&
-            (double.parse(hiveConfig.hiveScoresCell.getAt(i)?.secondComponentScore ?? '0') >=
-                    4 &&
-                double.parse(hiveConfig.hiveScoresCell
-                            .getAt(i)
-                            ?.secondComponentScore ??
-                        '0') <=
+                double.parse(
+                        hiveConfig.hiveScoresCell.getAt(i)?.avgScore ?? '0') <=
                     10)) {
           calPassedSubjects = calPassedSubjects + 1;
         } else {

@@ -56,11 +56,10 @@ class ScoreController extends GetxController with MixinController {
     }
     try {
       final result =
-          await scoreUseCase.getScoresStudents(studentCode: studentCode); //TODO
-      rxStudentScores.value = result; //TODO
+          await scoreUseCase.getScoresStudents(studentCode: studentCode);
+      rxStudentScores.value = result;
       if (!isAdd) {
-        scoreUseCase.insertScoreIntoHive(
-            rxStudentScores.value, scoreUseCase); //TODO
+        scoreUseCase.insertScoreIntoHive(rxStudentScores.value, scoreUseCase);
       }
       if (!isNullEmpty(result)) {
         rxExpandedList.value = List.generate(
@@ -109,6 +108,12 @@ class ScoreController extends GetxController with MixinController {
       if (double.parse(textController.trim()) > 10) {
         textValidator.value = "Vui lòng nhập điểm <=10";
         return false;
+      } else if (double.parse(firstComponentScore.text.trim()) < 4) {
+        validateFirstComponentScore.value = "Vui lòng nhập điểm >=4";
+        return false;
+      } else if (double.parse(secondComponentScore.text.trim()) < 4) {
+        validateSecondComponentScore.value = "Vui lòng nhập điểm >=4";
+        return false;
       }
     } else {
       textValidator.value = "Vui lòng điền đủ các trường";
@@ -139,6 +144,18 @@ class ScoreController extends GetxController with MixinController {
       return true;
     }
     return false;
+  }
+
+  Future<int?> getLengthApi() async {
+    final studentCode =
+        Get.find<MainController>().studentInfo.value.studentCode;
+
+    if (studentCode == null || studentCode.isEmpty) {
+      return null;
+    }
+    final result =
+        await scoreUseCase.getScoresStudents(studentCode: studentCode);
+    return result?.scores?.length;
   }
 
   Future<void> addScoreEng(
@@ -244,6 +261,7 @@ class ScoreController extends GetxController with MixinController {
 
   void onPressRefresh() async {
     refreshKey.currentState?.show();
+
     await refreshRemote(true);
     showTopSnackBar(context,
         message: "Cập nhật điểm thành công", type: SnackBarType.done);
