@@ -8,6 +8,7 @@ import 'package:kit_schedule_v2/presentation/theme/export.dart';
 import 'package:kit_schedule_v2/presentation/widgets/app_expansion_panel_list.dart';
 import 'package:kit_schedule_v2/presentation/widgets/app_touchable.dart';
 import 'package:kit_schedule_v2/presentation/widgets/export.dart';
+import 'package:kit_schedule_v2/presentation/widgets/warning_dialog.dart';
 
 import 'components/popup_menu_add_subject.dart';
 
@@ -181,10 +182,19 @@ class ScorePage extends GetView<ScoreController> {
                   width: AppDimens.width_40,
                   child: Align(
                     alignment: Alignment.center,
-                    child: PopUpMenuSubject(
-                      onSelected: controller.onSelectedDelSubject(index),
-                      title: "Xóa môn học",
-                      icon: Icon(Icons.more_vert),
+                    child: IconButton(
+                      onPressed: () => warningDialog(
+                          name: controller.rxStudentScores.value?.scores?[index]
+                                  .subject?.name ??
+                              "",
+                          context: context,
+                          btnOk: controller.onSelectedDelSubject(index),
+                          btnCancel: controller.onCancelDelSubject()),
+                      icon: Icon(
+                        Icons.delete,
+                        color: AppColors.blue900,
+                        size: AppDimens.space_20,
+                      ),
                     ),
                   ),
                 ),

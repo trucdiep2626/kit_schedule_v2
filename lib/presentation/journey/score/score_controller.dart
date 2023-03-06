@@ -235,16 +235,21 @@ class ScoreController extends GetxController with MixinController {
     };
   }
 
-  Function(int?) onSelectedDelSubject(int index) {
-    return (value) {
-      if (value == 1) {
-        showTopSnackBar(
-          Get.context!,
-          message: 'Xóa môn học thành công',
-          type: SnackBarType.done,
-        );
-        delSubject(index);
-      }
+  Function() onSelectedDelSubject(int index) {
+    return () {
+      showTopSnackBar(
+        Get.context!,
+        message: 'Xóa môn học thành công',
+        type: SnackBarType.done,
+      );
+      delSubject(index);
+      Get.back();
+    };
+  }
+
+  Function() onCancelDelSubject() {
+    return () {
+      Get.back();
     };
   }
 
@@ -287,8 +292,7 @@ class ScoreController extends GetxController with MixinController {
         passedSubjects: scoreUseCase.calPassedSubjects(),
         name: mainController.studentInfo.value.displayName,
         id: mainController.studentInfo.value.studentCode,
-        scores: scores.map(Score.fromHiveCell).toList()
-    );
+        scores: scores.map(Score.fromHiveCell).toList());
     rxExpandedList.value = List.generate(scores.length, (index) => false);
   }
 }
