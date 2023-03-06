@@ -2,17 +2,15 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:intl/intl.dart';
+
 import 'package:kit_schedule_v2/common/constants/enums.dart';
-import 'package:kit_schedule_v2/common/utils/app_convert.dart';
+
 import 'package:kit_schedule_v2/common/utils/app_screen_utils/flutter_screenutils.dart';
-import 'package:kit_schedule_v2/domain/models/student_schedule_model.dart';
-import 'package:kit_schedule_v2/presentation/journey/home/home_controller.dart';
-import 'package:kit_schedule_v2/presentation/journey/personal/personal_controller.dart';
+
 import 'package:kit_schedule_v2/presentation/journey/setting/setting_controller.dart';
 import 'package:kit_schedule_v2/presentation/theme/export.dart';
 import 'package:kit_schedule_v2/presentation/widgets/snack_bar/app_snack_bar.dart';
-import 'package:kit_schedule_v2/services/local_notification_service.dart';
+
 import 'package:kit_schedule_v2/common/utils/export.dart';
 
 class SettingPage extends GetView<SettingController> {
