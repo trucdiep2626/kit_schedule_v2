@@ -111,9 +111,11 @@ class ScoreController extends GetxController with MixinController {
       } else if (double.parse(firstComponentScore.text.trim()) < 4) {
         validateFirstComponentScore.value = "Vui lòng nhập điểm >=4";
         return false;
-      } else if (double.parse(secondComponentScore.text.trim()) < 4) {
-        validateSecondComponentScore.value = "Vui lòng nhập điểm >=4";
-        return false;
+      } else if (secondComponentScore.text.trim().isNotEmpty) {
+        if (double.parse(secondComponentScore.text.trim()) < 4) {
+          validateSecondComponentScore.value = "Vui lòng nhập điểm >=4";
+          return false;
+        }
       }
     } else {
       textValidator.value = "Vui lòng điền đủ các trường";
@@ -146,30 +148,26 @@ class ScoreController extends GetxController with MixinController {
     return false;
   }
 
-  Future<int?> getLengthApi() async {
-    final studentCode =
-        Get.find<MainController>().studentInfo.value.studentCode;
-
-    if (studentCode == null || studentCode.isEmpty) {
-      return null;
-    }
-    final result =
-        await scoreUseCase.getScoresStudents(studentCode: studentCode);
-    return result?.scores?.length;
-  }
-
   Future<void> addScoreEng(
       String? name, String? id, String? numberOfCredits) async {
+    bool flag = false;
     if (!checkValiDateScore(
         textValidator: validateFirstComponentScore,
         textController: firstComponentScore.text)) {
-      return;
-    } else if (!checkValiDateScore(
+      flag = true;
+    }
+    if (!checkValiDateScore(
         textValidator: validateSecondComponentScore,
         textController: secondComponentScore.text)) {
-      return;
-    } else if (!checkValiDateScore(
-        textValidator: validateExamScore, textController: examScore.text)) {
+      flag = true;
+    }
+    if (!checkValiDateScore(
+      textValidator: validateExamScore,
+      textController: examScore.text,
+    )) {
+      flag = true;
+    }
+    if (flag) {
       return;
     }
 
