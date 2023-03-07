@@ -23,7 +23,7 @@ class ScoreController extends GetxController with MixinController {
 
   Rx<StudentScores?> rxStudentScores = (null as StudentScores?).obs;
   RxList<bool> rxExpandedList = <bool>[].obs;
-
+  RxList<bool> rxcheckSubject = <bool>[].obs;
   ScoreController(this.schoolUseCase, this.scoreUseCase);
 
   TextEditingController firstComponentScore = TextEditingController();
@@ -65,6 +65,7 @@ class ScoreController extends GetxController with MixinController {
         for (int index = 0; index < result!.scores!.length; index++) {
           if (scoreUseCase.isDuplicate(result, index)) {
             scoreUseCase.insertSubjectFromAPI(result, index);
+            rxcheckSubject.add(true);
           }
         }
       }
@@ -194,6 +195,7 @@ class ScoreController extends GetxController with MixinController {
             double.parse(secondComponentScore.text.trim()).toStringAsFixed(1),
       ),
     );
+    rxcheckSubject.add(false);
     showTopSnackBar(context,
         message: 'Thêm môn học thành công', type: SnackBarType.done);
     resetData();
@@ -249,16 +251,21 @@ class ScoreController extends GetxController with MixinController {
     });
   }
 
-  Function(int?) onSelectedDelSubject(int index) {
-    return (value) {
-      if (value == 1) {
-        showTopSnackBar(
-          Get.context!,
-          message: 'Xóa môn học thành công',
-          type: SnackBarType.done,
-        );
-        delSubject(index);
-      }
+  Function() onSelectedDelSubject(int index) {
+    return () {
+      showTopSnackBar(
+        Get.context!,
+        message: 'Xóa môn học thành công',
+        type: SnackBarType.done,
+      );
+      delSubject(index);
+      Get.back();
+    };
+  }
+
+  Function() onCancelDelSubject() {
+    return () {
+      Get.back();
     };
   }
 

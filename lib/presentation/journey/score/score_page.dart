@@ -8,6 +8,7 @@ import 'package:kit_schedule_v2/presentation/theme/export.dart';
 import 'package:kit_schedule_v2/presentation/widgets/app_expansion_panel_list.dart';
 import 'package:kit_schedule_v2/presentation/widgets/app_touchable.dart';
 import 'package:kit_schedule_v2/presentation/widgets/export.dart';
+import 'package:kit_schedule_v2/presentation/widgets/warning_dialog.dart';
 
 import 'components/popup_menu_add_subject.dart';
 
@@ -126,7 +127,8 @@ class ScorePage extends GetView<ScoreController> {
                 elevation: 0,
                 children: [
                   for (int i = 0; i < scores.length; i++)
-                    _buildScoreCell(i, controller.rxExpandedList[i], scores[i])
+                    _buildScoreCell(i, controller.rxExpandedList[i], scores[i],
+                        controller.rxcheckSubject[i])
                 ],
                 expansionCallback: controller.setExpandedCell,
               ),
@@ -175,7 +177,8 @@ class ScorePage extends GetView<ScoreController> {
     );
   }
 
-  ExpansionPanel _buildScoreCell(int index, bool isExpanded, Score score) {
+  ExpansionPanel _buildScoreCell(
+      int index, bool isExpanded, Score score, bool isAddLocal) {
     return ExpansionPanel(
       canTapOnHeader: true,
       backgroundColor:
@@ -201,7 +204,7 @@ class ScorePage extends GetView<ScoreController> {
                   style: ThemeText.bodySemibold,
                 ),
               ),
-              if (isExpanded) ...[
+              if (isExpanded && !isAddLocal) ...[
                 SizedBox(
                   width: AppDimens.width_12,
                 ),
@@ -209,10 +212,19 @@ class ScorePage extends GetView<ScoreController> {
                   width: AppDimens.width_40,
                   child: Align(
                     alignment: Alignment.center,
-                    child: PopUpMenuSubject(
-                      onSelected: controller.onSelectedDelSubject(index),
-                      title: "Xóa môn học",
-                      icon: Icon(Icons.more_vert),
+                    child: IconButton(
+                      onPressed: () => warningDialog(
+                          name: controller.rxStudentScores.value?.scores?[index]
+                                  .subject?.name ??
+                              "",
+                          context: context,
+                          btnOk: controller.onSelectedDelSubject(index),
+                          btnCancel: controller.onCancelDelSubject()),
+                      icon: Icon(
+                        Icons.delete,
+                        color: AppColors.blue900,
+                        size: AppDimens.space_20,
+                      ),
                     ),
                   ),
                 ),
