@@ -24,17 +24,25 @@ class ScorePage extends GetView<ScoreController> {
         () {
           return Stack(
             children: [
-              CustomScrollView(
-                slivers: [
-                  _buildHeader(),
-                  _buildSubjectTableHeader(),
-                  if (!isNullEmpty(controller.rxStudentScores))
-                    _buildScoreTableData(),
-                ],
+              AnimatedSwitcher(
+                duration: kThemeAnimationDuration,
+                child: controller.rxLoadedType.value == LoadedType.start
+                    ? const Center(
+                        child: CircularProgressIndicator.adaptive(),
+                      )
+                    : CustomScrollView(
+                        slivers: [
+                          _buildHeader(),
+                          _buildSubjectTableHeader(),
+                          if (!isNullEmpty(controller.rxStudentScores))
+                            _buildScoreTableData(),
+                        ],
+                      ),
               ),
               SizedBox(
                 height: AppDimens.appBarHeight,
                 child: AppBar(
+                  centerTitle: false,
                   backgroundColor: AppColors.backgroundColor,
                   elevation: 0,
                   title: Text(
@@ -42,31 +50,51 @@ class ScorePage extends GetView<ScoreController> {
                     style: ThemeText.bodySemibold.s18,
                   ),
                   actions: [
-                    AppTouchable(
-                      padding:
-                          EdgeInsets.symmetric(horizontal: AppDimens.width_12),
-                      onPressed: controller.onPressRefresh,
-                      child: Icon(
-                        Icons.update,
-                        color: AppColors.blue900,
-                        size: AppDimens.space_24,
+                    Theme(
+                      data: Theme.of(context).copyWith(
+                        cardColor: AppColors.backgroundColor,
                       ),
-                    ),
-                    if (!controller.isExist("Tiếng anh 1") ||
-                        !controller.isExist("Tiếng anh 2") ||
-                        !controller.isExist("Tiếng anh 3")) ...[
-                      PopUpMenuSubject(
-                        onSelected: controller.onSelectedAddSubject(),
-                        title: "Thêm môn học",
+                      child: PopupMenuButton(
                         icon: const Icon(
-                          Icons.info_outline_rounded,
+                          Icons.more_vert_rounded,
                           color: AppColors.blue900,
                         ),
+                        itemBuilder: (context) {
+                          return [
+                            _buildAppBarPopUpItem(
+                              title: "Cập nhật điểm",
+                              onTap: () => Future.delayed(
+                                const Duration(),
+                                controller.onPressRefresh,
+                              ),
+                              icon: const Icon(
+                                Icons.refresh_rounded,
+                                color: AppColors.blue900,
+                              ),
+                            ),
+                            _buildAppBarPopUpItem(
+                              title: "Thêm môn học",
+                              onTap: () => controller.onSelectedAddSubject(1),
+                              icon: const Icon(
+                                Icons.add_rounded,
+                                color: AppColors.blue900,
+                              ),
+                            ),
+                            _buildAppBarPopUpItem(
+                              title: "Cách tính điểm",
+                              onTap: () => Future.delayed(
+                                const Duration(),
+                                () => Get.toNamed(AppRoutes.aboutScore),
+                              ),
+                              icon: const Icon(
+                                Icons.info_outline_rounded,
+                                color: AppColors.blue900,
+                              ),
+                            ),
+                          ];
+                        },
                       ),
-                    ],
-                    SizedBox(
-                      width: AppDimens.width_12,
-                    ),
+                    )
                   ],
                 ),
               ),
@@ -483,6 +511,32 @@ class ScorePage extends GetView<ScoreController> {
             )
           ],
         ),
+      ),
+    );
+  }
+
+  PopupMenuItem _buildAppBarPopUpItem({
+    required String title,
+    Icon? icon,
+    Function()? onTap,
+  }) {
+    return PopupMenuItem(
+      onTap: onTap,
+      child: Row(
+        children: [
+          icon ??
+              Icon(
+                Icons.info_outline_rounded,
+                color: AppColors.transparent,
+              ),
+          SizedBox(
+            width: AppDimens.width_8,
+          ),
+          Text(
+            title,
+            style: ThemeText.bodySemibold.s16,
+          ),
+        ],
       ),
     );
   }
