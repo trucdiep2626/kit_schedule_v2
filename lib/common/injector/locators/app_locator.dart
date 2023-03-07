@@ -7,6 +7,7 @@ import 'package:kit_schedule_v2/data/remote/score_respository.dart';
 import 'package:kit_schedule_v2/domain/usecases/personal_usecase.dart';
 import 'package:kit_schedule_v2/domain/usecases/school_usecase.dart';
 import 'package:kit_schedule_v2/domain/usecases/score_usecase.dart';
+import 'package:kit_schedule_v2/presentation/controllers/analytics_controller.dart';
 import 'package:kit_schedule_v2/presentation/controllers/app_controller.dart';
 import 'package:kit_schedule_v2/presentation/journey/home/home_controller.dart';
 import 'package:kit_schedule_v2/presentation/journey/login/login_controller.dart';
@@ -43,6 +44,7 @@ void configLocator() {
       sharePreferencesConstants: getIt<SharePreferencesConstants>()));
   getIt.registerFactory<SettingController>(() => SettingController(
       sharePreferencesConstants: getIt<SharePreferencesConstants>()));
+  getIt.registerLazySingleton<AnalyticsController>(() => AnalyticsController());
 
   /// UseCases
   getIt.registerFactory<SchoolUseCase>(

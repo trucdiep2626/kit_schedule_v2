@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "97324892986",
+    "project_id": "kit-schedule-v2-77a62",
+    "storage_bucket": "kit-schedule-v2-77a62.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:97324892986:android:503828d78f821efb028603",
+        "android_client_info": {
+          "package_name": "com.example.kit_schedule_v2"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "97324892986-5asg8vrup6251ead31859eq7i5h6vnha.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDNFTD7cynSXuQ_MwwWk-PtphzepkIOEmU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "97324892986-5asg8vrup6251ead31859eq7i5h6vnha.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

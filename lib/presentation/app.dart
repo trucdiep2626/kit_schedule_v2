@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:get/get.dart';
 import 'package:kit_schedule_v2/common/common_export.dart';
+import 'package:kit_schedule_v2/presentation/controllers/analytics_controller.dart';
 
 import 'app_pages.dart';
 import 'theme/theme_data.dart';
@@ -29,6 +30,10 @@ class App extends StatelessWidget {
           locale: appSupportedLocales.first,
           fallbackLocale: appSupportedLocales.first,
           theme: appTheme,
+          navigatorObservers: [
+
+              getIt<AnalyticsController>().getAnalyticsObserver()
+          ],
           builder: (context, child) {
             return GestureDetector(
               behavior: HitTestBehavior.translucent,
