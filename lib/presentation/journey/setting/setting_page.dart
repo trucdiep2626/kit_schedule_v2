@@ -50,13 +50,8 @@ class SettingPage extends GetView<SettingController> {
                     materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
                     value: controller.isNotification.value,
                     onChanged: (value) {
-                      getIt<AnalyticsController>()
-                          .logEvent(AnalyticsEventType.notification);
                       controller.onChangedNotification(value);
                       controller.notifications();
-                      showTopSnackBar(context,
-                          message: "Đã ${value ? "bật" : "tắt"} thông báo",
-                          type: SnackBarType.done);
                     },
                   ),
                 ),
@@ -168,13 +163,20 @@ class SettingPage extends GetView<SettingController> {
                       title: Text("$index phút",
                           style: ThemeText.bodyMedium.blue900),
                       onTap: () {
-                        controller.onChangedTimeNotification(index);
-                        controller.notifications();
-                        showTopSnackBar(context,
+                        if (controller.isNotification.value) {
+                          controller.onChangedTimeNotification(index);
+                          controller.notifications();
+                        } else {
+                          showTopSnackBar(
+                            context,
                             message:
-                                "Đã đặt thời gian thông báo trước $index phút",
-                            type: SnackBarType.done);
-                        Navigator.of(context).pop();
+                                "Vui lòng bật thông báo trước khi thay đổi thời gian thông báo",
+                            type: SnackBarType.error,
+                            duration: const Duration(seconds: 4),
+                          );
+                        }
+
+                        Get.back();
                       },
                     );
                   },

@@ -30,33 +30,35 @@ class SettingController extends GetxController with MixinController {
     if (await Permission.notification.isGranted) {
       isNotification.value = value;
       sharePreferencesConstants.setNotification(isNotification: value);
+      showTopSnackBar(context,
+          message: "Đã ${value ? "bật" : "tắt"} thông báo",
+          type: SnackBarType.done);
     } else {
       await Permission.notification.request();
       if (await Permission.notification.isGranted) {
         isNotification.value = value;
         sharePreferencesConstants.setNotification(isNotification: value);
-      } else {
         showTopSnackBar(context,
-            message: 'Bạn chưa cấp quyền thông báo cho ứng dụng');
+            message: "Đã ${value ? "bật" : "tắt"} thông báo",
+            type: SnackBarType.done);
+      } else {
+        showTopSnackBar(
+          context,
+          message: "Bạn chưa cấp quyền thông báo cho ứng dụng",
+          type: SnackBarType.error,
+        );
       }
     }
   }
 
   void onChangedTimeNotification(int newValue) async {
-    if (await Permission.notification.isGranted) {
-      timeNotification.value = newValue;
-      sharePreferencesConstants.setTimeNotification(timeNotification: newValue);
-    } else {
-      await Permission.notification.request();
-      if (await Permission.notification.isGranted) {
-        timeNotification.value = newValue;
-        sharePreferencesConstants.setTimeNotification(
-            timeNotification: newValue);
-      } else {
-        showTopSnackBar(context,
-            message: 'Bạn chưa cấp quyền thông báo cho ứng dụng');
-      }
-    }
+    timeNotification.value = newValue;
+    sharePreferencesConstants.setTimeNotification(timeNotification: newValue);
+    showTopSnackBar(
+      context,
+      message: 'Thông báo sẽ được gửi trước $newValue phút',
+      type: SnackBarType.done,
+    );
   }
 
   ///lên 50 lịch học tính từ thời điểm hiện tại
@@ -134,6 +136,6 @@ class SettingController extends GetxController with MixinController {
     if (isNotification.value) {
       _schoolScheduleNotifications();
       _personalScheduleNotifications();
-    }
+    } else {}
   }
 }
