@@ -57,10 +57,6 @@ class ScoreController extends GetxController with MixinController {
     try {
       final result =
           await scoreUseCase.getScoresStudents(studentCode: studentCode);
-      rxStudentScores.value = result;
-      if (!isAdd) {
-        scoreUseCase.insertScoreIntoHive(rxStudentScores.value, scoreUseCase);
-      }
       if (!isNullEmpty(result)) {
         rxExpandedList.value = List.generate(
             rxStudentScores.value?.scores?.length ?? 0, (index) => false);
@@ -72,10 +68,7 @@ class ScoreController extends GetxController with MixinController {
           }
         }
       }
-      if (isAdd) {
-        scoreUseCase.insertScoreIntoHive(rxStudentScores.value, scoreUseCase);
-      }
-
+      _refreshLocal();
       if (isExist("ATCBNN1") && isExist("LTCBNN2") && isExist("ATCBNN6")) {
         Future.delayed(const Duration(seconds: 1), () async {
           showTopSnackBar(context,
