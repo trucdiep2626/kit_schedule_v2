@@ -4,12 +4,13 @@ import 'package:flutter/material.dart';
 import 'package:kit_schedule_v2/common/utils/export.dart';
 import 'package:kit_schedule_v2/presentation/theme/export.dart';
 
-void warningDialog(
-    {required BuildContext context,
-    // required bool isSynch,
-    String? name,
-    required Function() btnOk,
-    required Function() btnCancel}) {
+void warningDialog({
+  required BuildContext context,
+  // required bool isSynch,
+  String? name,
+  required Function() btnOk,
+  required Function() btnCancel,
+}) {
   AwesomeDialog(
       dismissOnTouchOutside: false,
       context: context,
@@ -128,8 +129,10 @@ void warningDialog(
           alignment: Alignment.center,
           child: Padding(
             padding: EdgeInsets.symmetric(vertical: 8.sp, horizontal: 16.sp),
-            child: Text('Huỷ',
-              style: ThemeText.bodySemibold.s16.bianca,),
+            child: Text(
+              'Huỷ',
+              style: ThemeText.bodySemibold.s16.bianca,
+            ),
           ),
         ),
       )).show();
