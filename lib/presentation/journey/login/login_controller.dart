@@ -6,6 +6,7 @@ import 'package:kit_schedule_v2/common/config/network/network_state.dart';
 import 'package:kit_schedule_v2/domain/models/student_info_model.dart';
 import 'package:kit_schedule_v2/domain/usecases/school_usecase.dart';
 import 'package:kit_schedule_v2/presentation/controllers/mixin/export.dart';
+import 'package:kit_schedule_v2/presentation/journey/login/login_success_dialog.dart';
 import 'package:kit_schedule_v2/presentation/widgets/snack_bar/app_snack_bar.dart';
 
 class LoginController extends GetxController with MixinController {
@@ -58,10 +59,13 @@ class LoginController extends GetxController with MixinController {
           sharePreferencesConstants.setIsLogIn(isLogIn: true);
         }
         Get.offAndToNamed(AppRoutes.main);
+        loginSuccessDialog(Get.context!);
       } else {
-        showTopSnackBar(context,
-            message: 'Tài khoản đăng nhập không đúng',
-            type: SnackBarType.error);
+        showTopSnackBar(
+          context,
+          message: 'Tài khoản đăng nhập không đúng',
+          type: SnackBarType.error,
+        );
       }
     } on WrongPasswordError {
       showTopSnackBar(context,
