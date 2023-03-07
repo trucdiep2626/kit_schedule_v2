@@ -34,17 +34,28 @@ class Convert {
     '16': '21:15'
   };
 
-  static Map<String, double> letterScoreConvert = {
-    'A+': 4.0,
-    'A': 3.8,
-    'B+': 3.5,
-    'B': 3.0,
-    'C+': 2.5,
-    'C': 2.0,
-    'D+': 1.5,
-    'D': 1.0,
-    'F': 0.0
-  };
+  static double letterScoreConvert(String? alphabetScore) {
+    if (alphabetScore == 'F') {
+      return 0.0;
+    } else if (alphabetScore == 'D') {
+      return 1.0;
+    } else if (alphabetScore == 'D+') {
+      return 1.5;
+    } else if (alphabetScore == 'C') {
+      return 2.0;
+    } else if (alphabetScore == 'C+') {
+      return 2.5;
+    } else if (alphabetScore == 'B') {
+      return 3.0;
+    } else if (alphabetScore == 'B+') {
+      return 3.5;
+    } else if (alphabetScore == 'A') {
+      return 3.8;
+    } else if (alphabetScore == 'A+') {
+      return 4.0;
+    }
+    return 0.0;
+  }
 
   static DateTime dateConvert(DateTime time) {
     int year = time.year;
@@ -69,21 +80,21 @@ class Convert {
   static String scoreConvert(double score) {
     if (score <= 10 && score >= 9.0) {
       return 'A+';
-    } else if (score <= 8.9 && score >= 8.5) {
+    } else if (score < 9.0 && score >= 8.5) {
       return 'A';
-    } else if (score <= 8.4 && score >= 7.8) {
+    } else if (score < 8.5 && score >= 7.8) {
       return 'B+';
-    } else if (score <= 7.7 && score >= 7.0) {
+    } else if (score < 7.8 && score >= 7.0) {
       return 'B';
-    } else if (score <= 6.9 && score >= 6.3) {
+    } else if (score < 7.0 && score >= 6.3) {
       return 'C+';
-    } else if (score <= 6.2 && score >= 5.5) {
+    } else if (score < 6.3 && score >= 5.5) {
       return 'C';
-    } else if (score <= 5.4 && score >= 4.8) {
+    } else if (score < 5.5 && score >= 4.8) {
       return 'D+';
-    } else if (score <= 4.7 && score >= 4.0) {
+    } else if (score < 4.8 && score >= 4.0) {
       return 'D';
-    } else if (score <= 3.9) {
+    } else if (score < 4) {
       return 'F';
     }
     return 'F';

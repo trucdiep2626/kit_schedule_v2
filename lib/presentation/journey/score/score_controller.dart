@@ -191,12 +191,14 @@ class ScoreController extends GetxController with MixinController {
                 firstComponentScore: firstComponentScore.text,
                 secondComponentScore: secondComponentScore.text)
             ?.toStringAsFixed(1),
-        examScore: examScore.text.trim(),
-        firstComponentScore: firstComponentScore.text.trim(),
+        examScore: double.parse(examScore.text.trim()).toStringAsFixed(1),
+        firstComponentScore:
+            double.parse(firstComponentScore.text.trim()).toStringAsFixed(1),
         id: id,
         name: name,
         numberOfCredits: int.parse(numberOfCredits ?? '0'),
-        secondComponentScore: secondComponentScore.text.trim(),
+        secondComponentScore:
+            double.parse(secondComponentScore.text.trim()).toStringAsFixed(1),
       ),
     );
     showTopSnackBar(context,
@@ -225,14 +227,16 @@ class ScoreController extends GetxController with MixinController {
     };
   }
 
-  Function(int?) onSelectedAddSubject() {
-    return (value) {
+
+  void onSelectedAddSubject(int value) {
+    /// this is to ensure that the popup menu is closed
+    Future.delayed(const Duration(), () {
       if (value == 1) {
         displayTextInputDialog(
           compareIdEnd1: !isExist('Tiếng anh 1'),
           compareIdEnd2: !isExist('Tiếng anh 2'),
           compareIdEnd3: !isExist('Tiếng anh 3'),
-          Get.context!,
+          context,
           onPressedEng1: onPressedAddSubject(
             name: "Tiếng Anh 1",
             id: 'ATCBNN1',
@@ -249,7 +253,7 @@ class ScoreController extends GetxController with MixinController {
           )(),
         );
       }
-    };
+    });
   }
 
   Function(int?) onSelectedDelSubject(int index) {
