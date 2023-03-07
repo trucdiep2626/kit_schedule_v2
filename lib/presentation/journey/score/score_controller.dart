@@ -221,14 +221,16 @@ class ScoreController extends GetxController with MixinController {
     };
   }
 
-  Function(int?) onSelectedAddSubject() {
-    return (value) {
+
+  void onSelectedAddSubject(int value) {
+    /// this is to ensure that the popup menu is closed
+    Future.delayed(const Duration(), () {
       if (value == 1) {
         displayTextInputDialog(
           compareIdEnd1: !isExist('Tiếng anh 1'),
           compareIdEnd2: !isExist('Tiếng anh 2'),
           compareIdEnd3: !isExist('Tiếng anh 3'),
-          Get.context!,
+          context,
           onPressedEng1: onPressedAddSubject(
             name: "Tiếng Anh 1",
             id: 'ATCBNN1',
@@ -245,7 +247,7 @@ class ScoreController extends GetxController with MixinController {
           )(),
         );
       }
-    };
+    });
   }
 
   Function(int?) onSelectedDelSubject(int index) {
