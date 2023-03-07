@@ -12,10 +12,11 @@ import 'package:kit_schedule_v2/presentation/theme/export.dart';
 import 'package:kit_schedule_v2/presentation/widgets/export.dart';
 
 import 'package:kit_schedule_v2/presentation/widgets/app_dialog.dart';
+import 'package:kit_schedule_v2/presentation/widgets/warning_dialog.dart';
 
 import 'package:url_launcher/url_launcher_string.dart';
 
-class PersonalPage extends GetView<PersonalController> with AppDialog {
+class PersonalPage extends GetView<PersonalController> {
   final MainController _mainController = Get.find<MainController>();
 
   PersonalPage({Key? key}) : super(key: key);
@@ -334,7 +335,7 @@ class PersonalPage extends GetView<PersonalController> with AppDialog {
   }
 
   _launchURL() async {
-    const url = 'https://actvn.edu.vn/';
+    const url = 'https://www.facebook.com/kitclubKMA';
     if (await canLaunchUrlString(url)) {
       await launchUrlString(url);
     } else {

@@ -6,8 +6,9 @@ import 'package:kit_schedule_v2/presentation/journey/todo/todo_controller.dart';
 import 'package:kit_schedule_v2/presentation/theme/export.dart';
 import 'package:kit_schedule_v2/presentation/widgets/app_dialog.dart';
 import 'package:kit_schedule_v2/presentation/widgets/loading_widget.dart';
+import 'package:kit_schedule_v2/presentation/widgets/warning_dialog.dart';
 
-class TodoPage extends GetView<TodoController> with AppDialog {
+class TodoPage extends GetView<TodoController> {
   const TodoPage({Key? key}) : super(key: key);
 
   //
