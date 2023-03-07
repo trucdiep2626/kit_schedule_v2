@@ -31,8 +31,14 @@ class SettingController extends GetxController with MixinController {
       isNotification.value = value;
       sharePreferencesConstants.setNotification(isNotification: value);
     } else {
-      showTopSnackBar(context,
-          message: 'Bạn chưa cấp quyền thông báo cho ứng dụng');
+      await Permission.notification.request();
+      if (await Permission.notification.isGranted) {
+        isNotification.value = value;
+        sharePreferencesConstants.setNotification(isNotification: value);
+      } else {
+        showTopSnackBar(context,
+            message: 'Bạn chưa cấp quyền thông báo cho ứng dụng');
+      }
     }
   }
 
@@ -41,8 +47,15 @@ class SettingController extends GetxController with MixinController {
       timeNotification.value = newValue;
       sharePreferencesConstants.setTimeNotification(timeNotification: newValue);
     } else {
-      showTopSnackBar(context,
-          message: 'Bạn chưa cấp quyền thông báo cho ứng dụng');
+      await Permission.notification.request();
+      if (await Permission.notification.isGranted) {
+        timeNotification.value = newValue;
+        sharePreferencesConstants.setTimeNotification(
+            timeNotification: newValue);
+      } else {
+        showTopSnackBar(context,
+            message: 'Bạn chưa cấp quyền thông báo cho ứng dụng');
+      }
     }
   }
 
