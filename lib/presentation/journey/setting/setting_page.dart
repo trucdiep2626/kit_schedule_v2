@@ -19,6 +19,7 @@ class SettingPage extends GetView<SettingController> {
 
   @override
   Widget build(BuildContext context) {
+    controller.context = context;
     return Scaffold(
       backgroundColor: AppColors.bianca,
       appBar: AppBar(

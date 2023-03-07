@@ -7,7 +7,9 @@ import 'package:kit_schedule_v2/domain/models/personal_schedule_model.dart';
 import 'package:kit_schedule_v2/domain/models/student_schedule_model.dart';
 import 'package:kit_schedule_v2/presentation/controllers/mixin/mixin_controller.dart';
 import 'package:kit_schedule_v2/presentation/journey/home/home_controller.dart';
+import 'package:kit_schedule_v2/presentation/widgets/export.dart';
 import 'package:kit_schedule_v2/services/local_notification_service.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 class SettingController extends GetxController with MixinController {
   RxBool isNotification = false.obs;
@@ -24,14 +26,24 @@ class SettingController extends GetxController with MixinController {
     timeNotification.value = sharePreferencesConstants.getTimeNotification();
   }
 
-  void onChangedNotification(bool value) {
-    isNotification.value = value;
-    sharePreferencesConstants.setNotification(isNotification: value);
+  void onChangedNotification(bool value) async {
+    if (await Permission.notification.isGranted) {
+      isNotification.value = value;
+      sharePreferencesConstants.setNotification(isNotification: value);
+    } else {
+      showTopSnackBar(context,
+          message: 'Bạn chưa cấp quyền thông báo cho ứng dụng');
+    }
   }
 
-  void onChangedTimeNotification(int newValue) {
-    timeNotification.value = newValue;
-    sharePreferencesConstants.setTimeNotification(timeNotification: newValue);
+  void onChangedTimeNotification(int newValue) async {
+    if (await Permission.notification.isGranted) {
+      timeNotification.value = newValue;
+      sharePreferencesConstants.setTimeNotification(timeNotification: newValue);
+    } else {
+      showTopSnackBar(context,
+          message: 'Bạn chưa cấp quyền thông báo cho ứng dụng');
+    }
   }
 
   ///lên 50 lịch học tính từ thời điểm hiện tại
@@ -105,6 +117,7 @@ class SettingController extends GetxController with MixinController {
   ///lên lịch lại mỗi lần mở app, lịch mới sẽ được tính từ thời điểm hiện tại
   void notifications() async {
     await LocalNotificationService.cancelAllScheduleNotification();
+
     if (isNotification.value) {
       _schoolScheduleNotifications();
       _personalScheduleNotifications();
