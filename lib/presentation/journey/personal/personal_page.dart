@@ -8,120 +8,134 @@ import 'package:kit_schedule_v2/presentation/journey/personal/personal_controlle
 import 'package:kit_schedule_v2/presentation/journey/setting/setting_controller.dart';
 import 'package:kit_schedule_v2/presentation/journey/setting/setting_page.dart';
 import 'package:kit_schedule_v2/presentation/theme/export.dart';
-import 'package:kit_schedule_v2/presentation/widgets/warning_dialog.dart';
+import 'package:kit_schedule_v2/presentation/widgets/app_dialog.dart';
+
 import 'package:url_launcher/url_launcher_string.dart';
 
-class PersonalPage extends GetView<PersonalController> {
+class PersonalPage extends GetView<PersonalController> with AppDialog {
   final MainController _mainController = Get.find<MainController>();
 
   PersonalPage({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: AppColors.bianca,
-      body: ListView(
-        padding: EdgeInsets.zero,
-        children: [
-          Container(
-            decoration: const BoxDecoration(),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
+    return controller.rxLoadedType.value == LoadedType.start
+        ? const Center(
+            child: CircularProgressIndicator(),
+          )
+        : Scaffold(
+            backgroundColor: AppColors.bianca,
+            body: ListView(
+              padding: EdgeInsets.zero,
               children: [
                 Container(
-                    margin: EdgeInsets.only(
-                      top: Get.mediaQuery.padding.top + 20.sp,
-                    ),
-                    padding: EdgeInsets.all(16.sp),
-                    decoration: const BoxDecoration(
-                      color: AppColors.blue100,
-                      shape: BoxShape.circle,
-                    ),
-                    child: Icon(
-                      Icons.person,
-                      color: AppColors.blue900,
-                      size: 32.sp,
-                    )),
-                Padding(
-                    padding: EdgeInsets.symmetric(vertical: 16.sp),
-                    child: Column(
-                      children: [
-                        Text(
-                          _mainController.studentInfo.value.displayName ?? '',
-                          textAlign: TextAlign.center,
-                          style: ThemeText.bodySemibold.s20.blue900,
-                        ),
-                        const SizedBox(
-                          height: 4,
-                        ),
-                        Text(
-                          _mainController.studentInfo.value.studentCode ?? '',
-                          textAlign: TextAlign.center,
-                          style: ThemeText.bodyRegular.s16,
-                        ),
-                      ],
-                    ))
+                  decoration: const BoxDecoration(),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Container(
+                          margin: EdgeInsets.only(
+                            top: Get.mediaQuery.padding.top + 20.sp,
+                          ),
+                          padding: EdgeInsets.all(16.sp),
+                          decoration: const BoxDecoration(
+                            color: AppColors.blue100,
+                            shape: BoxShape.circle,
+                          ),
+                          child: Icon(
+                            Icons.person,
+                            color: AppColors.blue900,
+                            size: 32.sp,
+                          )),
+                      Padding(
+                          padding: EdgeInsets.symmetric(vertical: 16.sp),
+                          child: Column(
+                            children: [
+                              Text(
+                                _mainController.studentInfo.value.displayName ??
+                                    '',
+                                textAlign: TextAlign.center,
+                                style: ThemeText.bodySemibold.s20.blue900,
+                              ),
+                              const SizedBox(
+                                height: 4,
+                              ),
+                              Text(
+                                _mainController.studentInfo.value.studentCode ??
+                                    '',
+                                textAlign: TextAlign.center,
+                                style: ThemeText.bodyRegular.s16,
+                              ),
+                            ],
+                          ))
+                    ],
+                  ),
+                ),
+                _buildListTile(
+                    icon: Icons.score_outlined,
+                    onTap: () async => await _mainController.onChangedNav(1),
+                    title: 'Điểm của tôi'),
+                // _buildListTile(
+                //     icon: Icons.language,
+                //     onTap: () {
+                //       showDialog(
+                //           context: context,
+                //           builder: (dialogContext) =>
+                //               settingDialog(context, true, profileState));
+                //     },
+                //     title: ''),
+                _buildListTile(
+                  icon: Icons.system_update_outlined,
+                  onTap: () {
+                    actionUpdateSchedule(context);
+                  },
+                  title: 'Cập nhật lịch học',
+                ),
+                _buildListTile(
+                  icon: Icons.settings_outlined,
+                  onTap: () {
+                    Get.to(() => const SettingPage());
+                  },
+                  title: 'Cài đặt',
+                ),
+                _buildListTile(
+                  icon: Icons.info_outline,
+                  onTap: _launchURL,
+                  title: 'Về chúng tôi',
+                ),
+                _buildListTile(
+                  icon: Icons.star_rate_outlined,
+                  onTap: _launchURL,
+                  //() {
+                  // StoreRedirect.redirect(
+                  //   androidAppId: ProfileConstants.androidAppId,
+                  // );
+                  //key: 'kma.hatuan314.schedule'
+                  // },
+                  title: 'Đánh giá',
+                ),
+                _buildListTile(
+                  icon:
+                      //profileState.isLogIn ?
+                      Icons.logout,
+                  //: Icons.login,
+                  onTap: () {
+                    controller.clearDataScore();
+                    actionLogIn(
+                      context,
+                    );
+                  },
+                  title: 'Đăng xuất',
+                ),
+                // if (profileState.isLogIn)
+                //   _buildListTile(
+                //     onTap: () => _actionDeleteAccount(context),
+                //     title: AppLocalizations.of(context)!.deleteAccount,
+                //     icon: Icons.no_accounts_rounded,
+                //   )
               ],
             ),
-          ),
-          _buildListTile(
-              icon: Icons.score_outlined,
-              onTap: () async => await _mainController.onChangedNav(1),
-              title: 'Điểm của tôi'),
-          // _buildListTile(
-          //     icon: Icons.language,
-          //     onTap: () {
-          //       showDialog(
-          //           context: context,
-          //           builder: (dialogContext) =>
-          //               settingDialog(context, true, profileState));
-          //     },
-          //     title: ''),
-          _buildListTile(
-            icon: Icons.settings_outlined,
-            onTap: () {
-              Get.to(() => const SettingPage());
-            },
-            title: 'Cài đặt',
-          ),
-          _buildListTile(
-            icon: Icons.info_outline,
-            onTap: _launchURL,
-            title: 'Về chúng tôi',
-          ),
-          _buildListTile(
-            icon: Icons.star_rate_outlined,
-            onTap: _launchURL,
-            //() {
-            // StoreRedirect.redirect(
-            //   androidAppId: ProfileConstants.androidAppId,
-            // );
-            //key: 'kma.hatuan314.schedule'
-            // },
-            title: 'Đánh giá',
-          ),
-          _buildListTile(
-            icon:
-                //profileState.isLogIn ?
-                Icons.logout,
-            //: Icons.login,
-            onTap: () {
-              controller.clearDataScore();
-              actionLogIn(
-                context,
-              );
-            },
-            title: 'Đăng xuất',
-          ),
-          // if (profileState.isLogIn)
-          //   _buildListTile(
-          //     onTap: () => _actionDeleteAccount(context),
-          //     title: AppLocalizations.of(context)!.deleteAccount,
-          //     icon: Icons.no_accounts_rounded,
-          //   )
-        ],
-      ),
-    );
+          );
   }
 
   // void _actionDeleteAccount(BuildContext context) {
@@ -136,6 +150,24 @@ class PersonalPage extends GetView<PersonalController> {
   //     },
   //   );
   // }
+  void actionUpdateSchedule(BuildContext context) {
+    final formKey = GlobalKey<FormState>();
+    updateScheduleDialog(
+      context: context,
+      key: formKey,
+      keepOldSchedule: controller.keepOldSchedule.value,
+      btnOk: (password) {
+        if (formKey.currentState!.validate()) {
+          controller.updateSchedule(password, context);
+        }
+      },
+      btnCancel: () => Get.back(),
+      onChanged: (value) {
+        controller.keepOldSchedule.value = value;
+        logger('keepOldSchedule: ${controller.keepOldSchedule.value}');
+      },
+    );
+  }
 
   void actionLogIn(
     BuildContext context,
