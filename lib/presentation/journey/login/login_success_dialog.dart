@@ -27,36 +27,45 @@ void loginSuccessDialog(BuildContext context) {
             SizedBox(
               height: AppDimens.height_8,
             ),
+            Text(
+              "Bạn vừa đăng nhập thành công trên ứng dụng KIT Schedule.",
+              textAlign: TextAlign.center,
+              style: ThemeText.bodyMedium.copyWith(
+                color: AppColors.grey700,
+                height: 1.75,
+                fontSize: 12.sp,
+              ),
+            ),
+            SizedBox(
+              height: AppDimens.height_4,
+            ),
             Text.rich(
-              TextSpan(
-                  text:
-                  "Bạn vừa đăng nhập thành công trên ứng dụng KIT Schedule.\nĐể đảm bảo thông tin của bạn được an toàn, KIT Schedule ",
-                  children: [
-                    TextSpan(
-                      text: "KHÔNG ",
-                      style: ThemeText.bodyMedium.copyWith(
-                        color: AppColors.grey700,
-                        fontWeight: FontWeight.bold,
-                        height: 1.75,
-                        fontSize: 12.sp,
-                      ),
-                    ),
-                    const TextSpan(
-                        text:
+              TextSpan(text: "Lưu ý rằng, KIT Schedule ", children: [
+                TextSpan(
+                  text: "KHÔNG ",
+                  style: ThemeText.bodyMedium.copyWith(
+                    color: AppColors.grey700,
+                    fontWeight: FontWeight.bold,
+                    height: 1.75,
+                    fontSize: 12.sp,
+                  ),
+                ),
+                const TextSpan(
+                    text:
                         "lưu trữ mật khẩu đăng nhập của sinh viên trên thiết bị cũng như bất kì cơ sở dữ liệu nào khác, "),
-                    TextSpan(
-                      text: "KHÔNG ",
-                      style: ThemeText.bodyMedium.copyWith(
-                        color: AppColors.grey700,
-                        fontWeight: FontWeight.bold,
-                        height: 1.75,
-                        fontSize: 12.sp,
-                      ),
-                    ),
-                    const TextSpan(
-                        text:
-                        "sử dụng tài khoản sinh viên cung cấp để đăng nhập website QLĐT nhằm trích xuất dữ liệu kết quả học tập.")
-                  ]),
+                TextSpan(
+                  text: "KHÔNG ",
+                  style: ThemeText.bodyMedium.copyWith(
+                    color: AppColors.grey700,
+                    fontWeight: FontWeight.bold,
+                    height: 1.75,
+                    fontSize: 12.sp,
+                  ),
+                ),
+                const TextSpan(
+                    text:
+                        "sử dụng tài khoản đăng nhập website QLĐT để trích xuất dữ liệu kết quả học tập.")
+              ]),
               style: ThemeText.bodyMedium.copyWith(
                 color: AppColors.grey700,
                 height: 1.75,
@@ -87,6 +96,7 @@ void loginSuccessDialog(BuildContext context) {
           ],
         ),
         alignment: Alignment.center,
+        margin: EdgeInsets.only(bottom: 16.sp),
         padding: EdgeInsets.symmetric(vertical: 12.sp),
         child: Text(
           'Tôi đã hiểu',
