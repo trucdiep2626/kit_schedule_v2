@@ -26,6 +26,7 @@ class _AboutScorePageState extends State<AboutScorePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: AppColors.backgroundColor,
         body: Column(
       children: [
         SizedBox(
