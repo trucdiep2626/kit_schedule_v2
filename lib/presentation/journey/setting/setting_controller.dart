@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:kit_schedule_v2/common/common_export.dart';
 import 'package:kit_schedule_v2/common/constants/shared_preferences_constants.dart';
 
 import 'package:kit_schedule_v2/common/utils/app_convert.dart';
@@ -89,7 +90,9 @@ class SettingController extends GetxController with MixinController {
       if (personalSchedules.indexOf(element) > 10) break;
       DateTime date = Convert.dateTimeConvert(element.timer!, element.date!)
           .add(Duration(minutes: -timeNotification));
-
+      if (isNullEmpty(element.note)) {
+        element.note = 'Bạn có lịch cá nhân!';
+      }
       String content = '${element.timer}  -  ${element.note!}';
       LocalNotificationService.setupNotification(
           title: element.name.toString(),
