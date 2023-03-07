@@ -208,18 +208,6 @@ class ScoreController extends GetxController with MixinController {
     };
   }
 
-  bool isExist(String name) {
-    int n = 0;
-    for (int i = 0; i < scoreUseCase.getLengthHiveScoresCell(); i++) {
-      if (scoreUseCase.compareToName(i, name)) {
-        n++;
-      }
-    }
-    if (n != 0) {
-      return true;
-    }
-    return false;
-  }
 
   void onSelectedAddSubject(int value) {
     /// this is to ensure that the popup menu is closed
