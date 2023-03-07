@@ -9,12 +9,19 @@ import 'package:kit_schedule_v2/presentation/journey/home/home_controller.dart';
 import 'package:kit_schedule_v2/services/local_notification_service.dart';
 
 class SettingController extends GetxController with MixinController {
-  RxBool isNotification = SharePreferencesConstants().getIsNotification().obs;
-  RxInt timeNotification =
-      SharePreferencesConstants().getTimeNotification().obs;
+  RxBool isNotification = false.obs;
+  RxInt timeNotification = 0.obs;
   SharePreferencesConstants sharePreferencesConstants;
 
   SettingController({required this.sharePreferencesConstants});
+  @override
+  void onInit() {
+    super.onInit();
+
+    notifications();
+    isNotification.value = sharePreferencesConstants.getIsNotification();
+    timeNotification.value = sharePreferencesConstants.getTimeNotification();
+  }
 
   void onChangedNotification(bool value) {
     isNotification.value = value;
@@ -26,7 +33,9 @@ class SettingController extends GetxController with MixinController {
     sharePreferencesConstants.setTimeNotification(timeNotification: newValue);
   }
 
+  ///lên 50 lịch học tính từ thời điểm hiện tại
   void _schoolScheduleNotifications() async {
+    //lấy ra những lịch học trong ngày
     List<StudentSchedule>? schoolSchedules =
         (Get.find<HomeController>().studentSchedule).where((element) {
       List lessonNumbers = element.lesson!.split(',');
@@ -40,7 +49,7 @@ class SettingController extends GetxController with MixinController {
       }
       return false;
     }).toList();
-
+//lên 50 lịch học
     for (var element in schoolSchedules) {
       if (schoolSchedules.indexOf(element) > 50) break;
 
@@ -62,7 +71,9 @@ class SettingController extends GetxController with MixinController {
     }
   }
 
+  ///lên 10 lịch cá nhân tính từ thời điểm hiện tại
   void _personalScheduleNotifications() async {
+    ///lấy ra những lịch cá nhân trong ngày
     List<PersonalScheduleModel> personalSchedules =
         (Get.find<HomeController>().personalSchedule).where((element) {
       DateTime date = Convert.dateTimeConvert(element.timer!, element.date!)
@@ -72,6 +83,8 @@ class SettingController extends GetxController with MixinController {
       }
       return false;
     }).toList();
+
+    ///lên 10 lịch cá nhân
     for (var element in personalSchedules) {
       if (personalSchedules.indexOf(element) > 10) break;
       DateTime date = Convert.dateTimeConvert(element.timer!, element.date!)
@@ -86,17 +99,12 @@ class SettingController extends GetxController with MixinController {
     }
   }
 
+  ///lên lịch lại mỗi lần mở app, lịch mới sẽ được tính từ thời điểm hiện tại
   void notifications() async {
     await LocalNotificationService.cancelAllScheduleNotification();
     if (isNotification.value) {
       _schoolScheduleNotifications();
       _personalScheduleNotifications();
-    } else {}
-  }
-
-  @override
-  void onInit() {
-    super.onInit();
-    notifications();
+    }
   }
 }

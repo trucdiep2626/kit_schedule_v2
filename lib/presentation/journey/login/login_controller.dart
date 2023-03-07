@@ -57,7 +57,6 @@ class LoginController extends GetxController with MixinController {
             !isNullEmpty(result?.studentInfo)) {
           sharePreferencesConstants.setIsLogIn(isLogIn: true);
         }
-
         Get.offAndToNamed(AppRoutes.main);
       } else {
         showTopSnackBar(context,
