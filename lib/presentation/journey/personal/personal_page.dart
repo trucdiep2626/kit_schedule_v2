@@ -1,3 +1,4 @@
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:kit_schedule_v2/common/common_export.dart';
@@ -8,6 +9,8 @@ import 'package:kit_schedule_v2/presentation/journey/personal/personal_controlle
 import 'package:kit_schedule_v2/presentation/journey/setting/setting_controller.dart';
 import 'package:kit_schedule_v2/presentation/journey/setting/setting_page.dart';
 import 'package:kit_schedule_v2/presentation/theme/export.dart';
+import 'package:kit_schedule_v2/presentation/widgets/export.dart';
+
 import 'package:kit_schedule_v2/presentation/widgets/app_dialog.dart';
 
 import 'package:url_launcher/url_launcher_string.dart';
@@ -16,6 +19,7 @@ class PersonalPage extends GetView<PersonalController> with AppDialog {
   final MainController _mainController = Get.find<MainController>();
 
   PersonalPage({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return controller.rxLoadedType.value == LoadedType.start

@@ -11,6 +11,7 @@ import 'package:kit_schedule_v2/domain/usecases/score_usecase.dart';
 import 'package:kit_schedule_v2/presentation/controllers/mixin/export.dart';
 import 'package:kit_schedule_v2/presentation/journey/main/main_controller.dart';
 import 'package:kit_schedule_v2/presentation/widgets/export.dart';
+import 'package:kit_schedule_v2/presentation/widgets/snack_bar/flash.dart';
 
 class PersonalController extends GetxController with MixinController {
   final MainController mainController = Get.find<MainController>();
@@ -45,6 +46,7 @@ class PersonalController extends GetxController with MixinController {
     return scoreUseCase.clearDataScore();
   }
 
+  // ignore: use_build_context_synchronously
   void updateSchedule(String password, BuildContext context) async {
     String? username = mainController.studentInfo.value.studentCode ?? '';
     if (!await NetworkState.isConnected) {
@@ -79,23 +81,26 @@ class PersonalController extends GetxController with MixinController {
           await schoolUseCase
               .insertSchoolScheduleLocal(result?.studentSchedule ?? []);
         }
-        // ignore: use_build_context_synchronously
+
         showTopSnackBar(context,
             message: 'Cập nhật lịch học thành công', type: SnackBarType.done);
       } else {
-        // ignore: use_build_context_synchronously
         showTopSnackBar(context,
-            message: 'Tài khoản đăng nhập không đúng',
-            type: SnackBarType.error);
+            message: 'Cập nhật lịch học thất bại', type: SnackBarType.error);
       }
     } on WrongPasswordError {
-      showTopSnackBar(context,
-          message: 'Đăng nhập thất bại', type: SnackBarType.error);
+      showTopSnackBar(
+        context,
+        message: 'Cập nhật lịch học thất bại',
+        type: SnackBarType.error,
+      );
     } catch (e) {
       debugPrint(e.toString());
-      showTopSnackBar(context,
-          message: 'Đã có lỗi xảy ra. Vui lòng thử lại',
-          type: SnackBarType.error);
+      showTopSnackBar(
+        context,
+        message: 'Đã có lỗi xảy ra. Vui lòng thử lại',
+        type: SnackBarType.error,
+      );
     }
 
     rxLoadedType.value = LoadedType.finish;
