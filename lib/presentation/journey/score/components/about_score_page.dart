@@ -19,33 +19,42 @@ class _AboutScorePageState extends State<AboutScorePage> {
   @override
   void initState() {
     super.initState();
-    controllerPinch = PdfControllerPinch(document: PdfDocument.openAsset(Assets.docs.aboutScore));
+    controllerPinch = PdfControllerPinch(
+        document: PdfDocument.openAsset(Assets.docs.aboutScore));
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        centerTitle: false,
-        leadingWidth: AppDimens.width_32,
-        leading: AppTouchable(
-          padding: EdgeInsets.only(left: AppDimens.width_12),
-          onPressed: Get.back,
-          child: const Icon(
-            Icons.arrow_back_rounded,
-            color: AppColors.blue900,
+        body: Column(
+      children: [
+        SizedBox(
+          height: AppDimens.appBarHeight,
+          child: AppBar(
+            centerTitle: false,
+            leadingWidth: AppDimens.width_32,
+            leading: AppTouchable(
+              padding: EdgeInsets.only(left: AppDimens.width_12),
+              onPressed: Get.back,
+              child: const Icon(
+                Icons.arrow_back_rounded,
+                color: AppColors.blue900,
+              ),
+            ),
+            backgroundColor: AppColors.backgroundColor,
+            iconTheme: const IconThemeData(color: AppColors.blue900),
+            titleTextStyle: ThemeText.bodySemibold.s18,
+            toolbarHeight: AppDimens.appBarHeight,
+            title: const Text("Cách tính điểm"),
           ),
         ),
-        backgroundColor: AppColors.backgroundColor,
-        iconTheme: const IconThemeData(color: AppColors.blue900),
-        titleTextStyle: ThemeText.bodySemibold.s18,
-        toolbarHeight: AppDimens.appBarHeight,
-        title: const Text("Cách tính điểm"),
-      ),
-      body: PdfViewPinch(
-        controller: controllerPinch,
-      )
-    );
+        Expanded(
+          child: PdfViewPinch(
+            padding: 0,
+            controller: controllerPinch,
+          ),
+        ),
+      ],
+    ));
   }
 }
-
