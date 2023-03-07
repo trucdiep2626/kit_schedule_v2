@@ -1,11 +1,12 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import 'package:kit_schedule_v2/common/constants/enums.dart';
+import 'package:kit_schedule_v2/common/injector/locators/app_locator.dart';
+import 'package:kit_schedule_v2/common/utils/analytics_utils.dart';
 
 import 'package:kit_schedule_v2/common/utils/app_screen_utils/flutter_screenutils.dart';
+import 'package:kit_schedule_v2/presentation/controllers/analytics_controller.dart';
 
 import 'package:kit_schedule_v2/presentation/journey/setting/setting_controller.dart';
 import 'package:kit_schedule_v2/presentation/theme/export.dart';
@@ -48,6 +49,8 @@ class SettingPage extends GetView<SettingController> {
                     materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
                     value: controller.isNotification.value,
                     onChanged: (value) {
+                      getIt<AnalyticsController>()
+                          .logEvent(AnalyticsEventType.notification);
                       controller.onChangedNotification(value);
                       controller.notifications();
                       showTopSnackBar(context,

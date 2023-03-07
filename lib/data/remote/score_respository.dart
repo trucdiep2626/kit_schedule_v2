@@ -222,28 +222,7 @@ class ScoreRepository {
     return Convert.scoreConvert(double.parse(avgScore));
   }
 
-  double calScorePointSystem4(String? alphabetScore) {
-    if (alphabetScore == 'F') {
-      return 0.0;
-    } else if (alphabetScore == 'D') {
-      return 1.0;
-    } else if (alphabetScore == 'D+') {
-      return 1.5;
-    } else if (alphabetScore == 'C') {
-      return 2.0;
-    } else if (alphabetScore == 'C+') {
-      return 2.5;
-    } else if (alphabetScore == 'B') {
-      return 3.0;
-    } else if (alphabetScore == 'B+') {
-      return 3.5;
-    } else if (alphabetScore == 'A') {
-      return 3.8;
-    } else if (alphabetScore == 'A+') {
-      return 4.0;
-    }
-    return 0.0;
-  }
+  
 
   Future<void> delSubject(int index) {
     return hiveConfig.hiveScoresCell.deleteAt(index);
@@ -282,7 +261,7 @@ class ScoreRepository {
         continue;
       } else {
         if (hiveConfig.hiveScoresCell.getAt(i) != null) {
-          sumSCoresCell += (calScorePointSystem4(
+          sumSCoresCell += (Convert.letterScoreConvert(
                   hiveConfig.hiveScoresCell.getAt(i)?.alphabetScore) *
               hiveConfig.hiveScoresCell.getAt(i)!.numberOfCredits!);
         }

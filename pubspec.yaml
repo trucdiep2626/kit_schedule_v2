@@ -79,6 +79,10 @@ dependencies:
   pdfx: 2.3.0
 
 
+  firebase_core: 2.7.0
+  firebase_analytics: 10.1.4
+  firebase_crashlytics: 3.0.15
+
 dev_dependencies:
 #  flutter_test:
 #    sdk: flutter
