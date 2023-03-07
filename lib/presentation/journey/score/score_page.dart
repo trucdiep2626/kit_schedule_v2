@@ -99,7 +99,8 @@ class ScorePage extends GetView<ScoreController> {
                 elevation: 0,
                 children: [
                   for (int i = 0; i < scores.length; i++)
-                    _buildScoreCell(i, controller.rxExpandedList[i], scores[i])
+                    _buildScoreCell(i, controller.rxExpandedList[i], scores[i],
+                        controller.rxcheckSubject[i])
                 ],
                 expansionCallback: controller.setExpandedCell,
               ),
@@ -148,7 +149,8 @@ class ScorePage extends GetView<ScoreController> {
     );
   }
 
-  ExpansionPanel _buildScoreCell(int index, bool isExpanded, Score score) {
+  ExpansionPanel _buildScoreCell(
+      int index, bool isExpanded, Score score, bool isAddLocal) {
     return ExpansionPanel(
       canTapOnHeader: true,
       backgroundColor:
@@ -174,7 +176,7 @@ class ScorePage extends GetView<ScoreController> {
                   style: ThemeText.bodySemibold,
                 ),
               ),
-              if (isExpanded) ...[
+              if (isExpanded && !isAddLocal) ...[
                 SizedBox(
                   width: AppDimens.width_12,
                 ),

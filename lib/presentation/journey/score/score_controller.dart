@@ -23,7 +23,7 @@ class ScoreController extends GetxController with MixinController {
 
   Rx<StudentScores?> rxStudentScores = (null as StudentScores?).obs;
   RxList<bool> rxExpandedList = <bool>[].obs;
-
+  RxList<bool> rxcheckSubject = <bool>[].obs;
   ScoreController(this.schoolUseCase, this.scoreUseCase);
 
   TextEditingController firstComponentScore = TextEditingController();
@@ -69,6 +69,7 @@ class ScoreController extends GetxController with MixinController {
         for (int index = 0; index < result!.scores!.length; index++) {
           if (scoreUseCase.isDuplicate(result, index)) {
             scoreUseCase.insertSubjectFromAPI(result, index);
+            rxcheckSubject.add(true);
           }
         }
       }
@@ -193,6 +194,7 @@ class ScoreController extends GetxController with MixinController {
         secondComponentScore: secondComponentScore.text.trim(),
       ),
     );
+    rxcheckSubject.add(false);
     showTopSnackBar(context,
         message: 'Thêm môn học thành công', type: SnackBarType.done);
     resetData();
