@@ -6,7 +6,9 @@ import 'package:kit_schedule_v2/presentation/widgets/export.dart';
 import 'flash.dart';
 
 void showTopSnackBar(BuildContext context,
-    {SnackBarType type = SnackBarType.warning, required String message}) {
+    {SnackBarType type = SnackBarType.warning,
+    required String message,
+    Duration duration = const Duration(seconds: 2)}) {
   showFlash(
       context: context,
       duration: const Duration(seconds: 2),
@@ -75,27 +77,26 @@ class AppSnackBarWidget extends StatelessWidget {
     return Container(
       margin: EdgeInsets.symmetric(horizontal: AppDimens.space_16),
       decoration: BoxDecoration(
-        borderRadius:
-            const BorderRadius.all(Radius.circular(AppDimens.radius_12)),
-        color: backgroundColor,
-        boxShadow: [
-          BoxShadow(
-            color: backgroundColor!,
-            blurRadius: 6,
-            offset: const Offset(0,3),
-          )
-        ]
-      ),
+          borderRadius:
+              const BorderRadius.all(Radius.circular(AppDimens.radius_12)),
+          color: backgroundColor,
+          boxShadow: [
+            BoxShadow(
+              color: backgroundColor!,
+              blurRadius: 6,
+              offset: const Offset(0, 3),
+            )
+          ]),
       padding: EdgeInsets.all(AppDimens.space_12),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
-     //   mainAxisAlignment: MainAxisAlignment.center,
+        //   mainAxisAlignment: MainAxisAlignment.center,
         children: [
           AppImageWidget(
             path: iconPath,
             width: AppDimens.space_20,
             height: AppDimens.space_20,
-         //   color: textColor,
+            //   color: textColor,
           ),
           SizedBox(
             width: AppDimens.space_12,

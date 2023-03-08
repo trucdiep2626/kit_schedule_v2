@@ -94,9 +94,9 @@ class LocalNotificationService {
 
   static void initNotificationLocal() async {
     tz.initializeTimeZones();
-    if (Permission.notification.isBlank == true) {
-      await Permission.notification.request();
-    }
+
+    await Permission.notification.request();
+
     const AndroidInitializationSettings initializationSettingsAndroid =
         AndroidInitializationSettings('@mipmap/ic_launcher');
     const DarwinInitializationSettings initializationSettingsIOS =
@@ -115,6 +115,15 @@ class LocalNotificationService {
         .resolvePlatformSpecificImplementation<
             AndroidFlutterLocalNotificationsPlugin>()
         ?.requestPermission();
+
+    flutterLocalNotificationsPlugin
+        .resolvePlatformSpecificImplementation<
+            IOSFlutterLocalNotificationsPlugin>()
+        ?.requestPermissions(
+          alert: true,
+          badge: true,
+          sound: true,
+        );
   }
 
   static void onTapNotification(NotificationResponse notificationResponse) {
