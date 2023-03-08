@@ -15,12 +15,16 @@ import 'package:kit_schedule_v2/presentation/widgets/snack_bar/flash.dart';
 
 class PersonalController extends GetxController with MixinController {
   final MainController mainController = Get.find<MainController>();
+  final formKey = GlobalKey<FormState>();
   Rx<LoadedType> rxPersonalLoadedType = LoadedType.finish.obs;
   ScoreUseCase scoreUseCase;
   SchoolUseCase schoolUseCase;
   PersonalUsecase personalUsecase;
   SharePreferencesConstants sharePreferencesConstants;
   RxBool keepOldSchedule = false.obs;
+  final passwordController = TextEditingController();
+
+  RxBool isShowPassword = false.obs;
   PersonalController(
       {required this.schoolUseCase,
       required this.personalUsecase,
@@ -37,7 +41,7 @@ class PersonalController extends GetxController with MixinController {
       await schoolUseCase.deleteStudentInfo();
       await schoolUseCase.deleteAllSchoolSchedulesLocal();
       await personalUsecase.deleteAllPersonalSchedulesLocal();
-      await await sharePreferencesConstants.setIsLogIn(isLogIn: false);
+      await sharePreferencesConstants.setIsLogIn(isLogIn: false);
       Get.offAllNamed(AppRoutes.login);
     } catch (e) {}
   }
@@ -47,21 +51,25 @@ class PersonalController extends GetxController with MixinController {
   }
 
   // ignore: use_build_context_synchronously
-  void updateSchedule(String password, BuildContext context) async {
+  void updateSchedule() async {
     String? username = mainController.studentInfo.value.studentCode ?? '';
+    if (!formKey.currentState!.validate()) {
+      return;
+    }
+    String password = passwordController.text;
+
     if (!await NetworkState.isConnected) {
       showTopSnackBar(context,
           message: 'Không có kết nối Internet', type: SnackBarType.error);
       return;
     }
 
-    rxLoadedType.value = LoadedType.start;
-
     if (username.isEmpty || password.isEmpty) {
       return;
     }
 
     try {
+      rxLoadedType.value = LoadedType.start;
       final result = await schoolUseCase.getSchoolSchedule(
           username: username.trim().toUpperCase(), password: password.trim());
       if (!isNullEmpty(result)) {
@@ -102,8 +110,8 @@ class PersonalController extends GetxController with MixinController {
         type: SnackBarType.error,
       );
     }
-
-    rxLoadedType.value = LoadedType.finish;
+    passwordController.clear();
     Get.back();
+    rxLoadedType.value = LoadedType.finish;
   }
 }
