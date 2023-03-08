@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:kit_schedule_v2/common/common_export.dart';
+import 'package:kit_schedule_v2/common/config/database/hive_config.dart';
 import 'package:kit_schedule_v2/common/config/network/network_state.dart';
 import 'package:kit_schedule_v2/domain/models/hive_score_cell.dart';
 import 'package:kit_schedule_v2/domain/models/score_model.dart';
@@ -23,7 +24,7 @@ class ScoreController extends GetxController with MixinController {
 
   Rx<StudentScores?> rxStudentScores = (null as StudentScores?).obs;
   RxList<bool> rxExpandedList = <bool>[].obs;
-  RxList<bool> rxcheckSubject = <bool>[].obs;
+  RxList<bool?> rxIsLocal = <bool>[].obs;
   ScoreController(this.schoolUseCase, this.scoreUseCase);
 
   TextEditingController firstComponentScore = TextEditingController();
@@ -32,7 +33,6 @@ class ScoreController extends GetxController with MixinController {
   RxString validateFirstComponentScore = ''.obs;
   RxString validateSecondComponentScore = ''.obs;
   RxString validateExamScore = ''.obs;
-
   Future<void> refreshRemote(bool isAdd) async {
     if (!await NetworkState.isConnected) {
       showTopSnackBar(context,
@@ -64,8 +64,7 @@ class ScoreController extends GetxController with MixinController {
       if (!isNullEmpty(result)) {
         for (int index = 0; index < result!.scores!.length; index++) {
           if (scoreUseCase.isDuplicate(result, index)) {
-            scoreUseCase.insertSubjectFromAPI(result, index);
-            rxcheckSubject.add(true);
+            scoreUseCase.insertSubjectFromAPI(result, index, true);
           }
         }
       }
@@ -166,9 +165,9 @@ class ScoreController extends GetxController with MixinController {
         textValidator: validateExamScore, textController: examScore.text)) {
       return;
     }
-
     scoreUseCase.insertScoreEng(
       HiveScoresCell(
+        isLocal: false,
         alphabetScore: scoreUseCase.calAlphabetScore(
             examScore: examScore.text,
             firstComponentScore: firstComponentScore.text,
@@ -189,7 +188,12 @@ class ScoreController extends GetxController with MixinController {
             double.parse(secondComponentScore.text.trim()).toStringAsFixed(1),
       ),
     );
-    rxcheckSubject.add(false);
+    log(scoreUseCase.getIsLocal(0)!.toString());
+    log(scoreUseCase.getLengthHiveScoresCell().toString());
+    for (int i = 0; i < scoreUseCase.getLengthHiveScoresCell(); i++) {
+      log(scoreUseCase.getIsLocal(i)!.toString());
+    }
+    // log(scoreUseCase.getHiveScoresCellBox().getAt(0)!.isLocal.toString());
     showTopSnackBar(context,
         message: 'Thêm môn học thành công', type: SnackBarType.done);
     resetData();
@@ -216,7 +220,6 @@ class ScoreController extends GetxController with MixinController {
     };
   }
 
-
   void onSelectedAddSubject(int value) {
     /// this is to ensure that the popup menu is closed
     Future.delayed(const Duration(), () {
@@ -225,7 +228,7 @@ class ScoreController extends GetxController with MixinController {
           compareIdEnd1: !isExist('Tiếng anh 1'),
           compareIdEnd2: !isExist('Tiếng anh 2'),
           compareIdEnd3: !isExist('Tiếng anh 3'),
-          context,
+          Get.context!,
           onPressedEng1: onPressedAddSubject(
             name: "Tiếng Anh 1",
             id: 'ATCBNN1',
@@ -265,7 +268,6 @@ class ScoreController extends GetxController with MixinController {
 
   void onPressRefresh() async {
     refreshKey.currentState?.show();
-
     await refreshRemote(true);
     showTopSnackBar(context,
         message: "Cập nhật điểm thành công", type: SnackBarType.done);
@@ -297,6 +299,11 @@ class ScoreController extends GetxController with MixinController {
 
   void _refreshLocal() {
     final scores = scoreUseCase.getHiveScoresCell();
+    for (int i = 0; i < scoreUseCase.getLengthHiveScoresCell(); i++) {
+      if (!isNullEmpty(scoreUseCase.getIsLocal(i))) {
+        rxIsLocal.add(scoreUseCase.getIsLocal(i)!);
+      }
+    }
     rxStudentScores.value = StudentScores(
       avgScore: scoreUseCase.avgScoresCell(),
       failedSubjects: scoreUseCase.calNoPassedSubjects(),

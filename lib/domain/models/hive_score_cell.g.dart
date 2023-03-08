@@ -25,13 +25,14 @@ class HiveScoresCellAdapter extends TypeAdapter<HiveScoresCell> {
       avgScore: fields[6] as String?,
       examScore: fields[5] as String?,
       secondComponentScore: fields[4] as String?,
+      isLocal: fields[8] as bool?,
     );
   }
 
   @override
   void write(BinaryWriter writer, HiveScoresCell obj) {
     writer
-      ..writeByte(8)
+      ..writeByte(9)
       ..writeByte(0)
       ..write(obj.name)
       ..writeByte(1)
@@ -47,7 +48,9 @@ class HiveScoresCellAdapter extends TypeAdapter<HiveScoresCell> {
       ..writeByte(6)
       ..write(obj.avgScore)
       ..writeByte(7)
-      ..write(obj.alphabetScore);
+      ..write(obj.alphabetScore)
+      ..writeByte(8)
+      ..write(obj.isLocal);
   }
 
   @override

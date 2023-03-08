@@ -10,8 +10,6 @@ import 'package:kit_schedule_v2/presentation/widgets/app_touchable.dart';
 import 'package:kit_schedule_v2/presentation/widgets/export.dart';
 import 'package:kit_schedule_v2/presentation/widgets/warning_dialog.dart';
 
-import 'components/popup_menu_add_subject.dart';
-
 class ScorePage extends GetView<ScoreController> {
   const ScorePage({Key? key}) : super(key: key);
 
@@ -72,14 +70,18 @@ class ScorePage extends GetView<ScoreController> {
                                 color: AppColors.blue900,
                               ),
                             ),
-                            _buildAppBarPopUpItem(
-                              title: "Thêm môn học",
-                              onTap: () => controller.onSelectedAddSubject(1),
-                              icon: const Icon(
-                                Icons.add_rounded,
-                                color: AppColors.blue900,
+                            if (!controller.isExist("Tiếng anh 1") ||
+                                !controller.isExist("Tiếng anh 2") ||
+                                !controller.isExist("Tiếng anh 3")) ...[
+                              _buildAppBarPopUpItem(
+                                title: "Thêm môn học",
+                                onTap: () => controller.onSelectedAddSubject(1),
+                                icon: const Icon(
+                                  Icons.add_rounded,
+                                  color: AppColors.blue900,
+                                ),
                               ),
-                            ),
+                            ],
                             _buildAppBarPopUpItem(
                               title: "Cách tính điểm",
                               onTap: () => Future.delayed(
@@ -128,7 +130,7 @@ class ScorePage extends GetView<ScoreController> {
                 children: [
                   for (int i = 0; i < scores.length; i++)
                     _buildScoreCell(i, controller.rxExpandedList[i], scores[i],
-                        controller.rxcheckSubject[i])
+                        controller.rxIsLocal[i] ?? false)
                 ],
                 expansionCallback: controller.setExpandedCell,
               ),

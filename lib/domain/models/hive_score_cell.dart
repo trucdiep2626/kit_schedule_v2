@@ -20,6 +20,8 @@ class HiveScoresCell {
   String? avgScore;
   @HiveField(7)
   String? alphabetScore;
+  @HiveField(8)
+  bool? isLocal;
   HiveScoresCell({
     this.name,
     this.id,
@@ -29,5 +31,6 @@ class HiveScoresCell {
     this.avgScore,
     this.examScore,
     this.secondComponentScore,
+    this.isLocal,
   });
 }

@@ -16,8 +16,9 @@ class ScoreUseCase {
     await scoreRepository.clearDataScore();
   }
 
-  Future<void> insertSubjectFromAPI(StudentScores studentScores, int index) {
-    return scoreRepository.insertSubjectFromAPI(studentScores, index);
+  Future<void> insertSubjectFromAPI(
+      StudentScores studentScores, int index, bool isLocal) {
+    return scoreRepository.insertSubjectFromAPI(studentScores, index, isLocal);
   }
 
   Future<void> saveDataIntoList(StudentScores studentScores) {
@@ -31,7 +32,9 @@ class ScoreUseCase {
   bool compareToId(int i, String id) {
     return scoreRepository.compareToId(i, id);
   }
-
+  bool? getIsLocal(int index) {
+    return scoreRepository.getIsLocal(index);
+  }
   bool compareToName(int i, String name) {
     return scoreRepository.compareToName(i, name);
   }
