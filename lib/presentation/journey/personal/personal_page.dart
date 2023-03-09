@@ -92,6 +92,14 @@ class PersonalPage extends GetView<PersonalController> {
                   title: 'Cập nhật lịch học',
                 ),
                 _buildListTile(
+                  onTap: () {
+                    Get.toNamed(AppRoutes.donate);
+                    donateDialog(context);
+                  },
+                  title: 'Ủng hộ',
+                  icon: Icons.monetization_on_outlined,
+                ),
+                _buildListTile(
                   icon: Icons.settings_outlined,
                   onTap: () {
                     Get.to(() => const SettingPage());

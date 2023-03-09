@@ -23,7 +23,8 @@ class DonatePage extends GetView<DonateController> {
               color: AppColors.blue900, size: 20),
         ),
       ),
-      body: Padding(
+      body: Container(
+        color: AppColors.backgroundColor,
         padding: const EdgeInsets.all(16.0),
         child: Center(
           child: Column(
