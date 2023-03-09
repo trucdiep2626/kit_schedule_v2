@@ -9,6 +9,7 @@ import 'package:kit_schedule_v2/presentation/journey/personal/personal_controlle
 import 'package:kit_schedule_v2/presentation/journey/setting/setting_controller.dart';
 import 'package:kit_schedule_v2/presentation/journey/setting/setting_page.dart';
 import 'package:kit_schedule_v2/presentation/theme/export.dart';
+import 'package:kit_schedule_v2/presentation/widgets/donate_dialog.dart';
 import 'package:kit_schedule_v2/presentation/widgets/export.dart';
 import 'package:kit_schedule_v2/presentation/widgets/warning_dialog.dart';
 import 'package:url_launcher/url_launcher_string.dart';
@@ -82,10 +83,16 @@ class PersonalPage extends GetView<PersonalController> {
           //     title: ''),
           _buildListTile(
             icon: Icons.settings_outlined,
-            onTap: () {
-              Get.to(() => const SettingPage());
-            },
+            onTap: () {},
             title: 'Cài đặt',
+          ),
+          _buildListTile(
+            icon: Icons.monetization_on_outlined,
+            onTap: () {
+              Get.toNamed(AppRoutes.donate);
+              donateDialog(context);
+            },
+            title: 'Ủng hộ',
           ),
           _buildListTile(
             icon: Icons.info_outline,
