@@ -1,4 +1,5 @@
 import 'package:awesome_dialog/awesome_dialog.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:kit_schedule_v2/common/common_export.dart';
@@ -9,8 +10,13 @@ import 'package:kit_schedule_v2/presentation/journey/personal/personal_controlle
 import 'package:kit_schedule_v2/presentation/journey/setting/setting_controller.dart';
 import 'package:kit_schedule_v2/presentation/journey/setting/setting_page.dart';
 import 'package:kit_schedule_v2/presentation/theme/export.dart';
+import 'package:kit_schedule_v2/presentation/widgets/donate_dialog.dart';
 import 'package:kit_schedule_v2/presentation/widgets/export.dart';
+
+import 'package:kit_schedule_v2/presentation/widgets/app_dialog.dart';
+import 'package:kit_schedule_v2/presentation/widgets/text_field_widget.dart';
 import 'package:kit_schedule_v2/presentation/widgets/warning_dialog.dart';
+
 import 'package:url_launcher/url_launcher_string.dart';
 
 class PersonalPage extends GetView<PersonalController> {
@@ -20,150 +26,128 @@ class PersonalPage extends GetView<PersonalController> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: AppColors.bianca,
-      body: ListView(
-        padding: EdgeInsets.zero,
-        children: [
-          Container(
-            decoration: const BoxDecoration(),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
+    controller.context = context;
+    return controller.rxPersonalLoadedType.value == LoadedType.start
+        ? const Center(
+            child: CupertinoActivityIndicator(),
+          )
+        : Scaffold(
+            backgroundColor: AppColors.bianca,
+            body: ListView(
+              padding: EdgeInsets.zero,
               children: [
                 Container(
-                    margin: EdgeInsets.only(
-                      top: Get.mediaQuery.padding.top + 20.sp,
-                    ),
-                    padding: EdgeInsets.all(16.sp),
-                    decoration: const BoxDecoration(
-                      color: AppColors.blue100,
-                      shape: BoxShape.circle,
-                    ),
-                    child: Icon(
-                      Icons.person,
-                      color: AppColors.blue900,
-                      size: 32.sp,
-                    )),
-                Padding(
-                    padding: EdgeInsets.symmetric(vertical: 16.sp),
-                    child: Column(
-                      children: [
-                        Text(
-                          _mainController.studentInfo.value.displayName ?? '',
-                          textAlign: TextAlign.center,
-                          style: ThemeText.bodySemibold.s20.blue900,
-                        ),
-                        const SizedBox(
-                          height: 4,
-                        ),
-                        Text(
-                          _mainController.studentInfo.value.studentCode ?? '',
-                          textAlign: TextAlign.center,
-                          style: ThemeText.bodyRegular.s16,
-                        ),
-                      ],
-                    ))
+                  decoration: const BoxDecoration(),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Container(
+                          margin: EdgeInsets.only(
+                            top: Get.mediaQuery.padding.top + 20.sp,
+                          ),
+                          padding: EdgeInsets.all(16.sp),
+                          decoration: const BoxDecoration(
+                            color: AppColors.blue100,
+                            shape: BoxShape.circle,
+                          ),
+                          child: Icon(
+                            Icons.person,
+                            color: AppColors.blue900,
+                            size: 32.sp,
+                          )),
+                      Padding(
+                          padding: EdgeInsets.symmetric(vertical: 16.sp),
+                          child: Column(
+                            children: [
+                              Text(
+                                _mainController.studentInfo.value.displayName ??
+                                    '',
+                                textAlign: TextAlign.center,
+                                style: ThemeText.bodySemibold.s20.blue900,
+                              ),
+                              const SizedBox(
+                                height: 4,
+                              ),
+                              Text(
+                                _mainController.studentInfo.value.studentCode ??
+                                    '',
+                                textAlign: TextAlign.center,
+                                style: ThemeText.bodyRegular.s16,
+                              ),
+                            ],
+                          ))
+                    ],
+                  ),
+                ),
+                _buildListTile(
+                    icon: Icons.score_outlined,
+                    onTap: () async => await _mainController.onChangedNav(1),
+                    title: 'Điểm của tôi'),
+                _buildListTile(
+                  icon: Icons.system_update_outlined,
+                  onTap: () {
+                    actionUpdateSchedule(context);
+                  },
+                  title: 'Cập nhật lịch học',
+                ),
+                _buildListTile(
+                  onTap: () {
+                    Get.toNamed(AppRoutes.donate);
+                    donateDialog(context);
+                  },
+                  title: 'Ủng hộ',
+                  icon: Icons.monetization_on_outlined,
+                ),
+                _buildListTile(
+                  icon: Icons.settings_outlined,
+                  onTap: () {
+                    Get.to(() => const SettingPage());
+                  },
+                  title: 'Cài đặt',
+                ),
+                _buildListTile(
+                  icon: Icons.info_outline,
+                  onTap: _launchURL,
+                  title: 'Về chúng tôi',
+                ),
+                _buildListTile(
+                  icon: Icons.star_rate_outlined,
+                  onTap: _launchURL,
+                  title: 'Đánh giá',
+                ),
+                _buildListTile(
+                  icon: Icons.logout,
+                  onTap: () {
+                    controller.clearDataScore();
+                    actionLogIn(
+                      context,
+                    );
+                  },
+                  title: 'Đăng xuất',
+                ),
               ],
             ),
-          ),
-          _buildListTile(
-              icon: Icons.score_outlined,
-              onTap: () async => await _mainController.onChangedNav(1),
-              title: 'Điểm của tôi'),
-          // _buildListTile(
-          //     icon: Icons.language,
-          //     onTap: () {
-          //       showDialog(
-          //           context: context,
-          //           builder: (dialogContext) =>
-          //               settingDialog(context, true, profileState));
-          //     },
-          //     title: ''),
-          _buildListTile(
-            icon: Icons.settings_outlined,
-            onTap: () {
-              Get.to(() => const SettingPage());
-            },
-            title: 'Cài đặt',
-          ),
-          _buildListTile(
-            icon: Icons.info_outline,
-            onTap: _launchURL,
-            title: 'Về chúng tôi',
-          ),
-          _buildListTile(
-            icon: Icons.star_rate_outlined,
-            onTap: _launchURL,
-            //() {
-            // StoreRedirect.redirect(
-            //   androidAppId: ProfileConstants.androidAppId,
-            // );
-            //key: 'kma.hatuan314.schedule'
-            // },
-            title: 'Đánh giá',
-          ),
-          _buildListTile(
-            icon:
-                //profileState.isLogIn ?
-                Icons.logout,
-            //: Icons.login,
-            onTap: () {
-              actionLogIn(
-                context,
-              );
-            },
-            title: 'Đăng xuất',
-          ),
-          // if (profileState.isLogIn)
-          //   _buildListTile(
-          //     onTap: () => _actionDeleteAccount(context),
-          //     title: AppLocalizations.of(context)!.deleteAccount,
-          //     icon: Icons.no_accounts_rounded,
-          //   )
-        ],
-      ),
+          );
+  }
+
+  void actionUpdateSchedule(BuildContext context) {
+    updateScheduleDialog(
+      key: controller.formKey,
+      btnOk: () {
+        controller.updateSchedule();
+      },
+      btnCancel: () => Get.back(),
     );
   }
 
-  // void _actionDeleteAccount(BuildContext context) {
-  //   warningDialog(
-  //     context: context,
-  //     isSynch: true,
-  //     name: AppLocalizations.of(context)!.deleteAccount,
-  //     btnCancel: (context) => Navigator.pop(context),
-  //     btnOk: (context) {
-  //       BlocProvider.of<HomeBloc>(context)..add(DeleteAccountEvent());
-  //       Navigator.of(context).pop();
-  //     },
-  //   );
-  // }
-
   void actionLogIn(
     BuildContext context,
-    //bool isLogIn
   ) {
-    //   if (isLogIn) {
     warningDialog(
         context: context,
-        //isSynch: true,
         btnOk: controller.logOut,
         btnCancel: () => Get.back());
-    //   } else {
-    //     Navigator.pushNamed(context, '/sign-in').then((value) {
-    //       if (value is bool && value) {
-    //         BlocProvider.of<HomeBloc>(context)
-    //             .add(OnTabChangeEvent(MainItem.CalendarTabScreenItem));
-    //         BlocProvider.of<CalendarBloc>(context).add(GetAllScheduleDataEvent());
-    //         BlocProvider.of<TodoBloc>(context).add(GetUserNameEvent());
-    //         BlocProvider.of<ProfileBloc>(context)
-    //             .add(GetUserNameInProfileEvent());
-    //         BlocProvider.of<ScoresBloc>(context)
-    //           ..add(InitEvent())
-    //           ..add(LoadScoresEvent());
-    //       }
-    //     });
-    //   }
   }
 
   bool isEnglish(String isEng) {
@@ -201,63 +185,6 @@ class PersonalPage extends GetView<PersonalController> {
       ),
     );
   }
-
-  // SimpleDialog(
-  //   contentPadding: EdgeInsets.only(
-  //     bottom: 16.sp,
-  //     top: 16.sp,
-  //   ),
-  //   title: Text('Thông báo',
-  //       style: ThemeText.bodySemibold.copyWith(color: AppColors.blue900)),
-  //   children: [
-  //     _dialogItem(
-  //       title: 'Bật thông báo',
-  //       context: context,
-  //       onTap: () {},
-  //       // isLanguageDialog
-  //       //     ? () {
-  //       //   Injector.getIt<LanguageSelect>().changeLanguage(true);
-  //       // }
-  //       //     : !profileState.hasNoti
-  //       //     ? () async {
-  //       //   if (await Permission.calendar.isDenied) {
-  //       //     Navigator.pop(context);
-  //       //     openSettingDiaLog(
-  //       //       context: context,
-  //       //     );
-  //       //     return;
-  //       //   } else {
-  //       //     BlocProvider.of<ProfileBloc>(context)
-  //       //         .add(TurnOnNotificationEvent());
-  //       //     Navigator.pop(context);
-  //       //     BlocProvider.of<ProfileBloc>(context)
-  //       //         .add(GetUserNameInProfileEvent());
-  //       //   }
-  //       // }
-  //       //     : () {},
-  //       visible: false,
-  //     ),
-  //     _dialogItem(
-  //       title: 'Tắt thông báo',
-  //       context: context,
-  //       onTap:
-  //           // isLanguageDialog
-  //           //     ? () {
-  //           //   Injector.getIt<LanguageSelect>().changeLanguage(false);
-  //           // }
-  //           //     : profileState.hasNoti
-  //           //     ? () {
-  //           //   BlocProvider.of<ProfileBloc>(context)
-  //           //       .add(TurnOffNotificationEvent());
-  //           //   Navigator.pop(context);
-  //           //   BlocProvider.of<ProfileBloc>(context)
-  //           //       .add(GetUserNameInProfileEvent());
-  //           // }
-  //           //     :
-  //           () {},
-  //       visible: true,
-  //     ),
-  //   ]);
 
   Widget _dialogItem(
       {required String title,
@@ -299,8 +226,187 @@ class PersonalPage extends GetView<PersonalController> {
         ]));
   }
 
+  void updateScheduleDialog({
+    String? name,
+    Key? key,
+    required Function() btnOk,
+    required Function() btnCancel,
+  }) {
+    AwesomeDialog(
+        dismissOnTouchOutside: false,
+        context: controller.context,
+        dialogType: DialogType.info,
+        animType: AnimType.bottomSlide,
+        body: Padding(
+          padding: EdgeInsets.symmetric(vertical: 8.sp, horizontal: 8.sp),
+          child: Obx(
+            () => controller.rxLoadedType.value == LoadedType.start
+                ? SizedBox(
+                    height: 200.sp,
+                    child: const Center(
+                      child: CupertinoActivityIndicator(
+                        radius: 25,
+                      ),
+                    ),
+                  )
+                : Column(
+                    children: [
+                      Text(
+                        'Cập nhật lịch học',
+                        style: ThemeText.bodySemibold.copyWith(
+                          color: AppColors.black54,
+                          fontSize: 16.sp,
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 8,
+                      ),
+                      name == null
+                          ? Text(
+                              'Nhập mật khẩu để cập nhật lịch học mới nhất',
+                              style: ThemeText.bodySemibold.copyWith(
+                                color: AppColors.black54,
+                                fontSize: 14.sp,
+                              ),
+                              overflow: TextOverflow.ellipsis,
+                              textAlign: TextAlign.center,
+                              maxLines: 3,
+                            )
+                          : Text(
+                              name,
+                              style: ThemeText.bodySemibold.copyWith(
+                                color: AppColors.black54,
+                                fontSize: 16.sp,
+                                fontWeight: FontWeight.normal,
+                              ),
+                              overflow: TextOverflow.ellipsis,
+                              maxLines: 3,
+                            ),
+                      SizedBox(
+                        height: 25.h,
+                      ),
+                      Form(
+                        key: controller.formKey,
+                        child: TextFieldWidget(
+                          hintText: 'Mật khẩu',
+                          controller: controller.passwordController,
+                          validate: (value) {
+                            if (value!.isEmpty) {
+                              return 'Vui lòng nhập mật khẩu';
+                            }
+                            return null;
+                          },
+                          onSubmitted: (p0) {
+                            controller.passwordController.text = p0;
+                          },
+                          obscureText: !controller.isShowPassword.value,
+                          seffixIcon: IconButton(
+                            icon: Icon(
+                              controller.isShowPassword.value
+                                  ? Icons.visibility
+                                  : Icons.visibility_off,
+                              color: AppColors.blue500,
+                            ),
+                            onPressed: () {
+                              controller.isShowPassword.value =
+                                  !controller.isShowPassword.value;
+                            },
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        height: 8.h,
+                      ),
+                      Row(
+                        children: [
+                          Obx(
+                            () => Checkbox(
+                              activeColor: AppColors.grey300,
+                              checkColor: AppColors.blue500,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(4),
+                              ),
+                              value: controller.keepOldSchedule.value,
+                              onChanged: (value) {
+                                controller.keepOldSchedule.value = value!;
+                              },
+                            ),
+                          ),
+                          Text(
+                            'Xóa lịch học cũ',
+                            style: ThemeText.bodySemibold.copyWith(
+                              color: AppColors.black54,
+                              fontSize: 14.sp,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+          ),
+        ),
+        btnOk: GestureDetector(
+          onTap: () => btnOk(),
+          child: Container(
+            margin: EdgeInsets.only(bottom: 16.sp),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(20),
+              color: AppColors.blue500,
+              boxShadow: [
+                BoxShadow(
+                  color: AppColors.charade.withOpacity(0.3),
+                  blurRadius: 5,
+                  spreadRadius: 1,
+                  offset: const Offset(
+                    0,
+                    3,
+                  ),
+                )
+              ],
+            ),
+            alignment: Alignment.center,
+            child: Padding(
+              padding: EdgeInsets.symmetric(vertical: 8.sp, horizontal: 16.sp),
+              child: Text(
+                'Đồng ý',
+                style: ThemeText.bodySemibold.s16.bianca,
+              ),
+            ),
+          ),
+        ),
+        btnCancel: GestureDetector(
+          onTap: () => btnCancel(),
+          child: Container(
+            margin: EdgeInsets.only(bottom: 16.sp),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(20),
+              color: AppColors.errorColor,
+              boxShadow: [
+                BoxShadow(
+                  color: AppColors.charade.withOpacity(0.3),
+                  blurRadius: 5,
+                  spreadRadius: 1,
+                  offset: const Offset(
+                    0,
+                    3,
+                  ),
+                )
+              ],
+            ),
+            alignment: Alignment.center,
+            child: Padding(
+              padding: EdgeInsets.symmetric(vertical: 8.sp, horizontal: 16.sp),
+              child: Text(
+                'Huỷ',
+                style: ThemeText.bodySemibold.s16.bianca,
+              ),
+            ),
+          ),
+        )).show();
+  }
+
   _launchURL() async {
-    const url = 'https://actvn.edu.vn/';
+    const url = 'https://www.facebook.com/kitclubKMA';
     if (await canLaunchUrlString(url)) {
       await launchUrlString(url);
     } else {
