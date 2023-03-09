@@ -10,6 +10,7 @@ import 'package:kit_schedule_v2/presentation/journey/personal/personal_controlle
 import 'package:kit_schedule_v2/presentation/journey/setting/setting_controller.dart';
 import 'package:kit_schedule_v2/presentation/journey/setting/setting_page.dart';
 import 'package:kit_schedule_v2/presentation/theme/export.dart';
+import 'package:kit_schedule_v2/presentation/widgets/donate_dialog.dart';
 import 'package:kit_schedule_v2/presentation/widgets/export.dart';
 
 import 'package:kit_schedule_v2/presentation/widgets/app_dialog.dart';
@@ -89,6 +90,14 @@ class PersonalPage extends GetView<PersonalController> {
                     actionUpdateSchedule(context);
                   },
                   title: 'Cập nhật lịch học',
+                ),
+                _buildListTile(
+                  onTap: () {
+                    Get.toNamed(AppRoutes.donate);
+                    donateDialog(context);
+                  },
+                  title: 'Ủng hộ',
+                  icon: Icons.monetization_on_outlined,
                 ),
                 _buildListTile(
                   icon: Icons.settings_outlined,
