@@ -10,6 +10,7 @@ import 'package:kit_schedule_v2/presentation/widgets/app_touchable.dart';
 import 'package:kit_schedule_v2/presentation/widgets/export.dart';
 import 'package:kit_schedule_v2/presentation/widgets/warning_dialog.dart';
 
+
 class ScorePage extends GetView<ScoreController> {
   const ScorePage({Key? key}) : super(key: key);
 

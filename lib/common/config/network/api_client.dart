@@ -26,7 +26,7 @@ class ApiClient {
       throw FetchDataError(message: noInternetMsg);
     }
 
-    final uri = Uri.parse(endpoint);
+    final uri = Uri.parse("https://kma.lucasdang.me/student/AT160424");
 
     try {
       _logRequest(url: uri, headers: header, params: '', type: 'GET');

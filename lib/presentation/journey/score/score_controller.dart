@@ -20,13 +20,11 @@ class ScoreController extends GetxController with MixinController {
   final MainController mainController = Get.find<MainController>();
   final SchoolUseCase schoolUseCase;
   final ScoreUseCase scoreUseCase;
+  ScoreController(this.schoolUseCase, this.scoreUseCase);
   late final GlobalKey<RefreshIndicatorState> refreshKey;
-
   Rx<StudentScores?> rxStudentScores = (null as StudentScores?).obs;
   RxList<bool> rxExpandedList = <bool>[].obs;
   RxList<bool?> rxIsLocal = <bool>[].obs;
-  ScoreController(this.schoolUseCase, this.scoreUseCase);
-
   TextEditingController firstComponentScore = TextEditingController();
   TextEditingController secondComponentScore = TextEditingController();
   TextEditingController examScore = TextEditingController();
@@ -69,7 +67,7 @@ class ScoreController extends GetxController with MixinController {
           }
         }
       }
-      scoreUseCase.localDataExist ? _refreshLocal() : refreshRemote();
+      _refreshLocal();
       if (isExist("ATCBNN1") && isExist("LTCBNN2") && isExist("ATCBNN6")) {
         Future.delayed(const Duration(seconds: 1), () async {
           showTopSnackBar(context,
@@ -122,7 +120,8 @@ class ScoreController extends GetxController with MixinController {
 
   Future<void> insertScoreIntoHive(bool isAdd) async {
     if (isAdd) {
-      scoreUseCase.insertScoreIntoHive(rxStudentScores.value, scoreUseCase);
+      scoreUseCase.insertScoreIntoHive(
+          rxStudentScores.value, scoreUseCase, rxIsLocal);
     }
   }
 
@@ -195,11 +194,7 @@ class ScoreController extends GetxController with MixinController {
             double.parse(secondComponentScore.text.trim()).toStringAsFixed(1),
       ),
     );
-    log(scoreUseCase.getIsLocal(0)!.toString());
-    log(scoreUseCase.getLengthHiveScoresCell().toString());
-    for (int i = 0; i < scoreUseCase.getLengthHiveScoresCell(); i++) {
-      log(scoreUseCase.getIsLocal(i)!.toString());
-    }
+
     showTopSnackBar(context,
         message: 'Thêm môn học thành công', type: SnackBarType.done);
     resetData();
@@ -305,7 +300,6 @@ class ScoreController extends GetxController with MixinController {
 
   void _refreshLocal() {
     final scores = scoreUseCase.getHiveScoresCell();
-
     final isLocals = <bool>[];
     for (int i = 0; i < scoreUseCase.getLengthHiveScoresCell(); i++) {
       if (!isNullEmpty(scoreUseCase.getIsLocal(i))) {

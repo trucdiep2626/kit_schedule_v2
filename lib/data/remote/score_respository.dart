@@ -41,16 +41,18 @@ class ScoreRepository {
         : '';
   }
 
-  Future<void> insertScoreIntoHive(
-      StudentScores? studentScores, ScoreUseCase scoreUseCase) async {
+  Future<void> insertScoreIntoHive(StudentScores? studentScores,
+      ScoreUseCase scoreUseCase, List<bool?> isLocal) async {
     if (studentScores != null) {
       studentScores.scores?.length = scoreUseCase.getLengthHiveScoresCell();
       studentScores.avgScore = scoreUseCase.avgScoresCell();
       studentScores.passedSubjects = scoreUseCase.calPassedSubjects();
       studentScores.failedSubjects = scoreUseCase.calNoPassedSubjects();
+
       for (int index = 0;
           index < scoreUseCase.getLengthHiveScoresCell();
           index++) {
+        isLocal.add(scoreUseCase.getIsLocal(index));
         studentScores.scores?[index].subject?.name =
             scoreUseCase.getName(index);
         studentScores.scores?[index].subject?.id = scoreUseCase.getID(index);
