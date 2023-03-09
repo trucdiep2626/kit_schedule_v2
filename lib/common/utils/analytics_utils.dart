@@ -5,6 +5,7 @@ enum AnalyticsEventType {
   score,
   todo,
   personal,
+  login,
 }
 
 extension AnalyticsEventTypeExtension on AnalyticsEventType {
@@ -28,6 +29,9 @@ extension AnalyticsEventTypeExtension on AnalyticsEventType {
         break;
       case AnalyticsEventType.personal:
         string = 'personal';
+        break;
+      case AnalyticsEventType.login:
+        string = 'login';
         break;
     }
     return string;

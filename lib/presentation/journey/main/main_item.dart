@@ -1,4 +1,3 @@
-import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:kit_schedule_v2/common/utils/analytics_utils.dart';
 import 'package:kit_schedule_v2/presentation/journey/home/home_page.dart';
@@ -53,8 +52,7 @@ extension MainItemExtension on MainItem {
     }
   }
 
-  AnalyticsEventType getEventType()
-    {
+  AnalyticsEventType getEventType() {
     switch (this) {
       case MainItem.home:
         return AnalyticsEventType.viewSchedule;
@@ -63,7 +61,7 @@ extension MainItemExtension on MainItem {
       case MainItem.personal:
         return AnalyticsEventType.todo;
       case MainItem.todo:
-        return AnalyticsEventType.todo;
+        return AnalyticsEventType.personal;
     }
   }
 }
