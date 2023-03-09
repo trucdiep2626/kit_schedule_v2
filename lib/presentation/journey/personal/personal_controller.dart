@@ -5,9 +5,11 @@ import 'package:kit_schedule_v2/domain/usecases/school_usecase.dart';
 import 'package:kit_schedule_v2/domain/usecases/score_usecase.dart';
 import 'package:kit_schedule_v2/presentation/controllers/mixin/export.dart';
 import 'package:kit_schedule_v2/presentation/journey/main/main_controller.dart';
+import 'package:kit_schedule_v2/presentation/journey/score/score_controller.dart';
 
 class PersonalController extends GetxController with MixinController {
   final MainController mainController = Get.find<MainController>();
+  final ScoreController scoreController = Get.find<ScoreController>();
   Rx<LoadedType> rxPersonalLoadedType = LoadedType.finish.obs;
   ScoreUseCase scoreUseCase;
   SchoolUseCase schoolUseCase;
@@ -30,12 +32,11 @@ class PersonalController extends GetxController with MixinController {
       await schoolUseCase.deleteStudentInfo();
       await schoolUseCase.deleteAllSchoolSchedulesLocal();
       await personalUsecase.deleteAllPersonalSchedulesLocal();
-      await await sharePreferencesConstants.setIsLogIn(isLogIn: false);
+      await sharePreferencesConstants.setIsLogIn(isLogIn: false);
+      scoreUseCase.clearDataScore();
+      scoreController.clearScreenData();
+      mainController.rxCurrentNavIndex.value = 0;
       Get.offAllNamed(AppRoutes.login);
     } catch (e) {}
-  }
-
-  Future<void> clearDataScore() {
-    return scoreUseCase.clearDataScore();
   }
 }

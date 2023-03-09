@@ -206,7 +206,7 @@ class ScorePage extends GetView<ScoreController> {
                   style: ThemeText.bodySemibold,
                 ),
               ),
-              if (isExpanded && !isAddLocal) ...[
+              if (isExpanded && isAddLocal) ...[
                 SizedBox(
                   width: AppDimens.width_12,
                 ),

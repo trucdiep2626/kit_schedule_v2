@@ -21,10 +21,6 @@ class ScoreUseCase {
     return scoreRepository.insertSubjectFromAPI(studentScores, index, isLocal);
   }
 
-  Future<void> saveDataIntoList(StudentScores studentScores) {
-    return scoreRepository.saveDataIntoList(studentScores);
-  }
-
   bool isDuplicate(StudentScores studentScores, int index) {
     return scoreRepository.isDuplicate(studentScores, index);
   }
@@ -32,9 +28,11 @@ class ScoreUseCase {
   bool compareToId(int i, String id) {
     return scoreRepository.compareToId(i, id);
   }
+
   bool? getIsLocal(int index) {
     return scoreRepository.getIsLocal(index);
   }
+
   bool compareToName(int i, String name) {
     return scoreRepository.compareToName(i, name);
   }

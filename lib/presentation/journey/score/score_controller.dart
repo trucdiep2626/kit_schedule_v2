@@ -33,18 +33,18 @@ class ScoreController extends GetxController with MixinController {
   RxString validateFirstComponentScore = ''.obs;
   RxString validateSecondComponentScore = ''.obs;
   RxString validateExamScore = ''.obs;
-  Future<void> refreshRemote(bool isAdd) async {
+  Future<void> refreshRemote() async {
     if (!await NetworkState.isConnected) {
       showTopSnackBar(context,
           message: 'Không có kết nối Internet', type: SnackBarType.error);
       return;
     }
     rxLoadedType.value = LoadedType.start;
-    await getScores(isAdd);
+    await getScores();
     rxLoadedType.value = LoadedType.finish;
   }
 
-  Future<void> getScores(bool isAdd) async {
+  Future<void> getScores() async {
     rxLoadedType.value = LoadedType.start;
 
     final studentCode =
@@ -61,14 +61,15 @@ class ScoreController extends GetxController with MixinController {
         rxExpandedList.value = List.generate(
             rxStudentScores.value?.scores?.length ?? 0, (index) => false);
       }
+
       if (!isNullEmpty(result)) {
         for (int index = 0; index < result!.scores!.length; index++) {
           if (scoreUseCase.isDuplicate(result, index)) {
-            scoreUseCase.insertSubjectFromAPI(result, index, true);
+            scoreUseCase.insertSubjectFromAPI(result, index, false);
           }
         }
       }
-      _refreshLocal();
+      scoreUseCase.localDataExist ? _refreshLocal() : refreshRemote();
       if (isExist("ATCBNN1") && isExist("LTCBNN2") && isExist("ATCBNN6")) {
         Future.delayed(const Duration(seconds: 1), () async {
           showTopSnackBar(context,
@@ -167,7 +168,7 @@ class ScoreController extends GetxController with MixinController {
     }
     scoreUseCase.insertScoreEng(
       HiveScoresCell(
-        isLocal: false,
+        isLocal: true,
         alphabetScore: scoreUseCase.calAlphabetScore(
             examScore: examScore.text,
             firstComponentScore: firstComponentScore.text,
@@ -193,7 +194,6 @@ class ScoreController extends GetxController with MixinController {
     for (int i = 0; i < scoreUseCase.getLengthHiveScoresCell(); i++) {
       log(scoreUseCase.getIsLocal(i)!.toString());
     }
-    // log(scoreUseCase.getHiveScoresCellBox().getAt(0)!.isLocal.toString());
     showTopSnackBar(context,
         message: 'Thêm môn học thành công', type: SnackBarType.done);
     resetData();
@@ -268,7 +268,7 @@ class ScoreController extends GetxController with MixinController {
 
   void onPressRefresh() async {
     refreshKey.currentState?.show();
-    await refreshRemote(true);
+    await refreshRemote();
     showTopSnackBar(context,
         message: "Cập nhật điểm thành công", type: SnackBarType.done);
   }
@@ -283,11 +283,11 @@ class ScoreController extends GetxController with MixinController {
   @override
   Future<void> onReady() async {
     super.onReady();
-    scoreUseCase.localDataExist ? _refreshLocal() : refreshRemote(true);
+    scoreUseCase.localDataExist ? _refreshLocal() : refreshRemote();
   }
 
   @override
-  void onInit() {
+  void onInit() async {
     super.onInit();
     refreshKey = GlobalKey<RefreshIndicatorState>();
   }
@@ -299,11 +299,14 @@ class ScoreController extends GetxController with MixinController {
 
   void _refreshLocal() {
     final scores = scoreUseCase.getHiveScoresCell();
+
+    final isLocals = <bool>[];
     for (int i = 0; i < scoreUseCase.getLengthHiveScoresCell(); i++) {
       if (!isNullEmpty(scoreUseCase.getIsLocal(i))) {
-        rxIsLocal.add(scoreUseCase.getIsLocal(i)!);
+        isLocals.add(scoreUseCase.getIsLocal(i)!);
       }
     }
+    rxIsLocal.value = isLocals;
     rxStudentScores.value = StudentScores(
       avgScore: scoreUseCase.avgScoresCell(),
       failedSubjects: scoreUseCase.calNoPassedSubjects(),
@@ -313,5 +316,9 @@ class ScoreController extends GetxController with MixinController {
       scores: scores.map(Score.fromHiveCell).toList(),
     );
     rxExpandedList.value = List.generate(scores.length, (index) => false);
+  }
+
+  void clearScreenData() {
+    rxStudentScores.value = null;
   }
 }
