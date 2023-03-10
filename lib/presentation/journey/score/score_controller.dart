@@ -111,7 +111,7 @@ class ScoreController extends GetxController with MixinController {
   bool checkScoreComponent({required textValidator, required textController}) {
     if (textController.trim().isNotEmpty) {
       if (double.parse(textController.trim()) < 4) {
-        textValidator.value = "Vui lòng nhập điểm >4";
+        textValidator.value = "Vui lòng nhập điểm >=4";
         return false;
       }
     }
