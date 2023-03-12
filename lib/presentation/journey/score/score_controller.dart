@@ -283,7 +283,6 @@ class ScoreController extends GetxController with MixinController {
   @override
   Future<void> onReady() async {
     super.onReady();
-    scoreUseCase.localDataExist ? _refreshLocal() : refreshRemote();
   }
 
   @override
@@ -295,6 +294,10 @@ class ScoreController extends GetxController with MixinController {
   void setExpandedCell(int index, bool expanded) {
     rxExpandedList.fillRange(0, rxExpandedList.length, false);
     rxExpandedList[index] = !expanded;
+  }
+
+  Future<void> getData() async {
+    scoreUseCase.localDataExist ? _refreshLocal() : await refreshRemote();
   }
 
   void _refreshLocal() {
