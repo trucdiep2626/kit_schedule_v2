@@ -46,6 +46,7 @@ class PersonalController extends GetxController with MixinController {
       await sharePreferencesConstants.setIsLogIn(isLogIn: false);
       scoreController.clearScreenData();
       await scoreUseCase.clearDataScore();
+      // Get.delete<ScoreController>();
       mainController.rxCurrentNavIndex.value = 0;
       Get.offAllNamed(AppRoutes.login);
     } catch (e) {}

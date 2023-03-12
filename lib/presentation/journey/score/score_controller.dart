@@ -3,7 +3,6 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:kit_schedule_v2/common/common_export.dart';
-import 'package:kit_schedule_v2/common/config/database/hive_config.dart';
 import 'package:kit_schedule_v2/common/config/network/network_state.dart';
 import 'package:kit_schedule_v2/domain/models/hive_score_cell.dart';
 import 'package:kit_schedule_v2/domain/models/score_model.dart';
@@ -288,7 +287,7 @@ class ScoreController extends GetxController with MixinController {
   }
 
   @override
-  void onInit() async {
+  void onInit() {
     super.onInit();
     refreshKey = GlobalKey<RefreshIndicatorState>();
   }
