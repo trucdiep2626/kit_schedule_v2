@@ -1,8 +1,12 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:core';
 import 'dart:io';
 
+import 'package:convert/convert.dart';
+import 'package:encrypt/encrypt.dart' as encrypt;
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
 import 'package:kit_schedule_v2/common/config/network/api_exceptions.dart';
 import 'package:kit_schedule_v2/common/config/network/network_state.dart';
@@ -15,11 +19,25 @@ class ApiClient {
   static String defaultLang = 'en';
   // No internet message
   static String noInternetMsg = 'Không có kết nối Internet.';
+  static String apiKey = dotenv.maybeGet('API_KEY', fallback: null) ?? '';
+  static String apiSecret = dotenv.maybeGet('API_SECRET', fallback: null) ?? '';
 
-  static Map<String, String> header = {
-    //   'Content-Type': 'application/json; charset=utf-8',
-    'Accept': '*/*'
-  };
+  static Map<String, String> header() {
+    final iv = encrypt.IV.fromSecureRandom(16);
+    final key = base64.decode(apiSecret);
+    final encrypter = encrypt.Encrypter(
+        encrypt.AES(encrypt.Key(key), mode: encrypt.AESMode.cbc));
+
+    final timestamp = (DateTime.now().millisecondsSinceEpoch / 1000).floor();
+    final encrypted = encrypter.encrypt(timestamp.toString(), iv: iv);
+
+    return {
+      'Accept': '*/*',
+      'X-KMA-API-KEY': apiKey,
+      'X-KMA-API-SECRET-HASH':
+          '${hex.encode(encrypted.bytes)}.${hex.encode(iv.bytes)}',
+    };
+  }
 
   static Future<dynamic> getRequest(String endpoint) async {
     if (!(await NetworkState.isConnected)) {
@@ -29,12 +47,12 @@ class ApiClient {
     final uri = Uri.parse(endpoint);
 
     try {
-      _logRequest(url: uri, headers: header, params: '', type: 'GET');
+      _logRequest(url: uri, headers: header(), params: '', type: 'GET');
 
       final result = http
           .get(
             uri,
-            headers: header,
+            headers: header(),
           )
           .then((value) => _handleResponse(value));
 
@@ -64,7 +82,7 @@ class ApiClient {
     try {
       _logRequest(
         url: uri,
-        headers: header,
+        headers: {},
         params: params,
         type: 'POST',
       );
@@ -72,7 +90,7 @@ class ApiClient {
       final result = http
           .post(
             uri,
-            headers: header,
+            //   headers: header(),
             body: json.encode(params),
           )
           .then((value) => _handleResponse(value));
@@ -125,9 +143,8 @@ class ApiClient {
       'Response │ Status: $statusCode\n$url',
     );
 
-    final code = json.decode(response.body)['code'] == null
-        ? json.decode(response.body)['statusCode']
-        : json.decode(response.body)['code'];
+    final code = json.decode(response.body)['code'] ??
+        json.decode(response.body)['statusCode'];
     message = json.decode(response.body)['message'].toString();
     // final success = json.decode(response.body)['success'];
 

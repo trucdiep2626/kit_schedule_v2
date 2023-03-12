@@ -77,11 +77,13 @@ dependencies:
   syncfusion_flutter_gauges: 20.4.43
   hive_flutter: 1.1.0
   pdfx: 2.3.0
-
-
+  encrypt: 5.0.1
+  cryptography: 2.5.0
   firebase_core: 2.7.0
   firebase_analytics: 10.1.4
   firebase_crashlytics: 3.0.15
+  convert: 3.1.0
+  flutter_dotenv: 5.0.2
 
 dev_dependencies:
 #  flutter_test:
@@ -110,6 +112,7 @@ flutter:
     - assets/icons/
     - assets/fonts/
     - assets/docs/
+    - .env
 
     # An image asset can refer to one or more resolution-specific "variants", see
     # https://flutter.dev/assets-and-images/#resolution-aware.
