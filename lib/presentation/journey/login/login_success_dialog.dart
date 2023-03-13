@@ -78,7 +78,10 @@ void loginSuccessDialog(BuildContext context) {
       ),
     ),
     btnOk: AppTouchable(
-      onPressed: Get.back,
+      onPressed: () {
+        Get.back();
+        Get.offAndToNamed(AppRoutes.main);
+      },
       child: Container(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(AppDimens.space_20),
@@ -98,13 +101,10 @@ void loginSuccessDialog(BuildContext context) {
         alignment: Alignment.center,
         margin: EdgeInsets.only(bottom: 16.sp),
         padding: EdgeInsets.symmetric(vertical: 12.sp),
-        child: GestureDetector(
-          onTap: () => Get.offAndToNamed(AppRoutes.main),
-          child: Text(
-            'Tôi đã hiểu',
-            style: ThemeText.bodySemibold
-                .copyWith(color: AppColors.bianca, fontSize: 18.sp),
-          ),
+        child: Text(
+          'Tôi đã hiểu',
+          style: ThemeText.bodySemibold
+              .copyWith(color: AppColors.bianca, fontSize: 18.sp),
         ),
       ),
     ),
