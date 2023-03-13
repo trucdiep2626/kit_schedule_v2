@@ -18,6 +18,7 @@ import 'package:kit_schedule_v2/presentation/widgets/text_field_widget.dart';
 import 'package:kit_schedule_v2/presentation/widgets/warning_dialog.dart';
 
 import 'package:url_launcher/url_launcher_string.dart';
+import 'package:store_redirect/store_redirect.dart';
 
 class PersonalPage extends GetView<PersonalController> {
   final MainController _mainController = Get.find<MainController>();
@@ -108,12 +109,12 @@ class PersonalPage extends GetView<PersonalController> {
                 ),
                 _buildListTile(
                   icon: Icons.info_outline,
-                  onTap: _launchURL,
+                  onTap: _launchURLKitClub,
                   title: 'Về chúng tôi',
                 ),
                 _buildListTile(
                   icon: Icons.star_rate_outlined,
-                  onTap: _launchURL,
+                  onTap: _launchURLChPlay,
                   title: 'Đánh giá',
                 ),
                 _buildListTile(
@@ -405,12 +406,19 @@ class PersonalPage extends GetView<PersonalController> {
         )).show();
   }
 
-  _launchURL() async {
-    const url = 'https://www.facebook.com/kitclubKMA';
-    if (await canLaunchUrlString(url)) {
-      await launchUrlString(url);
+  _launchURLKitClub() async {
+    const facebookAppUrl = "fb://page/384011765537773";
+    const facebookWebUrl = 'https://www.facebook.com/kitclubKMA';
+    if (await canLaunchUrlString(facebookAppUrl)) {
+      await launchUrlString(facebookAppUrl);
     } else {
-      debugPrint('Could not launch $url');
+      await launchUrlString(facebookWebUrl);
     }
+  }
+
+  _launchURLChPlay() async {
+    StoreRedirect.redirect(
+      androidAppId: "kma.hatuan314.schedule",
+    );
   }
 }
