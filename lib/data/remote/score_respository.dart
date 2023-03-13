@@ -20,7 +20,7 @@ class ScoreRepository {
   }
 
   Future<void> insertSubjectFromAPI(
-      StudentScores studentScores, int index) async {
+      StudentScores studentScores, int index, bool isLocal) async {
     studentScores.scores != null
         ? await hiveConfig.hiveScoresCell.add(
             HiveScoresCell(
@@ -35,45 +35,24 @@ class ScoreRepository {
               name: studentScores.scores?[index].subject?.name,
               numberOfCredits:
                   studentScores.scores?[index].subject?.numberOfCredits,
+              isLocal: isLocal,
             ),
           )
         : '';
   }
 
-  Future<void> saveDataIntoList(StudentScores? studentScores) async {
-    studentScores?.scores?.length = hiveConfig.hiveScoresCell.length;
-    studentScores?.avgScore = avgScoresCell();
-    studentScores?.passedSubjects = calPassedSubjects();
-    studentScores?.failedSubjects = calNoPassedSubjects();
-    for (int index = 0; index < getLengthHiveScoresCell(); index++) {
-      studentScores?.scores?.add(Score(
-        alphabetScore: hiveConfig.hiveScoresCell.getAt(index)!.alphabetScore,
-        avgScore: hiveConfig.hiveScoresCell.getAt(index)!.avgScore,
-        examScore: hiveConfig.hiveScoresCell.getAt(index)!.examScore,
-        firstComponentScore:
-            hiveConfig.hiveScoresCell.getAt(index)!.firstComponentScore,
-        secondComponentScore:
-            hiveConfig.hiveScoresCell.getAt(index)!.secondComponentScore,
-        subject: Subject(
-          id: hiveConfig.hiveScoresCell.getAt(index)!.id,
-          name: hiveConfig.hiveScoresCell.getAt(index)!.name,
-          numberOfCredits:
-              hiveConfig.hiveScoresCell.getAt(index)!.numberOfCredits,
-        ),
-      ));
-    }
-  }
-
-  Future<void> insertScoreIntoHive(
-      StudentScores? studentScores, ScoreUseCase scoreUseCase) async {
+  Future<void> insertScoreIntoHive(StudentScores? studentScores,
+      ScoreUseCase scoreUseCase, List<bool?> isLocal) async {
     if (studentScores != null) {
       studentScores.scores?.length = scoreUseCase.getLengthHiveScoresCell();
       studentScores.avgScore = scoreUseCase.avgScoresCell();
       studentScores.passedSubjects = scoreUseCase.calPassedSubjects();
       studentScores.failedSubjects = scoreUseCase.calNoPassedSubjects();
+
       for (int index = 0;
           index < scoreUseCase.getLengthHiveScoresCell();
           index++) {
+        isLocal.add(scoreUseCase.getIsLocal(index));
         studentScores.scores?[index].subject?.name =
             scoreUseCase.getName(index);
         studentScores.scores?[index].subject?.id = scoreUseCase.getID(index);
@@ -117,6 +96,10 @@ class ScoreRepository {
 
   String? getAlphabetScore(int index) {
     return hiveConfig.hiveScoresCell.getAt(index)?.alphabetScore;
+  }
+
+  bool? getIsLocal(int index) {
+    return hiveConfig.hiveScoresCell.getAt(index)?.isLocal;
   }
 
   int? getNumberOfCredits(int index) {
@@ -221,8 +204,6 @@ class ScoreRepository {
         .toString();
     return Convert.scoreConvert(double.parse(avgScore));
   }
-
-  
 
   Future<void> delSubject(int index) {
     return hiveConfig.hiveScoresCell.deleteAt(index);

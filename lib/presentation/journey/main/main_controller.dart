@@ -7,13 +7,15 @@ import 'package:kit_schedule_v2/presentation/controllers/analytics_controller.da
 import 'package:kit_schedule_v2/presentation/controllers/mixin/export.dart';
 import 'package:kit_schedule_v2/presentation/journey/home/home_controller.dart';
 import 'package:kit_schedule_v2/presentation/journey/main/main_item.dart';
+import 'package:kit_schedule_v2/presentation/journey/score/score_controller.dart';
 
 class MainController extends GetxController with MixinController {
   RxInt rxCurrentNavIndex = 0.obs;
   Rx<StudentInfo> studentInfo = StudentInfo().obs;
   SchoolUseCase schoolUseCase;
-
-  MainController(this.schoolUseCase);
+  RxBool isLogin = false.obs;
+  SharePreferencesConstants sharePreferencesConstants;
+  MainController(this.schoolUseCase, this.sharePreferencesConstants);
 
   Future<void> onChangedNav(int index) async {
     rxCurrentNavIndex.value = index;
@@ -21,6 +23,11 @@ class MainController extends GetxController with MixinController {
         .logEvent(MainItem.values[index].getEventType());
     if (index == 0) {
       await Get.find<HomeController>().getScheduleLocal();
+    }
+    isLogin.value = sharePreferencesConstants.getIsLogIn();
+    if (isLogin.value) {
+      ScoreController scoreController = Get.find<ScoreController>();
+      scoreController.getData(); //lấy data theo local hoặc lấy data theo api
     }
   }
 

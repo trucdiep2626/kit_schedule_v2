@@ -2,16 +2,17 @@ import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:kit_schedule_v2/common/utils/analytics_utils.dart';
+
 class AnalyticsController extends GetxController {
   final FirebaseAnalytics analytics = FirebaseAnalytics.instance;
 
-  FirebaseAnalyticsObserver getAnalyticsObserver() => FirebaseAnalyticsObserver(analytics: analytics);
-
+  FirebaseAnalyticsObserver getAnalyticsObserver() =>
+      FirebaseAnalyticsObserver(analytics: analytics);
 
   Future<void> logEvent(
-      AnalyticsEventType type, {
-        Map<String, dynamic>? parameters,
-      }) async {
+    AnalyticsEventType type, {
+    Map<String, dynamic>? parameters,
+  }) async {
     try {
       debugPrint('--------------${type.name}---------');
       await analytics.logEvent(
@@ -32,5 +33,4 @@ class AnalyticsController extends GetxController {
     debugPrint('------------${screenName ?? ''}-----------');
     return analytics.setCurrentScreen(screenName: screenName);
   }
-
 }

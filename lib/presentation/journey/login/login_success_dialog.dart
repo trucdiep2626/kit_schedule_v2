@@ -98,10 +98,13 @@ void loginSuccessDialog(BuildContext context) {
         alignment: Alignment.center,
         margin: EdgeInsets.only(bottom: 16.sp),
         padding: EdgeInsets.symmetric(vertical: 12.sp),
-        child: Text(
-          'Tôi đã hiểu',
-          style: ThemeText.bodySemibold
-              .copyWith(color: AppColors.bianca, fontSize: 18.sp),
+        child: GestureDetector(
+          onTap: () => Get.offAndToNamed(AppRoutes.main),
+          child: Text(
+            'Tôi đã hiểu',
+            style: ThemeText.bodySemibold
+                .copyWith(color: AppColors.bianca, fontSize: 18.sp),
+          ),
         ),
       ),
     ),

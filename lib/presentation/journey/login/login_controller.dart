@@ -13,7 +13,6 @@ import 'package:kit_schedule_v2/presentation/widgets/snack_bar/app_snack_bar.dar
 
 class LoginController extends GetxController with MixinController {
   LoginController(this.schoolUseCase, this.sharePreferencesConstants);
-
   GlobalKey<FormState> textFormKey = GlobalKey<FormState>();
   TextEditingController accountController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
@@ -21,7 +20,6 @@ class LoginController extends GetxController with MixinController {
   FocusNode passwordFocusNode = FocusNode();
   RxBool isShowingPassword = false.obs;
   RxBool isPasswordFocused = false.obs;
-
   SchoolUseCase schoolUseCase;
   SharePreferencesConstants sharePreferencesConstants;
 
@@ -59,9 +57,7 @@ class LoginController extends GetxController with MixinController {
             !isNullEmpty(result?.studentInfo)) {
           sharePreferencesConstants.setIsLogIn(isLogIn: true);
         }
-        getIt<AnalyticsController>()
-            .logEvent(AnalyticsEventType.login);
-        Get.offAndToNamed(AppRoutes.main);
+        getIt<AnalyticsController>().logEvent(AnalyticsEventType.login);
         loginSuccessDialog(Get.context!);
       } else {
         showTopSnackBar(

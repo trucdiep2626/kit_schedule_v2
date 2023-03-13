@@ -25,8 +25,8 @@ void configLocator() {
   getIt.registerLazySingleton<AppController>(() => AppController());
   getIt.registerFactory<SplashController>(
       () => SplashController(getIt<SharePreferencesConstants>()));
-  getIt.registerFactory<MainController>(
-      () => MainController(getIt<SchoolUseCase>()));
+  getIt.registerFactory<MainController>(() => MainController(
+      getIt<SchoolUseCase>(), getIt<SharePreferencesConstants>()));
   getIt.registerFactory<HomeController>(() => HomeController(
         schoolUseCase: getIt<SchoolUseCase>(),
         personalUseCase: getIt<PersonalUsecase>(),
