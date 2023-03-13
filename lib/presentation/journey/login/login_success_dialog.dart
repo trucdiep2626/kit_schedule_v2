@@ -80,7 +80,6 @@ void loginSuccessDialog(BuildContext context) {
     btnOk: AppTouchable(
       onPressed: () {
         Get.back();
-        Get.offAndToNamed(AppRoutes.main);
       },
       child: Container(
         decoration: BoxDecoration(
