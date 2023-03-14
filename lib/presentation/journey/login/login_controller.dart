@@ -60,8 +60,8 @@ class LoginController extends GetxController with MixinController {
           sharePreferencesConstants.setIsLogIn(isLogIn: true);
         }
         getIt<AnalyticsController>().logEvent(AnalyticsEventType.login);
+        sharePreferencesConstants.setShowDialog(showDialog: true);
         Get.offAndToNamed(AppRoutes.main);
-        loginSuccessDialog(Get.context!);
       } else {
         showTopSnackBar(
           context,

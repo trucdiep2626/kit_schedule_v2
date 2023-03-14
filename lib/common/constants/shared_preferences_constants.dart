@@ -9,7 +9,7 @@ class SharePreferencesConstants {
   static const String kIsNotification = "is_notification";
   static const String kTimeNotification = "time_notification";
   static const String kHasRunBefore = 'hasRunBefore';
-
+  static const String kShowDialog = 'showDialog';
   Future<void> init() async {
     prefs = await SharedPreferences.getInstance();
   }
@@ -20,6 +20,14 @@ class SharePreferencesConstants {
 
   int getTimeNotification() {
     return prefs.getInt(kTimeNotification) ?? 0;
+  }
+
+  Future<bool> setShowDialog({required bool showDialog}) {
+    return prefs.setBool(kShowDialog, showDialog);
+  }
+
+  bool getShowDialog() {
+    return prefs.getBool(kShowDialog) ?? false;
   }
 
   Future<bool> setNotification({required bool isNotification}) {

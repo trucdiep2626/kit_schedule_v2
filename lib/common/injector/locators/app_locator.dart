@@ -28,6 +28,7 @@ void configLocator() {
   getIt.registerFactory<MainController>(() => MainController(
       getIt<SchoolUseCase>(), getIt<SharePreferencesConstants>()));
   getIt.registerFactory<HomeController>(() => HomeController(
+        sharePrefes: getIt<SharePreferencesConstants>(),
         schoolUseCase: getIt<SchoolUseCase>(),
         personalUseCase: getIt<PersonalUsecase>(),
       ));
