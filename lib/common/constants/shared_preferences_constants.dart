@@ -1,3 +1,5 @@
+import 'package:kit_schedule_v2/common/common_export.dart';
+import 'package:kit_schedule_v2/common/config/database/hive_config.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SharePreferencesConstants {
@@ -6,6 +8,7 @@ class SharePreferencesConstants {
   static String isLogin = 'is_log_in';
   static const String kIsNotification = "is_notification";
   static const String kTimeNotification = "time_notification";
+  static const String kHasRunBefore = 'hasRunBefore';
 
   Future<void> init() async {
     prefs = await SharedPreferences.getInstance();
@@ -33,5 +36,16 @@ class SharePreferencesConstants {
 
   bool getIsLogIn() {
     return prefs.getBool(isLogin) ?? false;
+  }
+
+  Future<void> clearDataOnReinstall() async {
+    if (!(prefs.getBool(kHasRunBefore) ?? false)) {
+      final hiveConfig = getIt<HiveConfig>();
+      await hiveConfig.studentBox.clear();
+      await hiveConfig.hiveScoresCell.clear();
+      await hiveConfig.personalBox.clear();
+      await hiveConfig.scheduleBox.clear();
+      prefs.setBool(kHasRunBefore, true);
+    }
   }
 }
