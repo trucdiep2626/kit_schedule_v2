@@ -8,7 +8,6 @@ import 'package:kit_schedule_v2/domain/models/student_info_model.dart';
 import 'package:kit_schedule_v2/domain/usecases/school_usecase.dart';
 import 'package:kit_schedule_v2/presentation/controllers/analytics_controller.dart';
 import 'package:kit_schedule_v2/presentation/controllers/mixin/export.dart';
-import 'package:kit_schedule_v2/presentation/journey/login/login_success_dialog.dart';
 import 'package:kit_schedule_v2/presentation/widgets/snack_bar/app_snack_bar.dart';
 
 class LoginController extends GetxController with MixinController {
@@ -28,6 +27,8 @@ class LoginController extends GetxController with MixinController {
   }
 
   Future<void> onPressedLogin() async {
+    FocusScope.of(context).unfocus();
+
     if (!textFormKey.currentState!.validate()) {
       return;
     }
@@ -75,7 +76,6 @@ class LoginController extends GetxController with MixinController {
           message: 'Đã có lỗi xảy ra. Vui lòng thử lại',
           type: SnackBarType.error);
     }
-    accountFocusNode.requestFocus();
     rxLoadedType.value = LoadedType.finish;
   }
 }
