@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
 import 'package:kit_schedule_v2/common/common_export.dart';
 import 'package:kit_schedule_v2/domain/models/personal_schedule_model.dart';
@@ -11,19 +10,18 @@ import 'package:kit_schedule_v2/presentation/journey/login/login_controller.dart
 import 'package:kit_schedule_v2/presentation/journey/login/login_success_dialog.dart';
 import 'package:kit_schedule_v2/presentation/journey/main/main_controller.dart';
 import 'package:kit_schedule_v2/presentation/journey/todo/todo_controller.dart';
-import 'package:kit_schedule_v2/presentation/theme/export.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 class HomeController extends GetxController with MixinController {
   final SchoolUseCase schoolUseCase;
   final PersonalUsecase personalUseCase;
-  HomeController({
-    required this.schoolUseCase,
-    required this.personalUseCase,
-  });
+  final SharePreferencesConstants sharePrefes;
+  HomeController(
+      {required this.schoolUseCase,
+      required this.personalUseCase,
+      required this.sharePrefes});
 
   final MainController mainController = Get.find<MainController>();
-  Rx<bool> isLogin = false.obs;
   Rx<DateTime> selectedDate = DateTime.now().obs;
   Rx<DateTime> focusedDate = DateTime.now().obs;
   RxInt currentViewIndex = 0.obs;
@@ -31,7 +29,7 @@ class HomeController extends GetxController with MixinController {
   RxList<StudentSchedule> studentSchedule = <StudentSchedule>[].obs;
   RxList<PersonalScheduleModel> personalSchedule =
       <PersonalScheduleModel>[].obs;
-
+  bool _showDialog = false;
   Future<void> getScheduleLocal() async {
     await getSchoolScheduleLocal();
     await getPersonalScheduleLocal();
@@ -58,10 +56,18 @@ class HomeController extends GetxController with MixinController {
     currentViewIndex.value = newIndex;
   }
 
+  Future<void> _loadDialog() async {
+    _showDialog = sharePrefes.getShowDialog();
+    if (_showDialog) {
+      loginSuccessDialog(Get.context!);
+    }
+    sharePrefes.setShowDialog(showDialog: false);
+  }
+
   @override
   Future<void> onReady() async {
     super.onReady();
-    loginSuccessDialog(Get.context!);
+    await _loadDialog();
     await getScheduleLocal();
   }
 
