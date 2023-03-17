@@ -19,15 +19,17 @@ class MainController extends GetxController with MixinController {
 
   Future<void> onChangedNav(int index) async {
     rxCurrentNavIndex.value = index;
-    // getIt<AnalyticsController>()
-    //     .logEvent(MainItem.values[index].getEventType());
+    getIt<AnalyticsController>()
+        .logEvent(MainItem.values[index].getEventType());
     if (index == 0) {
       await Get.find<HomeController>().getScheduleLocal();
     }
-    isLogin.value = sharePreferencesConstants.getIsLogIn();
-    if (isLogin.value) {
-      ScoreController scoreController = Get.find<ScoreController>();
-      scoreController.getData(); //lấy data theo local hoặc lấy data theo api
+    if (index == 1) {
+      isLogin.value = sharePreferencesConstants.getIsLogIn();
+      if (isLogin.value) {
+        ScoreController scoreController = Get.find<ScoreController>();
+        scoreController.getData(); //lấy data theo local hoặc lấy data theo api
+      }
     }
   }
 
