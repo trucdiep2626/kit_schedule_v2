@@ -10,7 +10,6 @@ import 'package:kit_schedule_v2/presentation/widgets/app_touchable.dart';
 import 'package:kit_schedule_v2/presentation/widgets/export.dart';
 import 'package:kit_schedule_v2/presentation/widgets/warning_dialog.dart';
 
-
 class ScorePage extends GetView<ScoreController> {
   const ScorePage({Key? key}) : super(key: key);
 
@@ -35,6 +34,7 @@ class ScorePage extends GetView<ScoreController> {
                           _buildSubjectTableHeader(),
                           if (!isNullEmpty(controller.rxStudentScores))
                             _buildScoreTableData(),
+                          _buildCredit(),
                         ],
                       ),
               ),
@@ -108,6 +108,15 @@ class ScorePage extends GetView<ScoreController> {
     );
   }
 
+  Widget _buildCredit() {
+    return SliverToBoxAdapter(
+        child: Text(
+      'Nguốn dữ liệu điểm: https://score.superkma.com/',
+      textAlign: TextAlign.center,
+      style: ThemeText.bodyRegular.s12,
+    ));
+  }
+
   SliverList _buildScoreTableData() {
     return SliverList(
       delegate: SliverChildBuilderDelegate(
@@ -116,8 +125,11 @@ class ScorePage extends GetView<ScoreController> {
           if (scores.isEmpty) {
             return SizedBox(
               height: AppDimens.height_80,
-              child: const Center(
-                child: Text("Không có dữ liệu"),
+              child: Center(
+                child: Text(
+                  "Không có dữ liệu",
+                  style: ThemeText.bodySemibold.s16,
+                ),
               ),
             );
           }

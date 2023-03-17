@@ -51,7 +51,7 @@ class CalendarView extends GetView<HomeController> {
             ),
             todayDecoration: BoxDecoration(
               shape: BoxShape.circle,
-              color: AppColors.grey300,
+              color: AppColors.background,
               border: Border.all(
                 color: AppColors.blue500,
                 width: 1.sp,
