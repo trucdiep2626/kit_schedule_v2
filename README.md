@@ -28,7 +28,7 @@ fluttergen -c pubspec.yaml
 import './generated/assets.gen.dart';
 Now, you can get path icon from folder svg by `Assets.svg.icon.path`
 
-# Common rules folow dart standard
+# Common rules follow dart standard
 1. Naming convention:
  - name file use snake case 
  - name class/ variable/ function use camel case
