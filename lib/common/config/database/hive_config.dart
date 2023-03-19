@@ -1,9 +1,9 @@
 import 'package:hive/hive.dart';
-import 'package:kit_schedule_v2/common/config/database/hive_type_constants.dart';
-import 'package:kit_schedule_v2/domain/models/hive_score_cell.dart';
-import 'package:kit_schedule_v2/domain/models/personal_schedule_model.dart';
-import 'package:kit_schedule_v2/domain/models/student_info_model.dart';
-import 'package:kit_schedule_v2/domain/models/student_schedule_model.dart';
+import 'package:schedule/common/config/database/hive_type_constants.dart';
+import 'package:schedule/domain/models/hive_score_cell.dart';
+import 'package:schedule/domain/models/personal_schedule_model.dart';
+import 'package:schedule/domain/models/student_info_model.dart';
+import 'package:schedule/domain/models/student_schedule_model.dart';
 import 'package:path_provider/path_provider.dart' as path_provider;
 
 class HiveConfig {

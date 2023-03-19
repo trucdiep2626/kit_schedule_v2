@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:kit_schedule_v2/common/common_export.dart';
-import 'package:kit_schedule_v2/domain/models/score_model.dart';
-import 'package:kit_schedule_v2/presentation/journey/score/components/gpa_chart_widget.dart';
-import 'package:kit_schedule_v2/presentation/journey/score/score_controller.dart';
-import 'package:kit_schedule_v2/presentation/theme/export.dart';
-import 'package:kit_schedule_v2/presentation/widgets/app_expansion_panel_list.dart';
-import 'package:kit_schedule_v2/presentation/widgets/app_touchable.dart';
-import 'package:kit_schedule_v2/presentation/widgets/export.dart';
-import 'package:kit_schedule_v2/presentation/widgets/warning_dialog.dart';
+import 'package:schedule/common/common_export.dart';
+import 'package:schedule/domain/models/score_model.dart';
+import 'package:schedule/presentation/journey/score/components/gpa_chart_widget.dart';
+import 'package:schedule/presentation/journey/score/score_controller.dart';
+import 'package:schedule/presentation/theme/export.dart';
+import 'package:schedule/presentation/widgets/app_expansion_panel_list.dart';
+import 'package:schedule/presentation/widgets/app_touchable.dart';
+import 'package:schedule/presentation/widgets/export.dart';
+import 'package:schedule/presentation/widgets/warning_dialog.dart';
 
 class ScorePage extends GetView<ScoreController> {
   const ScorePage({Key? key}) : super(key: key);

@@ -1,7 +1,7 @@
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
-import 'package:kit_schedule_v2/common/utils/analytics_utils.dart';
+import 'package:schedule/common/utils/analytics_utils.dart';
 
 class AnalyticsController extends GetxController {
   final FirebaseAnalytics analytics = FirebaseAnalytics.instance;

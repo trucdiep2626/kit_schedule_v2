@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:kit_schedule_v2/presentation/theme/theme_color.dart';
+import 'package:schedule/presentation/theme/theme_color.dart';
 
 import 'style_of_status_bar_content.dart';
 

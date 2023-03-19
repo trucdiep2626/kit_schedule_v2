@@ -1,5 +1,5 @@
-import 'package:kit_schedule_v2/domain/models/student_info_model.dart';
-import 'package:kit_schedule_v2/domain/models/student_schedule_model.dart';
+import 'package:schedule/domain/models/student_info_model.dart';
+import 'package:schedule/domain/models/student_schedule_model.dart';
 
 class SchoolScheduleModel {
   StudentInfo? studentInfo;

@@ -1,7 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/services.dart';
-import 'package:kit_schedule_v2/common/common_export.dart';
+import 'package:schedule/common/common_export.dart';
 import 'package:intl/intl.dart';
 
 class PhoneNumberInputFormatter extends TextInputFormatter {

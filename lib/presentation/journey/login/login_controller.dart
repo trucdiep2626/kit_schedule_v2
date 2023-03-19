@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:kit_schedule_v2/common/common_export.dart';
-import 'package:kit_schedule_v2/common/config/network/api_exceptions.dart';
-import 'package:kit_schedule_v2/common/config/network/network_state.dart';
-import 'package:kit_schedule_v2/common/utils/analytics_utils.dart';
-import 'package:kit_schedule_v2/domain/models/student_info_model.dart';
-import 'package:kit_schedule_v2/domain/usecases/school_usecase.dart';
-import 'package:kit_schedule_v2/presentation/controllers/analytics_controller.dart';
-import 'package:kit_schedule_v2/presentation/controllers/mixin/export.dart';
-import 'package:kit_schedule_v2/presentation/journey/login/login_success_dialog.dart';
-import 'package:kit_schedule_v2/presentation/widgets/snack_bar/app_snack_bar.dart';
+import 'package:schedule/common/common_export.dart';
+import 'package:schedule/common/config/network/api_exceptions.dart';
+import 'package:schedule/common/config/network/network_state.dart';
+import 'package:schedule/common/utils/analytics_utils.dart';
+import 'package:schedule/domain/models/student_info_model.dart';
+import 'package:schedule/domain/usecases/school_usecase.dart';
+import 'package:schedule/presentation/controllers/analytics_controller.dart';
+import 'package:schedule/presentation/controllers/mixin/export.dart';
+import 'package:schedule/presentation/journey/login/login_success_dialog.dart';
+import 'package:schedule/presentation/widgets/snack_bar/app_snack_bar.dart';
 
 class LoginController extends GetxController with MixinController {
   LoginController(this.schoolUseCase, this.sharePreferencesConstants);

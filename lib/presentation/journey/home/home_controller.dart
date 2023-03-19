@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:kit_schedule_v2/common/common_export.dart';
-import 'package:kit_schedule_v2/domain/models/personal_schedule_model.dart';
-import 'package:kit_schedule_v2/domain/models/student_schedule_model.dart';
-import 'package:kit_schedule_v2/domain/usecases/personal_usecase.dart';
-import 'package:kit_schedule_v2/domain/usecases/school_usecase.dart';
-import 'package:kit_schedule_v2/presentation/controllers/mixin/export.dart';
-import 'package:kit_schedule_v2/presentation/journey/login/login_controller.dart';
-import 'package:kit_schedule_v2/presentation/journey/login/login_success_dialog.dart';
-import 'package:kit_schedule_v2/presentation/journey/main/main_controller.dart';
-import 'package:kit_schedule_v2/presentation/journey/todo/todo_controller.dart';
+import 'package:schedule/common/common_export.dart';
+import 'package:schedule/domain/models/personal_schedule_model.dart';
+import 'package:schedule/domain/models/student_schedule_model.dart';
+import 'package:schedule/domain/usecases/personal_usecase.dart';
+import 'package:schedule/domain/usecases/school_usecase.dart';
+import 'package:schedule/presentation/controllers/mixin/export.dart';
+import 'package:schedule/presentation/journey/login/login_controller.dart';
+import 'package:schedule/presentation/journey/login/login_success_dialog.dart';
+import 'package:schedule/presentation/journey/main/main_controller.dart';
+import 'package:schedule/presentation/journey/todo/todo_controller.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 class HomeController extends GetxController with MixinController {

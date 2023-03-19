@@ -1,5 +1,5 @@
-import 'package:kit_schedule_v2/common/common_export.dart';
-import 'package:kit_schedule_v2/common/config/database/hive_config.dart';
+import 'package:schedule/common/common_export.dart';
+import 'package:schedule/common/config/database/hive_config.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SharePreferencesConstants {

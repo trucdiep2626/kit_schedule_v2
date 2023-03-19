@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import 'package:kit_schedule_v2/common/constants/enums.dart';
-import 'package:kit_schedule_v2/common/injector/locators/app_locator.dart';
-import 'package:kit_schedule_v2/common/utils/analytics_utils.dart';
+import 'package:schedule/common/constants/enums.dart';
+import 'package:schedule/common/injector/locators/app_locator.dart';
+import 'package:schedule/common/utils/analytics_utils.dart';
 
-import 'package:kit_schedule_v2/common/utils/app_screen_utils/flutter_screenutils.dart';
-import 'package:kit_schedule_v2/presentation/controllers/analytics_controller.dart';
+import 'package:schedule/common/utils/app_screen_utils/flutter_screenutils.dart';
+import 'package:schedule/presentation/controllers/analytics_controller.dart';
 
-import 'package:kit_schedule_v2/presentation/journey/setting/setting_controller.dart';
-import 'package:kit_schedule_v2/presentation/theme/export.dart';
-import 'package:kit_schedule_v2/presentation/widgets/snack_bar/app_snack_bar.dart';
+import 'package:schedule/presentation/journey/setting/setting_controller.dart';
+import 'package:schedule/presentation/theme/export.dart';
+import 'package:schedule/presentation/widgets/snack_bar/app_snack_bar.dart';
 
-import 'package:kit_schedule_v2/common/utils/export.dart';
+import 'package:schedule/common/utils/export.dart';
 
 class SettingPage extends GetView<SettingController> {
   const SettingPage({super.key});

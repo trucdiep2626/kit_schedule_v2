@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:kit_schedule_v2/common/common_export.dart';
-import 'package:kit_schedule_v2/presentation/widgets/export.dart';
+import 'package:schedule/common/common_export.dart';
+import 'package:schedule/presentation/widgets/export.dart';
 
 class DonateController extends GetxController {
   String accountNumber = '9500101009004';

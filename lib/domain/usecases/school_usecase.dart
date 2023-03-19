@@ -1,8 +1,8 @@
-import 'package:kit_schedule_v2/data/remote/school_repository.dart';
-import 'package:kit_schedule_v2/domain/models/school_schedule_model.dart';
-import 'package:kit_schedule_v2/domain/models/score_model.dart';
-import 'package:kit_schedule_v2/domain/models/student_info_model.dart';
-import 'package:kit_schedule_v2/domain/models/student_schedule_model.dart';
+import 'package:schedule/data/remote/school_repository.dart';
+import 'package:schedule/domain/models/school_schedule_model.dart';
+import 'package:schedule/domain/models/score_model.dart';
+import 'package:schedule/domain/models/student_info_model.dart';
+import 'package:schedule/domain/models/student_schedule_model.dart';
 
 class SchoolUseCase {
   final SchoolRepository schoolRepository;

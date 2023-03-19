@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:kit_schedule_v2/common/common_export.dart';
-import 'package:kit_schedule_v2/gen/fonts.gen.dart';
+import 'package:schedule/common/common_export.dart';
+import 'package:schedule/gen/fonts.gen.dart';
 
 import 'theme_color.dart';
 

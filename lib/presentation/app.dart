@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:get/get.dart';
-import 'package:kit_schedule_v2/common/common_export.dart';
-import 'package:kit_schedule_v2/presentation/controllers/analytics_controller.dart';
+import 'package:schedule/common/common_export.dart';
+import 'package:schedule/presentation/controllers/analytics_controller.dart';
 
 import 'app_pages.dart';
 import 'theme/theme_data.dart';

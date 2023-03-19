@@ -1,5 +1,5 @@
 import 'package:get/get.dart';
-import 'package:kit_schedule_v2/presentation/journey/donate/controllers/donate_controller.dart';
+import 'package:schedule/presentation/journey/donate/controllers/donate_controller.dart';
 
 class DonateBinding extends Bindings {
   @override

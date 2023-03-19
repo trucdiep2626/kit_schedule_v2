@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:kit_schedule_v2/common/constants/theme_border.dart';
-import 'package:kit_schedule_v2/common/utils/app_convert.dart';
-import 'package:kit_schedule_v2/common/utils/export.dart';
-import 'package:kit_schedule_v2/domain/models/student_schedule_model.dart';
-import 'package:kit_schedule_v2/presentation/theme/export.dart';
+import 'package:schedule/common/constants/theme_border.dart';
+import 'package:schedule/common/utils/app_convert.dart';
+import 'package:schedule/common/utils/export.dart';
+import 'package:schedule/domain/models/student_schedule_model.dart';
+import 'package:schedule/presentation/theme/export.dart';
 
 class SchoolScheduleElementWidget extends StatelessWidget {
   final StudentSchedule schedule;

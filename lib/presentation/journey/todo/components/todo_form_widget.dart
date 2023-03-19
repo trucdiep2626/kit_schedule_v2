@@ -2,14 +2,14 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
-import 'package:kit_schedule_v2/common/utils/app_convert.dart';
-import 'package:kit_schedule_v2/common/utils/date_time_format.dart';
-import 'package:kit_schedule_v2/common/utils/export.dart';
-import 'package:kit_schedule_v2/presentation/journey/todo/components/custom_date_picker.dart';
-import 'package:kit_schedule_v2/presentation/journey/todo/components/set_time_widget.dart';
-import 'package:kit_schedule_v2/presentation/journey/todo/todo_controller.dart';
-import 'package:kit_schedule_v2/presentation/theme/export.dart';
-import 'package:kit_schedule_v2/presentation/widgets/text_field_widget.dart';
+import 'package:schedule/common/utils/app_convert.dart';
+import 'package:schedule/common/utils/date_time_format.dart';
+import 'package:schedule/common/utils/export.dart';
+import 'package:schedule/presentation/journey/todo/components/custom_date_picker.dart';
+import 'package:schedule/presentation/journey/todo/components/set_time_widget.dart';
+import 'package:schedule/presentation/journey/todo/todo_controller.dart';
+import 'package:schedule/presentation/theme/export.dart';
+import 'package:schedule/presentation/widgets/text_field_widget.dart';
 
 class TodoFormWidget extends GetView<TodoController> {
   // final GlobalKey<FormState> formKey;
