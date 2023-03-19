@@ -2,10 +2,10 @@ import 'dart:developer';
 
 import 'package:flutter/cupertino.dart';
 import 'package:intl/intl.dart';
-import 'package:kit_schedule_v2/common/common_export.dart';
-import 'package:kit_schedule_v2/common/config/database/hive_config.dart';
-import 'package:kit_schedule_v2/common/utils/date_time_format.dart';
-import 'package:kit_schedule_v2/domain/models/personal_schedule_model.dart';
+import 'package:schedule/common/common_export.dart';
+import 'package:schedule/common/config/database/hive_config.dart';
+import 'package:schedule/common/utils/date_time_format.dart';
+import 'package:schedule/domain/models/personal_schedule_model.dart';
 
 class LocalRepository {
   // Future<void> setPhone(String phone) async {

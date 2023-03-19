@@ -1,5 +1,5 @@
 import 'package:hive/hive.dart';
-import 'package:kit_schedule_v2/common/config/database/hive_type_constants.dart';
+import 'package:schedule/common/config/database/hive_type_constants.dart';
 
 part 'personal_schedule_model.g.dart';
 

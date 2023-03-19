@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rounded_date_picker/src/era_mode.dart';
 import 'package:flutter_rounded_date_picker/src/flutter_cupertino_rounded_date_picker_widget.dart';
-import 'package:kit_schedule_v2/common/utils/export.dart';
+import 'package:schedule/common/utils/export.dart';
 
 class CupertinoRoundedDatePickerWidget {
   static show(

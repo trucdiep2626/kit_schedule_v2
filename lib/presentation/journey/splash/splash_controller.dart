@@ -1,8 +1,8 @@
 import 'package:get/get.dart';
-import 'package:kit_schedule_v2/common/common_export.dart';
-import 'package:kit_schedule_v2/common/utils/analytics_utils.dart';
-import 'package:kit_schedule_v2/presentation/controllers/analytics_controller.dart';
-import 'package:kit_schedule_v2/presentation/controllers/mixin/export.dart';
+import 'package:schedule/common/common_export.dart';
+import 'package:schedule/common/utils/analytics_utils.dart';
+import 'package:schedule/presentation/controllers/analytics_controller.dart';
+import 'package:schedule/presentation/controllers/mixin/export.dart';
 
 class SplashController extends GetxController with MixinController {
   SplashController(this.sharedPref);

@@ -1,8 +1,8 @@
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:kit_schedule_v2/common/common_export.dart';
-import 'package:kit_schedule_v2/common/utils/analytics_utils.dart';
+import 'package:schedule/common/common_export.dart';
+import 'package:schedule/common/utils/analytics_utils.dart';
 
 import 'mixin/export.dart';
 

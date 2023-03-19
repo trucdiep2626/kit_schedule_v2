@@ -1,4 +1,4 @@
-import 'package:kit_schedule_v2/common/utils/logger.dart';
+import 'package:schedule/common/utils/logger.dart';
 
 abstract class APIErrors implements Exception {
   final dynamic code;

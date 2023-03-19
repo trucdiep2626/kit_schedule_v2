@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:kit_schedule_v2/presentation/journey/home/components/calendar_view.dart';
-import 'package:kit_schedule_v2/presentation/journey/home/components/schedule_view.dart';
-import 'package:kit_schedule_v2/presentation/theme/export.dart';
+import 'package:schedule/presentation/journey/home/components/calendar_view.dart';
+import 'package:schedule/presentation/journey/home/components/schedule_view.dart';
+import 'package:schedule/presentation/theme/export.dart';
 
 import 'home_controller.dart';
 

@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:kit_schedule_v2/common/common_export.dart';
-import 'package:kit_schedule_v2/presentation/journey/login/login_appbar.dart';
-import 'package:kit_schedule_v2/presentation/journey/login/login_controller.dart';
-import 'package:kit_schedule_v2/presentation/theme/export.dart';
-import 'package:kit_schedule_v2/presentation/widgets/loading_widget.dart';
-import 'package:kit_schedule_v2/presentation/widgets/text_field_widget.dart';
+import 'package:schedule/common/common_export.dart';
+import 'package:schedule/presentation/journey/login/login_appbar.dart';
+import 'package:schedule/presentation/journey/login/login_controller.dart';
+import 'package:schedule/presentation/theme/export.dart';
+import 'package:schedule/presentation/widgets/loading_widget.dart';
+import 'package:schedule/presentation/widgets/text_field_widget.dart';
 
 class LoginPage extends GetView<LoginController> {
   const LoginPage({Key? key}) : super(key: key);

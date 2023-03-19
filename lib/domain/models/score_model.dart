@@ -1,4 +1,4 @@
-import 'package:kit_schedule_v2/domain/models/hive_score_cell.dart';
+import 'package:schedule/domain/models/hive_score_cell.dart';
 
 class StudentScores {
   double? avgScore;

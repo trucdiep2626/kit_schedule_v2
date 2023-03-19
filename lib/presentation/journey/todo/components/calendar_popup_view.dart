@@ -1,8 +1,8 @@
 // import 'package:flutter/material.dart';
 // import 'package:get/get_utils/src/extensions/string_extensions.dart';
 // import 'package:intl/intl.dart';
-// import 'package:kit_schedule_v2/common/utils/export.dart';
-// import 'package:kit_schedule_v2/presentation/theme/export.dart';
+// import 'package:schedule/common/utils/export.dart';
+// import 'package:schedule/presentation/theme/export.dart';
 // import 'package:table_calendar/table_calendar.dart';
 //
 // class CalendarPopupView extends StatefulWidget {

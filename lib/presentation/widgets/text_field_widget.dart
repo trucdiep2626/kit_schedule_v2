@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:kit_schedule_v2/common/utils/export.dart';
-import 'package:kit_schedule_v2/presentation/theme/export.dart';
+import 'package:schedule/common/utils/export.dart';
+import 'package:schedule/presentation/theme/export.dart';
 
 class TextFieldWidget extends StatelessWidget {
   final TextEditingController? controller;

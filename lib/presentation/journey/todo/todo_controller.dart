@@ -3,16 +3,16 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:get/get.dart';
-import 'package:kit_schedule_v2/common/common_export.dart';
-import 'package:kit_schedule_v2/common/utils/app_convert.dart';
-import 'package:kit_schedule_v2/common/utils/date_time_format.dart';
-import 'package:kit_schedule_v2/domain/models/personal_schedule_model.dart';
-import 'package:kit_schedule_v2/domain/usecases/personal_usecase.dart';
-import 'package:kit_schedule_v2/presentation/controllers/mixin/export.dart';
-import 'package:kit_schedule_v2/presentation/journey/home/home_controller.dart';
-import 'package:kit_schedule_v2/presentation/journey/main/main_controller.dart';
-import 'package:kit_schedule_v2/presentation/journey/setting/setting_controller.dart';
-import 'package:kit_schedule_v2/presentation/widgets/export.dart';
+import 'package:schedule/common/common_export.dart';
+import 'package:schedule/common/utils/app_convert.dart';
+import 'package:schedule/common/utils/date_time_format.dart';
+import 'package:schedule/domain/models/personal_schedule_model.dart';
+import 'package:schedule/domain/usecases/personal_usecase.dart';
+import 'package:schedule/presentation/controllers/mixin/export.dart';
+import 'package:schedule/presentation/journey/home/home_controller.dart';
+import 'package:schedule/presentation/journey/main/main_controller.dart';
+import 'package:schedule/presentation/journey/setting/setting_controller.dart';
+import 'package:schedule/presentation/widgets/export.dart';
 
 class TodoController extends GetxController with MixinController {
   final MainController mainController = Get.find<MainController>();

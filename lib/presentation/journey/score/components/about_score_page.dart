@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:kit_schedule_v2/gen/assets.gen.dart';
-import 'package:kit_schedule_v2/presentation/theme/export.dart';
-import 'package:kit_schedule_v2/presentation/widgets/app_touchable.dart';
-import 'package:kit_schedule_v2/common/constants/app_dimens.dart';
+import 'package:schedule/gen/assets.gen.dart';
+import 'package:schedule/presentation/theme/export.dart';
+import 'package:schedule/presentation/widgets/app_touchable.dart';
+import 'package:schedule/common/constants/app_dimens.dart';
 import 'package:pdfx/pdfx.dart';
 
 class AboutScorePage extends StatefulWidget {

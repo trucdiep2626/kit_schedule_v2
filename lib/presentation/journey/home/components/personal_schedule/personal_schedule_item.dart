@@ -1,9 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:kit_schedule_v2/common/constants/theme_border.dart';
-import 'package:kit_schedule_v2/common/utils/export.dart';
-import 'package:kit_schedule_v2/domain/models/personal_schedule_model.dart';
-import 'package:kit_schedule_v2/presentation/theme/export.dart';
+import 'package:schedule/common/constants/theme_border.dart';
+import 'package:schedule/common/utils/export.dart';
+import 'package:schedule/domain/models/personal_schedule_model.dart';
+import 'package:schedule/presentation/theme/export.dart';
 
 class PersonalScheduleElementWidget extends StatelessWidget {
   final PersonalScheduleModel todo;
