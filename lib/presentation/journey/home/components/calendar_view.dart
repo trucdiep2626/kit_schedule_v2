@@ -35,6 +35,7 @@ class CalendarView extends GetView<HomeController> {
           focusedDay: controller.focusedDate.value,
           calendarFormat: CalendarFormat.month,
           rangeSelectionMode: RangeSelectionMode.toggledOff,
+          currentDay: controller.selectedDate.value,
           eventLoader: _getEventsForDay,
           startingDayOfWeek: StartingDayOfWeek.monday,
           selectedDayPredicate: (day) =>
