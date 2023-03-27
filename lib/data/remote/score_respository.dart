@@ -2,13 +2,13 @@ import 'dart:math';
 
 import 'package:get/get_rx/src/rx_types/rx_types.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:kit_schedule_v2/common/common_export.dart';
-import 'package:kit_schedule_v2/common/config/database/hive_config.dart';
-import 'package:kit_schedule_v2/common/config/network/api_client.dart';
-import 'package:kit_schedule_v2/common/config/network/api_endpoints.dart';
-import 'package:kit_schedule_v2/common/utils/app_convert.dart';
-import 'package:kit_schedule_v2/domain/models/score_model.dart';
-import 'package:kit_schedule_v2/domain/usecases/score_usecase.dart';
+import 'package:schedule/common/common_export.dart';
+import 'package:schedule/common/config/database/hive_config.dart';
+import 'package:schedule/common/config/network/api_client.dart';
+import 'package:schedule/common/config/network/api_endpoints.dart';
+import 'package:schedule/common/utils/app_convert.dart';
+import 'package:schedule/domain/models/score_model.dart';
+import 'package:schedule/domain/usecases/score_usecase.dart';
 
 import '../../domain/models/hive_score_cell.dart';
 

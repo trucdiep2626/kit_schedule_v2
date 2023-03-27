@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:kit_schedule_v2/presentation/theme/export.dart';
+import 'package:schedule/presentation/theme/export.dart';
 
 class PopUpMenuSubject extends StatelessWidget {
   final Function(int?) onSelected;

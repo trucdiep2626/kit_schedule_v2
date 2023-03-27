@@ -8,9 +8,9 @@ import 'package:encrypt/encrypt.dart' as encrypt;
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
-import 'package:kit_schedule_v2/common/config/network/api_exceptions.dart';
-import 'package:kit_schedule_v2/common/config/network/network_state.dart';
-import 'package:kit_schedule_v2/common/utils/logger.dart';
+import 'package:schedule/common/config/network/api_exceptions.dart';
+import 'package:schedule/common/config/network/network_state.dart';
+import 'package:schedule/common/utils/logger.dart';
 
 class ApiClient {
   // Base URL by flavor

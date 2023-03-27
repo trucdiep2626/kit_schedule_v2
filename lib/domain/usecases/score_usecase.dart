@@ -1,8 +1,8 @@
 import 'package:get/get_rx/src/rx_types/rx_types.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:kit_schedule_v2/data/remote/score_respository.dart';
-import 'package:kit_schedule_v2/domain/models/hive_score_cell.dart';
-import 'package:kit_schedule_v2/domain/models/score_model.dart';
+import 'package:schedule/data/remote/score_respository.dart';
+import 'package:schedule/domain/models/hive_score_cell.dart';
+import 'package:schedule/domain/models/score_model.dart';
 
 class ScoreUseCase {
   final ScoreRepository scoreRepository;

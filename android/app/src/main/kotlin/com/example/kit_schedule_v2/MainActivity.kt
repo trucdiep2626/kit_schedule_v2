@@ -1,4 +1,4 @@
-package com.example.kit_schedule_v2
+package kma.hatuan314.schedule
 
 import io.flutter.embedding.android.FlutterActivity
 

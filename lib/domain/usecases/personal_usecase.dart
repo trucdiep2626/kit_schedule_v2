@@ -1,5 +1,5 @@
-import 'package:kit_schedule_v2/data/local_repository.dart';
-import 'package:kit_schedule_v2/domain/models/personal_schedule_model.dart';
+import 'package:schedule/data/local_repository.dart';
+import 'package:schedule/domain/models/personal_schedule_model.dart';
 
 class PersonalUsecase {
   final LocalRepository localRepository;

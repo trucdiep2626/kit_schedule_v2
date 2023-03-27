@@ -1,4 +1,4 @@
-import 'package:kit_schedule_v2/common/common_export.dart';
+import 'package:schedule/common/common_export.dart';
 
 class AppDimens {
   /// Common

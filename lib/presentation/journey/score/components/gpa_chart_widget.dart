@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:kit_schedule_v2/common/common_export.dart';
-import 'package:kit_schedule_v2/common/extensions/number_extension.dart';
-import 'package:kit_schedule_v2/presentation/theme/theme_color.dart';
-import 'package:kit_schedule_v2/presentation/theme/theme_text.dart';
+import 'package:schedule/common/common_export.dart';
+import 'package:schedule/common/extensions/number_extension.dart';
+import 'package:schedule/presentation/theme/theme_color.dart';
+import 'package:schedule/presentation/theme/theme_text.dart';
 import 'package:syncfusion_flutter_gauges/gauges.dart';
 
 class GPACharWidget extends StatelessWidget {

@@ -1,14 +1,14 @@
 import 'package:get/get.dart';
-import 'package:kit_schedule_v2/common/common_export.dart';
-import 'package:kit_schedule_v2/common/constants/shared_preferences_constants.dart';
+import 'package:schedule/common/common_export.dart';
+import 'package:schedule/common/constants/shared_preferences_constants.dart';
 
-import 'package:kit_schedule_v2/common/utils/app_convert.dart';
-import 'package:kit_schedule_v2/domain/models/personal_schedule_model.dart';
-import 'package:kit_schedule_v2/domain/models/student_schedule_model.dart';
-import 'package:kit_schedule_v2/presentation/controllers/mixin/mixin_controller.dart';
-import 'package:kit_schedule_v2/presentation/journey/home/home_controller.dart';
-import 'package:kit_schedule_v2/presentation/widgets/export.dart';
-import 'package:kit_schedule_v2/services/local_notification_service.dart';
+import 'package:schedule/common/utils/app_convert.dart';
+import 'package:schedule/domain/models/personal_schedule_model.dart';
+import 'package:schedule/domain/models/student_schedule_model.dart';
+import 'package:schedule/presentation/controllers/mixin/mixin_controller.dart';
+import 'package:schedule/presentation/journey/home/home_controller.dart';
+import 'package:schedule/presentation/widgets/export.dart';
+import 'package:schedule/services/local_notification_service.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 class SettingController extends GetxController with MixinController {

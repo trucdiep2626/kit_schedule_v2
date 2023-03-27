@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:kit_schedule_v2/common/common_export.dart';
-import 'package:kit_schedule_v2/common/utils/date_time_format.dart';
-import 'package:kit_schedule_v2/domain/models/personal_schedule_model.dart';
-import 'package:kit_schedule_v2/presentation/journey/home/components/personal_schedule/personal_schedule_item.dart';
-import 'package:kit_schedule_v2/presentation/journey/home/home_controller.dart';
-import 'package:kit_schedule_v2/presentation/theme/export.dart';
+import 'package:schedule/common/common_export.dart';
+import 'package:schedule/common/utils/date_time_format.dart';
+import 'package:schedule/domain/models/personal_schedule_model.dart';
+import 'package:schedule/presentation/journey/home/components/personal_schedule/personal_schedule_item.dart';
+import 'package:schedule/presentation/journey/home/home_controller.dart';
+import 'package:schedule/presentation/theme/export.dart';
 
 class PersonalScheduleWidget extends GetView<HomeController> {
   const PersonalScheduleWidget({Key? key, required this.selectedDate})

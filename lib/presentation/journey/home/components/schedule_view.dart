@@ -1,10 +1,10 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:kit_schedule_v2/common/utils/export.dart';
-import 'package:kit_schedule_v2/presentation/journey/home/components/personal_schedule/personal_schedule_view.dart';
-import 'package:kit_schedule_v2/presentation/journey/home/components/school_schedule/school_schedule_view.dart';
-import 'package:kit_schedule_v2/presentation/journey/home/home_controller.dart';
+import 'package:schedule/common/utils/export.dart';
+import 'package:schedule/presentation/journey/home/components/personal_schedule/personal_schedule_view.dart';
+import 'package:schedule/presentation/journey/home/components/school_schedule/school_schedule_view.dart';
+import 'package:schedule/presentation/journey/home/home_controller.dart';
 
 class ScheduleView extends GetView<HomeController> {
   const ScheduleView({Key? key}) : super(key: key);

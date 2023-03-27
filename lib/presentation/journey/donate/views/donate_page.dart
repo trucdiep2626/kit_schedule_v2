@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:kit_schedule_v2/common/utils/app_screen_utils/flutter_screenutils.dart';
-import 'package:kit_schedule_v2/gen/assets.gen.dart';
-import 'package:kit_schedule_v2/presentation/journey/donate/controllers/donate_controller.dart';
-import 'package:kit_schedule_v2/presentation/theme/export.dart';
-import 'package:kit_schedule_v2/presentation/widgets/app_image_widget.dart';
+import 'package:schedule/common/utils/app_screen_utils/flutter_screenutils.dart';
+import 'package:schedule/gen/assets.gen.dart';
+import 'package:schedule/presentation/journey/donate/controllers/donate_controller.dart';
+import 'package:schedule/presentation/theme/export.dart';
+import 'package:schedule/presentation/widgets/app_image_widget.dart';
 
 class DonatePage extends GetView<DonateController> {
   const DonatePage({Key? key}) : super(key: key);

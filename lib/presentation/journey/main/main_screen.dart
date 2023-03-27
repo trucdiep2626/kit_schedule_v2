@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:kit_schedule_v2/common/common_export.dart';
-import 'package:kit_schedule_v2/presentation/journey/home/home_page.dart';
-import 'package:kit_schedule_v2/presentation/journey/main/main_item.dart';
-import 'package:kit_schedule_v2/presentation/journey/personal/personal_page.dart';
-import 'package:kit_schedule_v2/presentation/journey/score/score_page.dart';
-import 'package:kit_schedule_v2/presentation/journey/todo/todo_page.dart';
-import 'package:kit_schedule_v2/presentation/theme/export.dart';
+import 'package:schedule/common/common_export.dart';
+import 'package:schedule/presentation/journey/home/home_page.dart';
+import 'package:schedule/presentation/journey/main/main_item.dart';
+import 'package:schedule/presentation/journey/personal/personal_page.dart';
+import 'package:schedule/presentation/journey/score/score_page.dart';
+import 'package:schedule/presentation/journey/todo/todo_page.dart';
+import 'package:schedule/presentation/theme/export.dart';
 
 import 'main_controller.dart';
 
