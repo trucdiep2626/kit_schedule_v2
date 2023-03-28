@@ -75,6 +75,7 @@ class CalendarView extends GetView<HomeController> {
               color: AppColors.black,
             ),
           ),
+          currentDay: controller.selectedDate.value,
           headerStyle: HeaderStyle(
             titleTextStyle: ThemeText.bodySemibold.black54.s18,
             formatButtonVisible: false,
