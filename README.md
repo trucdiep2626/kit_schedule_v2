@@ -2,17 +2,17 @@
 
 #Flutter version 3.0.5
 
-# Run to generated code with buiild_runner and freezed
+# Run to generated code with build_runner and freezed
 - You setup build environment for the first time.
 - You modified any code with the annotation `@freezed`.
 
-```
+```bash
 flutter pub run build_runner build --delete-conflicting-outputs
 ```
 
 # Run to generate translated message code
 
-```
+```bash
 flutter pub run intl_utils:generate
 ```
 Now, you can get the localized text by `L10n.of(context).msgap001`.
@@ -21,7 +21,7 @@ Now, you can get the localized text by `L10n.of(context).msgap001`.
 - docs: https://pub.dev/packages/flutter_gen
 - note: do not create directory 'default'
 
-```
+```bash
 fluttergen -c pubspec.yaml
 ```
 - example:
