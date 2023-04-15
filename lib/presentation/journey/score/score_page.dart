@@ -110,11 +110,18 @@ class ScorePage extends GetView<ScoreController> {
 
   Widget _buildCredit() {
     return SliverToBoxAdapter(
+      child: Padding(
+        padding: EdgeInsets.only(bottom: 15.0.h),
         child: Text(
-      'Nguốn dữ liệu điểm: https://score.superkma.com/',
-      textAlign: TextAlign.center,
-      style: ThemeText.bodyRegular.s12,
-    ));
+          'Nguốn dữ liệu điểm: https://score.superkma.com/',
+          //thêm gạch dưới
+          textAlign: TextAlign.center,
+          style: ThemeText.bodyRegular.s12.copyWith(
+            decoration: TextDecoration.underline,
+          ),
+        ),
+      ),
+    );
   }
 
   SliverList _buildScoreTableData() {
