@@ -4,7 +4,7 @@ import 'package:schedule/common/common_export.dart';
 import 'package:schedule/presentation/journey/todo/components/todo_form_widget.dart';
 import 'package:schedule/presentation/journey/todo/todo_controller.dart';
 import 'package:schedule/presentation/theme/export.dart';
-import 'package:schedule/presentation/widgets/app_dialog.dart';
+import 'package:schedule/presentation/widgets/upgrade_dialog.dart';
 import 'package:schedule/presentation/widgets/loading_widget.dart';
 import 'package:schedule/presentation/widgets/warning_dialog.dart';
 

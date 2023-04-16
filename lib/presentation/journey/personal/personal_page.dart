@@ -13,7 +13,7 @@ import 'package:schedule/presentation/theme/export.dart';
 import 'package:schedule/presentation/widgets/donate_dialog.dart';
 import 'package:schedule/presentation/widgets/export.dart';
 
-import 'package:schedule/presentation/widgets/app_dialog.dart';
+import 'package:schedule/presentation/widgets/upgrade_dialog.dart';
 import 'package:schedule/presentation/widgets/text_field_widget.dart';
 import 'package:schedule/presentation/widgets/warning_dialog.dart';
 

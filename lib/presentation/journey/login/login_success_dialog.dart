@@ -6,7 +6,7 @@ import '../../../common/common_export.dart';
 import '../../theme/export.dart';
 import '../../widgets/export.dart';
 
-void loginSuccessDialog(BuildContext context) {
+void loginSuccessDialog(BuildContext context, {required Function() btnOk}) {
   AwesomeDialog(
     context: context,
     headerAnimationLoop: false,
@@ -78,9 +78,7 @@ void loginSuccessDialog(BuildContext context) {
       ),
     ),
     btnOk: AppTouchable(
-      onPressed: () {
-        Get.back();
-      },
+      onPressed: btnOk,
       child: Container(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(AppDimens.space_20),
