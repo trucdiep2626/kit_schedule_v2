@@ -22,6 +22,8 @@ class HiveScoresCell {
   String? alphabetScore;
   @HiveField(8)
   bool? isLocal;
+  @HiveField(9)
+  bool? isSemester;
   HiveScoresCell({
     this.name,
     this.id,
@@ -32,5 +34,6 @@ class HiveScoresCell {
     this.examScore,
     this.secondComponentScore,
     this.isLocal,
+    this.isSemester,
   });
 }

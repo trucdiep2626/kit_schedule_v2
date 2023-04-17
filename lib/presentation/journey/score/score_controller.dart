@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:schedule/common/common_export.dart';
+import 'package:schedule/common/config/database/hive_config.dart';
 import 'package:schedule/common/config/network/network_state.dart';
 import 'package:schedule/domain/models/hive_score_cell.dart';
 import 'package:schedule/domain/models/score_model.dart';
@@ -24,6 +25,8 @@ class ScoreController extends GetxController with MixinController {
   Rx<StudentScores?> rxStudentScores = (null as StudentScores?).obs;
   RxList<bool> rxExpandedList = <bool>[].obs;
   RxList<bool?> rxIsLocal = <bool>[].obs;
+  RxList<bool?> rxIsSemester = <bool>[].obs;
+  Rx<bool?> rxIsCheckSemester = false.obs;
   TextEditingController firstComponentScore = TextEditingController();
   TextEditingController secondComponentScore = TextEditingController();
   TextEditingController examScore = TextEditingController();
@@ -39,6 +42,7 @@ class ScoreController extends GetxController with MixinController {
     rxLoadedType.value = LoadedType.start;
     await getScores();
     rxLoadedType.value = LoadedType.finish;
+    log(getIt<HiveConfig>().hiveScoresCell.getAt(39)!.isSemester.toString());
   }
 
   Future<void> getScores() async {
@@ -62,7 +66,7 @@ class ScoreController extends GetxController with MixinController {
       if (!isNullEmpty(result)) {
         for (int index = 0; index < result!.scores!.length; index++) {
           if (scoreUseCase.isDuplicate(result, index)) {
-            scoreUseCase.insertSubjectFromAPI(result, index, false);
+            scoreUseCase.insertSubjectFromAPI(result, index, false, false);
           }
         }
       }
@@ -120,7 +124,7 @@ class ScoreController extends GetxController with MixinController {
   Future<void> insertScoreIntoHive(bool isAdd) async {
     if (isAdd) {
       scoreUseCase.insertScoreIntoHive(
-          rxStudentScores.value, scoreUseCase, rxIsLocal);
+          rxStudentScores.value, scoreUseCase, rxIsLocal, rxIsSemester);
     }
   }
 
@@ -201,6 +205,18 @@ class ScoreController extends GetxController with MixinController {
     _refreshLocal();
   }
 
+  Function()? onPressedSaveSubjectSemester() {
+    return () {
+      rxIsCheckSemester.value = false;
+    };
+  }
+
+  Function()? onPressedCancelSubjectSemester() {
+    return () {
+      rxIsCheckSemester.value = false;
+    };
+  }
+
   Function() onPressedAddSubject(
       {required String name,
       required String id,
@@ -217,6 +233,16 @@ class ScoreController extends GetxController with MixinController {
           );
         };
       }
+    };
+  }
+
+  void onSelectedSemester() {
+    rxIsCheckSemester.value = true;
+  }
+
+  Function(bool?)? onSelectedCheckBox(int i) {
+    return (value) {
+      rxIsSemester[i] = value;
     };
   }
 
@@ -303,11 +329,15 @@ class ScoreController extends GetxController with MixinController {
   void _refreshLocal() {
     final scores = scoreUseCase.getHiveScoresCell();
     final isLocals = <bool>[];
+    final isSesmester = <bool>[];
     for (int i = 0; i < scoreUseCase.getLengthHiveScoresCell(); i++) {
-      if (!isNullEmpty(scoreUseCase.getIsLocal(i))) {
+      if (!isNullEmpty(scoreUseCase.getIsLocal(i)) &&
+          !isNullEmpty(scoreUseCase.getIsSemester(i))) {
         isLocals.add(scoreUseCase.getIsLocal(i)!);
+        isSesmester.add(scoreUseCase.getIsSemester(i)!);
       }
     }
+    rxIsSemester.value = isSesmester;
     rxIsLocal.value = isLocals;
     rxStudentScores.value = StudentScores(
       avgScore: scoreUseCase.avgScoresCell(),

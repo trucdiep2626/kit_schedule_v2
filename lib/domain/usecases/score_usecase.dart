@@ -17,8 +17,8 @@ class ScoreUseCase {
   }
 
   Future<void> insertSubjectFromAPI(
-      StudentScores studentScores, int index, bool isLocal) {
-    return scoreRepository.insertSubjectFromAPI(studentScores, index, isLocal);
+      StudentScores studentScores, int index, bool isLocal,bool isSemester) {
+    return scoreRepository.insertSubjectFromAPI(studentScores, index, isLocal,isSemester);
   }
 
   bool isDuplicate(StudentScores studentScores, int index) {
@@ -32,7 +32,9 @@ class ScoreUseCase {
   bool? getIsLocal(int index) {
     return scoreRepository.getIsLocal(index);
   }
-
+  bool? getIsSemester(int index){
+    return scoreRepository.getIsSemester(index);
+  }
   bool compareToName(int i, String name) {
     return scoreRepository.compareToName(i, name);
   }
@@ -58,8 +60,8 @@ class ScoreUseCase {
   }
 
   Future<void> insertScoreIntoHive(
-      StudentScores? studentScores, ScoreUseCase scoreUseCase, List<bool?> isLocal) {
-    return scoreRepository.insertScoreIntoHive(studentScores, scoreUseCase,isLocal);
+      StudentScores? studentScores, ScoreUseCase scoreUseCase, List<bool?> isLocal,List<bool?> isSemester) {
+    return scoreRepository.insertScoreIntoHive(studentScores, scoreUseCase,isLocal,isSemester);
   }
 
   String? getFirstComponentScore(int index) {

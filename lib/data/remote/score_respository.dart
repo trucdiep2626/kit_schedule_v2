@@ -20,7 +20,7 @@ class ScoreRepository {
   }
 
   Future<void> insertSubjectFromAPI(
-      StudentScores studentScores, int index, bool isLocal) async {
+      StudentScores studentScores, int index, bool isLocal, bool isSemester) async {
     studentScores.scores != null
         ? await hiveConfig.hiveScoresCell.add(
             HiveScoresCell(
@@ -36,13 +36,14 @@ class ScoreRepository {
               numberOfCredits:
                   studentScores.scores?[index].subject?.numberOfCredits,
               isLocal: isLocal,
+              isSemester: isSemester,
             ),
           )
         : '';
   }
 
   Future<void> insertScoreIntoHive(StudentScores? studentScores,
-      ScoreUseCase scoreUseCase, List<bool?> isLocal) async {
+      ScoreUseCase scoreUseCase, List<bool?> isLocal, List<bool?> isSemester) async {
     if (studentScores != null) {
       studentScores.scores?.length = scoreUseCase.getLengthHiveScoresCell();
       studentScores.avgScore = scoreUseCase.avgScoresCell();
@@ -52,6 +53,7 @@ class ScoreRepository {
       for (int index = 0;
           index < scoreUseCase.getLengthHiveScoresCell();
           index++) {
+            isSemester.add(scoreUseCase.getIsSemester(index));
         isLocal.add(scoreUseCase.getIsLocal(index));
         studentScores.scores?[index].subject?.name =
             scoreUseCase.getName(index);
@@ -101,7 +103,9 @@ class ScoreRepository {
   bool? getIsLocal(int index) {
     return hiveConfig.hiveScoresCell.getAt(index)?.isLocal;
   }
-
+  bool? getIsSemester(int index){
+    return hiveConfig.hiveScoresCell.getAt(index)?.isSemester;
+  }
   int? getNumberOfCredits(int index) {
     return hiveConfig.hiveScoresCell.getAt(index)?.numberOfCredits;
   }
