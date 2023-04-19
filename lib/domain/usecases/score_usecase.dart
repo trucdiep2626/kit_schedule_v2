@@ -17,8 +17,9 @@ class ScoreUseCase {
   }
 
   Future<void> insertSubjectFromAPI(
-      StudentScores studentScores, int index, bool isLocal,bool isSemester) {
-    return scoreRepository.insertSubjectFromAPI(studentScores, index, isLocal,isSemester);
+      StudentScores studentScores, int index, bool isLocal, bool isSemester) {
+    return scoreRepository.insertSubjectFromAPI(
+        studentScores, index, isLocal, isSemester);
   }
 
   bool isDuplicate(StudentScores studentScores, int index) {
@@ -32,9 +33,11 @@ class ScoreUseCase {
   bool? getIsLocal(int index) {
     return scoreRepository.getIsLocal(index);
   }
-  bool? getIsSemester(int index){
+
+  bool? getIsSemester(int index) {
     return scoreRepository.getIsSemester(index);
   }
+
   bool compareToName(int i, String name) {
     return scoreRepository.compareToName(i, name);
   }
@@ -55,13 +58,26 @@ class ScoreUseCase {
     return scoreRepository.getNumberOfCredits(index);
   }
 
+  double? calAvgSemester() {
+    return scoreRepository.calAvgSemester();
+  }
+
+  String? calScholarshipScore(double score) {
+    return scoreRepository.calScholarshipScore(score);
+  }
+
   String? getAlphabetScore(int index) {
     return scoreRepository.getAlphabetScore(index);
   }
 
-  Future<void> insertScoreIntoHive(
-      StudentScores? studentScores, ScoreUseCase scoreUseCase, List<bool?> isLocal,List<bool?> isSemester) {
-    return scoreRepository.insertScoreIntoHive(studentScores, scoreUseCase,isLocal,isSemester);
+  Future<void>? putIsSemester(int index, HiveScoresCell HiveScoresCell) {
+    return scoreRepository.putIsSemester(index, HiveScoresCell);
+  }
+
+  Future<void> insertScoreIntoHive(StudentScores? studentScores,
+      ScoreUseCase scoreUseCase, List<bool?> isLocal, List<bool?> isSemester) {
+    return scoreRepository.insertScoreIntoHive(
+        studentScores, scoreUseCase, isLocal, isSemester);
   }
 
   String? getFirstComponentScore(int index) {

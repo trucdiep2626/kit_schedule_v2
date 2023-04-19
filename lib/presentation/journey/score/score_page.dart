@@ -62,8 +62,7 @@ class ScorePage extends GetView<ScoreController> {
                       ),
                       child: controller.rxIsCheckSemester.value!
                           ? IconButton(
-                              onPressed:
-                                  controller.onPressedSaveSubjectSemester(),
+                              onPressed: controller.onPressedCalAvgSemester(),
                               icon: const Icon(Icons.done),
                               color: AppColors.blue900,
                             )
