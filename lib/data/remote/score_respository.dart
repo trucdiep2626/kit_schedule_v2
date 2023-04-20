@@ -199,9 +199,11 @@ class ScoreRepository {
       "ATQGTC4",
       "ATQGTC5"
     ];
-    if (getID(i) != null) {
-      if (physicalEducation[i].contains(getID(i)!)) {
-        return true;
+    for (int index = 0; index < physicalEducation.length; index++) {
+      if (getID(i) != null) {
+        if (physicalEducation[index] == getID(i)!) {
+          return true;
+        }
       }
     }
     return false;
