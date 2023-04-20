@@ -164,12 +164,7 @@ class ScoreRepository {
   double calSumSemester() {
     double sumSCoresCell = 0;
     for (int i = 0; i < hiveConfig.hiveScoresCell.length; i++) {
-      if (getID(i) == "ATQGTC1" ||
-          getID(i) == "ATQGTC2" ||
-          getID(i) == "ATQGTC3" ||
-          getID(i) == "ATQGTC4" ||
-          getID(i) == "ATQGTC5" ||
-          getIsSemester(i) == false) {
+      if (checkConditionSemester(i)) {
         continue;
       } else {
         if (hiveConfig.hiveScoresCell.getAt(i)?.numberOfCredits != null) {
@@ -186,12 +181,7 @@ class ScoreRepository {
     double totalCredits = 0;
 
     for (int i = 0; i < hiveConfig.hiveScoresCell.length; i++) {
-      if (getID(i) == "ATQGTC1" ||
-          getID(i) == "ATQGTC2" ||
-          getID(i) == "ATQGTC3" ||
-          getID(i) == "ATQGTC4" ||
-          getID(i) == "ATQGTC5" ||
-          getIsSemester(i) == false) {
+      if (checkConditionSemester(i)) {
         continue;
       } else {
         totalCredits +=
@@ -199,6 +189,29 @@ class ScoreRepository {
       }
     }
     return totalCredits;
+  }
+
+  bool checkPhysicalEducation(int i) {
+    List<String> physicalEducation = [
+      "ATQGTC1",
+      "ATQGTC2",
+      "ATQGTC3",
+      "ATQGTC4",
+      "ATQGTC5"
+    ];
+    if (getID(i) != null) {
+      if (physicalEducation[i].contains(getID(i)!)) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  bool checkConditionSemester(int i) {
+    if (checkPhysicalEducation(i) || getIsSemester(i) == false) {
+      return true;
+    }
+    return false;
   }
 
   double? calAvgSemester() {
