@@ -9,7 +9,6 @@ import 'package:schedule/presentation/widgets/export.dart';
 void upgradeDialog({
   required BuildContext context,
   required Function() btnUpgrade,
-  required Function() btnLater,
   required String store,
 }) {
   AwesomeDialog(
@@ -78,34 +77,6 @@ void upgradeDialog({
               height: AppDimens.height_4,
             ),
           ],
-        ),
-      ),
-    ),
-    btnCancel: AppTouchable(
-      onPressed: btnLater,
-      child: Container(
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(AppDimens.space_20),
-          color: AppColors.red,
-          boxShadow: [
-            BoxShadow(
-              color: AppColors.charade.withOpacity(0.3),
-              blurRadius: AppDimens.space_4,
-              spreadRadius: 1,
-              offset: Offset(
-                0,
-                AppDimens.height_4,
-              ),
-            )
-          ],
-        ),
-        alignment: Alignment.center,
-        margin: EdgeInsets.only(bottom: 16.sp),
-        padding: EdgeInsets.symmetric(vertical: 12.sp),
-        child: Text(
-          'Để sau',
-          style: ThemeText.bodySemibold
-              .copyWith(color: AppColors.bianca, fontSize: 18.sp),
         ),
       ),
     ),

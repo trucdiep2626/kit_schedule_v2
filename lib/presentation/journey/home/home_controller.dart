@@ -82,9 +82,6 @@ class HomeController extends GetxController with MixinController {
     if (upgrader.isUpdateAvailable()) {
       upgradeDialog(
         context: context,
-        btnLater: () {
-          Get.back();
-        },
         btnUpgrade: _launchURLChPlay,
         store: defaultTargetPlatform == TargetPlatform.android
             ? "Google Play"
