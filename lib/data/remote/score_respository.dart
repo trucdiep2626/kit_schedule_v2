@@ -1,6 +1,5 @@
 import 'dart:math';
 
-import 'package:get/get_rx/src/rx_types/rx_types.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:schedule/common/common_export.dart';
 import 'package:schedule/common/config/database/hive_config.dart';
@@ -293,11 +292,7 @@ class ScoreRepository {
     double totalCredits = 0;
 
     for (int i = 0; i < hiveConfig.hiveScoresCell.length; i++) {
-      if (getID(i) == "ATQGTC1" ||
-          getID(i) == "ATQGTC2" ||
-          getID(i) == "ATQGTC3" ||
-          getID(i) == "ATQGTC4" ||
-          getID(i) == "ATQGTC5") {
+      if (checkPhysicalEducation(i)) {
         continue;
       } else {
         totalCredits +=
@@ -310,11 +305,7 @@ class ScoreRepository {
   double calSumScoresCell() {
     double sumSCoresCell = 0;
     for (int i = 0; i < hiveConfig.hiveScoresCell.length; i++) {
-      if (getID(i) == "ATQGTC1" ||
-          getID(i) == "ATQGTC2" ||
-          getID(i) == "ATQGTC3" ||
-          getID(i) == "ATQGTC4" ||
-          getID(i) == "ATQGTC5") {
+      if (checkPhysicalEducation(i)) {
         continue;
       } else {
         if (hiveConfig.hiveScoresCell.getAt(i) != null) {

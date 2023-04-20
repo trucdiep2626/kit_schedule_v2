@@ -43,7 +43,6 @@ class ScoreController extends GetxController with MixinController {
     rxLoadedType.value = LoadedType.start;
     await getScores();
     rxLoadedType.value = LoadedType.finish;
-    log(getIt<HiveConfig>().hiveScoresCell.getAt(39)!.isSemester.toString());
   }
 
   Future<void> getScores() async {
@@ -261,6 +260,11 @@ class ScoreController extends GetxController with MixinController {
             isLocal: scoreUseCase.getIsLocal(i),
             secondComponentScore: scoreUseCase.getSecondComponentScore(i)),
       );
+      for (int index = 0;
+          index < scoreUseCase.getLengthHiveScoresCell();
+          index++) {
+        log(scoreUseCase.getIsSemester(index).toString());
+      }
     };
   }
 
