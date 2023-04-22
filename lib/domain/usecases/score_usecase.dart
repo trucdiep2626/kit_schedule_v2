@@ -112,6 +112,10 @@ class ScoreUseCase {
     return scoreRepository.getScoresStudents(studentCode: studentCode);
   }
 
+  bool checkPhysicalEducation(int i) {
+    return scoreRepository.checkPhysicalEducation(i);
+  }
+
   double? calAvgScore(
       {required String? firstComponentScore,
       required String? secondComponentScore,

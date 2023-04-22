@@ -11,10 +11,12 @@ import 'package:schedule/domain/usecases/school_usecase.dart';
 import 'package:schedule/domain/usecases/score_usecase.dart';
 import 'package:schedule/presentation/controllers/mixin/export.dart';
 import 'package:schedule/presentation/journey/main/main_controller.dart';
+import 'package:schedule/presentation/journey/score/components/gpa_chart_widget.dart';
 import 'package:schedule/presentation/widgets/display_avgscore_dialog.dart';
 import 'package:schedule/presentation/widgets/snack_bar/app_snack_bar.dart';
 import 'package:schedule/presentation/widgets/text_input_dialog.dart';
 
+import 'components/gpa_semester_chart.dart';
 import 'components/navigator_add_subject.dart';
 
 class ScoreController extends GetxController with MixinController {
@@ -214,13 +216,11 @@ class ScoreController extends GetxController with MixinController {
     return () {
       rxIsCheckSemester.value = false;
       if (!scoreUseCase.calAvgSemester()!.isNaN) {
-        displayAvgScoreDialog(
-          Get.context!,
-          avgSemester: scoreUseCase.calAvgSemester() ?? 0.0,
-          scholarshipScore: double.parse(scoreUseCase
-                  .calScholarshipScore(scoreUseCase.calAvgSemester() ?? 0) ??
-              '0'),
-        );
+        Get.to(GPASemesterChart(
+          avgScore: scoreUseCase.calAvgSemester() ?? 0,
+          onTap: onTapBackScorePage(),
+          hiveScoresCell: scoreUseCase.getHiveScoresCell(),
+        ));
       }
       for (int i = 0; i < scoreUseCase.getLengthHiveScoresCell(); i++) {
         rxIsSemester[i] = false;
@@ -371,7 +371,9 @@ class ScoreController extends GetxController with MixinController {
   Function() onTapBackScorePage() {
     return () {
       Get.back();
-      resetData();
+      if (rxIsCheckSemester.value ?? false) {
+        resetData();
+      }
     };
   }
 

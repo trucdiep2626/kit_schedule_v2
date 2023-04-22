@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:flutter/services.dart';
 import 'package:schedule/common/common_export.dart';
 import 'package:schedule/presentation/journey/score/score_controller.dart';
 import 'package:schedule/presentation/theme/theme_color.dart';
