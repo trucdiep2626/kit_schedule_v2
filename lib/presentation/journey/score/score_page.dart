@@ -109,7 +109,7 @@ class ScorePage extends GetView<ScoreController> {
                                     ),
                                   ),
                                   _buildAppBarPopUpItem(
-                                    title: "Tính điểm 1 kỳ",
+                                    title: "Xét điểm học bổng",
                                     onTap: () =>
                                         controller.onSelectedSemester(),
                                     icon: const Icon(

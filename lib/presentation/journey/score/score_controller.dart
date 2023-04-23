@@ -246,20 +246,22 @@ class ScoreController extends GetxController with MixinController {
   Function(bool?)? onSelectedCheckBox(int i) {
     return (value) {
       rxIsSemester[i] = value;
-      scoreUseCase.putIsSemester(
-        i,
-        HiveScoresCell(
-            name: scoreUseCase.getName(i),
-            numberOfCredits: scoreUseCase.getNumberOfCredits(i),
-            isSemester: value,
-            alphabetScore: scoreUseCase.getAlphabetScore(i),
-            avgScore: scoreUseCase.getAvgScore(i),
-            examScore: scoreUseCase.getExamScore(i),
-            firstComponentScore: scoreUseCase.getFirstComponentScore(i),
-            id: scoreUseCase.getID(i),
-            isLocal: scoreUseCase.getIsLocal(i),
-            secondComponentScore: scoreUseCase.getSecondComponentScore(i)),
-      );
+      if (!scoreUseCase.checkPhysicalEducation(i)) {
+        scoreUseCase.putIsSemester(
+          i,
+          HiveScoresCell(
+              name: scoreUseCase.getName(i),
+              numberOfCredits: scoreUseCase.getNumberOfCredits(i),
+              isSemester: value,
+              alphabetScore: scoreUseCase.getAlphabetScore(i),
+              avgScore: scoreUseCase.getAvgScore(i),
+              examScore: scoreUseCase.getExamScore(i),
+              firstComponentScore: scoreUseCase.getFirstComponentScore(i),
+              id: scoreUseCase.getID(i),
+              isLocal: scoreUseCase.getIsLocal(i),
+              secondComponentScore: scoreUseCase.getSecondComponentScore(i)),
+        );
+      }
       for (int index = 0;
           index < scoreUseCase.getLengthHiveScoresCell();
           index++) {

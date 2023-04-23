@@ -65,6 +65,7 @@ class GPASemesterChart extends StatelessWidget {
                           const DataLabelSettings(isVisible: true)),
                 ],
                 legend: Legend(
+                    padding: 0,
                     overflowMode: LegendItemOverflowMode.wrap,
                     position: LegendPosition.bottom,
                     isVisible: true,
