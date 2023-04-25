@@ -442,30 +442,6 @@ class ScorePage extends GetView<ScoreController> {
     );
   }
 
-  // Widget? buttonSaveSubjectSemester() {
-  //   if (controller.rxIsCheckSemester.value == true) {
-  //     return AppTouchable(
-  //       onPressed: controller.onPressedSaveSubjectSemester(),
-  //       outlinedBorder: RoundedRectangleBorder(
-  //           side: BorderSide.none,
-  //           borderRadius: BorderRadius.circular(AppDimens.space_20)),
-  //       backgroundColor: AppColors.blue900,
-  //       width: double.infinity,
-  //       margin: EdgeInsets.symmetric(horizontal: 10.sp),
-  //       padding: EdgeInsets.symmetric(vertical: AppDimens.height_14),
-  //       child: Text(
-  //         'Lưu',
-  //         style: ThemeText.bodySemibold.copyWith(
-  //           color: AppColors.bianca,
-  //           fontSize: AppDimens.space_18,
-  //         ),
-  //       ),
-  //     );
-  //   } else {
-  //     return Container();
-  //   }
-  // }
-
   Widget _buildSubjectInfoRow(String field, String? description) {
     return Padding(
       padding: EdgeInsets.only(bottom: AppDimens.height_14),

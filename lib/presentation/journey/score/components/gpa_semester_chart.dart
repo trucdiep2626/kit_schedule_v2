@@ -44,7 +44,9 @@ class GPASemesterChart extends StatelessWidget {
                     text: "Sơ đồ biểu diễn điểm học kỳ của bạn",
                     textStyle: ThemeText.heading1.s18.blue900,
                     alignment: ChartAlignment.center),
-                tooltipBehavior: TooltipBehavior(enable: true),
+                tooltipBehavior: TooltipBehavior(
+                  enable: true,
+                ),
                 annotations: <CircularChartAnnotation>[
                   CircularChartAnnotation(
                       widget: Center(
@@ -54,15 +56,18 @@ class GPASemesterChart extends StatelessWidget {
                 ],
                 series: <CircularSeries>[
                   DoughnutSeries<HiveScoresCell, String>(
-                      enableTooltip: true,
-                      dataSource: hiveScoresCell
-                          .where((element) => element.isSemester ?? false)
-                          .toList(),
-                      xValueMapper: ((HiveScoresCell data, _) => data.name),
-                      yValueMapper: ((HiveScoresCell data, _) =>
-                          Convert.letterScoreConvert(data.alphabetScore)),
-                      dataLabelSettings:
-                          const DataLabelSettings(isVisible: true)),
+                    enableTooltip: true,
+                    selectionBehavior: SelectionBehavior(
+                      enable: true,
+                    ),
+                    dataSource: hiveScoresCell
+                        .where((element) => element.isSemester ?? false)
+                        .toList(),
+                    xValueMapper: ((HiveScoresCell data, _) => data.name),
+                    yValueMapper: ((HiveScoresCell data, _) =>
+                        Convert.letterScoreConvert(data.alphabetScore)),
+                    dataLabelSettings: const DataLabelSettings(isVisible: true),
+                  ),
                 ],
                 legend: Legend(
                     padding: 0,
