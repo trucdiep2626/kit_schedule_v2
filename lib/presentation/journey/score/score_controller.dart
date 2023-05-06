@@ -12,7 +12,6 @@ import 'package:schedule/presentation/controllers/mixin/export.dart';
 import 'package:schedule/presentation/journey/main/main_controller.dart';
 import 'package:schedule/presentation/widgets/snack_bar/app_snack_bar.dart';
 import 'package:schedule/presentation/widgets/text_input_dialog.dart';
-
 import 'components/gpa_semester_chart.dart';
 import 'components/navigator_add_subject.dart';
 
@@ -27,6 +26,8 @@ class ScoreController extends GetxController with MixinController {
   RxList<bool?> rxIsLocal = <bool>[].obs;
   RxList<bool?> rxIsSemester = <bool>[].obs;
   Rx<bool?> rxIsCheckSemester = false.obs;
+  RxDouble rxCurrentAvgScore = 0.0.obs;
+  RxList<HiveScoresCell> rxSemesterScoreList = <HiveScoresCell>[].obs;
   TextEditingController firstComponentScore = TextEditingController();
   TextEditingController secondComponentScore = TextEditingController();
   TextEditingController examScore = TextEditingController();
@@ -209,56 +210,27 @@ class ScoreController extends GetxController with MixinController {
     _refreshLocal();
   }
 
-  Function()? onPressedCalAvgSemester() {
-    return () {
-      rxIsCheckSemester.value = false;
-      if (!scoreUseCase.calAvgSemester()!.isNaN) {
-        Get.to(GPASemesterChart(
-          avgScore: scoreUseCase.calAvgSemester() ?? 0,
-          onTap: onTapBackScorePage(),
-          hiveScoresCell: scoreUseCase.getHiveScoresCell(),
-        ));
-      }
-      for (int i = 0; i < scoreUseCase.getLengthHiveScoresCell(); i++) {
-        rxIsSemester[i] = false;
-        scoreUseCase.putIsSemester(
-          i,
-          HiveScoresCell(
-              name: scoreUseCase.getName(i),
-              numberOfCredits: scoreUseCase.getNumberOfCredits(i),
-              isSemester: false,
-              alphabetScore: scoreUseCase.getAlphabetScore(i),
-              avgScore: scoreUseCase.getAvgScore(i),
-              examScore: scoreUseCase.getExamScore(i),
-              firstComponentScore: scoreUseCase.getFirstComponentScore(i),
-              id: scoreUseCase.getID(i),
-              isLocal: scoreUseCase.getIsLocal(i),
-              secondComponentScore: scoreUseCase.getSecondComponentScore(i)),
-        );
-        log(scoreUseCase.getIsSemester(i).toString());
-      }
-    };
-  }
-
   Function(bool?)? onSelectedCheckBox(int i) {
     return (value) {
       rxIsSemester[i] = value;
       if (!scoreUseCase.checkPhysicalEducation(i)) {
-        scoreUseCase.putIsSemester(
-          i,
-          HiveScoresCell(
-              name: scoreUseCase.getName(i),
-              numberOfCredits: scoreUseCase.getNumberOfCredits(i),
-              isSemester: value,
-              alphabetScore: scoreUseCase.getAlphabetScore(i),
-              avgScore: scoreUseCase.getAvgScore(i),
-              examScore: scoreUseCase.getExamScore(i),
-              firstComponentScore: scoreUseCase.getFirstComponentScore(i),
-              id: scoreUseCase.getID(i),
-              isLocal: scoreUseCase.getIsLocal(i),
-              secondComponentScore: scoreUseCase.getSecondComponentScore(i)),
-        );
+        {
+          rxSemesterScoreList.add(
+            HiveScoresCell(
+                name: scoreUseCase.getName(i),
+                numberOfCredits: scoreUseCase.getNumberOfCredits(i),
+                isSemester: value,
+                alphabetScore: scoreUseCase.getAlphabetScore(i),
+                avgScore: scoreUseCase.getAvgScore(i),
+                examScore: scoreUseCase.getExamScore(i),
+                firstComponentScore: scoreUseCase.getFirstComponentScore(i),
+                id: scoreUseCase.getID(i),
+                isLocal: scoreUseCase.getIsLocal(i),
+                secondComponentScore: scoreUseCase.getSecondComponentScore(i)),
+          );
+        }
       }
+
       for (int index = 0;
           index < scoreUseCase.getLengthHiveScoresCell();
           index++) {
@@ -276,21 +248,29 @@ class ScoreController extends GetxController with MixinController {
       rxIsCheckSemester.value = false;
       for (int i = 0; i < scoreUseCase.getLengthHiveScoresCell(); i++) {
         rxIsSemester[i] = false;
-        scoreUseCase.putIsSemester(
-          i,
-          HiveScoresCell(
-              name: scoreUseCase.getName(i),
-              numberOfCredits: scoreUseCase.getNumberOfCredits(i),
-              isSemester: false,
-              alphabetScore: scoreUseCase.getAlphabetScore(i),
-              avgScore: scoreUseCase.getAvgScore(i),
-              examScore: scoreUseCase.getExamScore(i),
-              firstComponentScore: scoreUseCase.getFirstComponentScore(i),
-              id: scoreUseCase.getID(i),
-              isLocal: scoreUseCase.getIsLocal(i),
-              secondComponentScore: scoreUseCase.getSecondComponentScore(i)),
+        rxSemesterScoreList.clear();
+      }
+    };
+  }
+
+  Function()? onPressedCalAvgSemester() {
+    return () {
+      rxIsCheckSemester.value = false;
+      if (scoreUseCase.calculateCurrentAvgScore(
+              rxCurrentAvgScore.value, rxSemesterScoreList.value) !=
+          0) {
+        Get.to(
+          () => GPASemesterChart(
+            avgScore: scoreUseCase.calculateCurrentAvgScore(
+                rxCurrentAvgScore.value, rxSemesterScoreList.value),
+            onTap: onTapBackScorePage(),
+            hiveScoresCell: rxSemesterScoreList,
+          ),
         );
-        log(scoreUseCase.getIsSemester(i).toString());
+      }
+
+      for (int i = 0; i < scoreUseCase.getLengthHiveScoresCell(); i++) {
+        rxIsSemester[i] = false;
       }
     };
   }
@@ -372,6 +352,10 @@ class ScoreController extends GetxController with MixinController {
       Get.back();
       if (rxIsCheckSemester.value ?? false) {
         resetData();
+        log("reset data");
+      } else {
+        rxSemesterScoreList.clear();
+        log("xóa data thành công");
       }
     };
   }

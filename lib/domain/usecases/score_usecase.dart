@@ -58,8 +58,10 @@ class ScoreUseCase {
     return scoreRepository.getNumberOfCredits(index);
   }
 
-  double? calAvgSemester() {
-    return scoreRepository.calAvgSemester();
+  double calculateCurrentAvgScore(
+      double currentAvgScore, List<HiveScoresCell> hiveScoresCell) {
+    return scoreRepository.calculateCurrentAvgScore(
+        currentAvgScore, hiveScoresCell);
   }
 
   String? calScholarshipScore(double score) {

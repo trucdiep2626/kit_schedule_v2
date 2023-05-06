@@ -160,36 +160,6 @@ class ScoreRepository {
     return false;
   }
 
-  double calSumSemester() {
-    double sumSCoresCell = 0;
-    for (int i = 0; i < hiveConfig.hiveScoresCell.length; i++) {
-      if (checkConditionSemester(i)) {
-        continue;
-      } else {
-        if (hiveConfig.hiveScoresCell.getAt(i)?.numberOfCredits != null) {
-          sumSCoresCell += (Convert.letterScoreConvert(
-                  hiveConfig.hiveScoresCell.getAt(i)?.alphabetScore) *
-              hiveConfig.hiveScoresCell.getAt(i)!.numberOfCredits!);
-        }
-      }
-    }
-    return sumSCoresCell;
-  }
-
-  double calTotalCreditsSemester() {
-    double totalCredits = 0;
-
-    for (int i = 0; i < hiveConfig.hiveScoresCell.length; i++) {
-      if (checkConditionSemester(i)) {
-        continue;
-      } else {
-        totalCredits +=
-            hiveConfig.hiveScoresCell.getAt(i)?.numberOfCredits ?? 0;
-      }
-    }
-    return totalCredits;
-  }
-
   bool checkPhysicalEducation(int i) {
     List<String> physicalEducation = [
       "ATQGTC1",
@@ -215,8 +185,27 @@ class ScoreRepository {
     return false;
   }
 
-  double? calAvgSemester() {
-    return (calSumSemester() / calTotalCreditsSemester());
+  double calculateCurrentAvgScore(
+      double currentAvgScore, List<HiveScoresCell> hiveScoresCell) {
+    double totalScore = 0;
+    double totalCredit = 0;
+
+    for (final cell in hiveScoresCell) {
+      if (cell.isSemester == false) {
+        continue;
+      }
+      totalScore += Convert.letterScoreConvert(cell.alphabetScore) *
+          (cell.numberOfCredits ?? 0);
+      totalCredit += cell.numberOfCredits ?? 0;
+    }
+
+    if (totalCredit > 0) {
+      currentAvgScore = totalScore / totalCredit;
+      return currentAvgScore;
+    } else {
+      currentAvgScore = 0;
+      return currentAvgScore;
+    }
   }
 
   double? calAvgScore(
