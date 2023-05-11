@@ -1,5 +1,4 @@
 import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:schedule/common/common_export.dart';
@@ -257,12 +256,12 @@ class ScoreController extends GetxController with MixinController {
     return () {
       rxIsCheckSemester.value = false;
       if (scoreUseCase.calculateCurrentAvgScore(
-              rxCurrentAvgScore.value, rxSemesterScoreList.value) !=
+              rxCurrentAvgScore.value, rxSemesterScoreList) !=
           0) {
         Get.to(
           () => GPASemesterChart(
             avgScore: scoreUseCase.calculateCurrentAvgScore(
-                rxCurrentAvgScore.value, rxSemesterScoreList.value),
+                rxCurrentAvgScore.value, rxSemesterScoreList),
             onTap: onTapBackScorePage(),
             hiveScoresCell: rxSemesterScoreList,
           ),
@@ -343,6 +342,7 @@ class ScoreController extends GetxController with MixinController {
   void onPressRefresh() async {
     refreshKey.currentState?.show();
     await refreshRemote();
+    // ignore: use_build_context_synchronously
     showTopSnackBar(context,
         message: "Cập nhật điểm thành công", type: SnackBarType.done);
   }
