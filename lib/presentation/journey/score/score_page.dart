@@ -44,59 +44,82 @@ class ScorePage extends GetView<ScoreController> {
                   centerTitle: false,
                   backgroundColor: AppColors.backgroundColor,
                   elevation: 0,
-                  title: Text(
-                    'Điểm của bạn',
-                    style: ThemeText.bodySemibold.s18,
-                  ),
+                  title: controller.rxIsCheckSemester.value!
+                      ? IconButton(
+                          onPressed:
+                              controller.onPressedCancelSubjectSemester(),
+                          icon: const Icon(Icons.arrow_back_ios_new_outlined),
+                          color: AppColors.blue900,
+                        )
+                      : Text(
+                          'Điểm của bạn',
+                          style: ThemeText.bodySemibold.s18,
+                        ),
                   actions: [
                     Theme(
                       data: Theme.of(context).copyWith(
                         cardColor: AppColors.backgroundColor,
                       ),
-                      child: PopupMenuButton(
-                        icon: const Icon(
-                          Icons.more_vert_rounded,
-                          color: AppColors.blue900,
-                        ),
-                        itemBuilder: (context) {
-                          return [
-                            _buildAppBarPopUpItem(
-                              title: "Cập nhật điểm",
-                              onTap: () => Future.delayed(
-                                const Duration(),
-                                controller.onPressRefresh,
-                              ),
+                      child: controller.rxIsCheckSemester.value!
+                          ? IconButton(
+                              onPressed: controller.onPressedCalAvgSemester(),
+                              icon: const Icon(Icons.done),
+                              color: AppColors.blue900,
+                            )
+                          : PopupMenuButton(
                               icon: const Icon(
-                                Icons.refresh_rounded,
+                                Icons.more_vert_rounded,
                                 color: AppColors.blue900,
                               ),
+                              itemBuilder: (context) {
+                                return [
+                                  _buildAppBarPopUpItem(
+                                    title: "Cập nhật điểm",
+                                    onTap: () => Future.delayed(
+                                      const Duration(),
+                                      controller.onPressRefresh,
+                                    ),
+                                    icon: const Icon(
+                                      Icons.refresh_rounded,
+                                      color: AppColors.blue900,
+                                    ),
+                                  ),
+                                  if (!controller.isExist("Tiếng anh 1") ||
+                                      !controller.isExist("Tiếng anh 2") ||
+                                      !controller.isExist("Tiếng anh 3")) ...[
+                                    _buildAppBarPopUpItem(
+                                      title: "Thêm môn học",
+                                      onTap: () =>
+                                          controller.onSelectedAddSubject(1),
+                                      icon: const Icon(
+                                        Icons.add_rounded,
+                                        color: AppColors.blue900,
+                                      ),
+                                    ),
+                                  ],
+                                  _buildAppBarPopUpItem(
+                                    title: "Cách tính điểm",
+                                    onTap: () => Future.delayed(
+                                      const Duration(),
+                                      () => Get.toNamed(AppRoutes.aboutScore),
+                                    ),
+                                    icon: const Icon(
+                                      Icons.info_outline_rounded,
+                                      color: AppColors.blue900,
+                                    ),
+                                  ),
+                                  _buildAppBarPopUpItem(
+                                    title: "Xét điểm học bổng",
+                                    onTap: () =>
+                                        controller.onSelectedSemester(),
+                                    icon: const Icon(
+                                      Icons.credit_score,
+                                      color: AppColors.blue900,
+                                    ),
+                                  )
+                                ];
+                              },
                             ),
-                            if (!controller.isExist("Tiếng anh 1") ||
-                                !controller.isExist("Tiếng anh 2") ||
-                                !controller.isExist("Tiếng anh 3")) ...[
-                              _buildAppBarPopUpItem(
-                                title: "Thêm môn học",
-                                onTap: () => controller.onSelectedAddSubject(1),
-                                icon: const Icon(
-                                  Icons.add_rounded,
-                                  color: AppColors.blue900,
-                                ),
-                              ),
-                            ],
-                            _buildAppBarPopUpItem(
-                              title: "Cách tính điểm",
-                              onTap: () => Future.delayed(
-                                const Duration(),
-                                () => Get.toNamed(AppRoutes.aboutScore),
-                              ),
-                              icon: const Icon(
-                                Icons.info_outline_rounded,
-                                color: AppColors.blue900,
-                              ),
-                            ),
-                          ];
-                        },
-                      ),
                     )
                   ],
                 ),
@@ -105,6 +128,8 @@ class ScorePage extends GetView<ScoreController> {
           );
         },
       ),
+      // floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      // floatingActionButton: buttonSaveSubjectSemester(),
     );
   }
 
@@ -142,8 +167,15 @@ class ScorePage extends GetView<ScoreController> {
                 elevation: 0,
                 children: [
                   for (int i = 0; i < scores.length; i++)
-                    _buildScoreCell(i, controller.rxExpandedList[i], scores[i],
-                        controller.rxIsLocal[i] ?? false)
+                    _buildScoreCell(
+                      i,
+                      controller.rxExpandedList[i],
+                      scores[i],
+                      controller.rxIsLocal[i] ?? false,
+                      controller.rxIsCheckSemester.value ?? false,
+                      controller.rxIsSemester[i] ?? false,
+                      controller.onSelectedCheckBox(i),
+                    )
                 ],
                 expansionCallback: controller.setExpandedCell,
               ),
@@ -193,7 +225,13 @@ class ScorePage extends GetView<ScoreController> {
   }
 
   ExpansionPanel _buildScoreCell(
-      int index, bool isExpanded, Score score, bool isAddLocal) {
+      int index,
+      bool isExpanded,
+      Score score,
+      bool isAddLocal,
+      bool isCheckSemester,
+      bool isSemester,
+      Function(bool?)? onChanged) {
     return ExpansionPanel(
       canTapOnHeader: true,
       backgroundColor:
@@ -252,19 +290,31 @@ class ScorePage extends GetView<ScoreController> {
                   width: AppDimens.width_40,
                   child: Align(
                     alignment: Alignment.centerLeft,
-                    child: score.isPassed
-                        ? Text(
-                            isExpanded ? "" : score.alphabetScore ?? "?",
-                            textAlign: TextAlign.start,
-                            style: ThemeText.heading2,
-                          )
-                        : Icon(
-                            Icons.warning_amber_rounded,
-                            color: AppColors.red,
-                            size: AppDimens.space_20,
-                          ),
+                    child: isCheckSemester
+                        ? (Checkbox(
+                            onChanged: onChanged,
+                            value: isSemester,
+                            checkColor: AppColors.blue900,
+                            fillColor: MaterialStateProperty.all(
+                                AppColors.backgroundColor),
+                            side: MaterialStateBorderSide.resolveWith(
+                              (states) => const BorderSide(
+                                  width: 1.0, color: AppColors.blue900),
+                            ),
+                          ))
+                        : score.isPassed
+                            ? Text(
+                                isExpanded ? "" : score.alphabetScore ?? "?",
+                                textAlign: TextAlign.start,
+                                style: ThemeText.heading2,
+                              )
+                            : Icon(
+                                Icons.warning_amber_rounded,
+                                color: AppColors.red,
+                                size: AppDimens.space_20,
+                              ),
                   ),
-                )
+                ),
               ]
             ],
           ),

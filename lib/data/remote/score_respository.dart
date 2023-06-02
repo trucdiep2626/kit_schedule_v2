@@ -1,6 +1,5 @@
 import 'dart:math';
 
-import 'package:get/get_rx/src/rx_types/rx_types.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:schedule/common/common_export.dart';
 import 'package:schedule/common/config/database/hive_config.dart';
@@ -19,8 +18,8 @@ class ScoreRepository {
     await hiveConfig.hiveScoresCell.add(HiveScoresCell);
   }
 
-  Future<void> insertSubjectFromAPI(
-      StudentScores studentScores, int index, bool isLocal) async {
+  Future<void> insertSubjectFromAPI(StudentScores studentScores, int index,
+      bool isLocal, bool isSemester) async {
     studentScores.scores != null
         ? await hiveConfig.hiveScoresCell.add(
             HiveScoresCell(
@@ -36,13 +35,17 @@ class ScoreRepository {
               numberOfCredits:
                   studentScores.scores?[index].subject?.numberOfCredits,
               isLocal: isLocal,
+              isSemester: isSemester,
             ),
           )
         : '';
   }
 
-  Future<void> insertScoreIntoHive(StudentScores? studentScores,
-      ScoreUseCase scoreUseCase, List<bool?> isLocal) async {
+  Future<void> insertScoreIntoHive(
+      StudentScores? studentScores,
+      ScoreUseCase scoreUseCase,
+      List<bool?> isLocal,
+      List<bool?> isSemester) async {
     if (studentScores != null) {
       studentScores.scores?.length = scoreUseCase.getLengthHiveScoresCell();
       studentScores.avgScore = scoreUseCase.avgScoresCell();
@@ -52,6 +55,7 @@ class ScoreRepository {
       for (int index = 0;
           index < scoreUseCase.getLengthHiveScoresCell();
           index++) {
+        isSemester.add(scoreUseCase.getIsSemester(index));
         isLocal.add(scoreUseCase.getIsLocal(index));
         studentScores.scores?[index].subject?.name =
             scoreUseCase.getName(index);
@@ -102,6 +106,10 @@ class ScoreRepository {
     return hiveConfig.hiveScoresCell.getAt(index)?.isLocal;
   }
 
+  bool? getIsSemester(int index) {
+    return hiveConfig.hiveScoresCell.getAt(index)?.isSemester;
+  }
+
   int? getNumberOfCredits(int index) {
     return hiveConfig.hiveScoresCell.getAt(index)?.numberOfCredits;
   }
@@ -139,6 +147,10 @@ class ScoreRepository {
     }
   }
 
+  Future<void>? putIsSemester(int index, HiveScoresCell HiveScoresCell) {
+    return hiveConfig.hiveScoresCell.putAt(index, HiveScoresCell);
+  }
+
   bool isDuplicate(StudentScores result, int index) {
     if (hiveConfig.hiveScoresCell.values
         .where((element) => element.id == result.scores?[index].subject?.id)
@@ -146,6 +158,54 @@ class ScoreRepository {
       return true;
     }
     return false;
+  }
+
+  bool checkPhysicalEducation(int i) {
+    List<String> physicalEducation = [
+      "ATQGTC1",
+      "ATQGTC2",
+      "ATQGTC3",
+      "ATQGTC4",
+      "ATQGTC5"
+    ];
+    for (int index = 0; index < physicalEducation.length; index++) {
+      if (getID(i) != null) {
+        if (physicalEducation[index] == getID(i)!) {
+          return true;
+        }
+      }
+    }
+    return false;
+  }
+
+  bool checkConditionSemester(int i) {
+    if (checkPhysicalEducation(i) || getIsSemester(i) == false) {
+      return true;
+    }
+    return false;
+  }
+
+  double calculateCurrentAvgScore(
+      double currentAvgScore, List<HiveScoresCell> hiveScoresCell) {
+    double totalScore = 0;
+    double totalCredit = 0;
+
+    for (final cell in hiveScoresCell) {
+      if (cell.isSemester == false) {
+        continue;
+      }
+      totalScore += Convert.letterScoreConvert(cell.alphabetScore) *
+          (cell.numberOfCredits ?? 0);
+      totalCredit += cell.numberOfCredits ?? 0;
+    }
+
+    if (totalCredit > 0) {
+      currentAvgScore = totalScore / totalCredit;
+      return currentAvgScore;
+    } else {
+      currentAvgScore = 0;
+      return currentAvgScore;
+    }
   }
 
   double? calAvgScore(
@@ -160,6 +220,10 @@ class ScoreRepository {
 
   double? avgScoresCell() {
     return (calSumScoresCell() / calTotalCredits());
+  }
+
+  String? calScholarshipScore(double score) {
+    return (3.0 - score).toStringAsFixed(2);
   }
 
   int calNoPassedSubjects() {
@@ -217,11 +281,7 @@ class ScoreRepository {
     double totalCredits = 0;
 
     for (int i = 0; i < hiveConfig.hiveScoresCell.length; i++) {
-      if (getID(i) == "ATQGTC1" ||
-          getID(i) == "ATQGTC2" ||
-          getID(i) == "ATQGTC3" ||
-          getID(i) == "ATQGTC4" ||
-          getID(i) == "ATQGTC5") {
+      if (checkPhysicalEducation(i)) {
         continue;
       } else {
         totalCredits +=
@@ -234,11 +294,7 @@ class ScoreRepository {
   double calSumScoresCell() {
     double sumSCoresCell = 0;
     for (int i = 0; i < hiveConfig.hiveScoresCell.length; i++) {
-      if (getID(i) == "ATQGTC1" ||
-          getID(i) == "ATQGTC2" ||
-          getID(i) == "ATQGTC3" ||
-          getID(i) == "ATQGTC4" ||
-          getID(i) == "ATQGTC5") {
+      if (checkPhysicalEducation(i)) {
         continue;
       } else {
         if (hiveConfig.hiveScoresCell.getAt(i) != null) {

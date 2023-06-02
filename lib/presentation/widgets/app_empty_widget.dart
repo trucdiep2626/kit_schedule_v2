@@ -31,7 +31,9 @@ class AppEmptyWidget extends StatelessWidget {
           SizedBox(
             height: AppDimens.space_18,
           ),
-          SizedBox(width: Get.width * 2/3, child: child ?? const SizedBox.shrink()),
+          SizedBox(
+              width: Get.width * 2 / 3,
+              child: child ?? const SizedBox.shrink()),
         ],
       ),
     );
